@@ -27,21 +27,40 @@
 
 
 - (IBAction)Login:(id)sender {
+
+
+    NSString *user = txtuser.text;
+    NSString *password = txtpassword.text;
+    if(user.length==0  || password.length == 0)
+    {
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: @"用户名密码不能为空！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        
+    }
+    else
+    {
+        //先输出一下控件的值作为断点确认数据
+        NSLog(@"%@", txtuser.text);
+        NSLog(@"%@", txtpassword.text);
+        //设置需要访问的ws和传入参数
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/CheckUser?User=%@&Password=%@", txtuser.text,txtpassword.text];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+        
+    }
     
-    
-    //先输出一下控件的值作为断点确认数据
-    NSLog(@"%@", txtuser.text);
-    NSLog(@"%@", txtpassword.text);
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/CheckUser?User=%@&Password=%@", txtuser.text,txtpassword.text];
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
-    
+   
     //
     //下边为手动释放内存需要进行设置MRC 和 ARC
     //[connection release];

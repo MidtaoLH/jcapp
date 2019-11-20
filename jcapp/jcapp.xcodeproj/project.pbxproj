@@ -116,6 +116,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				EBB5CDD523853E0500FCA5B5 /* UsersPage */,
 				AFF2375423838E2D002AEAFB /* HomePage */,
 				EB4315E0237FB413007D1213 /* AppDelegate.h */,
 				EB4315E1237FB413007D1213 /* AppDelegate.m */,
@@ -146,6 +147,13 @@
 				EB431606237FB414007D1213 /* Info.plist */,
 			);
 			path = jcappUITests;
+			sourceTree = "<group>";
+		};
+		EBB5CDD523853E0500FCA5B5 /* UsersPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UsersPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

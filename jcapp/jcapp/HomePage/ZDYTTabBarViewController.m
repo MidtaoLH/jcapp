@@ -9,6 +9,7 @@
 #import "ZDYTTabBarViewController.h"
 #import "HomePageViewController.h"
 #import "myViewController.h"
+#import "UsersViewController.h"
 
 @interface ZDYTTabBarViewController ()
 
@@ -27,7 +28,7 @@
     nav.tabBarItem.title = @"首页";
     [self addChildViewController: nav];
     
-    UIViewController* mineVC = [[myViewController alloc] init];
+    UIViewController* mineVC = [[UsersViewController alloc] init];
     nav = [[UINavigationController alloc] initWithRootViewController: mineVC];
     nav.tabBarItem.image = [UIImage imageNamed:@"我的-灰色.png"];
     nav.tabBarItem.selectedImage = [UIImage imageNamed:@"我的-绿色.png"];

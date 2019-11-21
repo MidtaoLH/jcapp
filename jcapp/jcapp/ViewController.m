@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "HomePage/HomePageViewController.h"
+#import "HomePage/ZDYTTabBarViewController.h"
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -173,16 +174,19 @@
             message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
             
             
-             HomePageViewController * valueView = [[HomePageViewController alloc] initWithNibName:@"HomePageViewController"bundle:[NSBundle mainBundle]];
-             //从底部划入
-             [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-             //跳转
-             [self presentModalViewController:valueView animated:YES];
-             
+//             HomePageViewController * valueView = [[HomePageViewController alloc] initWithNibName:@"HomePageViewController"bundle:[NSBundle mainBundle]];
+//             //从底部划入
+//             [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+//             //跳转
+//             [self presentModalViewController:valueView animated:YES];
+            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
+            
+            [self presentViewController:tabBarCtrl animated:NO completion:nil];
             
         }
-    
-    
+        UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
+        
+        [self presentViewController:tabBarCtrl animated:NO completion:nil];
     //[alert release];
     
 }

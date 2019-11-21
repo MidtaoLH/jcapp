@@ -40,11 +40,13 @@
                               delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
-        [alert show];
+        [alert show];   
+        
         
     }
     else
     {
+        
         //先输出一下控件的值作为断点确认数据
         NSLog(@"%@", txtuser.text);
         NSLog(@"%@", txtpassword.text);
@@ -172,6 +174,19 @@
             //返回1为1显示登陆成功
             message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
             
+            //保存用户名密码
+            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+            
+                        if (![txtuser.text isEqualToString:[defaults objectForKey:@"username"]]||![txtpassword.text isEqualToString:[defaults objectForKey:@"password"]] ) {
+                
+                                [defaults setObject:txtuser.text forKey:@"username"];
+                
+                                [defaults setObject:txtpassword.text forKey:@"password"];
+                
+                                [defaults synchronize];//保存到磁盘
+                            }
+
+    
             
              HomePageViewController * valueView = [[HomePageViewController alloc] initWithNibName:@"HomePageViewController"bundle:[NSBundle mainBundle]];
              //从底部划入

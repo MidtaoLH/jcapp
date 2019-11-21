@@ -12,11 +12,14 @@
     //h文件先定义参数
     IBOutlet UITextField    *txtuser;
     IBOutlet UITextField    *txtpassword;
+    
     NSString *xmlString;
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
     NSMutableDictionary *info;
+    
+    
     
 }
 //h文件先设置相应属性

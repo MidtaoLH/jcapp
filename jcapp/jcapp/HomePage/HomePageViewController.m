@@ -13,7 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) NSTimer *timer;
 
-
 @end
 
 @implementation HomePageViewController

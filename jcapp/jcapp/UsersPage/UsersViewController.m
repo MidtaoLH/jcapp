@@ -25,7 +25,7 @@
     self.myHeadPortrait = [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
     _myHeadPortrait.backgroundColor = [UIColor magentaColor];
     [self.view addSubview:self.myHeadPortrait];
-    [self setHeadPortrait]; 
+    [self setHeadPortrait];
     
     /*UIImageView * userimage = [[UIImageView alloc] initWithFrame:CGRectMake(20.f, 50.f, 160.f, 160.f) ];// 数据为float类型
     userimage.layer.masksToBounds = YES;

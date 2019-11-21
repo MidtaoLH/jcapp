@@ -1,8 +1,8 @@
 //
 //  HomePageViewController.h
-//  jcapp yangjl
+//  jcapp
 //
-//  Created by youkare on 2019/11/18.
+//  Created by youkare on 2019/11/20.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 

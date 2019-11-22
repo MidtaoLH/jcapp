@@ -9,23 +9,38 @@
 #import "UsersViewController.h"
 
 @interface UsersViewController
-()
+()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
 @property (weak, nonatomic) IBOutlet UILabel *lblcode;
 @property (weak, nonatomic) IBOutlet UILabel *lbldept;
-@property (weak, nonatomic) IBOutlet UIButton *hc;
 @property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
-@property (weak, nonatomic) IBOutlet UIButton *hctwo;
+@property (weak, nonatomic) IBOutlet UITableView *userslist;
 @end
 
 @implementation UsersViewController
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    self.edgesForExtendedLayout=0;
+    self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
     //头像
+    
     self.myHeadPortrait = [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
     _myHeadPortrait.backgroundColor = [UIColor magentaColor];
+    
     [self.view addSubview:self.myHeadPortrait];
-    [self setHeadPortrait]; 
+    [self setHeadPortrait];
+    
+    //_userslist=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
+    _userslist.delegate=self;
+    _userslist.dataSource=self;
+    _userslist.bounces = NO;
+   
+    /*UITableView * userslist=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
+    userslist.delegate=self;
+    userslist.dataSource=self;
+    userslist.bounces=NO;
+    [self.view addSubview:userslist];
     
     /*UIImageView * userimage = [[UIImageView alloc] initWithFrame:CGRectMake(20.f, 50.f, 160.f, 160.f) ];// 数据为float类型
     userimage.layer.masksToBounds = YES;
@@ -38,11 +53,7 @@
     userimage.image = [UIImage imageNamed:@"yxlm"];
     userimage.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:userimage];*/
-    
-    //缓存
-    CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
-    NSString *message = size > 1 ? [NSString stringWithFormat:@"缓存%.2fM", size] : [NSString stringWithFormat:@"缓存%.2fK", size * 1024.0];
-    [_hctwo setTitle:[NSString stringWithFormat:message,size] forState:UIControlStateNormal];
+   
 }
 //  方法：设置头像样式
 -(void)setHeadPortrait{
@@ -56,6 +67,7 @@
      *  添加手势：也就是当用户点击头像了之后，对这个操作进行反应
      */
     //允许用户交互
+     self.myHeadPortrait.layer.backgroundColor = [UIColor grayColor].CGColor; // 在没有设置图片的时候观察位置
     _myHeadPortrait.userInteractionEnabled = YES;
     //初始化一个手势
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self
@@ -112,7 +124,7 @@
 
 
 //清除缓存按钮的点击事件
-- (IBAction)hc:(id)sender {
+- (void)clearRAM{
     CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
     
     NSString *message = size > 1 ? [NSString stringWithFormat:@"缓存%.0fM, 删除缓存", size] : [NSString stringWithFormat:@"缓存%.0fK, 删除缓存", size * 1024.0];
@@ -163,10 +175,63 @@
         }
     }
 
-
-
-- (IBAction)userimage:(id)sender {
-   
+//userstable
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        
+    }
+    if(indexPath.row==0)
+    {
+        cell.textLabel.text=[NSString stringWithFormat:@"修改账户密码"];
+        cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+    }
+    else if(indexPath.row==1)
+    {
+        cell.textLabel.text=[NSString stringWithFormat:@"消息推送通知"];
+        cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+    }
+    else if(indexPath.row==2)
+    {
+        //缓存
+        CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
+        NSString *message = size > 1 ? [NSString stringWithFormat:@"%.2fM", size] : [NSString stringWithFormat:@"%.2fK", size * 1024.0];
+        NSString *messagenew =[NSString stringWithFormat:@"清除缓存%@",message];
+        
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:messagenew];
+        NSRange range1 = [[str string] rangeOfString:@"清除缓存"];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1] range:range1];
+        NSRange range2 = [[str string] rangeOfString:message];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1] range:range2 ];
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
+        style.alignment = NSTextAlignmentRight;
+        [str addAttribute:NSParagraphStyleAttributeName value:style range:range2];
+        cell.textLabel.attributedText = str;
+    }
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row==0)
+    {
+    }
+    else if(indexPath.row==1)
+    {
+    }
+    else if(indexPath.row==2)
+    {
+        [self clearRAM];
+    }
 }
 @end
 

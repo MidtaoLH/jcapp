@@ -11,12 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UsersViewController">
             <connections>
-                <outlet property="hc" destination="dRR-Wh-dnG" id="V5v-3Y-Mja"/>
-                <outlet property="hctwo" destination="ROr-sX-15K" id="9GT-2V-NJh"/>
                 <outlet property="lblcode" destination="CGu-Zz-1q4" id="2cS-zr-Ep9"/>
                 <outlet property="lbldept" destination="spw-k7-X3O" id="x4y-Tx-v0q"/>
                 <outlet property="lblname" destination="SuB-V2-Y8Q" id="Usq-aN-Zdx"/>
                 <outlet property="myHeadPortrait" destination="CXh-YJ-vLA" id="3xW-fH-gd0"/>
+                <outlet property="userslist" destination="aAe-kw-fX9" id="3Ct-xP-eQV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -53,24 +52,13 @@
                     <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRR-Wh-dnG">
-                    <rect key="frame" x="0.0" y="451" width="333" height="49"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aAe-kw-fX9">
+                    <rect key="frame" x="0.0" y="281" width="414" height="129"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="清除缓存"/>
-                    <connections>
-                        <action selector="hc:" destination="-1" eventType="touchUpInside" id="pXZ-oQ-HCX"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROr-sX-15K">
-                    <rect key="frame" x="341" y="451" width="73" height="49"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="0.00M"/>
-                    <connections>
-                        <action selector="hc:" destination="-1" eventType="touchUpInside" id="lgv-Y7-UpM"/>
-                    </connections>
-                </button>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CXh-YJ-vLA">
-                    <rect key="frame" x="46" y="112" width="130" height="130"/>
+                    <rect key="frame" x="32" y="99" width="130" height="130"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>

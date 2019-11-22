@@ -41,7 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AF6BC9D92386AD1300C381EB /* myViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myViewController.h; sourceTree = "<group>"; };
 		AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDYTTabBarViewController.m; sourceTree = "<group>"; };
 		AF6BC9DC2386AD2000C381EB /* ZDYTTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDYTTabBarViewController.h; sourceTree = "<group>"; };
 		AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZDYTTabBarViewController.plist; sourceTree = "<group>"; };
@@ -100,7 +99,6 @@
 				AF6BC9DC2386AD2000C381EB /* ZDYTTabBarViewController.h */,
 				AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */,
 				AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */,
-				AF6BC9D92386AD1300C381EB /* myViewController.h */,
 				AFF2375523838E4C002AEAFB /* HomePageViewController.h */,
 				AFF2375623838E4C002AEAFB /* HomePageViewController.m */,
 				AFF2375723838E4C002AEAFB /* HomePageViewController.xib */,

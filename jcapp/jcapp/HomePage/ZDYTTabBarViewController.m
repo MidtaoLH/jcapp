@@ -8,7 +8,6 @@
 
 #import "ZDYTTabBarViewController.h"
 #import "HomePageViewController.h"
-#import "myViewController.h"
 #import "UsersViewController.h"
 
 @interface ZDYTTabBarViewController ()

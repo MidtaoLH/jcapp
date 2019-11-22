@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
-		AF6BC9E02386AD2000C381EB /* myViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF6BC9DB2386AD2000C381EB /* myViewController.xib */; };
 		AF6BC9E12386AD2000C381EB /* ZDYTTabBarViewController.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */; };
-		AF6BC9E22386AD2000C381EB /* myViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DE2386AD2000C381EB /* myViewController.m */; };
 		AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375223838BBF002AEAFB /* ViewController.xib */; };
 		AFF2375823838E4C002AEAFB /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF2375623838E4C002AEAFB /* HomePageViewController.m */; };
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
@@ -45,10 +43,8 @@
 /* Begin PBXFileReference section */
 		AF6BC9D92386AD1300C381EB /* myViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myViewController.h; sourceTree = "<group>"; };
 		AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDYTTabBarViewController.m; sourceTree = "<group>"; };
-		AF6BC9DB2386AD2000C381EB /* myViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = myViewController.xib; sourceTree = "<group>"; };
 		AF6BC9DC2386AD2000C381EB /* ZDYTTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDYTTabBarViewController.h; sourceTree = "<group>"; };
 		AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZDYTTabBarViewController.plist; sourceTree = "<group>"; };
-		AF6BC9DE2386AD2000C381EB /* myViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myViewController.m; sourceTree = "<group>"; };
 		AFF2375223838BBF002AEAFB /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		AFF2375523838E4C002AEAFB /* HomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		AFF2375623838E4C002AEAFB /* HomePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
@@ -101,8 +97,6 @@
 		AFF2375423838E2D002AEAFB /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				AF6BC9DE2386AD2000C381EB /* myViewController.m */,
-				AF6BC9DB2386AD2000C381EB /* myViewController.xib */,
 				AF6BC9DC2386AD2000C381EB /* ZDYTTabBarViewController.h */,
 				AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */,
 				AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */,
@@ -288,7 +282,6 @@
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
 				AF6BC9E12386AD2000C381EB /* ZDYTTabBarViewController.plist in Resources */,
-				AF6BC9E02386AD2000C381EB /* myViewController.xib in Resources */,
 				AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,7 +308,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFF2375823838E4C002AEAFB /* HomePageViewController.m in Sources */,
-				AF6BC9E22386AD2000C381EB /* myViewController.m in Sources */,
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,

@@ -28,60 +28,30 @@
      //    图片的Y
          CGFloat imageY = 0;
      //    图片中数
-         NSInteger totalCount = 3;
-     //   1.添加5张图片
-    UIImageView *imageView = [[UIImageView alloc] init];
-    //        图片X
-    CGFloat imageX = 0 * imageW;
-    //        设置frame
-    imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-    //        设置图片
-    NSString *name = @"img_0d";
-    imageView.image = [UIImage imageNamed:name];
-    [self.scrollview addSubview:imageView];
-    //----------------
-    imageView = [[UIImageView alloc] init];
-    //        图片X
-    imageX = 1 * imageW;
-    //        设置frame
-    imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-    //        设置图片
-    name = @"img_1d";
-    imageView.image = [UIImage imageNamed:name];
-    [self.scrollview addSubview:imageView];
-    //-----------------
-    imageView = [[UIImageView alloc] init];
-    //        图片X
-    imageX = 2 * imageW;
-    //        设置frame
-    imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-    //        设置图片
-    name = @"img_2d";
-    imageView.image = [UIImage imageNamed:name];
-    //        隐藏指示条
-    self.scrollview.showsHorizontalScrollIndicator = NO;
-    [self.scrollview addSubview:imageView];
+         NSInteger totalCount = 5;
+
     
-//         for (int i = 0; i < totalCount; i++) {
-//                 UIImageView *imageView = [[UIImageView alloc] init];
-//         //        图片X
-//                 CGFloat imageX = i * imageW;
-//         //        设置frame
-//                 imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-//         //        设置图片
-//                 NSString *name = [NSString stringWithFormat:@"img_0%d", i + 1];
-//
-//             imageView.image = [UIImage imageNamed:name];
-//         //        隐藏指示条
-//                 self.scrollview.showsHorizontalScrollIndicator = NO;
-//
-//                 [self.scrollview addSubview:imageView];
-//             }
+         for (int i = 0; i < totalCount; i++) {
+                 UIImageView *imageView = [[UIImageView alloc] init];
+         //        图片X
+                 CGFloat imageX = i * imageW;
+         
+         //        设置图片
+                 NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+             
+             imageView.image = [UIImage imageNamed:name];
+         //        隐藏指示条
+                 self.scrollview.showsHorizontalScrollIndicator = NO;
+             //        设置frame
+             imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+                 [self.scrollview addSubview:imageView];
+             }
     
      //    2.设置scrollview的滚动范围
          CGFloat contentW = totalCount *imageW;
          //不允许在垂直方向上进行滚动
          self.scrollview.contentSize = CGSizeMake(contentW, 0);
+    
     
      //    3.设置分页
          self.scrollview.pagingEnabled = YES;

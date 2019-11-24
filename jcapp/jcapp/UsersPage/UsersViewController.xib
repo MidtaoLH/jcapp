@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="lblcode" destination="CGu-Zz-1q4" id="2cS-zr-Ep9"/>
                 <outlet property="lbldept" destination="spw-k7-X3O" id="x4y-Tx-v0q"/>
+                <outlet property="lblimagename" destination="JRx-ZE-Hoa" id="1PZ-Xj-qBw"/>
                 <outlet property="lblname" destination="SuB-V2-Y8Q" id="Usq-aN-Zdx"/>
                 <outlet property="myHeadPortrait" destination="CXh-YJ-vLA" id="3xW-fH-gd0"/>
                 <outlet property="userslist" destination="aAe-kw-fX9" id="3Ct-xP-eQV"/>
@@ -61,6 +62,13 @@
                     <rect key="frame" x="32" y="99" width="113" height="112"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRx-ZE-Hoa">
+                    <rect key="frame" x="32" y="99" width="113" height="112"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

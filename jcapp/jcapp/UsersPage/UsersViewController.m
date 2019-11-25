@@ -9,122 +9,57 @@
 #import "UsersViewController.h"
 
 @interface UsersViewController
-()
+()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
 @property (weak, nonatomic) IBOutlet UILabel *lblcode;
 @property (weak, nonatomic) IBOutlet UILabel *lbldept;
-@property (weak, nonatomic) IBOutlet UIButton *hc;
 @property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
-@property (weak, nonatomic) IBOutlet UIButton *hctwo;
+@property (weak, nonatomic) IBOutlet UILabel *lblimagename;
+@property (weak, nonatomic) IBOutlet UITableView *userslist;
 @end
 
 @implementation UsersViewController
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    //头像
-    self.myHeadPortrait = [[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
-    _myHeadPortrait.backgroundColor = [UIColor magentaColor];
-    [self.view addSubview:self.myHeadPortrait];
-    [self setHeadPortrait]; 
+    self.edgesForExtendedLayout=0;
+    self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
+    _userslist.delegate=self;
+    _userslist.dataSource=self;
+    _userslist.bounces = NO;
+    //初始化一个UIImageView的对象
+    self.myHeadPortrait.userInteractionEnabled = YES;//打开用户交互
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choseImage:)];
+    [self.myHeadPortrait addGestureRecognizer:tap];
+   
+    CGFloat headimageX = self.view.frame.size.width * 0.12;
+    CGFloat headimageY = self.view.frame.size.height * 0.105;
+    CGFloat headimageW = self.view.frame.size.width * 0.25;
+    CGFloat headimageH = headimageW;
+    self.myHeadPortrait.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
+    //这句必须写
+    self.myHeadPortrait.layer.masksToBounds = YES;
+    self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
+    self.myHeadPortrait.image = [UIImage imageNamed:@"1"];
+    self.myHeadPortrait.backgroundColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
     
-    /*UIImageView * userimage = [[UIImageView alloc] initWithFrame:CGRectMake(20.f, 50.f, 160.f, 160.f) ];// 数据为float类型
-    userimage.layer.masksToBounds = YES;
-    // 层.角半径
-    // 如果要坐一个APP那样圆角的正方形 只要调节这个数据就可以  角半径设为小于半径比较多的数据
-    userimage.layer.cornerRadius = 80;// 层.角半径
-    userimage.layer.borderWidth = 1;
-    userimage.layer.borderColor = [UIColor whiteColor].CGColor;
-    userimage.backgroundColor = [UIColor grayColor]; // 在没有设置图片的时候观察位置
-    userimage.image = [UIImage imageNamed:@"yxlm"];
-    userimage.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:userimage];*/
-    
-    //缓存
-    CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
-    NSString *message = size > 1 ? [NSString stringWithFormat:@"缓存%.2fM", size] : [NSString stringWithFormat:@"缓存%.2fK", size * 1024.0];
-    [_hctwo setTitle:[NSString stringWithFormat:message,size] forState:UIControlStateNormal];
+    self.lblimagename.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
+    self.lblimagename.text=@"用户名";
 }
-//  方法：设置头像样式
--(void)setHeadPortrait{
-    //  把头像设置成圆形
-    self.myHeadPortrait.layer.cornerRadius=self.myHeadPortrait.frame.size.width/2;
-    self.myHeadPortrait.layer.masksToBounds=YES;
-    //  给头像加一个圆形边框
-    self.myHeadPortrait.layer.borderWidth = 1.5f;
-    self.myHeadPortrait.layer.borderColor = [UIColor blackColor].CGColor;
-    /**
-     *  添加手势：也就是当用户点击头像了之后，对这个操作进行反应
-     */
-    //允许用户交互
-    _myHeadPortrait.userInteractionEnabled = YES;
-    //初始化一个手势
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self
-    action:@selector(alterHeadPortrait:)];
-    //给imageView添加手势
-    [_myHeadPortrait addGestureRecognizer:singleTap];
-}
-
-//  方法：alterHeadPortrait
--(void)alterHeadPortrait:(UITapGestureRecognizer *)gesture{
-    /**
-     *  弹出提示框
-     */
-    //初始化提示框
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    //按钮：从相册选择，类型：UIAlertActionStyleDefault
-    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //初始化UIImagePickerController
-        UIImagePickerController *PickerImage = [[UIImagePickerController alloc]init];
-        //获取方式1：通过相册（呈现全部相册），UIImagePickerControllerSourceTypePhotoLibrary
-        //获取方式2，通过相机，UIImagePickerControllerSourceTypeCamera
-        //获取方法3，通过相册（呈现全部图片），UIImagePickerControllerSourceTypeSavedPhotosAlbum
-        PickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        //允许编辑，即放大裁剪
-        PickerImage.allowsEditing = YES;
-        //自代理
-        PickerImage.delegate = self;
-        //页面跳转
-        [self presentViewController:PickerImage animated:YES completion:nil];
-    }]];
-    //按钮：拍照，类型：UIAlertActionStyleDefault
-    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
-        /**
-         其实和从相册选择一样，只是获取方式不同，前面是通过相册，而现在，我们要通过相机的方式
-         */
-        UIImagePickerController *PickerImage = [[UIImagePickerController alloc]init];
-        //获取方式:通过相机
-        PickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
-        PickerImage.allowsEditing = YES;
-        PickerImage.delegate = self;
-        [self presentViewController:PickerImage animated:YES completion:nil];
-    }]];
-    //按钮：取消，类型：UIAlertActionStyleCancel
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-//PickerImage完成后的代理方法
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    //定义一个newPhoto，用来存放我们选择的图片。
-    UIImage *newPhoto = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    _myHeadPortrait.image = newPhoto;
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 //清除缓存按钮的点击事件
-- (IBAction)hc:(id)sender {
-    CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
-    
-    NSString *message = size > 1 ? [NSString stringWithFormat:@"缓存%.0fM, 删除缓存", size] : [NSString stringWithFormat:@"缓存%.0fK, 删除缓存", size * 1024.0];
-    
+- (void)clearRAM{
+    NSString *message =@"删除缓存";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:(UIAlertControllerStyleAlert)];
-    
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
         [self cleanCaches:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject];
         [self cleanCaches:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject];
         [self cleanCaches:NSTemporaryDirectory()];
+        //缓存
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+        UITableViewCell *cell=[self.userslist cellForRowAtIndexPath:indexPath];
+        cell.detailTextLabel.text = @"0.00K";
+        cell.detailTextLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
     }];
-    
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
     [alert addAction:action];
     [alert addAction:cancel];
@@ -160,13 +95,129 @@
             // 将文件删除
             [fileManager removeItemAtPath:absolutePath error:nil];
         }
+    }
+}
+//userstable
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID=@"cellID";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
+    if (!cell) {
+        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if(indexPath.row==0)
+        {
+            cell.textLabel.text=[NSString stringWithFormat:@"修改账户密码"];
+            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+        }
+        else if(indexPath.row==1)
+        {
+            cell.textLabel.text=[NSString stringWithFormat:@"消息推送通知"];
+            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+        }
+        else if(indexPath.row==2)
+        {
+            //缓存
+            CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
+            NSString *message = size > 1 ? [NSString stringWithFormat:@"%.2fM", size] : [NSString stringWithFormat:@"%.2fK", size * 1024.0];
+            NSString *messagenew =[NSString stringWithFormat:@"清除缓存"];
+            cell.textLabel.text = messagenew;
+            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+            cell.detailTextLabel.text = message;
+            cell.detailTextLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
         }
     }
-
-
-
-- (IBAction)userimage:(id)sender {
-   
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row==0)
+    {
+    }
+    else if(indexPath.row==1)
+    {
+    }
+    else if(indexPath.row==2)
+    {
+        [self clearRAM];
+    }
+}
+//点击事件
+ -(void)choseImage:(UITapGestureRecognizer*)sender{
+    UIAlertView * Alert=[[UIAlertView alloc]initWithTitle:@"请选择获取方式" message:@""
+                                                 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:
+                         @"打开照相机",@"从手机相册获取", nil];
+    Alert.delegate=self;
+    [Alert show ];
+}
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self getAvatatFormCamera:self];//调用相机
+    }
+    if (buttonIndex ==2) {
+        [self getAvatatFormPhotoLibrary:self];//调用相册
+    }
+}
+- (void)getAvatatFormPhotoLibrary:(UIViewController *)controller
+{
+    //这里可以判断类型是相册还是相机
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.delegate = self;
+        //加上下面这句会有编辑框
+        picker.allowsEditing = YES;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+- (void)getAvatatFormCamera:(UIViewController *)controller
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.delegate = self;
+    picker.showsCameraControls = YES;
+    picker.allowsEditing = YES;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+#pragma - mark - UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    //这里可以选择image类型,
+    //原图:UIImagePickerControllerOriginalImage
+    //获取编辑框里的图:UIImagePickerControllerEditedImage
+    UIImage* image = [info objectForKey:UIImagePickerControllerEditedImage];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        CGSize newSize = CGSizeMake(300.0f, 300.0f);
+        UIGraphicsBeginImageContext(newSize);
+        UIImage *imagechuansong = image;
+        [imagechuansong drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+        UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *imagename=[NSString stringWithFormat:@"%d.png",self.lblname.text];
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imagename];
+        BOOL result =[UIImagePNGRepresentation(newImage) writeToFile:filePath atomically:YES];
+        if (result == YES) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            
+            NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:
+                                  [NSString stringWithFormat:imagename]];
+            // 保存文件的名称
+            UIImage *img = [UIImage imageWithContentsOfFile:filePath];
+            // 保存文件的名称
+             [self.myHeadPortrait setImage:img];
+            self.lblimagename.hidden=YES;
+        }
+        UIGraphicsEndImageContext();
+        //上传图片,以文件形式,还是base64在这调用就ok
+    }];
 }
 @end
 

@@ -7,11 +7,15 @@
 //
 
 #import "HomePageViewController.h"
+#import "../Notice/NoticeViewController.h"
+#import "WebViewController.h"
 
 @interface HomePageViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) NSTimer *timer;
+- (IBAction)test:(id)sender;
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
 
 
 @end
@@ -21,45 +25,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //    图片的宽
-         CGFloat imageW = self.scrollview.frame.size.width;
-     //    CGFloat imageW = 300;
-     //    图片高
-         CGFloat imageH = self.scrollview.frame.size.height;
-     //    图片的Y
-         CGFloat imageY = 0;
-     //    图片中数
-         NSInteger totalCount = 5;
-
-    
-         for (int i = 0; i < totalCount; i++) {
-                 UIImageView *imageView = [[UIImageView alloc] init];
-         //        图片X
-                 CGFloat imageX = i * imageW;
-         
-         //        设置图片
-                 NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
-             
-             imageView.image = [UIImage imageNamed:name];
-         //        隐藏指示条
-                 self.scrollview.showsHorizontalScrollIndicator = NO;
-             //        设置frame
-             imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-                 [self.scrollview addSubview:imageView];
-             }
-    
-     //    2.设置scrollview的滚动范围
-         CGFloat contentW = totalCount *imageW;
-         //不允许在垂直方向上进行滚动
-         self.scrollview.contentSize = CGSizeMake(contentW, 0);
+    CGFloat imageW = self.scrollview.frame.size.width;
+    //    CGFloat imageW = 300;
+    //    图片高
+    CGFloat imageH = self.scrollview.frame.size.height;
+    //    图片的Y
+    CGFloat imageY = 0;
+    //    图片中数
+    NSInteger totalCount = 5;
     
     
-     //    3.设置分页
-         self.scrollview.pagingEnabled = YES;
+    for (int i = 0; i < totalCount; i++) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        //        图片X
+        CGFloat imageX = i * imageW;
+        
+        //        设置图片
+        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        
+        imageView.image = [UIImage imageNamed:name];
+        //        隐藏指示条
+        self.scrollview.showsHorizontalScrollIndicator = NO;
+        //        设置frame
+        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+        [self.scrollview addSubview:imageView];
+    }
     
-         //4.监听scrollview的滚动
-         self.scrollview.delegate = self;
+    //    2.设置scrollview的滚动范围-----
+    CGFloat contentW = totalCount *imageW;
+    //不允许在垂直方向上进行滚动
+    self.scrollview.contentSize = CGSizeMake(contentW, 0);
     
-         [self addTimer];
+    
+    //    3.设置分页
+    self.scrollview.pagingEnabled = YES;
+    
+    //4.监听scrollview的滚动
+    self.scrollview.delegate = self;
+    
+    [self addTimer];
 }
 
 
@@ -81,7 +85,7 @@
 // scrollview滚动的时候调用
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"滚动中");
+    //NSLog(@"滚动中");
     //    计算页码
     //    页码 = (contentoffset.x + scrollView一半宽度)/scrollView宽度
     CGFloat scrollviewW =  scrollView.frame.size.width;
@@ -117,5 +121,33 @@
 - (void)removeTimer
 {
     [self.timer invalidate];
+}
+- (IBAction)test:(id)sender {
+    //NoticeViewController * VCCollect = [[NoticeViewController alloc] init];
+    //[self.navigationController pushViewController:VCCollect animated:YES];
+    
+    //发送请求
+    NSURL *url=[NSURL URLWithString:@"http://www.baidu.com"];
+    //请求
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    //发送异步请求
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        if(!connectionError){
+            //把二进制数据转化成NSString
+            //NSString *html=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            
+            //
+            WebViewController *web=[[WebViewController alloc] init];
+            //[web.webview loadRequest:request];
+            //[self.webview loadHTMLString:html baseURL:nil];
+            [self.navigationController pushViewController:web animated:YES];
+            web.request=request;
+            
+            //NSLog(@"%@",html);
+        }else{
+            NSLog(@"连接出错%@",connectionError);
+        }
+    }];
+    
 }
 @end

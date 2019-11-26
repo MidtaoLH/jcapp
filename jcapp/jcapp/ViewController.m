@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "HomePage/HomePageViewController.h"
 #import "HomePage/ZDYTTabBarViewController.h"
+#import "VatationPage/VatationPageViewController.h"
+
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -77,9 +79,20 @@
 
 -(IBAction)onClickButton:(id)sender {
     
-
-    
+                 VatationPageViewController * valueView = [[VatationPageViewController alloc] initWithNibName:@"VatationPageViewController"bundle:[NSBundle mainBundle]];
+                 //从底部划入
+                 [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+                 //跳转
+                 [self presentModalViewController:valueView animated:YES];
 }
+
+-(IBAction)onClickButtontest:(id)sender {
+    NSLog(@"%@", @"test");
+    
+
+}
+
+
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -88,6 +101,9 @@
     //默认对于中文的支持不好
     NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
     NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
+    NSLog(@"%@", @"test");
+    NSLog(@"%@", gbkNSString);
+    
     //如果是非UTF－8  NSXMLParser会报错。
     xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
                                                                                         withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
@@ -204,8 +220,9 @@
         [self presentViewController:tabBarCtrl animated:NO completion:nil];
     //[alert release];
     
+    }
 }
-}
+
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {

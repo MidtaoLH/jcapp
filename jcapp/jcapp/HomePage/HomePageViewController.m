@@ -13,6 +13,9 @@
 #import "../Model/ScrollView.h"
 
 @interface HomePageViewController ()
+{
+    int *index;
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) NSTimer *timer;
@@ -42,51 +45,13 @@ static NSString *identifier =@"TableViewCell";
     NSLog(@"%@", @"首页是否走到这里");
     
     [super viewDidLoad];
-    //    图片的宽
-    CGFloat imageW = self.scrollview.frame.size.width;
-    //    CGFloat imageW = 300;
-    //    图片高
-    CGFloat imageH = self.scrollview.frame.size.height;
-    //    图片的Y
-    CGFloat imageY = 0;
-    //    图片中数
-    NSInteger totalCount = 5;
-    
-    
-    for (int i = 0; i < totalCount; i++) {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        //        图片X
-        CGFloat imageX = i * imageW;
-        
-        //        设置图片
-        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
-        
-        imageView.image = [UIImage imageNamed:name];
-        //        隐藏指示条
-        self.scrollview.showsHorizontalScrollIndicator = NO;
-        //        设置frame
-        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-        [self.scrollview addSubview:imageView];
-    }
-    
-    // 2.设置scrollview的滚动范围-----
-    CGFloat contentW = totalCount *imageW;
-    //不允许在垂直方向上进行滚动
-    self.scrollview.contentSize = CGSizeMake(contentW, 0);
-    // 3.设置分页
-    self.scrollview.pagingEnabled = YES;
-    
-    //4.监听scrollview的滚动
-    self.scrollview.delegate = self;
-    
-    [self addTimer];
 }
 
 
 - (void)nextImage
 {
     int page = (int)self.pageControl.currentPage;
-    if (page == 4) {
+    if (page == self.listOfMovies.count-1) {
         page = 0;
     }else
     {
@@ -192,10 +157,88 @@ static NSString *identifier =@"TableViewCell";
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
     
-    for (ScrollView *user in listOfMovies) {
-        NSLog(@"img=%@, imgUrl=%@", user.ScrollImage, user.ScrollURL);
+    //
+    //    图片的宽
+    CGFloat imageW = self.scrollview.frame.size.width;
+    //    CGFloat imageW = 300;
+    //    图片高
+    CGFloat imageH = self.scrollview.frame.size.height;
+    //    图片的Y
+    CGFloat imageY = 0;
+    //    图片中数
+    NSInteger totalCount = listOfMovies.count;
+    self.pageControl.numberOfPages=totalCount;
+    NSLog(@"8888888888888888888");
+    for (int i = 0; i < totalCount; i++) {
+        index=i;
+        UIImageView *imageView = [[UIImageView alloc] init];
+        //        图片X
+        CGFloat imageX = i * imageW;
+        
+        //        设置图片
+        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        
+        imageView.image = [UIImage imageNamed:name];
+        imageView.userInteractionEnabled = YES;
+        //[imageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)]];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
+        [imageView addGestureRecognizer:tap];
+        //        隐藏指示条
+        self.scrollview.showsHorizontalScrollIndicator = NO;
+        //        设置frame
+        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+        [self.scrollview addSubview:imageView];
+        
     }
-    NSLog(@"%@",@"connection1-end");
+    
+    // 2.设置scrollview的滚动范围-----
+    CGFloat contentW = totalCount *imageW;
+    //不允许在垂直方向上进行滚动
+    self.scrollview.contentSize = CGSizeMake(contentW, 0);
+    // 3.设置分页
+    self.scrollview.pagingEnabled = YES;
+    
+    //4.监听scrollview的滚动
+    self.scrollview.delegate = self;
+    
+    [self addTimer];
+    
+    
+    //    for (ScrollView *user in listOfMovies) {
+    //        NSLog(@"img=%@, imgUrl=%@", user.ScrollImage, user.ScrollURL);
+    //    }
+    //    NSLog(@"%@",@"connection1-end");
+}
+
+-(void)doTapAction:(UITapGestureRecognizer*)sender{
+    //跳转
+    //NSLog(@"6666666666666");
+    ScrollView *m =self.listOfMovies[self.pageControl.currentPage];
+    NSLog(@"666666666img=%@, imgUrl=%@", [NSString stringWithFormat:@"%ld", (long)self.pageControl.currentPage], m.ScrollURL);
+    //发送请求
+    NSURL *url=[NSURL URLWithString:m.ScrollURL];
+    //请求
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    //发送异步请求
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        if(!connectionError){
+            //把二进制数据转化成NSString
+            //NSString *html=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            
+            //
+            WebViewController *web=[[WebViewController alloc] init];
+            //[web.webview loadRequest:request];
+            //[self.webview loadHTMLString:html baseURL:nil];
+            [self.navigationController pushViewController:web animated:YES];
+            web.request=request;
+            
+            //NSLog(@"%@",html);
+        }else{
+            NSLog(@"连接出错%@",connectionError);
+        }
+    }];
+    
+    
 }
 
 //弹出消息框

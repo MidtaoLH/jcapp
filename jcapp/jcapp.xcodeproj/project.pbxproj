@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		774270EB238E9DDE00EC0C85 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 774270EA238E9DDD00EC0C85 /* NoticeNews.m */; };
 		775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6190238BBE8D00985FF3 /* MJExtensionConst.m */; };
 		775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6192238BBE8D00985FF3 /* MJFoundation.m */; };
 		775B61A6238BBE8D00985FF3 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6194238BBE8D00985FF3 /* MJProperty.m */; };
@@ -63,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		774270E9238E9DDD00EC0C85 /* NoticeNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoticeNews.h; path = ../../../../../jcapp/jcapp/jcapp/Model/NoticeNews.h; sourceTree = "<group>"; };
+		774270EA238E9DDD00EC0C85 /* NoticeNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoticeNews.m; path = ../../../../../jcapp/jcapp/jcapp/Model/NoticeNews.m; sourceTree = "<group>"; };
 		775B618E238BBE8D00985FF3 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		775B618F238BBE8D00985FF3 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
 		775B6190238BBE8D00985FF3 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				774270E9238E9DDD00EC0C85 /* NoticeNews.h */,
+				774270EA238E9DDD00EC0C85 /* NoticeNews.m */,
 				8D92093B238CEBC8006E43CC /* Vatcation.h */,
 				8D92093C238CEBC8006E43CC /* Vatcation.m */,
 				EB4A358E238E3519006573A9 /* UserInfo.h */,
@@ -465,6 +470,7 @@
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
 				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
+				774270EB238E9DDE00EC0C85 /* NoticeNews.m in Sources */,
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,
 				EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,

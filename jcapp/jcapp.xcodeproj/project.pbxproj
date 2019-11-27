@@ -17,6 +17,10 @@
 		775B61AB238BBE8D00985FF3 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B619E238BBE8D00985FF3 /* NSObject+MJKeyValue.m */; };
 		775B61AC238BBE8D00985FF3 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61A0238BBE8D00985FF3 /* NSObject+MJProperty.m */; };
 		775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61A2238BBE8D00985FF3 /* NSString+MJExtension.m */; };
+		775B61B4238BC0A500985FF3 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61B3238BC0A500985FF3 /* NoticeNews.m */; };
+		775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61B6238BD79B00985FF3 /* NewViewController.m */; };
+		775B61B9238BD79B00985FF3 /* NewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775B61B7238BD79B00985FF3 /* NewViewController.xib */; };
+		775B61BC238C10FB00985FF3 /* WJWebserviceHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */; };
 		77A4C0E42387B1D900D9F1B4 /* NoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4C0E22387B1D900D9F1B4 /* NoticeViewController.m */; };
 		77A4C0E52387B1D900D9F1B4 /* NoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77A4C0E32387B1D900D9F1B4 /* NoticeViewController.xib */; };
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
@@ -74,6 +78,13 @@
 		775B61A0238BBE8D00985FF3 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		775B61A1238BBE8D00985FF3 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		775B61A2238BBE8D00985FF3 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		775B61B2238BC0A500985FF3 /* NoticeNews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeNews.h; sourceTree = "<group>"; };
+		775B61B3238BC0A500985FF3 /* NoticeNews.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeNews.m; sourceTree = "<group>"; };
+		775B61B5238BD79B00985FF3 /* NewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewViewController.h; sourceTree = "<group>"; };
+		775B61B6238BD79B00985FF3 /* NewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewViewController.m; sourceTree = "<group>"; };
+		775B61B7238BD79B00985FF3 /* NewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewViewController.xib; sourceTree = "<group>"; };
+		775B61BA238C10FB00985FF3 /* WJWebserviceHttpRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WJWebserviceHttpRequest.h; sourceTree = "<group>"; };
+		775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WJWebserviceHttpRequest.m; sourceTree = "<group>"; };
 		77A4C0E12387B1D900D9F1B4 /* NoticeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeViewController.h; sourceTree = "<group>"; };
 		77A4C0E22387B1D900D9F1B4 /* NoticeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeViewController.m; sourceTree = "<group>"; };
 		77A4C0E32387B1D900D9F1B4 /* NoticeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeViewController.xib; sourceTree = "<group>"; };
@@ -157,12 +168,26 @@
 			path = MJExtension;
 			sourceTree = "<group>";
 		};
+		775B61AE238BBF9700985FF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				775B61B2238BC0A500985FF3 /* NoticeNews.h */,
+				775B61B3238BC0A500985FF3 /* NoticeNews.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		77A4C0E02387B04D00D9F1B4 /* Notice */ = {
 			isa = PBXGroup;
 			children = (
 				77A4C0E12387B1D900D9F1B4 /* NoticeViewController.h */,
 				77A4C0E22387B1D900D9F1B4 /* NoticeViewController.m */,
 				77A4C0E32387B1D900D9F1B4 /* NoticeViewController.xib */,
+				775B61B5238BD79B00985FF3 /* NewViewController.h */,
+				775B61B6238BD79B00985FF3 /* NewViewController.m */,
+				775B61B7238BD79B00985FF3 /* NewViewController.xib */,
+				775B61BA238C10FB00985FF3 /* WJWebserviceHttpRequest.h */,
+				775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */,
 			);
 			path = Notice;
 			sourceTree = "<group>";
@@ -203,6 +228,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				775B61AE238BBF9700985FF3 /* Model */,
 				775B618C238BBE8D00985FF3 /* MJExtension */,
 				77A4C0E02387B04D00D9F1B4 /* Notice */,
 				EBB5CDE02385458700FCA5B5 /* UsersPage */,
@@ -358,6 +384,7 @@
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
 				AF6BC9E12386AD2000C381EB /* ZDYTTabBarViewController.plist in Resources */,
 				AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */,
+				775B61B9238BD79B00985FF3 /* NewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +411,7 @@
 			files = (
 				775B61AA238BBE8D00985FF3 /* NSObject+MJCoding.m in Sources */,
 				775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */,
+				775B61B4238BC0A500985FF3 /* NoticeNews.m in Sources */,
 				775B61A9238BBE8D00985FF3 /* NSObject+MJClass.m in Sources */,
 				775B61A7238BBE8D00985FF3 /* MJPropertyKey.m in Sources */,
 				77A4C0E42387B1D900D9F1B4 /* NoticeViewController.m in Sources */,
@@ -392,8 +420,10 @@
 				775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */,
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
+				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,
+				775B61BC238C10FB00985FF3 /* WJWebserviceHttpRequest.m in Sources */,
 				EB4315F0237FB414007D1213 /* main.m in Sources */,
 				775B61AB238BBE8D00985FF3 /* NSObject+MJKeyValue.m in Sources */,
 				775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */,

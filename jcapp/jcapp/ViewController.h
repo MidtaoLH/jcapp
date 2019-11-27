@@ -12,6 +12,8 @@
     //h文件先定义参数
     IBOutlet UITextField    *txtuser;
     IBOutlet UITextField    *txtpassword;
+    IBOutlet UITextField    *txttest;
+    
     
     NSString *xmlString;
     NSString *currentTagName;
@@ -26,8 +28,15 @@
 @property (nonatomic, retain)IBOutlet UITextField *txtuser;
 @property (nonatomic, retain)IBOutlet UITextField *txtpassword;
 
+@property (nonatomic, retain)IBOutlet UITextField *txttest;
+
 //先在h文件写入相应方法
 -(IBAction)onClickButton:(id)sender;
+
+-(IBAction)onClickButtontest:(id)sender;
+
+
+
 
 -(IBAction)textFieldDoneEditing:(id)sender;
 

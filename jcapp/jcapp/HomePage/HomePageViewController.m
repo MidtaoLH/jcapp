@@ -7,59 +7,79 @@
 //
 
 #import "HomePageViewController.h"
+#import "../Notice/NoticeViewController.h"
+#import "WebViewController.h"
+#import "../MJExtension/MJExtension.h"
+#import "../Model/ScrollView.h"
 
 @interface HomePageViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) NSTimer *timer;
+- (IBAction)test:(id)sender;
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
 
 
 @end
 
 @implementation HomePageViewController
+static NSString *identifier =@"TableViewCell";
+@synthesize listOfMovies;
 
 - (void)viewDidLoad {
+    //调用webservice
+    
+    //设置需要访问的ws和传入参数
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetScrollviewList"];
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
+    NSLog(@"%@", @"首页是否走到这里");
+    
     [super viewDidLoad];
     //    图片的宽
-         CGFloat imageW = self.scrollview.frame.size.width;
-     //    CGFloat imageW = 300;
-     //    图片高
-         CGFloat imageH = self.scrollview.frame.size.height;
-     //    图片的Y
-         CGFloat imageY = 0;
-     //    图片中数
-         NSInteger totalCount = 5;
-
-    
-         for (int i = 0; i < totalCount; i++) {
-                 UIImageView *imageView = [[UIImageView alloc] init];
-         //        图片X
-                 CGFloat imageX = i * imageW;
-         
-         //        设置图片
-                 NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
-             
-             imageView.image = [UIImage imageNamed:name];
-         //        隐藏指示条
-                 self.scrollview.showsHorizontalScrollIndicator = NO;
-             //        设置frame
-             imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-                 [self.scrollview addSubview:imageView];
-             }
-    
-     //    2.设置scrollview的滚动范围
-         CGFloat contentW = totalCount *imageW;
-         //不允许在垂直方向上进行滚动
-         self.scrollview.contentSize = CGSizeMake(contentW, 0);
+    CGFloat imageW = self.scrollview.frame.size.width;
+    //    CGFloat imageW = 300;
+    //    图片高
+    CGFloat imageH = self.scrollview.frame.size.height;
+    //    图片的Y
+    CGFloat imageY = 0;
+    //    图片中数
+    NSInteger totalCount = 5;
     
     
-     //    3.设置分页
-         self.scrollview.pagingEnabled = YES;
+    for (int i = 0; i < totalCount; i++) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        //        图片X
+        CGFloat imageX = i * imageW;
+        
+        //        设置图片
+        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        
+        imageView.image = [UIImage imageNamed:name];
+        //        隐藏指示条
+        self.scrollview.showsHorizontalScrollIndicator = NO;
+        //        设置frame
+        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+        [self.scrollview addSubview:imageView];
+    }
     
-         //4.监听scrollview的滚动
-         self.scrollview.delegate = self;
+    // 2.设置scrollview的滚动范围-----
+    CGFloat contentW = totalCount *imageW;
+    //不允许在垂直方向上进行滚动
+    self.scrollview.contentSize = CGSizeMake(contentW, 0);
+    // 3.设置分页
+    self.scrollview.pagingEnabled = YES;
     
-         [self addTimer];
+    //4.监听scrollview的滚动
+    self.scrollview.delegate = self;
+    
+    [self addTimer];
 }
 
 
@@ -81,7 +101,7 @@
 // scrollview滚动的时候调用
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"滚动中");
+    //NSLog(@"滚动中");
     //    计算页码
     //    页码 = (contentoffset.x + scrollView一半宽度)/scrollView宽度
     CGFloat scrollviewW =  scrollView.frame.size.width;
@@ -118,4 +138,196 @@
 {
     [self.timer invalidate];
 }
-@end
+- (IBAction)test:(id)sender {
+    //NoticeViewController * VCCollect = [[NoticeViewController alloc] init];
+    //[self.navigationController pushViewController:VCCollect animated:YES];
+    
+    //发送请求
+    NSURL *url=[NSURL URLWithString:@"http://www.baidu.com"];
+    //请求
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    //发送异步请求
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        if(!connectionError){
+            //把二进制数据转化成NSString
+            //NSString *html=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            
+            //
+            WebViewController *web=[[WebViewController alloc] init];
+            //[web.webview loadRequest:request];
+            //[self.webview loadHTMLString:html baseURL:nil];
+            [self.navigationController pushViewController:web animated:YES];
+            web.request=request;
+            
+            //NSLog(@"%@",html);
+        }else{
+            NSLog(@"连接出错%@",connectionError);
+        }
+    }];
+    
+}
+
+
+//系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSLog(@"%@",@"connection1-begin");
+    
+    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    //NSLog(@"%@", @"kaishidayin");
+    //NSLog(@"%@", xmlString);
+    
+    // 字符串截取
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    NSString *resultString = [xmlString substringWithRange:reusltRagne];
+    
+    NSLog(@"%@", resultString);
+    
+    NSString *requestTmp = [NSString stringWithString:resultString];
+    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
+    
+    for (ScrollView *user in listOfMovies) {
+        NSLog(@"img=%@, imgUrl=%@", user.ScrollImage, user.ScrollURL);
+    }
+    NSLog(@"%@",@"connection1-end");
+}
+
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: [error localizedDescription]
+                               message: [error localizedFailureReason]
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    NSLog(@"%@",@"connection2-end");
+}
+
+//解析返回的xml系统自带方法不需要h中声明
+- (void) connectionDidFinishLoading: (NSURLConnection*) connection {
+    
+    NSLog(@"%@", @"kaishijiex");    //开始解析XML
+    
+    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+    ipParser.delegate = self;
+    [ipParser parse];
+    NSLog(@"%@",@"connectionDidFinishLoading-end");
+    
+    [self.NewTableView reloadData];
+}
+
+//解析xml回调方法
+- (void)parserDidStartDocument:(NSXMLParser *)parser {
+    info = [[NSMutableDictionary alloc] initWithCapacity: 1];
+    
+    NSLog(@"%@",@"parserDidStartDocument-end");
+}
+
+//回调方法出错弹框
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: [parseError localizedDescription]
+                               message: [parseError localizedFailureReason]
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    NSLog(@"%@",@"parser-end");
+}
+
+//解析返回xml的节点elementName
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qualifiedName
+    attributes:(NSDictionary *)attributeDict  {
+    NSLog(@"value2: %@\n", elementName);
+    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
+    currentTagName = elementName;
+    
+    NSLog(@"%@",@"parser2-end");
+}
+
+//取得我们需要的节点的数据
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    
+    NSLog(@"%@",@"parser3-begin");
+    
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName {
+    
+}
+
+//循环解析d节点
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+    
+    NSLog(@"%@",@"parserDidEndDocument-begin");
+    
+    NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
+    for (id key in info) {
+        [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
+    }
+    
+    //[outstring release];
+    //[xmlString release];
+}
+
+
+//有多少组
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSLog(@"%@",@"numberOfSectionsInTableView-begin");
+    // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
+    // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
+    return 3;
+}
+
+//如果不设置section 默认就1组
+//每组多少行
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
+    // 这里是返回节点的行数
+    NSLog(@"%@",@"tableView-begin");
+    return self.listOfMovies.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    if (cell == nil){
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellID"];
+    }
+    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
+    // UITableViewCell *cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    ScrollView *m =self.listOfMovies[indexPath.row];//取出数据元素
+    
+    cell.textLabel.text =  [NSString stringWithFormat:@"图片地址：%@,对应网址：%@",m.ScrollImage,m.ScrollURL];
+    
+    return cell;
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    // 返回顶部标题
+    NSLog(@"%@",@"tableView2-begin");
+    return @"";
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    NSLog(@"%@",@"tableView3-begin");
+    // 返回底部文字
+    return @"";
+}@end

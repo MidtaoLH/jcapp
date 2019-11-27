@@ -9,7 +9,9 @@
 #import "UsersViewController.h"
 #import "AlterPWDController.h"
 #import "ZDYTTabBarViewController.h"
-#import "userinfo.h"
+#import "UserInfo.h"
+#import "MJExtension.h"
+
 @interface UsersViewController
 ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
@@ -62,13 +64,15 @@ NSString *allString;
     self.userslist.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
     self.btnloginout.frame=CGRectMake(0,  self.view.frame.size.height*0.5, self.view.frame.size.width, 44);
     
-    headimageX = self.view.frame.size.width * 0.5;
+    headimageX = self.view.frame.size.width * 0.495;
     headimageY = self.view.frame.size.height * 0.025;
     headimageW = self.view.frame.size.width * 0.25;
     headimageH =  headimageW;
     self.lblname.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
+    headimageX = self.view.frame.size.width * 0.5;
     headimageY = self.view.frame.size.height * 0.07;
     self.lblcode.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
+    headimageX = self.view.frame.size.width * 0.5;
     headimageY = self.view.frame.size.height * 0.10;
     self.lbldept.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
     
@@ -309,7 +313,8 @@ NSString *allString;
     ////添加分界线，换行
     [body appendFormat:@"%@\r\n",MPboundary];
     //声明pic字段，文件名为boris.png
-    [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",self.lblcode.text];
+    NSString *imagename = [self CharacterStringMainString:self.lblcode.text AddDigit:30 AddString:@" "];
+    [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",imagename];
     //声明上传文件的格式
     [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
     //声明结束符：--AaB03x--
@@ -339,22 +344,43 @@ NSString *allString;
         _mResponseData = [[NSMutableData alloc] init];
     }
 }
-
+- (NSString*)CharacterStringMainString:(NSString*)MainString AddDigit:(int)AddDigit AddString:(NSString*)AddString
+{
+    NSString*ret = [[NSString alloc]init];
+    
+    ret = MainString;
+    for(int y =0;y < (AddDigit - MainString.length) ;y++ ){
+        ret = [NSString stringWithFormat:@"%@%@",ret,AddString];
+    }
+    return ret;
+}
 #pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"%@", infoString);
-    if(infoString.length>0)
+    if([infoString containsString:@"xmlns"])
     {
-        [GroupRoomModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
-            return @{
-                     @"roomGroup":@"roomgroup",
-                     };
-        }];
+        infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
+        // 字符串截取
+        NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+        NSRange endRagne = [infoString rangeOfString:@"]</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [infoString substringWithRange:reusltRagne];
         
+        NSLog(@"%@", resultString);
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        UserInfo *userinfo = [UserInfo mj_objectWithKeyValues:resultDic];
+        self.lblname.text=userinfo.name;
+        self.lblcode.text=userinfo.code;
+        self.lbldept.text=userinfo.dept;
+        self.lblimagename.text=userinfo.name;
         NSString *urlString =[NSString stringWithFormat:@"http://47.94.85.101:8095/APP/Image/%@.png",self.lblcode.text];
         NSData *imgdata = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
         UIImage *image = [UIImage imageWithData:imgdata]; // 取得图片
@@ -392,4 +418,5 @@ NSString *allString;
                                        delegate:self];
 }
 @end
+
 

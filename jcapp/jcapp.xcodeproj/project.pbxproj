@@ -29,6 +29,7 @@
 		AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375223838BBF002AEAFB /* ViewController.xib */; };
 		AFF2375823838E4C002AEAFB /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF2375623838E4C002AEAFB /* HomePageViewController.m */; };
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
+		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
 		EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4315E1237FB413007D1213 /* AppDelegate.m */; };
@@ -99,6 +100,8 @@
 		AFF2375523838E4C002AEAFB /* HomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		AFF2375623838E4C002AEAFB /* HomePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		AFF2375723838E4C002AEAFB /* HomePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageViewController.xib; sourceTree = "<group>"; };
+		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
+		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 			children = (
 				8D92093B238CEBC8006E43CC /* Vatcation.h */,
 				8D92093C238CEBC8006E43CC /* Vatcation.m */,
+				AFFE90B7238E5145009DE419 /* ScrollView.h */,
+				AFFE90B8238E5145009DE419 /* ScrollView.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -445,6 +450,7 @@
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,
 				EB4315F0237FB414007D1213 /* main.m in Sources */,
+				AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */,
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,
 				775B61AB238BBE8D00985FF3 /* NSObject+MJKeyValue.m in Sources */,

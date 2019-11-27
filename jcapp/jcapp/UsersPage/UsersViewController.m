@@ -9,7 +9,7 @@
 #import "UsersViewController.h"
 #import "AlterPWDController.h"
 #import "ZDYTTabBarViewController.h"
-
+#import "userinfo.h"
 @interface UsersViewController
 ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
@@ -26,6 +26,7 @@ NSMutableDictionary *userinfo;
 NSString *infocurrentTagName;
 NSString *infocurrentValue;
 NSString *inforesultString;
+NSString *allString;
 @implementation UsersViewController
 - (void)viewDidLoad {
     
@@ -71,27 +72,7 @@ NSString *inforesultString;
     headimageY = self.view.frame.size.height * 0.10;
     self.lbldept.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
     
-    NSString *urlString =[NSString stringWithFormat:@"http://47.94.85.101:8095/APP/Image/%@.png",self.lblcode.text];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
-    UIImage *image = [UIImage imageWithData:data]; // 取得图片
-    // 本地沙盒目录
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    // 得到本地沙盒中名为"MyImage"的路径，"MyImage"是保存的图片名
-    NSString *imageFilePath = [path stringByAppendingPathComponent:self.lblcode.text];
-    // 将取得的图片写入本地的沙盒中，其中0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
-    BOOL success = [UIImageJPEGRepresentation(image, 1) writeToFile:imageFilePath  atomically:YES];
-    if (success){
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        
-        NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:
-                              [NSString stringWithFormat:self.lblcode.text]];
-        // 保存文件的名称
-        UIImage *img = [UIImage imageWithContentsOfFile:filePath];
-        // 保存文件的名称
-        [self.myHeadPortrait setImage:img];
-        self.lblimagename.hidden=YES;
-        [self updateImage:img];
-    }
+   
     [self loadinfo];
 }
 //清除缓存按钮的点击事件
@@ -361,45 +342,42 @@ NSString *inforesultString;
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [_mResponseData setLength:0];
-}
-
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    //infoString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"withString:@""]];
-}
-//取得我们需要的节点的数据
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSString *message =@"";
-    if ([infocurrentTagName isEqualToString:@"string"]) {
-        if (string.length>0) {
-            self.lblcode.text=string;
-        }
+    infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", infoString);
+    if(infoString.length>0)
+    {
+        [GroupRoomModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+            return @{
+                     @"roomGroup":@"roomgroup",
+                     };
+        }];
         
+        
+        NSString *urlString =[NSString stringWithFormat:@"http://47.94.85.101:8095/APP/Image/%@.png",self.lblcode.text];
+        NSData *imgdata = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
+        UIImage *image = [UIImage imageWithData:imgdata]; // 取得图片
+        // 本地沙盒目录
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        // 得到本地沙盒中名为"MyImage"的路径，"MyImage"是保存的图片名
+        NSString *imageFilePath = [path stringByAppendingPathComponent:self.lblcode.text];
+        // 将取得的图片写入本地的沙盒中，其中0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
+        BOOL success = [UIImageJPEGRepresentation(image, 1) writeToFile:imageFilePath  atomically:YES];
+        if (success){
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            
+            NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:
+                                  [NSString stringWithFormat:self.lblcode.text]];
+            // 保存文件的名称
+            UIImage *img = [UIImage imageWithContentsOfFile:filePath];
+            // 保存文件的名称
+            [self.myHeadPortrait setImage:img];
+            self.lblimagename.hidden=YES;
+            [self updateImage:img];
+        }
     }
 }
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    
-    NSDictionary *dic =  [NSJSONSerialization JSONObjectWithData:_mResponseData options:kNilOptions error:nil];
-    NSLog(@"%@", dic);
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"Error: %@", error);
-}
-
-
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
@@ -413,6 +391,5 @@ NSString *inforesultString;
                                        initWithRequest:request
                                        delegate:self];
 }
-
 @end
 

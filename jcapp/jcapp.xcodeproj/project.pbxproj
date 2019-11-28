@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		774270EB238E9DDE00EC0C85 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 774270EA238E9DDD00EC0C85 /* NoticeNews.m */; };
 		775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6190238BBE8D00985FF3 /* MJExtensionConst.m */; };
 		775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6192238BBE8D00985FF3 /* MJFoundation.m */; };
 		775B61A6238BBE8D00985FF3 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6194238BBE8D00985FF3 /* MJProperty.m */; };
@@ -24,6 +23,7 @@
 		8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920935238CDC59006E43CC /* VatationPageViewController.m */; };
 		8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920937238CDC59006E43CC /* VatationPageViewController.xib */; };
 		8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D92093C238CEBC8006E43CC /* Vatcation.m */; };
+		AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABC40238F5FCE00F46278 /* NoticeNews.m */; };
 		AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF269C45238D5F010058F3E0 /* WebViewController.m */; };
 		AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF269C46238D5F010058F3E0 /* WebViewController.xib */; };
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
@@ -64,8 +64,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		774270E9238E9DDD00EC0C85 /* NoticeNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoticeNews.h; path = ../../../../../jcapp/jcapp/jcapp/Model/NoticeNews.h; sourceTree = "<group>"; };
-		774270EA238E9DDD00EC0C85 /* NoticeNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoticeNews.m; path = ../../../../../jcapp/jcapp/jcapp/Model/NoticeNews.m; sourceTree = "<group>"; };
 		775B618E238BBE8D00985FF3 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		775B618F238BBE8D00985FF3 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
 		775B6190238BBE8D00985FF3 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
@@ -97,6 +95,8 @@
 		8D920937238CDC59006E43CC /* VatationPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VatationPageViewController.xib; sourceTree = "<group>"; };
 		8D92093B238CEBC8006E43CC /* Vatcation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vatcation.h; sourceTree = "<group>"; };
 		8D92093C238CEBC8006E43CC /* Vatcation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vatcation.m; sourceTree = "<group>"; };
+		AF0ABC40238F5FCE00F46278 /* NoticeNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeNews.m; sourceTree = "<group>"; };
+		AF0ABC41238F5FCE00F46278 /* NoticeNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNews.h; sourceTree = "<group>"; };
 		AF269C44238D5F000058F3E0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		AF269C45238D5F010058F3E0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		AF269C46238D5F010058F3E0 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
@@ -219,8 +219,8 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				774270E9238E9DDD00EC0C85 /* NoticeNews.h */,
-				774270EA238E9DDD00EC0C85 /* NoticeNews.m */,
+				AF0ABC41238F5FCE00F46278 /* NoticeNews.h */,
+				AF0ABC40238F5FCE00F46278 /* NoticeNews.m */,
 				8D92093B238CEBC8006E43CC /* Vatcation.h */,
 				8D92093C238CEBC8006E43CC /* Vatcation.m */,
 				EB4A358E238E3519006573A9 /* UserInfo.h */,
@@ -470,7 +470,7 @@
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
 				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
-				774270EB238E9DDE00EC0C85 /* NoticeNews.m in Sources */,
+				AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */,
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,
 				EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,

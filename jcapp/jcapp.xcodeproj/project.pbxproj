@@ -81,6 +81,12 @@
 		AF0ABF01238F9B5A00F46278 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABEC8238F9B5A00F46278 /* UIImageView+WebCache.m */; };
 		AF0ABF02238F9B5A00F46278 /* UIView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABECA238F9B5A00F46278 /* UIView+WebCache.m */; };
 		AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABECC238F9B5A00F46278 /* UIView+WebCacheOperation.m */; };
+		AF0ABF0B238FC9B000F46278 /* AutoButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF06238FC9AF00F46278 /* AutoButton.m */; };
+		AF0ABF0C238FC9B000F46278 /* AutoLableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF08238FC9AF00F46278 /* AutoLableView.m */; };
+		AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF0A238FC9AF00F46278 /* DXLAutoButtonView.m */; };
+		AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF11238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m */; };
+		AF0ABF15238FC9CF00F46278 /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF13238FC9CF00F46278 /* UIView+SDAutoLayout.m */; };
+		AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */; };
 		AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF269C45238D5F010058F3E0 /* WebViewController.m */; };
 		AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF269C46238D5F010058F3E0 /* WebViewController.xib */; };
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
@@ -269,6 +275,20 @@
 		AF0ABECA238F9B5A00F46278 /* UIView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCache.m"; sourceTree = "<group>"; };
 		AF0ABECB238F9B5A00F46278 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		AF0ABECC238F9B5A00F46278 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		AF0ABF05238FC9AF00F46278 /* AutoButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoButton.h; sourceTree = "<group>"; };
+		AF0ABF06238FC9AF00F46278 /* AutoButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoButton.m; sourceTree = "<group>"; };
+		AF0ABF07238FC9AF00F46278 /* AutoLableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoLableView.h; sourceTree = "<group>"; };
+		AF0ABF08238FC9AF00F46278 /* AutoLableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoLableView.m; sourceTree = "<group>"; };
+		AF0ABF09238FC9AF00F46278 /* DXLAutoButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXLAutoButtonView.h; sourceTree = "<group>"; };
+		AF0ABF0A238FC9AF00F46278 /* DXLAutoButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXLAutoButtonView.m; sourceTree = "<group>"; };
+		AF0ABF0F238FC9CF00F46278 /* SDAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAutoLayout.h; sourceTree = "<group>"; };
+		AF0ABF10238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+SDAutoTableViewCellHeight.h"; sourceTree = "<group>"; };
+		AF0ABF11238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+SDAutoTableViewCellHeight.m"; sourceTree = "<group>"; };
+		AF0ABF12238FC9CF00F46278 /* UIView+SDAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SDAutoLayout.h"; sourceTree = "<group>"; };
+		AF0ABF13238FC9CF00F46278 /* UIView+SDAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDAutoLayout.m"; sourceTree = "<group>"; };
+		AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		AF0ABF17238FCD3200F46278 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		AF269C44238D5F000058F3E0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		AF269C45238D5F010058F3E0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		AF269C46238D5F010058F3E0 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
@@ -542,9 +562,39 @@
 			path = Private;
 			sourceTree = "<group>";
 		};
+		AF0ABF04238FC9AF00F46278 /* DXLAutoCountButtonView */ = {
+			isa = PBXGroup;
+			children = (
+				AF0ABF05238FC9AF00F46278 /* AutoButton.h */,
+				AF0ABF06238FC9AF00F46278 /* AutoButton.m */,
+				AF0ABF07238FC9AF00F46278 /* AutoLableView.h */,
+				AF0ABF08238FC9AF00F46278 /* AutoLableView.m */,
+				AF0ABF09238FC9AF00F46278 /* DXLAutoButtonView.h */,
+				AF0ABF0A238FC9AF00F46278 /* DXLAutoButtonView.m */,
+			);
+			path = DXLAutoCountButtonView;
+			sourceTree = "<group>";
+		};
+		AF0ABF0E238FC9CF00F46278 /* SDAutoLayout */ = {
+			isa = PBXGroup;
+			children = (
+				AF0ABF0F238FC9CF00F46278 /* SDAutoLayout.h */,
+				AF0ABF10238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.h */,
+				AF0ABF11238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m */,
+				AF0ABF12238FC9CF00F46278 /* UIView+SDAutoLayout.h */,
+				AF0ABF13238FC9CF00F46278 /* UIView+SDAutoLayout.m */,
+			);
+			path = SDAutoLayout;
+			sourceTree = "<group>";
+		};
 		AFF2375423838E2D002AEAFB /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				AF0ABF17238FCD3200F46278 /* UIColor+Hex.h */,
+				AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */,
+				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
+				AF0ABF0E238FC9CF00F46278 /* SDAutoLayout */,
+				AF0ABF04238FC9AF00F46278 /* DXLAutoCountButtonView */,
 				AF269C44238D5F000058F3E0 /* WebViewController.h */,
 				AF269C45238D5F010058F3E0 /* WebViewController.m */,
 				AF269C46238D5F010058F3E0 /* WebViewController.xib */,
@@ -771,6 +821,7 @@
 			files = (
 				AF0ABED2238F9B5A00F46278 /* SDImageAssetManager.m in Sources */,
 				775B61AA238BBE8D00985FF3 /* NSObject+MJCoding.m in Sources */,
+				AF0ABF0B238FC9B000F46278 /* AutoButton.m in Sources */,
 				AF0ABEFF238F9B5A00F46278 /* UIImage+Transform.m in Sources */,
 				AF0ABEF0238F9B5A00F46278 /* SDWebImageDownloader.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
@@ -778,9 +829,12 @@
 				775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */,
 				775B61A9238BBE8D00985FF3 /* NSObject+MJClass.m in Sources */,
 				AF0ABEF9238F9B5A00F46278 /* UIButton+WebCache.m in Sources */,
+				AF0ABF0C238FC9B000F46278 /* AutoLableView.m in Sources */,
 				AF0ABEEB238F9B5A00F46278 /* SDMemoryCache.m in Sources */,
 				AF0ABEF4238F9B5A00F46278 /* SDWebImageError.m in Sources */,
 				AF0ABEE3238F9B5A00F46278 /* SDImageCodersManager.m in Sources */,
+				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
+				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,
 				AF0ABEE1238F9B5A00F46278 /* SDImageCoder.m in Sources */,
 				AF0ABECE238F9B5A00F46278 /* NSData+ImageContentType.m in Sources */,
@@ -805,6 +859,7 @@
 				AF0ABED8238F9B5A00F46278 /* SDAnimatedImageRep.m in Sources */,
 				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
 				AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */,
+				AF0ABF15238FC9CF00F46278 /* UIView+SDAutoLayout.m in Sources */,
 				AF0ABEE2238F9B5A00F46278 /* SDImageCoderHelper.m in Sources */,
 				AF0ABEEE238F9B5A00F46278 /* SDWebImageCompat.m in Sources */,
 				AF0ABEF6238F9B5A00F46278 /* SDWebImageManager.m in Sources */,
@@ -836,6 +891,7 @@
 				AF0ABF00238F9B5A00F46278 /* UIImageView+HighlightedWebCache.m in Sources */,
 				AF0ABED0238F9B5A00F46278 /* NSBezierPath+RoundedCorners.m in Sources */,
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
+				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,
 				AF0ABEFC238F9B5A00F46278 /* UIImage+MemoryCacheCost.m in Sources */,
@@ -1012,6 +1068,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = jcapp/HomePage/PrefixHeader.pch;
 				INFOPLIST_FILE = jcapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1028,6 +1086,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = jcapp/HomePage/PrefixHeader.pch;
 				INFOPLIST_FILE = jcapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

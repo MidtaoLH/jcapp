@@ -11,6 +11,7 @@
 #import "WebViewController.h"
 #import "../MJExtension/MJExtension.h"
 #import "../Model/ScrollView.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 @interface HomePageViewController ()
 {
@@ -21,7 +22,6 @@
 @property (nonatomic, strong) NSTimer *timer;
 - (IBAction)test:(id)sender;
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
-
 
 @end
 
@@ -45,6 +45,8 @@ static NSString *identifier =@"TableViewCell";
     NSLog(@"%@", @"首页是否走到这里");
     
     [super viewDidLoad];
+    self.scrollview.frame=CGRectMake(0, 0, self.view.frame.size.width, 300);
+    self.scrollview.backgroundColor= UIColor.orangeColor;
 }
 
 
@@ -176,11 +178,15 @@ static NSString *identifier =@"TableViewCell";
         CGFloat imageX = i * imageW;
         
         //        设置图片
-        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        //NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        //imageView.image = [UIImage imageNamed:name];
         
-        imageView.image = [UIImage imageNamed:name];
+        ScrollView *m =self.listOfMovies[i];
+        NSLog(@"img%@",m.ScrollImage);
+        [imageView sd_setImageWithURL:[NSURL URLWithString:m.ScrollImage]];
+        
         imageView.userInteractionEnabled = YES;
-        //[imageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)]];
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
         [imageView addGestureRecognizer:tap];
         //        隐藏指示条

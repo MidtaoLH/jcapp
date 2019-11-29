@@ -30,11 +30,8 @@
     [super viewDidLoad];
     count = 1;
     // Do any additional setup after loading the view, typically from a nib.
-    NSArray *provinces=[[NSArray alloc] initWithObjects:@"事假",@"病假",@"年假",@"调休",@"婚假",@"产假",@"陪产假",@"计划生育假", nil];
-    self.data = vatcationArray;
-    
-    tableview.rowHeight = 59;
-    NSLog(@"%@", @"1是否走到这里1");
+    //NSArray *provinces=[[NSArray alloc] initWithObjects:@"事假",@"病假",@"年假",@"调休",@"婚假",@"产假",@"陪产//假",@"计划生育假", nil];
+   
     //行高
     
 }
@@ -54,42 +51,68 @@
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    static NSString *cellId = @"cellid";
+    
+     Vatcation  *m =vatcationArray[indexPath.row];//取出数据元素
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+    }
+    
+     cell.textLabel.text =  [NSString stringWithFormat:@"%@",m.Name];
+    
+    //当上下拉动的时候，因为cell的复用性，我们需要重新判断一下哪一行是打勾的
+    if (_selIndex == indexPath) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+
+    [defaults setObject:cell.textLabel.text forKey:@"vatcationname"];
+
+    [defaults synchronize];//保存到磁盘
+                
+
+    
+    
+    return cell;
+    
+    
+    
+    ////////
     NSLog(@"%@",@"tableView1-begin");
     
-    
+    /*
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     if (cell == nil){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellID"];
     }
 
-
-    Vatcation  *m =vatcationArray[indexPath.row];//取出数据元素
-    
-    
-    
     cell.textLabel.text =  [NSString stringWithFormat:@"%@",m.Name];
     cell.detailTextLabel.text = @"按天请假     >";
     return cell;
-    
-    
-    
-    
-    
-    
+     */
     
 }
 
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //为什么每次点击会增加4次相当于循环四次
-    NSString *str = [@"点击了几次" stringByAppendingString:[NSString stringWithFormat:@"%d",count]];
-    //这里是跳转传数据使用
-    NSLog(@"%@", str);
-    count=count+1;
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    NSLog(@"%@", cell.textLabel.text);
+    //之前选中的，取消选择
+    UITableViewCell *celled = [tableView cellForRowAtIndexPath:_selIndex];
+    
+    celled.accessoryType = UITableViewCellAccessoryNone;
+    //记录当前选中的位置索引
+    _selIndex = indexPath;
+    //当前选择的打勾
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
     
 }
@@ -195,14 +218,32 @@
     NSLog(@"%@", allString);
     // JSON字符串转模型
     //Vatcation *vatcation = [Vatcation mj_objectWithKeyValues:allString];
+    
     vatcationArray = [Vatcation mj_objectArrayWithKeyValuesArray:allString];
     
     for (Vatcation *vatcation in vatcationArray) {
         NSLog(@"name=%@",  vatcation.Name);
     }
-    [tableview reloadData];
+    self.data = vatcationArray;
+    
+    tableview.rowHeight = 59;
+    NSLog(@"%@", @"1是否走到这里1");
+    
+    
+    //[tableview reloadData];
     
 }
+
+-(IBAction)onClickButtonreturn:(id)sender {
+    
+
+     [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+    //[tableview reloadData];
+    
+}
+
+
+
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI

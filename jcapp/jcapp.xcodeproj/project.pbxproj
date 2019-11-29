@@ -19,9 +19,13 @@
 		775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61A2238BBE8D00985FF3 /* NSString+MJExtension.m */; };
 		77A4C0E42387B1D900D9F1B4 /* NoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4C0E22387B1D900D9F1B4 /* NoticeViewController.m */; };
 		77A4C0E52387B1D900D9F1B4 /* NoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77A4C0E32387B1D900D9F1B4 /* NoticeViewController.xib */; };
+		8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8409F5238FA3A300A58623 /* CalendaViewController.m */; };
+		8D8409F8238FA3A300A58623 /* CalendaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8409F6238FA3A300A58623 /* CalendaViewController.xib */; };
 		8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920935238CDC59006E43CC /* VatationPageViewController.m */; };
 		8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920937238CDC59006E43CC /* VatationPageViewController.xib */; };
 		8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D92093C238CEBC8006E43CC /* Vatcation.m */; };
+		8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */; };
+		8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */; };
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
 		AF6BC9E12386AD2000C381EB /* ZDYTTabBarViewController.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */; };
 		AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375223838BBF002AEAFB /* ViewController.xib */; };
@@ -80,11 +84,17 @@
 		77A4C0E12387B1D900D9F1B4 /* NoticeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeViewController.h; sourceTree = "<group>"; };
 		77A4C0E22387B1D900D9F1B4 /* NoticeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeViewController.m; sourceTree = "<group>"; };
 		77A4C0E32387B1D900D9F1B4 /* NoticeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeViewController.xib; sourceTree = "<group>"; };
+		8D8409F4238FA3A300A58623 /* CalendaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendaViewController.h; sourceTree = "<group>"; };
+		8D8409F5238FA3A300A58623 /* CalendaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendaViewController.m; sourceTree = "<group>"; };
+		8D8409F6238FA3A300A58623 /* CalendaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendaViewController.xib; sourceTree = "<group>"; };
 		8D920935238CDC59006E43CC /* VatationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VatationPageViewController.m; sourceTree = "<group>"; };
 		8D920936238CDC59006E43CC /* VatationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VatationPageViewController.h; sourceTree = "<group>"; };
 		8D920937238CDC59006E43CC /* VatationPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VatationPageViewController.xib; sourceTree = "<group>"; };
 		8D92093B238CEBC8006E43CC /* Vatcation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vatcation.h; sourceTree = "<group>"; };
 		8D92093C238CEBC8006E43CC /* Vatcation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vatcation.m; sourceTree = "<group>"; };
+		8DA5572A238E1A3E005C7706 /* VatcationMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VatcationMainViewController.h; sourceTree = "<group>"; };
+		8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VatcationMainViewController.m; sourceTree = "<group>"; };
+		8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VatcationMainViewController.xib; sourceTree = "<group>"; };
 		AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDYTTabBarViewController.m; sourceTree = "<group>"; };
 		AF6BC9DC2386AD2000C381EB /* ZDYTTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDYTTabBarViewController.h; sourceTree = "<group>"; };
 		AF6BC9DD2386AD2000C381EB /* ZDYTTabBarViewController.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZDYTTabBarViewController.plist; sourceTree = "<group>"; };
@@ -181,6 +191,12 @@
 				8D920936238CDC59006E43CC /* VatationPageViewController.h */,
 				8D920935238CDC59006E43CC /* VatationPageViewController.m */,
 				8D920937238CDC59006E43CC /* VatationPageViewController.xib */,
+				8DA5572A238E1A3E005C7706 /* VatcationMainViewController.h */,
+				8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */,
+				8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */,
+				8D8409F4238FA3A300A58623 /* CalendaViewController.h */,
+				8D8409F5238FA3A300A58623 /* CalendaViewController.m */,
+				8D8409F6238FA3A300A58623 /* CalendaViewController.xib */,
 			);
 			path = VatationPage;
 			sourceTree = "<group>";
@@ -380,8 +396,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
 				8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */,
+				8D8409F8238FA3A300A58623 /* CalendaViewController.xib in Resources */,
 				77A4C0E52387B1D900D9F1B4 /* NoticeViewController.xib in Resources */,
 				AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */,
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
@@ -414,6 +432,7 @@
 			files = (
 				775B61AA238BBE8D00985FF3 /* NSObject+MJCoding.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
+				8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */,
 				775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */,
 				775B61A9238BBE8D00985FF3 /* NSObject+MJClass.m in Sources */,
 				775B61A7238BBE8D00985FF3 /* MJPropertyKey.m in Sources */,
@@ -429,6 +448,7 @@
 				EB4315F0237FB414007D1213 /* main.m in Sources */,
 				775B61AB238BBE8D00985FF3 /* NSObject+MJKeyValue.m in Sources */,
 				775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */,
+				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
 				EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */,
 				775B61AC238BBE8D00985FF3 /* NSObject+MJProperty.m in Sources */,
 			);

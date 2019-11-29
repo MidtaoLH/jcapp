@@ -16,6 +16,7 @@ UITableViewDelegate>{
     IBOutlet UITableView *tableview;
     NSArray *data;//数组的每一个元素对应tableView相应的一格
     int *count;
+    NSIndexPath *_selIndex;
     NSString *xmlString;
     NSString *currentTagName;
     NSString *currentValue;
@@ -31,6 +32,8 @@ UITableViewDelegate>{
 @property (copy, nonatomic) NSArray *datas;
 
 -(IBAction)onClickButtontest:(id)sender;
+-(IBAction)onClickButtonreturn:(id)sender;
+
 
 @end
 

@@ -10,6 +10,7 @@
 #import "HomePage/HomePageViewController.h"
 #import "HomePage/ZDYTTabBarViewController.h"
 #import "VatationPage/VatationPageViewController.h"
+#import "VatationPage/VatcationMainViewController.h"
 
 
 @interface ViewController ()
@@ -79,11 +80,19 @@
 
 -(IBAction)onClickButton:(id)sender {
     
+    /*
                  VatationPageViewController * valueView = [[VatationPageViewController alloc] initWithNibName:@"VatationPageViewController"bundle:[NSBundle mainBundle]];
                  //从底部划入
                  [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
                  //跳转
                  [self presentModalViewController:valueView animated:YES];
+    */
+    
+   
+    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+
+
 }
 
 -(IBAction)onClickButtontest:(id)sender {

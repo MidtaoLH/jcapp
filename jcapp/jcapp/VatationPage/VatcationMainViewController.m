@@ -18,25 +18,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    txttime.textAlignment = NSTextAlignmentRight;//
     //初始化一个UIImageView的对象
-    imageview.userInteractionEnabled = YES;//打开用户交互
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choseImage:)];
-    [imageview addGestureRecognizer:tap];
 
-    //这句必须写
-    imageview.layer.masksToBounds = YES;
-    
-    imageview.image = [UIImage imageNamed:@"1"];
-    imageview.backgroundColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-    
-    
+    imageview.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [imageview addGestureRecognizer:singleTap];
+
     
     // Do any additional setup after loading the view from its nib.
 }
 
 
-
+-(IBAction)onClickButtonupload:(id)sender {
+    NSLog(@"%@", @"shangchuan");
+    
+    UIAlertView * Alert=[[UIAlertView alloc]initWithTitle:@"请选择获取方式" message:@""
+                                                 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:
+                         @"打开照相机",@"从手机相册获取", nil];
+    Alert.delegate=self;
+    [Alert show ];
+}
 
 //点击事件
 -(void)choseImage:(UITapGestureRecognizer*)sender{
@@ -50,6 +52,8 @@
     [Alert show ];
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+   
+     NSLog(@"%@", @"选择");
     if (buttonIndex == 1) {
         [self getAvatatFormCamera:self];//调用相机
     }
@@ -152,12 +156,13 @@
 
         cell.textLabel.text =  @"请假类型";
         //当上下拉动的时候，因为cell的复用性，我们需要重新判断一下哪一行是打勾的
-        
+         NSLog(@"%@", @"type赋值");
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *user = [defaults objectForKey:@"vatcationname"];
+         NSLog(@"%@", user);
         if(user.length>0)
         {
-                cell.detailTextLabel.text = [user stringByAppendingString:@"    >"];
+                cell.detailTextLabel.text = user;
         }
         else
         {
@@ -309,7 +314,6 @@
         
         VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
         [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
-        
         
         
     }

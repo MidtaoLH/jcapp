@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VatcationMainViewController : UIViewController<UITableViewDataSource,
-UITableViewDelegate>{
+UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     
     IBOutlet UITableView *tableviewtype;
     IBOutlet UITableView *tableviewstart;
@@ -36,8 +36,9 @@ UITableViewDelegate>{
 
 -(IBAction)textFieldDoneEditing:(id)sender;
 
--(IBAction)backgroundTap:(id)sender;
+-(IBAction)onClickButtonupload:(id)sender;
 
+-(IBAction)backgroundTap:(id)sender;
 
 @end
 

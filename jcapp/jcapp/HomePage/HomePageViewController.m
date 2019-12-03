@@ -11,6 +11,13 @@
 #import "WebViewController.h"
 #import "../MJExtension/MJExtension.h"
 #import "../Model/ScrollView.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
+#import "DXLAutoButtonView.h"
+
+/**屏幕尺寸-宽度*/
+#define kWidth ([UIScreen mainScreen].bounds.size.width)
+/**屏幕尺寸-高度*/
+#define kHeight ([UIScreen mainScreen].bounds.size.height)
 
 @interface HomePageViewController ()
 {
@@ -21,7 +28,7 @@
 @property (nonatomic, strong) NSTimer *timer;
 - (IBAction)test:(id)sender;
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
-
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -42,11 +49,23 @@ static NSString *identifier =@"TableViewCell";
                                    initWithRequest:request
                                    delegate:self];
     
-    NSLog(@"%@", @"首页是否走到这里");
-    
     [super viewDidLoad];
+    CGFloat navigationBarAndStatusBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
+    
+    self.scrollview.frame=CGRectMake(0, navigationBarAndStatusBarHeight, self.view.frame.size.width, 200);
+    self.scrollview.backgroundColor= UIColor.orangeColor;
+    
+    //设置顶部导航栏的显示名称
+    self.navigationItem.title=@"北京中道益通软件技术有限公司";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
+    [self setView1];
+    [self setView2];
+    [self setView3];
 }
-
 
 - (void)nextImage
 {
@@ -132,7 +151,6 @@ static NSString *identifier =@"TableViewCell";
     
 }
 
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"%@",@"connection1-begin");
@@ -176,11 +194,16 @@ static NSString *identifier =@"TableViewCell";
         CGFloat imageX = i * imageW;
         
         //        设置图片
-        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        //NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        //imageView.image = [UIImage imageNamed:name];
         
-        imageView.image = [UIImage imageNamed:name];
+        ScrollView *m =self.listOfMovies[i];
+        //NSLog(@"img%@",m.ScrollImage);
+        //加载网络图片
+        [imageView sd_setImageWithURL:[NSURL URLWithString:m.ScrollImage]];
+        
         imageView.userInteractionEnabled = YES;
-        //[imageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)]];
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
         [imageView addGestureRecognizer:tap];
         //        隐藏指示条
@@ -230,6 +253,7 @@ static NSString *identifier =@"TableViewCell";
             //[web.webview loadRequest:request];
             //[self.webview loadHTMLString:html baseURL:nil];
             [self.navigationController pushViewController:web animated:YES];
+            //self.navigationItem.title=@"返回";
             web.request=request;
             
             //NSLog(@"%@",html);
@@ -325,52 +349,111 @@ static NSString *identifier =@"TableViewCell";
 }
 
 
-//有多少组
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+
+- (void)setView1
 {
-    NSLog(@"%@",@"numberOfSectionsInTableView-begin");
-    // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
-    // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
-    return 3;
+    //上面图片下面文字
+    NSArray *title = @[@"我的申请",@"待我审批",@"待我回览"];
+    NSArray *image = @[@"app01.png",@"app02.png",@"app03.png"];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    [btn setBtnClickBlock:^(NSInteger index) {
+        switch (index) {
+            case 0:
+            {
+                NSLog(@"点击第一个按键");
+            }
+                break;
+            case 1:
+            {
+                NSLog(@"点击第二个按键");
+            }
+                break;
+            case 2:
+            {
+                NSLog(@"点击第三个按键");
+            }
+                break;
+            case 3:
+            {
+                NSLog(@"点击第四个按键");
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }];
+    [self.view addSubview:btn];
+}
+- (void)setView2
+{
+    //上面图片下面文字
+    NSArray *title = @[@"请假",@"出差",@"外出"];
+    NSArray *image = @[@"app05.png",@"app06.png",@"app07.png"];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 410, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    [btn setBtnClickBlock:^(NSInteger index) {
+        switch (index) {
+            case 0:
+            {
+                NSLog(@"点击第一个按键");
+            }
+                break;
+            case 1:
+            {
+                NSLog(@"点击第二个按键");
+            }
+                break;
+            case 2:
+            {
+                NSLog(@"点击第三个按键");
+            }
+                break;
+            case 3:
+            {
+                NSLog(@"点击第四个按键");
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }];
+    [self.view addSubview:btn];
+}
+- (void)setView3
+{
+    //上面图片下面文字
+    NSArray *title = @[@"考勤日历",@"代理人设置",@"公告"];
+    NSArray *image = @[@"app08.png",@"app09.png",@"app10.png"];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 520, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    [btn setBtnClickBlock:^(NSInteger index) {
+        switch (index) {
+            case 0:
+            {
+                NSLog(@"点击第一个按键");
+            }
+                break;
+            case 1:
+            {
+                NSLog(@"点击第二个按键");
+            }
+                break;
+            case 2:
+            {
+                NSLog(@"点击第三个按键");
+            }
+                break;
+            case 3:
+            {
+                NSLog(@"点击第四个按键");
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }];
+    [self.view addSubview:btn];
 }
 
-//如果不设置section 默认就1组
-//每组多少行
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
-    // 这里是返回节点的行数
-    NSLog(@"%@",@"tableView-begin");
-    return self.listOfMovies.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if (cell == nil){
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellID"];
-    }
-    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-    // UITableViewCell *cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    
-    ScrollView *m =self.listOfMovies[indexPath.row];//取出数据元素
-    
-    cell.textLabel.text =  [NSString stringWithFormat:@"图片地址：%@,对应网址：%@",m.ScrollImage,m.ScrollURL];
-    
-    return cell;
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    NSLog(@"%@",@"tableView3-begin");
-    // 返回底部文字
-    return @"";
-}@end
+@end

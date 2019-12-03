@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController{
+@interface ViewController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>{
     //h文件先定义参数
     IBOutlet UITextField    *txtuser;
     IBOutlet UITextField    *txtpassword;

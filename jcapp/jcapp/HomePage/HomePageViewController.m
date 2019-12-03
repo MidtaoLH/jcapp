@@ -13,6 +13,7 @@
 #import "../Model/ScrollView.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "DXLAutoButtonView.h"
+#import "../Leave/LeaveViewController.h"
 
 /**屏幕尺寸-宽度*/
 #define kWidth ([UIScreen mainScreen].bounds.size.width)
@@ -396,7 +397,14 @@ static NSString *identifier =@"TableViewCell";
         switch (index) {
             case 0:
             {
-                NSLog(@"点击第一个按键");
+//                WaitApplyViewController * VCCollect = [[WaitApplyViewController alloc] init];
+//                [self.navigationController pushViewController:VCCollect animated:YES];
+                
+                LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
+                //从底部划入
+                [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+                //跳转
+                [self presentModalViewController:valueView animated:YES];
             }
                 break;
             case 1:

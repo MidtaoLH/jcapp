@@ -7,12 +7,13 @@
 //
 
 #import "HomePageViewController.h"
-#import "../Notice/NoticeViewController.h"
+#import "../Notice/NewViewController.h"
 #import "WebViewController.h"
 #import "../MJExtension/MJExtension.h"
 #import "../Model/ScrollView.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "DXLAutoButtonView.h"
+#import "../Leave/LeaveViewController.h"
 
 /**屏幕尺寸-宽度*/
 #define kWidth ([UIScreen mainScreen].bounds.size.width)
@@ -354,8 +355,9 @@ static NSString *identifier =@"TableViewCell";
 {
     //上面图片下面文字
     NSArray *title = @[@"我的申请",@"待我审批",@"待我回览"];
-    NSArray *image = @[@"app01.png",@"app02.png",@"app03.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    NSArray *image = @[@"1",@"2",@"3"];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:image autolabelItem:title withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    //DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -395,7 +397,14 @@ static NSString *identifier =@"TableViewCell";
         switch (index) {
             case 0:
             {
-                NSLog(@"点击第一个按键");
+//                WaitApplyViewController * VCCollect = [[WaitApplyViewController alloc] init];
+//                [self.navigationController pushViewController:VCCollect animated:YES];
+                
+                LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
+                //从底部划入
+                [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+                //跳转
+                [self presentModalViewController:valueView animated:YES];
             }
                 break;
             case 1:
@@ -440,12 +449,8 @@ static NSString *identifier =@"TableViewCell";
                 break;
             case 2:
             {
-                NSLog(@"点击第三个按键");
-            }
-                break;
-            case 3:
-            {
-                NSLog(@"点击第四个按键");
+                NewViewController * VCCollect = [[NewViewController alloc] init];
+                [self.navigationController pushViewController:VCCollect animated:YES];
             }
                 break;
                 

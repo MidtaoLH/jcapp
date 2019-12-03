@@ -32,6 +32,9 @@
         _titlelb = [UILabel new];
         _titlelb.textColor = kColor_BlackTitle;
         _titlelb.textAlignment = NSTextAlignmentCenter;
+        _titlelb.width=self.size.width/2;
+        _titlelb.height=self.size.height-20;
+        _titlelb.backgroundColor= UIColor.orangeColor;
         _titlelb.font = kFont_Lable_14;
         [self addSubview:_titlelb];
         _countlb = [UILabel new];
@@ -42,7 +45,7 @@
 
         
         _titlelb.sd_layout
-        .widthRatioToView(self, 0.8)
+        .widthRatioToView(self, 0.5)
         .centerXEqualToView(self)
         .topSpaceToView(self, 5)
         .heightRatioToView(self, 0.5);

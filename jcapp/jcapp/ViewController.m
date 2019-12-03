@@ -14,6 +14,7 @@
 #import "MJExtension/MJExtension.h"
 #import "Model/UserLogin.h"
 
+#import "Leave/LeaveViewController.h"
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -94,7 +95,14 @@
     
 
 }
-
+-(IBAction)onClickButtonLeave:(id)sender {
+    LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
+    //从底部划入
+    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    //跳转
+    [self presentModalViewController:valueView animated:YES];
+    
+    }
 
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8

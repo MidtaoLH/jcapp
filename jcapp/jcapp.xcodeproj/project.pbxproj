@@ -25,6 +25,7 @@
 		8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920935238CDC59006E43CC /* VatationPageViewController.m */; };
 		8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920937238CDC59006E43CC /* VatationPageViewController.xib */; };
 		8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D92093C238CEBC8006E43CC /* Vatcation.m */; };
+		8D936BDE2396302A000473ED /* UserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936BDD2396302A000473ED /* UserLogin.m */; };
 		8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */; };
 		8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */; };
 		AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABC40238F5FCE00F46278 /* NoticeNews.m */; };
@@ -164,6 +165,8 @@
 		8D920937238CDC59006E43CC /* VatationPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VatationPageViewController.xib; sourceTree = "<group>"; };
 		8D92093B238CEBC8006E43CC /* Vatcation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vatcation.h; sourceTree = "<group>"; };
 		8D92093C238CEBC8006E43CC /* Vatcation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vatcation.m; sourceTree = "<group>"; };
+		8D936BDC2396302A000473ED /* UserLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserLogin.h; sourceTree = "<group>"; };
+		8D936BDD2396302A000473ED /* UserLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserLogin.m; sourceTree = "<group>"; };
 		8DA5572A238E1A3E005C7706 /* VatcationMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VatcationMainViewController.h; sourceTree = "<group>"; };
 		8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VatcationMainViewController.m; sourceTree = "<group>"; };
 		8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VatcationMainViewController.xib; sourceTree = "<group>"; };
@@ -436,6 +439,8 @@
 				EB4A358F238E35DE006573A9 /* UserInfo.m */,
 				AFFE90B7238E5145009DE419 /* ScrollView.h */,
 				AFFE90B8238E5145009DE419 /* ScrollView.m */,
+				8D936BDC2396302A000473ED /* UserLogin.h */,
+				8D936BDD2396302A000473ED /* UserLogin.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -886,6 +891,7 @@
 				AF0ABEF3238F9B5A00F46278 /* SDWebImageDownloaderRequestModifier.m in Sources */,
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,
 				AF0ABEE4238F9B5A00F46278 /* SDImageFrame.m in Sources */,
+				8D936BDE2396302A000473ED /* UserLogin.m in Sources */,
 				AF0ABEED238F9B5A00F46278 /* SDWebImageCacheSerializer.m in Sources */,
 				AF0ABECD238F9B5A00F46278 /* NSButton+WebCache.m in Sources */,
 				AF0ABED5238F9B5A00F46278 /* SDWeakProxy.m in Sources */,

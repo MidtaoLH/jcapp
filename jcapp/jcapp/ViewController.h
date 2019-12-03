@@ -36,7 +36,7 @@
 -(IBAction)onClickButtontest:(id)sender;
 
 
-
+-(IBAction)onClickButtonLeave:(id)sender;
 
 -(IBAction)textFieldDoneEditing:(id)sender;
 

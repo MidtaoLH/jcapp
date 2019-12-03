@@ -21,6 +21,12 @@
 		775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61B6238BD79B00985FF3 /* NewViewController.m */; };
 		775B61B9238BD79B00985FF3 /* NewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775B61B7238BD79B00985FF3 /* NewViewController.xib */; };
 		775B61BC238C10FB00985FF3 /* WJWebserviceHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */; };
+		77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77AA030C23910D8C00881B0F /* LeaveViewController.m */; };
+		77AA030F23910D8C00881B0F /* LeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77AA030D23910D8C00881B0F /* LeaveViewController.xib */; };
+		77AA03132391159F00881B0F /* WaitApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77AA03112391159F00881B0F /* WaitApplyViewController.m */; };
+		77AA03142391159F00881B0F /* WaitApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77AA03122391159F00881B0F /* WaitApplyViewController.xib */; };
+		77F10CFB2394F9EC005679B0 /* LeaveListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F10CFA2394F9EC005679B0 /* LeaveListModel.m */; };
+		77F10CFE2394FD1A005679B0 /* LeaveListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F10CFD2394FD1A005679B0 /* LeaveListCell.m */; };
 		8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920935238CDC59006E43CC /* VatationPageViewController.m */; };
 		8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920937238CDC59006E43CC /* VatationPageViewController.xib */; };
 		8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D92093C238CEBC8006E43CC /* Vatcation.m */; };
@@ -92,6 +98,16 @@
 		775B61B7238BD79B00985FF3 /* NewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewViewController.xib; sourceTree = "<group>"; };
 		775B61BA238C10FB00985FF3 /* WJWebserviceHttpRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WJWebserviceHttpRequest.h; sourceTree = "<group>"; };
 		775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WJWebserviceHttpRequest.m; sourceTree = "<group>"; };
+		77AA030B23910D8C00881B0F /* LeaveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveViewController.h; sourceTree = "<group>"; };
+		77AA030C23910D8C00881B0F /* LeaveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveViewController.m; sourceTree = "<group>"; };
+		77AA030D23910D8C00881B0F /* LeaveViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveViewController.xib; sourceTree = "<group>"; };
+		77AA03102391159F00881B0F /* WaitApplyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaitApplyViewController.h; sourceTree = "<group>"; };
+		77AA03112391159F00881B0F /* WaitApplyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WaitApplyViewController.m; sourceTree = "<group>"; };
+		77AA03122391159F00881B0F /* WaitApplyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitApplyViewController.xib; sourceTree = "<group>"; };
+		77F10CF92394F9EC005679B0 /* LeaveListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveListModel.h; sourceTree = "<group>"; };
+		77F10CFA2394F9EC005679B0 /* LeaveListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveListModel.m; sourceTree = "<group>"; };
+		77F10CFC2394FD1A005679B0 /* LeaveListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveListCell.h; sourceTree = "<group>"; };
+		77F10CFD2394FD1A005679B0 /* LeaveListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveListCell.m; sourceTree = "<group>"; };
 		8D920935238CDC59006E43CC /* VatationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VatationPageViewController.m; sourceTree = "<group>"; };
 		8D920936238CDC59006E43CC /* VatationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VatationPageViewController.h; sourceTree = "<group>"; };
 		8D920937238CDC59006E43CC /* VatationPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VatationPageViewController.xib; sourceTree = "<group>"; };
@@ -206,6 +222,21 @@
 			path = Notice;
 			sourceTree = "<group>";
 		};
+		77AA030523910CF600881B0F /* Leave */ = {
+			isa = PBXGroup;
+			children = (
+				77AA030B23910D8C00881B0F /* LeaveViewController.h */,
+				77AA030C23910D8C00881B0F /* LeaveViewController.m */,
+				77AA030D23910D8C00881B0F /* LeaveViewController.xib */,
+				77AA03102391159F00881B0F /* WaitApplyViewController.h */,
+				77AA03112391159F00881B0F /* WaitApplyViewController.m */,
+				77AA03122391159F00881B0F /* WaitApplyViewController.xib */,
+				77F10CFC2394FD1A005679B0 /* LeaveListCell.h */,
+				77F10CFD2394FD1A005679B0 /* LeaveListCell.m */,
+			);
+			path = Leave;
+			sourceTree = "<group>";
+		};
 		8D920934238CDB90006E43CC /* VatationPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +258,8 @@
 				EB4A358F238E35DE006573A9 /* UserInfo.m */,
 				AFFE90B7238E5145009DE419 /* ScrollView.h */,
 				AFFE90B8238E5145009DE419 /* ScrollView.m */,
+				77F10CF92394F9EC005679B0 /* LeaveListModel.h */,
+				77F10CFA2394F9EC005679B0 /* LeaveListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -271,6 +304,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				77AA030523910CF600881B0F /* Leave */,
 				8D92093A238CEAFA006E43CC /* Model */,
 				8D920934238CDB90006E43CC /* VatationPage */,
 				775B618C238BBE8D00985FF3 /* MJExtension */,
@@ -428,11 +462,13 @@
 				AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */,
 				8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */,
 				AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */,
+				77AA030F23910D8C00881B0F /* LeaveViewController.xib in Resources */,
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
 				AF6BC9E12386AD2000C381EB /* ZDYTTabBarViewController.plist in Resources */,
 				EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */,
 				AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */,
+				77AA03142391159F00881B0F /* WaitApplyViewController.xib in Resources */,
 				775B61B9238BD79B00985FF3 /* NewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +496,8 @@
 			files = (
 				775B61AA238BBE8D00985FF3 /* NSObject+MJCoding.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
+				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
+				77F10CFB2394F9EC005679B0 /* LeaveListModel.m in Sources */,
 				775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */,
 				775B61A9238BBE8D00985FF3 /* NSObject+MJClass.m in Sources */,
 				775B61A7238BBE8D00985FF3 /* MJPropertyKey.m in Sources */,
@@ -472,6 +510,7 @@
 				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
 				774270EB238E9DDE00EC0C85 /* NoticeNews.m in Sources */,
 				AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */,
+				77AA03132391159F00881B0F /* WaitApplyViewController.m in Sources */,
 				EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,
 				775B61BC238C10FB00985FF3 /* WJWebserviceHttpRequest.m in Sources */,
@@ -480,6 +519,7 @@
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,
 				775B61AB238BBE8D00985FF3 /* NSObject+MJKeyValue.m in Sources */,
+				77F10CFE2394FD1A005679B0 /* LeaveListCell.m in Sources */,
 				775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */,
 				EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */,
 				775B61AC238BBE8D00985FF3 /* NSObject+MJProperty.m in Sources */,

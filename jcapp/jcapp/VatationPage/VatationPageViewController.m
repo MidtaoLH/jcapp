@@ -70,12 +70,7 @@
     }
     
     
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
-
-    [defaults setObject:cell.textLabel.text forKey:@"vatcationname"];
-
-    [defaults synchronize];//保存到磁盘
                 
 
     
@@ -113,6 +108,13 @@
     //当前选择的打勾
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    [defaults setObject:cell.textLabel.text forKey:@"vatcationname"];
+    
+    [defaults synchronize];//保存到磁盘
     
     
 }
@@ -236,8 +238,8 @@
 
 -(IBAction)onClickButtonreturn:(id)sender {
     
-
-     [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+NSLog(@"%@", @"return");
+    [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
     //[tableview reloadData];
     
 }

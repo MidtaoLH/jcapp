@@ -108,6 +108,8 @@
 		AF7EC2F12396147B00257CF1 /* ApprovedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF7EC2EF2396147B00257CF1 /* ApprovedViewController.xib */; };
 		AF7EC2F52396148D00257CF1 /* WaitHandleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7EC2F32396148D00257CF1 /* WaitHandleViewController.m */; };
 		AF7EC2F62396148D00257CF1 /* WaitHandleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF7EC2F42396148D00257CF1 /* WaitHandleViewController.xib */; };
+		AF7EC2FA2396151100257CF1 /* WaitingApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF7EC2F72396151000257CF1 /* WaitingApplyViewController.xib */; };
+		AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7EC2F92396151100257CF1 /* WaitingApplyViewController.m */; };
 		AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375223838BBF002AEAFB /* ViewController.xib */; };
 		AFF2375823838E4C002AEAFB /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF2375623838E4C002AEAFB /* HomePageViewController.m */; };
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
@@ -341,6 +343,9 @@
 		AF7EC2F22396148D00257CF1 /* WaitHandleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WaitHandleViewController.h; sourceTree = "<group>"; };
 		AF7EC2F32396148D00257CF1 /* WaitHandleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WaitHandleViewController.m; sourceTree = "<group>"; };
 		AF7EC2F42396148D00257CF1 /* WaitHandleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitHandleViewController.xib; sourceTree = "<group>"; };
+		AF7EC2F72396151000257CF1 /* WaitingApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingApplyViewController.xib; sourceTree = "<group>"; };
+		AF7EC2F82396151100257CF1 /* WaitingApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingApplyViewController.h; sourceTree = "<group>"; };
+		AF7EC2F92396151100257CF1 /* WaitingApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitingApplyViewController.m; sourceTree = "<group>"; };
 		AFF2375223838BBF002AEAFB /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		AFF2375523838E4C002AEAFB /* HomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		AFF2375623838E4C002AEAFB /* HomePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
@@ -660,6 +665,9 @@
 		AF7EC2CA23960B5000257CF1 /* MyApply */ = {
 			isa = PBXGroup;
 			children = (
+				AF7EC2F82396151100257CF1 /* WaitingApplyViewController.h */,
+				AF7EC2F92396151100257CF1 /* WaitingApplyViewController.m */,
+				AF7EC2F72396151000257CF1 /* WaitingApplyViewController.xib */,
 				AF7EC2D723960EDF00257CF1 /* ApplyListCell.h */,
 				AF7EC2D623960EDF00257CF1 /* ApplyListCell.m */,
 				AF7EC2CB23960BC900257CF1 /* MyApplyTabBarViewController.h */,
@@ -878,6 +886,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF7EC2FA2396151100257CF1 /* WaitingApplyViewController.xib in Resources */,
 				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
 				AF7EC2EC2396140B00257CF1 /* ApprovingViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
@@ -1010,6 +1019,7 @@
 				AF0ABEE5238F9B5A00F46278 /* SDImageGIFCoder.m in Sources */,
 				AF0ABED4238F9B5A00F46278 /* SDInternalMacros.m in Sources */,
 				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
+				AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */,
 				EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */,
 				AF0ABEF2238F9B5A00F46278 /* SDWebImageDownloaderOperation.m in Sources */,
 				AF0ABEDB238F9B5A00F46278 /* SDDiskCache.m in Sources */,

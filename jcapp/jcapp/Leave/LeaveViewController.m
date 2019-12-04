@@ -25,7 +25,12 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     
-    self.title = @"请假一览";
+    //设置顶部导航栏的显示名称
+    self.navigationItem.title=@"请假一览";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
     //设置需要访问的ws和传入参数
     

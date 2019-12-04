@@ -7,8 +7,10 @@
 //
 
 #import "MyApplyTabBarViewController.h"
-#import "HomePageViewController.h"
-#import "UsersViewController.h"
+#import "WaitHandleViewController.h"
+#import "ApprovedViewController.h"
+#import "ApprovingViewController.h"
+#import "WaitingApplyViewController.h"
 
 @interface MyApplyTabBarViewController ()
 
@@ -24,20 +26,35 @@
     
     [self dismissViewControllerAnimated:NO completion: nil];
     UINavigationController *nav;
-    UIViewController *mainVC = [[HomePageViewController alloc]init];
+    UIViewController *mainVC = [[WaitingApplyViewController alloc]init];
     nav = [[UINavigationController alloc] initWithRootViewController: mainVC];
     nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_essence_icon.png"];
     nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_essence_icon.png"];
-    nav.tabBarItem.title = @"首页";
+    nav.tabBarItem.title = @"待申请";
 
     [self addChildViewController: nav];
 
-    UIViewController* mineVC = [[UsersViewController alloc] init];
+    UIViewController* mineVC = [[ApprovingViewController alloc] init];
     nav = [[UINavigationController alloc] initWithRootViewController: mineVC];
     nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_friendTrends_icon.png"];
     nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_friendTrends_icon.png"];
-    nav.tabBarItem.title = @"我的";
+    nav.tabBarItem.title = @"审批中";
 
+    [self addChildViewController: nav];
+    UIViewController *yjcVC = [[ApprovedViewController alloc]init];
+    nav = [[UINavigationController alloc] initWithRootViewController: yjcVC];
+    nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_essence_icon.png"];
+    nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_essence_icon.png"];
+    nav.tabBarItem.title = @"已决裁";
+    
+    [self addChildViewController: nav];
+    
+    UIViewController* dclVC = [[WaitHandleViewController alloc] init];
+    nav = [[UINavigationController alloc] initWithRootViewController: dclVC];
+    nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_friendTrends_icon.png"];
+    nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_friendTrends_icon.png"];
+    nav.tabBarItem.title = @"待处理";
+    
     [self addChildViewController: nav];
     //设置字体
 //    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:25], NSFontAttributeName, nil] forState:UIControlStateNormal];

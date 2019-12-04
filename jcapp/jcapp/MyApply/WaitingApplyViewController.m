@@ -8,9 +8,8 @@
 
 #import "WaitingApplyViewController.h"
 #import "MJExtension.h"
-#import "../Model/LeaveListModel.h"
+#import "../Model/Pending.h"
 #import "ApplyListCell.h"
-
 
 
 static NSString * identifier = @"LeaveListCell";
@@ -25,11 +24,20 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     
-    self.title = @"请假一览";
+    //设置顶部导航栏的显示名称
+    self.navigationItem.title=@"待申请记录";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
     
     //设置需要访问的ws和传入参数
-    
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveList"];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
+
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?code=%@&userID=%@&menuID=%@", userid,empid,@"2"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -46,7 +54,7 @@ static NSString * identifier = @"LeaveListCell";
     
 
     
-    NSLog(@"%@",@"viewDidLoad-end");
+    //NSLog(@"%@",@"viewDidLoad-end");
 }
 
 
@@ -79,7 +87,7 @@ static NSString * identifier = @"LeaveListCell";
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -221,9 +229,9 @@ static NSString * identifier = @"LeaveListCell";
 
 -(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    NSLog(@"%@",@"tableView3-begin");
-    // 返回底部文字
-    return @"中道益通";
+//    NSLog(@"%@",@"tableView3-begin");
+//    // 返回底部文字
+    return @"";
 }
 
 @end

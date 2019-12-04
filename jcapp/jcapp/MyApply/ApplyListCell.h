@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "../Model/LeaveListModel.h"
+#import "../Model/Pending.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ApplyListCell : UITableViewCell
 
-@property (nonatomic,strong) LeaveListModel * leavelistitem;
+@property (nonatomic,strong) Pending * leavelistitem;
 
 
 

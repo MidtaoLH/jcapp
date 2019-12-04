@@ -7,6 +7,8 @@
 //
 
 #import "ApplyListCell.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
+#import "../CommonConst.h"
 
 #define kMargin 10
 
@@ -89,23 +91,30 @@
     return self;
 }
 
--(void)setLeavelistitem:(LeaveListModel *)leavelistitem
+-(void)setLeavelistitem:(Pending *)leavelistitem
 {
     _leavelistitem =leavelistitem;
     
-    self.textLabel.text = @"李四提交的请假";
+    self.textLabel.text = [NSString stringWithFormat:@"%@提交的%@", _leavelistitem.CaseApplyMan,_leavelistitem.CaseTypeTxt];
     
-    self.leaveStatusLable.text = @"承认中";
+    self.leaveStatusLable.text = _leavelistitem.CaseStatusTxt;
     
-    self.leaveDateLable.text = @"2019.12.12";
+    self.leaveDateLable.text = _leavelistitem.CaseDate;
     
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
+    //加载网络图片
+    NSUserDefaults * userdefaults = [NSUserDefaults standardUserDefaults];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,[userdefaults objectForKey:@"username"]];
+    NSLog(@"userurlString:%@", userurlString);
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    //NSLog(@"imageView:%@", imageView);
+    self.imageView.image=imageView.image;
     
-    self.beignDateLable.text = @"开始时间:2019.12.12";
+    self.beignDateLable.text = _leavelistitem.BeignDate;
     
-    self.endDateLable.text = @"结束时间:2019.12.12";
+    self.endDateLable.text = _leavelistitem.EndDate;
     
-    self.leaveTypeLable.text = @"请假类型:事假";
+    self.leaveTypeLable.text = _leavelistitem.CaseStatusTxt;
     
 }
 

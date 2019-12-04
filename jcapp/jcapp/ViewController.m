@@ -163,6 +163,7 @@
     ipParser.delegate = self;
     [ipParser parse];
     NSString *message = @"";
+    
     if(listOfUser.count > 0)
     {
         
@@ -197,6 +198,8 @@
                             }
             
              [defaults setObject:m.id forKey:@"userid"];
+             [defaults setObject:m.EmpID forKey:@"EmpID"];
+            
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页

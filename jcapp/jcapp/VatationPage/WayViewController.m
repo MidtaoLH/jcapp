@@ -7,44 +7,78 @@
 //
 
 #import "WayViewController.h"
+#import "../Model/Way.h"
+#import "../MJExtension/MJExtension.h"
+#import "TableCell.h"
+
+
+static NSString * identifier = @"TableCell";
+
+
+
 
 @interface WayViewController ()
 
 @end
 
 @implementation WayViewController
+@synthesize listOfWay;
+
+
+
+
 
 - (void)viewDidLoad {
+    
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *id = [defaults objectForKey:@"userid"];
+    //设置需要访问的ws和传入参数
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@", id];
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
+    [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 150;
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%@", @"2是否走到这里1");
+    NSLog(@"%@", @"way2是否走到这里1");
     
     return 1;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%@", @"3是否走到这里1");
-    return 1;
+    NSLog(@"%@", @"way3是否走到这里1");
+    return self.listOfWay.count;
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//shezhi
-    static NSString *cellId = @"cellid";
+
+    TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
+
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
+
     
 }
 
@@ -69,7 +103,7 @@
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    //listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
     
 }
 
@@ -91,7 +125,18 @@
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
+    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+    ipParser.delegate = self;
+    [ipParser parse];
+    NSString *message = @"";
     
+    if(listOfWay.count > 0)
+    {
+        
+        Way *m =self.listOfWay[0];//取出数据元素
+         NSLog(@"%@", m.levelname);
+        NSLog(@"%@", m.name);
+    }
 }
 
 //解析xml回调方法
@@ -124,8 +169,7 @@
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
 
-    
-    
+ 
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
@@ -168,5 +212,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 @end

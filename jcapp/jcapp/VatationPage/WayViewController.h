@@ -10,8 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WayViewController : UIViewController<UITableViewDataSource,
-UITableViewDelegate>{
+@interface WayViewController : UIViewController{
     
      IBOutlet UITableView *tableview;
      NSMutableArray *wayArray;
@@ -19,6 +18,12 @@ UITableViewDelegate>{
      NSString *xmlString;
     
 }
+@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
+
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfWay;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

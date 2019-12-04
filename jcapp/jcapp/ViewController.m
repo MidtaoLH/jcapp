@@ -155,7 +155,8 @@
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
-    NSLog(@"%@", listOfUser.count);
+    //NSLog(@"%@", listOfUser.count);
+    
        //开始解析XML
     
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
@@ -199,8 +200,9 @@
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页
-            VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
-            [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
+            
+            [self presentViewController:tabBarCtrl animated:NO completion:nil];
             
         }
         

@@ -15,7 +15,7 @@
 #import "Model/UserLogin.h"
 
 #import "Leave/LeaveViewController.h"
-
+#import "PendingPage/PendingViewController.h"
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
@@ -104,7 +104,14 @@
     
     }
 
-
+-(IBAction)onClickButtonLeaveP:(id)sender {
+    PendingViewController * valueView = [[PendingViewController alloc] initWithNibName:@"PendingViewController"bundle:[NSBundle mainBundle]];
+    //从底部划入
+    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    //跳转
+    [self presentModalViewController:valueView animated:YES];
+    
+}
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
@@ -149,6 +156,7 @@
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
     //NSLog(@"%@", listOfUser.count);
+    
        //开始解析XML
     
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];

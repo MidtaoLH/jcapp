@@ -94,6 +94,14 @@
                         <action selector="onClickButtonLeave:" destination="-1" eventType="touchUpInside" id="1Nd-Mb-b4K"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0u-GG-5AO">
+                    <rect key="frame" x="130" y="604" width="46" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="待审批"/>
+                    <connections>
+                        <action selector="onClickButtonLeaveP:" destination="-1" eventType="touchUpInside" id="9cf-hl-gmh"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

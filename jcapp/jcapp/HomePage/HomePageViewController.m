@@ -14,6 +14,7 @@
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "DXLAutoButtonView.h"
 #import "../Leave/LeaveViewController.h"
+#import "../Leave/LeaveTabBarViewController.h"
 #import "../PendingPage/PendingViewController.h"
 #import "../MyApply/MyApplyTabBarViewController.h"
 
@@ -407,14 +408,16 @@ static NSString *identifier =@"TableViewCell";
         switch (index) {
             case 0:
             {
-//                WaitApplyViewController * VCCollect = [[WaitApplyViewController alloc] init];
-//                [self.navigationController pushViewController:VCCollect animated:YES];
+                NSLog(@"点击第1个按键");
+                UITabBarController *tabBarCtrl = [[LeaveTabBarViewController alloc]init];
                 
-                LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
-                //从底部划入
-                [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-                //跳转
-                [self presentModalViewController:valueView animated:YES];
+                [self presentViewController:tabBarCtrl animated:NO completion:nil];
+                
+//                LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
+//                //从底部划入
+//                [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+//                //跳转
+//                [self presentModalViewController:valueView animated:YES];
             }
                 break;
             case 1:

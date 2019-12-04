@@ -365,6 +365,7 @@
 		AFF2375723838E4C002AEAFB /* HomePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageViewController.xib; sourceTree = "<group>"; };
 		AFFE34D523975D7800B03076 /* LeaveTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveTabBarViewController.h; sourceTree = "<group>"; };
 		AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTabBarViewController.m; sourceTree = "<group>"; };
+		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
@@ -721,7 +722,6 @@
 			children = (
 				AF0ABF17238FCD3200F46278 /* UIColor+Hex.h */,
 				AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */,
-				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				AF0ABF0E238FC9CF00F46278 /* SDAutoLayout */,
 				AF0ABF04238FC9AF00F46278 /* DXLAutoCountButtonView */,
 				AF269C44238D5F000058F3E0 /* WebViewController.h */,
@@ -778,8 +778,10 @@
 				AFF2375223838BBF002AEAFB /* ViewController.xib */,
 				EB4315E9237FB414007D1213 /* Assets.xcassets */,
 				EB4315EB237FB414007D1213 /* LaunchScreen.storyboard */,
+				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				EB4315EE237FB414007D1213 /* Info.plist */,
 				EB4315EF237FB414007D1213 /* main.m */,
+				AFFE34D92397A4A700B03076 /* CommonConst.h */,
 			);
 			path = jcapp;
 			sourceTree = "<group>";
@@ -1241,7 +1243,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = jcapp/HomePage/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = jcapp/PrefixHeader.pch;
 				INFOPLIST_FILE = jcapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1259,7 +1261,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = jcapp/HomePage/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = jcapp/PrefixHeader.pch;
 				INFOPLIST_FILE = jcapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

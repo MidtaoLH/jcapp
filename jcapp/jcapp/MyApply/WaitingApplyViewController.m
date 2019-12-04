@@ -8,9 +8,9 @@
 
 #import "WaitingApplyViewController.h"
 #import "MJExtension.h"
-#import "../Model/LeaveListModel.h"
+#import "../Model/Pending.h"
 #import "ApplyListCell.h"
-
+#import "../CommonConst.h"
 
 
 static NSString * identifier = @"LeaveListCell";
@@ -25,11 +25,23 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     
-    self.title = @"请假一览";
+    //设置顶部导航栏的显示名称
+    self.navigationItem.title=@"待申请记录";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
     
     //设置需要访问的ws和传入参数
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
+    NSString *urlString =[NSString stringWithFormat:Common_UserPhotoUrl,[defaults objectForKey:@"username"]];
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveList"];
+    NSLog(@"urlString:%@", urlString);
+    
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?code=%@&userID=%@&menuID=%@", userid,empid,@"2"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -63,8 +75,8 @@ static NSString * identifier = @"LeaveListCell";
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
+    //NSLog(@"%@", @"kaishidayin");
+    //NSLog(@"%@", xmlString);
     
     // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];

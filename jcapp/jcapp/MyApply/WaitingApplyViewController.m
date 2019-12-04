@@ -10,7 +10,6 @@
 #import "MJExtension.h"
 #import "../Model/Pending.h"
 #import "ApplyListCell.h"
-#import "../CommonConst.h"
 
 
 static NSString * identifier = @"LeaveListCell";
@@ -37,10 +36,7 @@ static NSString * identifier = @"LeaveListCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
-    NSString *urlString =[NSString stringWithFormat:Common_UserPhotoUrl,[defaults objectForKey:@"username"]];
-    
-    NSLog(@"urlString:%@", urlString);
-    
+
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?code=%@&userID=%@&menuID=%@", userid,empid,@"2"];
     
     NSURL *url = [NSURL URLWithString:strURL];
@@ -58,7 +54,7 @@ static NSString * identifier = @"LeaveListCell";
     
 
     
-    NSLog(@"%@",@"viewDidLoad-end");
+    //NSLog(@"%@",@"viewDidLoad-end");
 }
 
 
@@ -75,8 +71,8 @@ static NSString * identifier = @"LeaveListCell";
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    //NSLog(@"%@", @"kaishidayin");
-    //NSLog(@"%@", xmlString);
+    NSLog(@"%@", @"kaishidayin");
+    NSLog(@"%@", xmlString);
     
     // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
@@ -91,7 +87,7 @@ static NSString * identifier = @"LeaveListCell";
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -233,9 +229,9 @@ static NSString * identifier = @"LeaveListCell";
 
 -(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    NSLog(@"%@",@"tableView3-begin");
-    // 返回底部文字
-    return @"中道益通";
+//    NSLog(@"%@",@"tableView3-begin");
+//    // 返回底部文字
+    return @"";
 }
 
 @end

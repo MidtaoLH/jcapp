@@ -13,6 +13,8 @@
 #import "VatationPage/VatcationMainViewController.h"
 
 #import "Leave/LeaveViewController.h"
+#import "Leave/LeaveTabBar.h"
+#import "Leave/LeaveDetailController.h"
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -102,12 +104,15 @@
 
 }
 -(IBAction)onClickButtonLeave:(id)sender {
-    LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
+   LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
     //从底部划入
-    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转
     [self presentModalViewController:valueView animated:YES];
     
+ //   UITabBarController *tabBarCtrl = [[LeaveTabBar alloc]init];
+    
+ //   [self presentViewController:tabBarCtrl animated:NO completion:nil];
     }
 
 

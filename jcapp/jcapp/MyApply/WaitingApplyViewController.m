@@ -6,36 +6,38 @@
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "LeaveViewController.h"
+#import "WaitingApplyViewController.h"
 #import "MJExtension.h"
-#import "../Model/LeaveListModel.h"
-#import "LeaveListCell.h"
-
+#import "../Model/Pending.h"
+#import "ApplyListCell.h"
 
 
 static NSString * identifier = @"LeaveListCell";
 
-@interface LeaveViewController ()
+@interface WaitingApplyViewController ()
 
 @end
 
-@implementation LeaveViewController
+@implementation WaitingApplyViewController
 
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
     
-    self.title = @"请假记录";
     //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"请假一览";
+    self.navigationItem.title=@"待申请记录";
     //设置子视图的f导航栏的返回按钮
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
-    //设置需要访问的ws和传入参数
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveList"];
+    //设置需要访问的ws和传入参数
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
+
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?code=%@&userID=%@&menuID=%@", userid,empid,@"2"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -45,12 +47,14 @@ static NSString * identifier = @"LeaveListCell";
                                    initWithRequest:request
                                    delegate:self];
     //e注册自定义 cell
-    [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[ApplyListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
- 
+    
     [super viewDidLoad];
- 
-    NSLog(@"%@",@"viewDidLoad-end");
+    
+
+    
+    //NSLog(@"%@",@"viewDidLoad-end");
 }
 
 
@@ -83,7 +87,7 @@ static NSString * identifier = @"LeaveListCell";
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -199,7 +203,7 @@ static NSString * identifier = @"LeaveListCell";
   //      cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
   //  }
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-     LeaveListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+     ApplyListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
     
@@ -210,9 +214,24 @@ static NSString * identifier = @"LeaveListCell";
  //  cell.textLabel.text = m.LeaveVersion;
     
   //  cell.detailTextLabel.text = m.LeaveApplyCode;
+    
+  
  
     return cell;
 }
 
- 
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    // 返回顶部标题
+    NSLog(@"%@",@"tableView2-begin");
+    return @"请假记录";
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+//    NSLog(@"%@",@"tableView3-begin");
+//    // 返回底部文字
+    return @"";
+}
+
 @end

@@ -11,17 +11,21 @@
 #import "HomePage/ZDYTTabBarViewController.h"
 #import "VatationPage/VatationPageViewController.h"
 #import "VatationPage/VatcationMainViewController.h"
+#import "MJExtension/MJExtension.h"
+#import "Model/UserLogin.h"
 
 #import "Leave/LeaveViewController.h"
 #import "Leave/LeaveTabBar.h"
 #import "Leave/LeaveDetailController.h"
 
+#import "PendingPage/PendingViewController.h"
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
 @end
 
 @implementation ViewController
+@synthesize listOfUser;
 
 //设置控件属性设置完才可以进行赋值等操作
 @synthesize txtuser;
@@ -69,15 +73,6 @@
         
     }
     
-   
-    //
-    //下边为手动释放内存需要进行设置MRC 和 ARC
-    //[connection release];
-    //[request release];
-    
-    
-    //返回
-    ////[self dismissModalViewControllerAnimated:YES];        }
 
 }
 
@@ -115,25 +110,37 @@
  //   [self presentViewController:tabBarCtrl animated:NO completion:nil];
     }
 
-
+-(IBAction)onClickButtonLeaveP:(id)sender {
+    PendingViewController * valueView = [[PendingViewController alloc] initWithNibName:@"PendingViewController"bundle:[NSBundle mainBundle]];
+    //从底部划入
+    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    //跳转
+    [self presentModalViewController:valueView animated:YES];
+    
+}
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    NSLog(@"%@", @"test");
-    NSLog(@"%@", gbkNSString);
     
-    //如果是非UTF－8  NSXMLParser会报错。
-    xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-                                                                                        withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    NSLog(@"%@",@"connection1-begin");
+
     
-    NSLog(@"%@", xmlString);
-    //NSLog(@"%@", utf8NSString);
-    //下边为手动释放内存需要进行设置MRC 和 ARC
-    //[gbkNSString release];
+    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    NSString *resultString = [xmlString substringWithRange:reusltRagne];
+    
+    NSLog(@"%@", resultString);
+    
+    NSString *requestTmp = [NSString stringWithString:resultString];
+    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+    
+
+    
+    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
     
 }
 
@@ -154,12 +161,74 @@
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
-    NSLog(@"%@", xmlString);
-    NSLog(@"%@", @"kaishijiex");    //开始解析XML
+    //NSLog(@"%@", listOfUser.count);
+    
+       //开始解析XML
     
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
+    NSString *message = @"";
+    
+    if(listOfUser.count > 0)
+    {
+        
+        UserLogin *m =self.listOfUser[0];//取出数据元素
+        
+        if (![ m.flag isEqualToString:@"1"]) {
+            //返回不为1显示登陆失败
+            message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"登录结果"
+                                  message: message
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }else
+        {
+            //返回1为1显示登陆成功
+            message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
+            
+            //保存用户名密码
+            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+            
+                        if (![txtuser.text isEqualToString:[defaults objectForKey:@"username"]]||![txtpassword.text isEqualToString:[defaults objectForKey:@"password"]] ) {
+                
+                                [defaults setObject:txtuser.text forKey:@"username"];
+                
+                                [defaults setObject:txtpassword.text forKey:@"password"];
+                
+                               
+                            }
+            
+             [defaults setObject:m.id forKey:@"userid"];
+             [defaults setObject:m.EmpID forKey:@"EmpID"];
+            
+            //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
+            [defaults synchronize];//保存到磁盘
+            //跳转到首页
+            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
+            
+            [self presentViewController:tabBarCtrl animated:NO completion:nil];
+            
+        }
+        
+    }
+    else
+    {
+        NSLog(@"%@", @"123");
+        //返回不为1显示登陆失败
+        message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"登录结果"
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];    }
     
 }
 
@@ -185,65 +254,16 @@
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    NSLog(@"value: %@\n", elementName);
-    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
+
     currentTagName = elementName;
 }
 
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    NSLog(@"value: %@\n", string);
-    //NSLog(@"value: %@\n", @"jiedian2");
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSString *message =@"";
-    if ([currentTagName isEqualToString:@"string"]) {
-        if (![string isEqualToString:@"1"]) {
-            //返回不为1显示登陆失败
-            message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"登录结果"
-                                  message: message
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-        }else
-        {
-            //返回1为1显示登陆成功
-            message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
-            
-            //保存用户名密码
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            
-                        if (![txtuser.text isEqualToString:[defaults objectForKey:@"username"]]||![txtpassword.text isEqualToString:[defaults objectForKey:@"password"]] ) {
-                
-                                [defaults setObject:txtuser.text forKey:@"username"];
-                
-                                [defaults setObject:txtpassword.text forKey:@"password"];
-                
-                                [defaults synchronize];//保存到磁盘
-                            }
-
-    
-            
-//             HomePageViewController * valueView = [[HomePageViewController alloc] initWithNibName:@"HomePageViewController"bundle:[NSBundle mainBundle]];
-//             //从底部划入
-//             [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-//             //跳转
-//             [self presentModalViewController:valueView animated:YES];
-            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
-            
-            [self presentViewController:tabBarCtrl animated:NO completion:nil];
-            
-        }
-        UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
-        
-        [self presentViewController:tabBarCtrl animated:NO completion:nil];
-    //[alert release];
+   
     
     }
-}
+
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI

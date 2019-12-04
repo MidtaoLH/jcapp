@@ -30,6 +30,10 @@
 
 @property (nonatomic, retain)IBOutlet UITextField *txttest;
 
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfUser;
+
+
 //先在h文件写入相应方法
 -(IBAction)onClickButton:(id)sender;
 

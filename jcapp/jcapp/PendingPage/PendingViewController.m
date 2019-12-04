@@ -1,37 +1,29 @@
 //
-//  LeaveViewController.m
+//  LeavePendingViewController.m
 //  jcapp
 //
-//  Created by zclmac on 2019/11/29.
+//  Created by lh on 2019/12/2.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "LeaveViewController.h"
+#import "PendingViewController.h"
 #import "MJExtension.h"
-#import "../Model/LeaveListModel.h"
-#import "LeaveListCell.h"
+#import "../Model/Pending.h"
+#import "PendingListCell.h"
 
+static NSString * identifier = @"PendingListCell";
 
-
-static NSString * identifier = @"LeaveListCell";
-
-@interface LeaveViewController ()
+@interface PendingViewController ()
 
 @end
 
-@implementation LeaveViewController
+@implementation PendingViewController
 
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
     
-    self.title = @"请假记录";
-    //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"请假一览";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    self.title = @"待审批记录";
     
     //设置需要访问的ws和传入参数
     
@@ -45,11 +37,13 @@ static NSString * identifier = @"LeaveListCell";
                                    initWithRequest:request
                                    delegate:self];
     //e注册自定义 cell
-    [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
- 
+    
     [super viewDidLoad];
- 
+    
+    
+    
     NSLog(@"%@",@"viewDidLoad-end");
 }
 
@@ -83,7 +77,7 @@ static NSString * identifier = @"LeaveListCell";
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -194,25 +188,40 @@ static NSString * identifier = @"LeaveListCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-  //  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-  //  if (cell == nil){
-  //      cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
-  //  }
+    //  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    //  if (cell == nil){
+    //      cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
+    //  }
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-     LeaveListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
-   // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
+    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
     
-    cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
+    cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
     
- //  LeaveListModel *m =self.listOfMovies[indexPath.row];//取出数据元素
+    //  LeaveListModel *m =self.listOfMovies[indexPath.row];//取出数据元素
     
- //  cell.textLabel.text = m.LeaveVersion;
+    //  cell.textLabel.text = m.LeaveVersion;
     
-  //  cell.detailTextLabel.text = m.LeaveApplyCode;
- 
+    //  cell.detailTextLabel.text = m.LeaveApplyCode;
+    
+    
+    
     return cell;
 }
 
- 
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    // 返回顶部标题
+    NSLog(@"%@",@"tableView2-begin");
+    return @"请假记录";
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    NSLog(@"%@",@"tableView3-begin");
+    // 返回底部文字
+    return @"中道益通";
+}
+
 @end

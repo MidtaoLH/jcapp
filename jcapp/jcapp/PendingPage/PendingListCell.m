@@ -101,17 +101,20 @@
     [super layoutSubviews];
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    CGFloat imageWH= height - 2*kMargin;
+    CGFloat imageWH= height*0.75 - 2*kMargin;
     CGFloat leaveDateWidth = 80;
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    self.imageView.frame = CGRectMake(kMargin,height*0.2, imageWH, imageWH);
     self.pendingDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     self.pendingTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.pendingStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH, txtH);
+    
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

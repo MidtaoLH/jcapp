@@ -8,7 +8,8 @@
 
 #import "WaitApplyViewController.h"
 #import "MJExtension.h"
-#import "../Model/NoticeNews.h"
+#import "../Model/LeaveListModel.h"
+#import "LeaveWaitCell.h"
 
 @interface WaitApplyViewController ()
 
@@ -16,17 +17,17 @@
 
 @implementation WaitApplyViewController
 
-static NSString *identifier =@"TableViewCell";
+static NSString *identifier =@"LeaveWaitCell";
 
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
     
-    NSLog(@"%@",@"viewDidLoad-bgn");
+     self.title = @"待申请请假";
     
     //设置需要访问的ws和传入参数
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetNoticeNews"];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveList"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -35,6 +36,10 @@ static NSString *identifier =@"TableViewCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+    
+    //e注册自定义 cell
+    [_NewTableView registerClass:[LeaveWaitCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 150;
     
     [super viewDidLoad];
     NSLog(@"%@",@"viewDidLoad-end");
@@ -70,7 +75,7 @@ static NSString *identifier =@"TableViewCell";
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [NoticeNews mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -181,35 +186,15 @@ qualifiedName:(NSString *)qName {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if (cell == nil){
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
-    }
-    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-    // UITableViewCell *cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    LeaveWaitCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
-    NoticeNews *m =self.listOfMovies[indexPath.row];//取出数据元素
+    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
     
-    cell.textLabel.text = m.NewsTheme;
-    
-    cell.detailTextLabel.text = m.NewsContent;
+    cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
     
     return cell;
 }
-
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"待申请一览";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    NSLog(@"%@",@"tableView3-begin");
-    // 返回底部文字
-    return @"中道益通";
-}
+ 
 
 @end
 

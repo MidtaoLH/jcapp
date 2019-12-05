@@ -8,6 +8,7 @@
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
+
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 //#import "CommonConst.h"
@@ -15,6 +16,16 @@
 #import "UIColor+Hex.h"
 
 /**十六进制色值*/
+#define Common_WSUrl @"http://47.94.85.101:8095/%@"
+/*头像存储路径*/
+#define Common_UserPhotoUrl @"http://47.94.85.101:8095/APP/Image/%@.png"
+/*列表申请状态的e颜色*/
+#define Color_ProcessStutasColor  [UIColor colorWithRed:0/255.0 green:204/255.0 blue:204/255.0 alpha:1]
+/*列表默认加载行数*/
+#define Common_PageSize @"5"
+/*列表下拉叠加行数*/
+#define Common_PageSizeAdd @"10"
+
 #define hexColor(hex) [UIColor colorWithHex:hex]
 #define kColor_Gray   [UIColor grayColor]
 #define kColor_Black  [UIColor blackColor]

@@ -29,7 +29,7 @@
  if (!_leaveStatusLable) {
  _leaveStatusLable = [[UILabel alloc] init];
  _leaveStatusLable.font = [UIFont systemFontOfSize:15];
- _leaveStatusLable.textColor = [UIColor grayColor];
+ _leaveStatusLable.textColor = [UIColor greenColor];
  }
  return _leaveStatusLable;
  }
@@ -93,19 +93,29 @@
 {
     _leavelistitem =leavelistitem;
     
-    self.textLabel.text = @"李四提交的请假";
+    self.textLabel.text = _leavelistitem.CaseName;
     
-    self.leaveStatusLable.text = @"承认中";
+    self.leaveStatusLable.text = _leavelistitem.LeaveStatusTxt;
+    if([_leavelistitem.LeaveStatusTxt  isEqualToString:  @"已驳回"])
+    {
+        _leaveStatusLable.textColor = [UIColor redColor];
+    }
     
-    self.leaveDateLable.text = @"2019.12.12";
+    self.leaveDateLable.text = _leavelistitem.LeaveDate;
     
     self.imageView.image =[UIImage imageNamed:@"01.jpg"];
     
-    self.beignDateLable.text = @"开始时间:2019.12.12";
+    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_leavelistitem.BeignDate];
+ 
+    self.beignDateLable.text = strbegindate;
     
-    self.endDateLable.text = @"结束时间:2019.12.12";
+    NSString * strendate =[[NSString alloc]initWithFormat:@"%@%@",@"结束时间：",_leavelistitem.EndDate];
     
-    self.leaveTypeLable.text = @"请假类型:事假";
+    self.endDateLable.text = strendate;
+    
+     NSString * strLeaveTypeTxt =[[NSString alloc]initWithFormat:@"%@%@",@"请假类型：",_leavelistitem.LeaveTypeTxt];
+    
+    self.leaveTypeLable.text = strLeaveTypeTxt;
     
 }
 

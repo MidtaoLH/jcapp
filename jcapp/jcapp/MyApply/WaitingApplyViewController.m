@@ -9,6 +9,7 @@
 #import "WaitingApplyViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
+//#import "../PendingPage/PendingListCell.h"
 #import "ApplyListCell.h"
 
 
@@ -24,21 +25,14 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     
-    //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"待申请记录";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
     
     //设置需要访问的ws和传入参数
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
 
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?code=%@&userID=%@&menuID=%@", userid,empid,@"2"];
-    
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@", @"1",Common_PageSize,userid,empid,@"2"];
+    //NSLog(@"strURL:%@",strURL);
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -46,11 +40,18 @@ static NSString * identifier = @"LeaveListCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+    
+    [super viewDidLoad];
+    
+    //设置顶部导航栏的显示名称
+    self.navigationItem.title=@"待申请记录";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     //e注册自定义 cell
     [_NewTableView registerClass:[ApplyListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
-    
-    [super viewDidLoad];
     
 
     
@@ -207,7 +208,7 @@ static NSString * identifier = @"LeaveListCell";
     
    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
     
-    cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
+    cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
     
  //  LeaveListModel *m =self.listOfMovies[indexPath.row];//取出数据元素
     
@@ -218,20 +219,6 @@ static NSString * identifier = @"LeaveListCell";
   
  
     return cell;
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"请假记录";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-//    NSLog(@"%@",@"tableView3-begin");
-//    // 返回底部文字
-    return @"";
 }
 
 @end

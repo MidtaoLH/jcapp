@@ -25,6 +25,7 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     
+    self.title = @"请假记录";
     //设置顶部导航栏的显示名称
     self.navigationItem.title=@"请假一览";
     //设置子视图的f导航栏的返回按钮
@@ -46,11 +47,9 @@ static NSString * identifier = @"LeaveListCell";
     //e注册自定义 cell
     [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
-    
+ 
     [super viewDidLoad];
-    
-
-    
+ 
     NSLog(@"%@",@"viewDidLoad-end");
 }
 
@@ -211,24 +210,9 @@ static NSString * identifier = @"LeaveListCell";
  //  cell.textLabel.text = m.LeaveVersion;
     
   //  cell.detailTextLabel.text = m.LeaveApplyCode;
-    
-  
  
     return cell;
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"请假记录";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    NSLog(@"%@",@"tableView3-begin");
-    // 返回底部文字
-    return @"中道益通";
-}
-
+ 
 @end

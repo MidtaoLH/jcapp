@@ -17,6 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    
+    NSMutableArray *array;
+    NSMutableArray *array2;
+    NSInteger _page;
+    NSInteger _pageSize;
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 

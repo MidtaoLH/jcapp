@@ -17,6 +17,7 @@
 #import "../Leave/LeaveTabBarViewController.h"
 #import "../PendingPage/PendingViewController.h"
 #import "../MyApply/MyApplyTabBarViewController.h"
+#import "../PendingPage/PendingTabBarViewController.h"
 
 /**屏幕尺寸-宽度*/
 #define kWidth ([UIScreen mainScreen].bounds.size.width)
@@ -373,12 +374,9 @@ static NSString *identifier =@"TableViewCell";
                 break;
             case 1:
             {
-                PendingViewController * valueView = [[PendingViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
-                //从底部划入
-                [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-                //跳转
-                [self presentModalViewController:valueView animated:YES];
-            NSLog(@"点击第2个按键");
+                UITabBarController *tabBarCtrl = [[PendingTabBarViewController alloc]init];
+                
+                [self presentViewController:tabBarCtrl animated:NO completion:nil];
             }
                 break;
             case 2:

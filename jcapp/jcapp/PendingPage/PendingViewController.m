@@ -10,7 +10,7 @@
 #import "MJExtension.h"
 #import "../Model/Pending.h"
 #import "PendingListCell.h"
-
+#import "../MJRefresh/MJRefresh.h"
 static NSString * identifier = @"PendingListCell";
 
 @interface PendingViewController ()
@@ -19,25 +19,40 @@ static NSString * identifier = @"PendingListCell";
 
 @implementation PendingViewController
 NSInteger currentPage;
+NSInteger currentPageCount;
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     self.title = @"待审批记录";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+
+    CGFloat headimageW = self.view.frame.size.width;
+    CGFloat headimageH =  self.view.frame.size.height;
+    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
+    
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
-    CGFloat headimageX = self.view.frame.size.width;
-    CGFloat headimageY = self.view.frame.size.height;
-    CGFloat headimageW = self.view.frame.size.width*1.104;
-    CGFloat headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
     currentPage=1;
-    [self LoadDate];
-    [super viewDidLoad];
+    currentPageCount=5;
+    [self LoadData];
+    
+    // 添加头部的下拉刷新
+    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+    self.NewTableView.mj_header = header;
+    
+    // 添加底部的上拉加载
+    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+    self.NewTableView.mj_footer = footer;
 }
 
--(void)LoadDate
+-(void)LoadData
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
@@ -45,7 +60,8 @@ NSInteger currentPage;
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPagestr = [NSString stringWithFormat: @"%ld", (long)currentPage];
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",currentPagestr,@"10",@"19",@"19",@"4"];
+    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",currentPagestr,currentPageCountstr,@"19",@"19",@"4"];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -54,6 +70,33 @@ NSInteger currentPage;
                                    initWithRequest:request
                                    delegate:self];
 }
+
+// 2.实现下拉刷新和上拉加载的事件。
+// 头部的下拉刷新触发事件
+- (void)headerClick {
+    // 可在此处实现下拉刷新时要执行的代码
+    // ......
+    if(currentPageCount>1)
+        currentPageCount--;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_header endRefreshing];
+}
+// 底部的上拉加载触发事件
+- (void)footerClick {
+    // 可在此处实现上拉加载时要执行的代码
+    // ......
+    currentPageCount++;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_footer endRefreshing];
+}
+
+
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -88,6 +131,7 @@ NSInteger currentPage;
     ipParser.delegate = self;
     [ipParser parse];
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -191,19 +235,19 @@ NSInteger currentPage;
 {
     //当你按下这个按钮的时候, 意味着你需要看下一页了, 因此当前页码加1
     currentPage++;
-    [self LoadDate];//通过调用GetRecord方法, 将数据取出.
+    [self LoadData];//通过调用GetRecord方法, 将数据取出.
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     // 返回顶部标题
-    return @"待审批记录";
+    return @"";
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     // 返回底部文字
-    return @"中道益通";
+    return @"";
 }
 
 @end

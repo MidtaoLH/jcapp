@@ -16,7 +16,9 @@
 #import "UIColor+Hex.h"
 
 /**十六进制色值*/
-
+#define Common_WSUrl @"http://47.94.85.101:8095/%@"
+#define Common_UserPhotoUrl @"http://47.94.85.101:8095/APP/Image/%@.png"
+/*列表申请状态的e颜色*/
 #define Color_ProcessStutasColor  [UIColor colorWithRed:0/255.0 green:204/255.0 blue:204/255.0 alpha:1]
 
 #define hexColor(hex) [UIColor colorWithHex:hex]

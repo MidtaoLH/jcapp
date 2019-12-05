@@ -21,7 +21,6 @@
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
 #import "SDWebImage/UIImageView+WebCache.h"
-#import "CommonConst.h"
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;

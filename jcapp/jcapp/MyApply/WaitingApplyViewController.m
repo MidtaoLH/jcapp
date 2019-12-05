@@ -31,7 +31,7 @@ static NSString * identifier = @"LeaveListCell";
     NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
 
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@", @"1",@"10",userid,empid,@"2"];
-    
+    //NSLog(@"strURL:%@",strURL);
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];

@@ -159,7 +159,7 @@ static NSString *identifier =@"TableViewCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
+    //NSLog(@"%@",@"connection1-begin");
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
@@ -172,7 +172,7 @@ static NSString *identifier =@"TableViewCell";
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
     
-    NSLog(@"%@", resultString);
+    //NSLog(@"%@", resultString);
     
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
@@ -192,7 +192,7 @@ static NSString *identifier =@"TableViewCell";
     //    图片中数
     NSInteger totalCount = listOfMovies.count;
     self.pageControl.numberOfPages=totalCount;
-    NSLog(@"8888888888888888888");
+    
     for (int i = 0; i < totalCount; i++) {
         index=i;
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -243,7 +243,7 @@ static NSString *identifier =@"TableViewCell";
     //跳转
     //NSLog(@"6666666666666");
     ScrollView *m =self.listOfMovies[self.pageControl.currentPage];
-    NSLog(@"666666666img=%@, imgUrl=%@", [NSString stringWithFormat:@"%ld", (long)self.pageControl.currentPage], m.ScrollURL);
+    //NSLog(@"666666666img=%@, imgUrl=%@", [NSString stringWithFormat:@"%ld", (long)self.pageControl.currentPage], m.ScrollURL);
     //发送请求
     NSURL *url=[NSURL URLWithString:m.ScrollURL];
     //请求
@@ -281,18 +281,18 @@ static NSString *identifier =@"TableViewCell";
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    NSLog(@"%@",@"connection2-end");
+    
 }
 
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
-    NSLog(@"%@", @"kaishijiex");    //开始解析XML
+    //NSLog(@"%@", @"kaishijiex");    //开始解析XML
     
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
-    NSLog(@"%@",@"connectionDidFinishLoading-end");
+    //NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
 }
@@ -301,7 +301,7 @@ static NSString *identifier =@"TableViewCell";
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
     info = [[NSMutableDictionary alloc] initWithCapacity: 1];
     
-    NSLog(@"%@",@"parserDidStartDocument-end");
+    //NSLog(@"%@",@"parserDidStartDocument-end");
 }
 
 //回调方法出错弹框
@@ -313,7 +313,7 @@ static NSString *identifier =@"TableViewCell";
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    NSLog(@"%@",@"parser-end");
+    //NSLog(@"%@",@"parser-end");
 }
 
 //解析返回xml的节点elementName
@@ -321,17 +321,17 @@ static NSString *identifier =@"TableViewCell";
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    NSLog(@"value2: %@\n", elementName);
+    //NSLog(@"value2: %@\n", elementName);
     //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
     currentTagName = elementName;
     
-    NSLog(@"%@",@"parser2-end");
+    //NSLog(@"%@",@"parser2-end");
 }
 
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
-    NSLog(@"%@",@"parser3-begin");
+    //NSLog(@"%@",@"parser3-begin");
     
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
@@ -343,7 +343,7 @@ static NSString *identifier =@"TableViewCell";
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     
-    NSLog(@"%@",@"parserDidEndDocument-begin");
+    //NSLog(@"%@",@"parserDidEndDocument-begin");
     
     NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
     for (id key in info) {

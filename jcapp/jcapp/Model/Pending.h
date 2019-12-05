@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * CaseApplyCode;
 @property (nonatomic,copy) NSString * CaseApplyMan;
 @property (nonatomic,copy) NSString * CaseVersion;
-@property (nonatomic,copy) UIImage * ApplyManPhoto;
+@property (nonatomic,copy) NSString * ApplyManPhoto;
 
 
 @end

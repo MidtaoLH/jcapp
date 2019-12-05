@@ -1,8 +1,8 @@
 //
-//  LeaveListCell.m
+//  PendingListCell.m
 //  jcapp
 //
-//  Created by zclmac on 2019/12/2.
+//  Created by lh on 2019/12/3.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -12,150 +12,118 @@
 #define kMargin 10
 
 @interface ApplyListCell()
-
-@property (nonatomic, strong) UILabel *leaveDateLable;
+@property (nonatomic, strong) UILabel *pendingCaseName;
+@property (nonatomic, strong) UILabel *pendingDateLable;
 @property (nonatomic, strong) UILabel *beignDateLable;
 @property (nonatomic, strong) UILabel *endDateLable;
-@property (nonatomic, strong) UILabel *leaveTypeLable;
-@property (nonatomic, strong) UILabel *leaveStatusLable;
+@property (nonatomic, strong) UILabel *pendingTypeLable;
+@property (nonatomic, strong) UILabel *pendingStatusLable;
 
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
 @implementation ApplyListCell
 
-
- - (UILabel *)leaveStatusLable {
- 
- if (!_leaveStatusLable) {
- _leaveStatusLable = [[UILabel alloc] init];
- _leaveStatusLable.font = [UIFont systemFontOfSize:15];
- _leaveStatusLable.textColor = Color_ProcessStutasColor;
- }
- return _leaveStatusLable;
- }
-
-- (UILabel *)leaveDateLable {
+- (UILabel *)pendingStatusLable {
     
-    if (!_leaveDateLable) {
-        _leaveDateLable = [[UILabel alloc] init];
-        _leaveDateLable.font = [UIFont systemFontOfSize:15];
-        _leaveDateLable.textColor = [UIColor grayColor];
+    if (!_pendingStatusLable) {
+        _pendingStatusLable = [[UILabel alloc] init];
+        _pendingStatusLable.font = kFont_Lable_14;
+        _pendingStatusLable.textColor = Color_ProcessStutasColor;
     }
-    return _leaveDateLable;
+    return _pendingStatusLable;
+}
+- (UILabel *)pendingDateLable {
+    
+    if (!_pendingDateLable) {
+        _pendingDateLable = [[UILabel alloc] init];
+        _pendingDateLable.font = kFont_Lable_12;
+        _pendingDateLable.textColor = kColor_Gray;
+    }
+    return _pendingDateLable;
 }
 - (UILabel *)beignDateLable {
     
     if (!_beignDateLable) {
         _beignDateLable = [[UILabel alloc] init];
-        _beignDateLable.font = [UIFont systemFontOfSize:15];
-        _beignDateLable.textColor = [UIColor grayColor];
+        _beignDateLable.font = kFont_Lable_13;
+        _beignDateLable.textColor = kColor_Gray;
     }
     return _beignDateLable;
 }
-
 - (UILabel *)endDateLable {
     
     if (!_endDateLable) {
         _endDateLable = [[UILabel alloc] init];
-        _endDateLable.font = [UIFont systemFontOfSize:15];
-        _endDateLable.textColor = [UIColor grayColor];
+        _endDateLable.font = kFont_Lable_13;
+        _endDateLable.textColor =kColor_Gray;
     }
     return _endDateLable;
 }
-- (UILabel *)leaveTypeLable {
+- (UILabel *)pendingTypeLable {
     
-    if (!_leaveTypeLable) {
-        _leaveTypeLable = [[UILabel alloc] init];
-        _leaveTypeLable.font = [UIFont systemFontOfSize:15];
-        _leaveTypeLable.textColor = [UIColor grayColor];
+    if (!_pendingTypeLable) {
+        _pendingTypeLable = [[UILabel alloc] init];
+        _pendingTypeLable.font = kFont_Lable_13;
+        _pendingTypeLable.textColor = kColor_Gray;
     }
-    return _leaveTypeLable;
+    return _pendingTypeLable;
 }
-
-
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-     
         [self.contentView addSubview:self.endDateLable];
-        [self.contentView  addSubview:self.leaveTypeLable];
+        [self.contentView  addSubview:self.pendingTypeLable];
         [self.contentView  addSubview:self.beignDateLable];
-        [self.contentView  addSubview:self.leaveStatusLable];
-        [self.contentView  addSubview:self.leaveDateLable];
+        [self.contentView  addSubview:self.pendingStatusLable];
+        [self.contentView  addSubview:self.pendingDateLable];
     }
     return self;
 }
 
--(void)setLeavelistitem:(Pending *)leavelistitem
+-(void)setPendinglistitem:(Pending *)pendinglistitem
 {
-    _leavelistitem =leavelistitem;
+    _pendinglistitem =pendinglistitem;
+    self.textLabel.text = _pendinglistitem.CaseName;
+    self.pendingStatusLable.text = _pendinglistitem.CaseStatusTxt;
+    self.pendingDateLable.text = _pendinglistitem.CaseDate;
     
-    self.textLabel.text = [NSString stringWithFormat:@"%@提交的%@", _leavelistitem.CaseApplyMan,_leavelistitem.CaseTypeTxt];
-    
-    self.leaveStatusLable.text = _leavelistitem.CaseStatusTxt;
-    
-    self.leaveDateLable.text = _leavelistitem.CaseDate;
-    
-    //加载网络图片
-    NSUserDefaults * userdefaults = [NSUserDefaults standardUserDefaults];
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,[userdefaults objectForKey:@"username"]];
-//    NSLog(@"userurlString:%@", userurlString);
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-    //NSLog(@"imageView:%@", imageView);
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    self.imageView.image=myDelegate.userPhotoimageView.image;
-    
-    self.beignDateLable.text = _leavelistitem.BeignDate;
-    
-    self.endDateLable.text = _leavelistitem.EndDate;
-    
-    self.leaveTypeLable.text = _leavelistitem.CaseStatusTxt;
-    
+    self.imageView.width=10;
+    self.imageView.image =myDelegate.userPhotoimageView.image;
+    self.beignDateLable.text = _pendinglistitem.BeignDate;
+    self.endDateLable.text = _pendinglistitem.EndDate;
+    if(_pendinglistitem.CaseTypeTxt!=NULL)
+    {
+        self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];
+    }
 }
-
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    CGFloat 	width = self.bounds.size.width;
+    CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    
-    CGFloat imageWH= height - 2*kMargin;
-   
+    CGFloat imageWH= width/5;
     CGFloat leaveDateWidth = 80;
-    
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-    
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
-    
-    self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
-    
-    self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
-    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
+    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH);
+    self.pendingDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    self.pendingTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
-    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
- 
+    self.pendingStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH, txtH);
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
-
 @end

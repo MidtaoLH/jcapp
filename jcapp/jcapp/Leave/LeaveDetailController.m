@@ -1,37 +1,29 @@
 //
-//  LeaveViewController.m
+//  LeaveDetailController.m
 //  jcapp
 //
-//  Created by zclmac on 2019/11/29.
+//  Created by zclmac on 2019/12/3.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "LeaveViewController.h"
+#import "LeaveDetailController.h"
 #import "MJExtension.h"
 #import "../Model/LeaveListModel.h"
-#import "LeaveListCell.h"
+#import "LeaveDetailCell.h"
 
-
-
-static NSString * identifier = @"LeaveListCell";
-
-@interface LeaveViewController ()
+@interface LeaveDetailController ()
 
 @end
 
-@implementation LeaveViewController
+@implementation LeaveDetailController
+
+static NSString *identifier =@"LeaveDetailCell";
 
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
     
-    self.title = @"请假记录";
-    //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"请假一览";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    self.title = @"请假";
     
     //设置需要访问的ws和传入参数
     
@@ -44,15 +36,25 @@ static NSString * identifier = @"LeaveListCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+    
     //e注册自定义 cell
-    [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[LeaveDetailCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
- 
+    
     [super viewDidLoad];
- 
     NSLog(@"%@",@"viewDidLoad-end");
+    
+    _imgvleavestatus.layer.masksToBounds = YES;
+    
+    _imgvleavestatus.layer.cornerRadius = _imgvleavestatus.frame.size.width / 2;
+    
+    _imgvleavestatus.backgroundColor = [UIColor greenColor];
 }
 
+-(void)setempvalue
+{
+    
+}
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -194,25 +196,28 @@ static NSString * identifier = @"LeaveListCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-  //  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-  //  if (cell == nil){
-  //      cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
-  //  }
-    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-     LeaveListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    
-   // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-    
+    LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+ 
     cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
     
- //  LeaveListModel *m =self.listOfMovies[indexPath.row];//取出数据元素
-    
- //  cell.textLabel.text = m.LeaveVersion;
-    
-  //  cell.detailTextLabel.text = m.LeaveApplyCode;
+    LeaveListModel * listmodel = self.listOfMovies[indexPath.row];
  
+    _emplbl.text = listmodel.CaseName;
+    
+    _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+    
+    _lblleavestatus.text = @"承认中";
+    
+    _lblempgroup.text = @"上海销售部";
+    
+    _lblapplydate.text = @"申请时间：2019-12-12";
+    
+    _lblleavedate.text = @"请假时间：2019-12-23 -- 2019-12-23";
+    
+    _lblleavetype.text = @"事假";
+    
+    
     return cell;
 }
 
- 
 @end

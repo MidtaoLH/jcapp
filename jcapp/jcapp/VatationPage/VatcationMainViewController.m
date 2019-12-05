@@ -10,11 +10,17 @@
 #import "CalendaViewController.h"
 #import "VatationPageViewController.h"
 #import "ViewController.h"
+#import "WayViewController.h"
+
+
 @interface VatcationMainViewController ()
 
 @end
 
 @implementation VatcationMainViewController
+
+@synthesize txttime;
+@synthesize textviewreason1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -383,7 +389,7 @@
 //点击背景键盘退出
 -(IBAction)backgroundTap:(id)sender {
     [txttime resignFirstResponder];
-     [textviewreason resignFirstResponder];}
+     [textviewreason1 resignFirstResponder];}
 
 //点击背景键盘退出
 -(IBAction)onClickButtonnext:(id)sender {
@@ -450,6 +456,8 @@
     }
     else
     {
+
+         NSLog(@"time%@",txttime.text);
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"提示信息！"
@@ -461,22 +469,27 @@
         return;
     }
     
-    if(textviewreason.text.length > 0)
+    if(textviewreason1.text.length > 0)
     {
         
     }
     else
     {
+        NSLog(@"textviewreason1%@",textviewreason1.text);
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"提示信息！"
-                              message: @"请假理由不能为空！"
+                              message: @"请假事由不能为空！"
                               delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
         [alert show];
         return;
     }
+    
+    
+    WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
     
 }
 

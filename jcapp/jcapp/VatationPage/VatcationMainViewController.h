@@ -17,7 +17,7 @@ UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelega
     IBOutlet UITableView *tableviewstart;
     IBOutlet UITableView *tableviewend;
     IBOutlet UITableView *tableviewtime;
-    IBOutlet UITextView *textviewreason;
+    IBOutlet UITextView *textviewreason1;
     IBOutlet UIDatePicker *datepick;
     IBOutlet UITextField    *txttime;
     IBOutlet UIImageView *imageview;
@@ -29,6 +29,8 @@ UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelega
 @property (nonatomic, retain)IBOutlet UITableView *textviewreason;
 
 @property (nonatomic, retain)IBOutlet UITextField *txttime;
+
+@property (nonatomic, retain)IBOutlet UITextView *textviewreason1;
 
 @property (nonatomic, retain)IBOutlet UIImageView *imageview;
 

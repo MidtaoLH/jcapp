@@ -1,5 +1,5 @@
 //
-//  LeaveListCell.h
+//  LeaveWaitCell.h
 //  jcapp
 //
 //  Created by zclmac on 2019/12/2.
@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "../Model/Pending.h"
-
+#import "../Model/LeaveListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ApplyListCell : UITableViewCell
+@interface LeaveWaitCell : UITableViewCell
 
-@property (nonatomic,strong) Pending * leavelistitem;
-
-
+    @property (nonatomic,strong) LeaveListModel * leavelistitem;
 
 @end
 

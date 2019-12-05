@@ -15,6 +15,9 @@
 #import "Model/UserLogin.h"
 
 #import "Leave/LeaveViewController.h"
+#import "Leave/LeaveTabBar.h"
+#import "Leave/LeaveDetailController.h"
+
 #import "PendingPage/PendingViewController.h"
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -96,12 +99,15 @@
 
 }
 -(IBAction)onClickButtonLeave:(id)sender {
-    LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
+   LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
     //从底部划入
-    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转
     [self presentModalViewController:valueView animated:YES];
     
+ //   UITabBarController *tabBarCtrl = [[LeaveTabBar alloc]init];
+    
+ //   [self presentViewController:tabBarCtrl animated:NO completion:nil];
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {
@@ -155,6 +161,7 @@
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
+    //NSLog(@"%@", listOfUser.count);
     
        //开始解析XML
     
@@ -162,6 +169,7 @@
     ipParser.delegate = self;
     [ipParser parse];
     NSString *message = @"";
+    
     if(listOfUser.count > 0)
     {
         
@@ -196,11 +204,14 @@
                             }
             
              [defaults setObject:m.id forKey:@"userid"];
+             [defaults setObject:m.EmpID forKey:@"EmpID"];
+            
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页
-            VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
-            [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
+            
+            [self presentViewController:tabBarCtrl animated:NO completion:nil];
             
         }
         

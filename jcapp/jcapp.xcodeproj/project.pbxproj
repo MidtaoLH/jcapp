@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E8752397FC1100BF6944 /* LeaveDetailController.m */; };
+		7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7756E8772397FC1200BF6944 /* LeaveDetailController.xib */; };
+		7756E87C2397FC1300BF6944 /* LeaveDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E8792397FC1200BF6944 /* LeaveDetailCell.m */; };
 		775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6190238BBE8D00985FF3 /* MJExtensionConst.m */; };
 		775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6192238BBE8D00985FF3 /* MJFoundation.m */; };
 		775B61A6238BBE8D00985FF3 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6194238BBE8D00985FF3 /* MJProperty.m */; };
@@ -28,6 +31,10 @@
 		77F10CFE2394FD1A005679B0 /* LeaveListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F10CFD2394FD1A005679B0 /* LeaveListCell.m */; };
 		8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8409F5238FA3A300A58623 /* CalendaViewController.m */; };
 		8D8409F8238FA3A300A58623 /* CalendaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8409F6238FA3A300A58623 /* CalendaViewController.xib */; };
+		8D8954BB239662A600F1E109 /* WayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8954B9239662A600F1E109 /* WayViewController.m */; };
+		8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8954BA239662A600F1E109 /* WayViewController.xib */; };
+		8D8B0CFA239796DB009CFEA0 /* Way.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B0CF9239796DB009CFEA0 /* Way.m */; };
+		8D8B0CFD2397B020009CFEA0 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B0CFC2397B020009CFEA0 /* TableCell.m */; };
 		8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920935238CDC59006E43CC /* VatationPageViewController.m */; };
 		8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920937238CDC59006E43CC /* VatationPageViewController.xib */; };
 		8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D92093C238CEBC8006E43CC /* Vatcation.m */; };
@@ -114,6 +121,7 @@
 		AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375223838BBF002AEAFB /* ViewController.xib */; };
 		AFF2375823838E4C002AEAFB /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF2375623838E4C002AEAFB /* HomePageViewController.m */; };
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
+		AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */; };
 		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
@@ -151,6 +159,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7756E8752397FC1100BF6944 /* LeaveDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveDetailController.m; sourceTree = "<group>"; };
+		7756E8762397FC1100BF6944 /* LeaveDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveDetailController.h; sourceTree = "<group>"; };
+		7756E8772397FC1200BF6944 /* LeaveDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeaveDetailController.xib; sourceTree = "<group>"; };
+		7756E8782397FC1200BF6944 /* LeaveDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveDetailCell.h; sourceTree = "<group>"; };
+		7756E8792397FC1200BF6944 /* LeaveDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveDetailCell.m; sourceTree = "<group>"; };
 		775B618E238BBE8D00985FF3 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		775B618F238BBE8D00985FF3 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
 		775B6190238BBE8D00985FF3 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
@@ -190,6 +203,13 @@
 		8D8409F4238FA3A300A58623 /* CalendaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendaViewController.h; sourceTree = "<group>"; };
 		8D8409F5238FA3A300A58623 /* CalendaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendaViewController.m; sourceTree = "<group>"; };
 		8D8409F6238FA3A300A58623 /* CalendaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendaViewController.xib; sourceTree = "<group>"; };
+		8D8954B8239662A600F1E109 /* WayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WayViewController.h; sourceTree = "<group>"; };
+		8D8954B9239662A600F1E109 /* WayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WayViewController.m; sourceTree = "<group>"; };
+		8D8954BA239662A600F1E109 /* WayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WayViewController.xib; sourceTree = "<group>"; };
+		8D8B0CF8239796DB009CFEA0 /* Way.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Way.h; sourceTree = "<group>"; };
+		8D8B0CF9239796DB009CFEA0 /* Way.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Way.m; sourceTree = "<group>"; };
+		8D8B0CFB2397B01F009CFEA0 /* TableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
+		8D8B0CFC2397B020009CFEA0 /* TableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
 		8D920935238CDC59006E43CC /* VatationPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VatationPageViewController.m; sourceTree = "<group>"; };
 		8D920936238CDC59006E43CC /* VatationPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VatationPageViewController.h; sourceTree = "<group>"; };
 		8D920937238CDC59006E43CC /* VatationPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VatationPageViewController.xib; sourceTree = "<group>"; };
@@ -357,6 +377,9 @@
 		AFF2375523838E4C002AEAFB /* HomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
 		AFF2375623838E4C002AEAFB /* HomePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
 		AFF2375723838E4C002AEAFB /* HomePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageViewController.xib; sourceTree = "<group>"; };
+		AFFE34D523975D7800B03076 /* LeaveTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveTabBarViewController.h; sourceTree = "<group>"; };
+		AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTabBarViewController.m; sourceTree = "<group>"; };
+		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
@@ -468,6 +491,13 @@
 		77AA030523910CF600881B0F /* Leave */ = {
 			isa = PBXGroup;
 			children = (
+				7756E8782397FC1200BF6944 /* LeaveDetailCell.h */,
+				7756E8792397FC1200BF6944 /* LeaveDetailCell.m */,
+				7756E8762397FC1100BF6944 /* LeaveDetailController.h */,
+				7756E8752397FC1100BF6944 /* LeaveDetailController.m */,
+				7756E8772397FC1200BF6944 /* LeaveDetailController.xib */,
+				AFFE34D523975D7800B03076 /* LeaveTabBarViewController.h */,
+				AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */,
 				77AA030B23910D8C00881B0F /* LeaveViewController.h */,
 				77AA030C23910D8C00881B0F /* LeaveViewController.m */,
 				77AA030D23910D8C00881B0F /* LeaveViewController.xib */,
@@ -492,6 +522,11 @@
 				8D8409F4238FA3A300A58623 /* CalendaViewController.h */,
 				8D8409F5238FA3A300A58623 /* CalendaViewController.m */,
 				8D8409F6238FA3A300A58623 /* CalendaViewController.xib */,
+				8D8954B8239662A600F1E109 /* WayViewController.h */,
+				8D8954B9239662A600F1E109 /* WayViewController.m */,
+				8D8954BA239662A600F1E109 /* WayViewController.xib */,
+				8D8B0CFB2397B01F009CFEA0 /* TableCell.h */,
+				8D8B0CFC2397B020009CFEA0 /* TableCell.m */,
 			);
 			path = VatationPage;
 			sourceTree = "<group>";
@@ -513,6 +548,8 @@
 				77F10CFA2394F9EC005679B0 /* LeaveListModel.m */,
 				8D936BDC2396302A000473ED /* UserLogin.h */,
 				8D936BDD2396302A000473ED /* UserLogin.m */,
+				8D8B0CF8239796DB009CFEA0 /* Way.h */,
+				8D8B0CF9239796DB009CFEA0 /* Way.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -708,7 +745,6 @@
 			children = (
 				AF0ABF17238FCD3200F46278 /* UIColor+Hex.h */,
 				AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */,
-				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				AF0ABF0E238FC9CF00F46278 /* SDAutoLayout */,
 				AF0ABF04238FC9AF00F46278 /* DXLAutoCountButtonView */,
 				AF269C44238D5F000058F3E0 /* WebViewController.h */,
@@ -765,8 +801,10 @@
 				AFF2375223838BBF002AEAFB /* ViewController.xib */,
 				EB4315E9237FB414007D1213 /* Assets.xcassets */,
 				EB4315EB237FB414007D1213 /* LaunchScreen.storyboard */,
+				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				EB4315EE237FB414007D1213 /* Info.plist */,
 				EB4315EF237FB414007D1213 /* main.m */,
+				AFFE34D92397A4A700B03076 /* CommonConst.h */,
 			);
 			path = jcapp;
 			sourceTree = "<group>";
@@ -919,6 +957,7 @@
 			files = (
 				EBCF6C0323974DE300893A02 /* PendingViewController.xib in Resources */,
 				AF7EC2FA2396151100257CF1 /* WaitingApplyViewController.xib in Resources */,
+				7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */,
 				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
 				AF7EC2EC2396140B00257CF1 /* ApprovingViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
@@ -930,6 +969,7 @@
 				77AA030F23910D8C00881B0F /* LeaveViewController.xib in Resources */,
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
+				8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */,
 				EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */,
 				AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */,
 				AF7EC2F62396148D00257CF1 /* WaitHandleViewController.xib in Resources */,
@@ -980,6 +1020,7 @@
 				AF0ABEE3238F9B5A00F46278 /* SDImageCodersManager.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
+				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,
 				AF0ABEE1238F9B5A00F46278 /* SDImageCoder.m in Sources */,
@@ -987,17 +1028,20 @@
 				AF0ABF01238F9B5A00F46278 /* UIImageView+WebCache.m in Sources */,
 				775B61A7238BBE8D00985FF3 /* MJPropertyKey.m in Sources */,
 				AF0ABED3238F9B5A00F46278 /* SDImageCachesManagerOperation.m in Sources */,
+				8D8B0CFD2397B020009CFEA0 /* TableCell.m in Sources */,
 				8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */,
 				AFF2375823838E4C002AEAFB /* HomePageViewController.m in Sources */,
 				775B61A6238BBE8D00985FF3 /* MJProperty.m in Sources */,
 				AF0ABEFB238F9B5A00F46278 /* UIImage+GIF.m in Sources */,
 				AF0ABED1238F9B5A00F46278 /* SDAsyncBlockOperation.m in Sources */,
+				8D8B0CFA239796DB009CFEA0 /* Way.m in Sources */,
 				AF0ABEEF238F9B5A00F46278 /* SDWebImageDefine.m in Sources */,
 				AF0ABEDD238F9B5A00F46278 /* SDImageCache.m in Sources */,
 				AF0ABEFE238F9B5A00F46278 /* UIImage+MultiFormat.m in Sources */,
 				775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */,
 				AF0ABEF5238F9B5A00F46278 /* SDWebImageIndicator.m in Sources */,
 				AF0ABEEC238F9B5A00F46278 /* SDWebImageCacheKeyFilter.m in Sources */,
+				AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */,
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				AF0ABEE6238F9B5A00F46278 /* SDImageGraphics.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
@@ -1027,6 +1071,7 @@
 				AF0ABEE8238F9B5A00F46278 /* SDImageLoader.m in Sources */,
 				AF0ABEE7238F9B5A00F46278 /* SDImageIOCoder.m in Sources */,
 				EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */,
+				8D8954BB239662A600F1E109 /* WayViewController.m in Sources */,
 				AF0ABED7238F9B5A00F46278 /* SDAnimatedImage.m in Sources */,
 				AF0ABEF8238F9B5A00F46278 /* SDWebImageTransition.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,
@@ -1042,6 +1087,7 @@
 				AF0ABEDC238F9B5A00F46278 /* SDImageAPNGCoder.m in Sources */,
 				AF0ABF00238F9B5A00F46278 /* UIImageView+HighlightedWebCache.m in Sources */,
 				AF0ABED0238F9B5A00F46278 /* NSBezierPath+RoundedCorners.m in Sources */,
+				7756E87C2397FC1300BF6944 /* LeaveDetailCell.m in Sources */,
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
@@ -1225,7 +1271,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = jcapp/HomePage/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = jcapp/PrefixHeader.pch;
 				INFOPLIST_FILE = jcapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1243,7 +1289,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = jcapp/HomePage/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = jcapp/PrefixHeader.pch;
 				INFOPLIST_FILE = jcapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

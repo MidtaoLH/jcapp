@@ -15,7 +15,7 @@
                 <outlet property="tableviewend" destination="GPT-qB-6jR" id="xLz-YI-iCF"/>
                 <outlet property="tableviewstart" destination="6Ea-g9-lov" id="JeK-jd-sCq"/>
                 <outlet property="tableviewtype" destination="pdL-g3-111" id="mpP-n4-dMX"/>
-                <outlet property="textviewreason" destination="SfA-dX-lFZ" id="J2t-s6-WcH"/>
+                <outlet property="textviewreason1" destination="SfA-dX-lFZ" id="RF1-fq-ZaT"/>
                 <outlet property="txttime" destination="wcZ-V2-z77" id="SUv-Kd-jb6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

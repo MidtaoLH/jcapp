@@ -1,16 +1,18 @@
 //
-//  LeaveListCell.m
+//  TableViewCell.m
 //  jcapp
 //
-//  Created by zclmac on 2019/12/2.
+//  Created by zhaodan on 2019/12/4.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "LeaveListCell.h"
+#import "TableCell.h"
+
 
 #define kMargin 10
 
-@interface LeaveListCell()
+
+@interface TableCell ()
 
 @property (nonatomic, strong) UILabel *leaveDateLable;
 @property (nonatomic, strong) UILabel *beignDateLable;
@@ -21,18 +23,18 @@
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
-@implementation LeaveListCell
+@implementation TableCell
 
 
- - (UILabel *)leaveStatusLable {
- 
- if (!_leaveStatusLable) {
- _leaveStatusLable = [[UILabel alloc] init];
- _leaveStatusLable.font = [UIFont systemFontOfSize:15];
- _leaveStatusLable.textColor = [UIColor greenColor];
- }
- return _leaveStatusLable;
- }
+- (UILabel *)leaveStatusLable {
+    
+    if (!_leaveStatusLable) {
+        _leaveStatusLable = [[UILabel alloc] init];
+        _leaveStatusLable.font = [UIFont systemFontOfSize:15];
+        _leaveStatusLable.textColor = [UIColor grayColor];
+    }
+    return _leaveStatusLable;
+}
 
 - (UILabel *)leaveDateLable {
     
@@ -76,10 +78,12 @@
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
+    NSLog(@"%@",@"tablecell");
+    
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-     
+        
         [self.contentView addSubview:self.endDateLable];
         [self.contentView  addSubview:self.leaveTypeLable];
         [self.contentView  addSubview:self.beignDateLable];
@@ -89,33 +93,25 @@
     return self;
 }
 
--(void)setLeavelistitem:(LeaveListModel *)leavelistitem
+-(void)setWaylist:(Way *)Waylist:(Way *)Waylist
 {
-    _leavelistitem =leavelistitem;
+    NSLog(@"%@",@"tablecell2");
     
-    self.textLabel.text = _leavelistitem.CaseName;
+    _Waylist =Waylist;
     
-    self.leaveStatusLable.text = _leavelistitem.LeaveStatusTxt;
-    if([_leavelistitem.LeaveStatusTxt  isEqualToString:  @"已驳回"])
-    {
-        _leaveStatusLable.textColor = [UIColor redColor];
-    }
+    self.textLabel.text = @"李四提交的请假";
     
-    self.leaveDateLable.text = _leavelistitem.LeaveDate;
+    self.leaveStatusLable.text = @"承认中";
+    
+    self.leaveDateLable.text = @"2019.12.12";
     
     self.imageView.image =[UIImage imageNamed:@"01.jpg"];
     
-    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_leavelistitem.BeignDate];
- 
-    self.beignDateLable.text = strbegindate;
+    self.beignDateLable.text = @"开始时间:2019.12.12";
     
-    NSString * strendate =[[NSString alloc]initWithFormat:@"%@%@",@"结束时间：",_leavelistitem.EndDate];
+    self.endDateLable.text = @"结束时间:2019.12.12";
     
-    self.endDateLable.text = strendate;
-    
-     NSString * strLeaveTypeTxt =[[NSString alloc]initWithFormat:@"%@%@",@"请假类型：",_leavelistitem.LeaveTypeTxt];
-    
-    self.leaveTypeLable.text = strLeaveTypeTxt;
+    self.leaveTypeLable.text = @"请假类型:事假";
     
 }
 
@@ -123,11 +119,11 @@
 {
     [super layoutSubviews];
     
-    CGFloat 	width = self.bounds.size.width;
+    CGFloat     width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
     CGFloat imageWH= height - 2*kMargin;
-   
+    
     CGFloat leaveDateWidth = 80;
     
     //每行的文本的高度
@@ -146,7 +142,7 @@
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
     self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
- 
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -155,7 +151,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

@@ -40,7 +40,7 @@ NSInteger currentPageCountwait;
     currentPageCountwait=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
-    empID = @"21";//[defaults objectForKey:@"EmpID"];
+    empID = [defaults objectForKey:@"EmpID"];
     
     [self LoadData];
     

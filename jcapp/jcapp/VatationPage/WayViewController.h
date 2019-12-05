@@ -10,7 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WayViewController : UIViewController{
+@interface WayViewController : UIViewController <UITableViewDataSource,
+UITableViewDelegate>{
     
      IBOutlet UITableView *tableview;
      NSMutableArray *wayArray;

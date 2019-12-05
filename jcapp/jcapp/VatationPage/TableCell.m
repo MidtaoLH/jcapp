@@ -93,7 +93,7 @@
     return self;
 }
 
--(void)setWaylist:(Way *)Waylist:(Way *)Waylist
+-(void)setWaylist:(Way *)Waylist
 {
     NSLog(@"%@",@"tablecell2");
     

@@ -59,13 +59,13 @@ static NSString * identifier = @"TableCell";
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"%@", @"way3是否走到这里1");
-    return self.listOfWay.count;
+    return 5;
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-
+    NSLog(@"%@", @"way4是否走到这里1");
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
     // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];

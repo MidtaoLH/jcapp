@@ -11,6 +11,7 @@
 #import "VatationPageViewController.h"
 #import "ViewController.h"
 #import "WayViewController.h"
+#import "../MJExtension/MJExtension.h"
 
 
 @interface VatcationMainViewController ()
@@ -399,6 +400,15 @@
     NSString *vatcationname = [defaults objectForKey:@"vatcationname"];
     NSString *timestart = [defaults objectForKey:@"timestart"];
     NSString *timeend = [defaults objectForKey:@"timeend"];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *EmpID = [defaults objectForKey:@"EmpID"];
+    NSString *name = [defaults objectForKey:@"empname"];
+    NSString *Groupid = [defaults objectForKey:@"Groupid"];
+    NSString *type = [defaults objectForKey:@"vatcationname"];
+
+    
+    
+    
     if(vatcationname.length > 0)
     {
         
@@ -488,13 +498,147 @@
     }
     
     
-    WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    NSLog(@"%@", userid);
+    NSLog(@"%@", Groupid);
+    NSLog(@"%@", EmpID);
+    NSLog(@"%@", type);
+    NSLog(@"%@", timestart);
+    NSLog(@"%@", timeend);
+    NSLog(@"%@", txttime.text);
+    NSLog(@"%@", textviewreason1.text);
+    NSLog(@"%@", name);
+    
+    //timestart = timestart.trim
+    
+    NSString *vatcationtime = txttime.text;
+NSString *reason = textviewreason1.text;
+    
+    //设置需要访问的ws和传入参数
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@", userid,Groupid,EmpID,type,timestart,timeend,vatcationtime,reason,name];
+    
+    NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+        NSLog(@"%@", strURL);
+    
+    NSURL *url = [NSURL URLWithString:urlStringUTF8];
+    
+   
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
+    
+    
     
 }
 
+//系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+    
+    NSLog(@"%@",@"connection1-begin");
+    
+    
+    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@", data);
+    
+    NSLog(@"%@", xmlString);
+    
+    
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    NSString *resultString = [xmlString substringWithRange:reusltRagne];
+    
+    NSLog(@"%@", resultString);
+    
+    NSString *requestTmp = [NSString stringWithString:resultString];
+    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    
+    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    //listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
+    
+    NSString *test = [[NSString alloc] initWithData:resData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",test);
+    
+    
+}
 
+- (void) connectionDidFinishLoading: (NSURLConnection*) connection {
+    NSLog(@"%@", @"test3");
+    NSLog(@"%@", xmlString);
+    NSLog(@"%@", @"kaishijiex");    //开始解析XML
+    
+    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+    ipParser.delegate = self;
+    [ipParser parse];
 
+}
+
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    
+    NSLog(@"%@", @"test2");
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: [error localizedDescription]
+                               message: [error localizedFailureReason]
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    //[errorAlert release];
+    
+}
+
+//解析xml回调方法
+- (void)parserDidStartDocument:(NSXMLParser *)parser {
+    NSLog(@"%@", @"test4");
+    info = [[NSMutableDictionary alloc] initWithCapacity: 1];
+}
+
+//回调方法出错弹框
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+    NSLog(@"%@", @"test5");
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: [parseError localizedDescription]
+                               message: [parseError localizedFailureReason]
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    //[errorAlert release];
+}
+
+//解析返回xml的节点elementName
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qualifiedName
+    attributes:(NSDictionary *)attributeDict  {
+    NSLog(@"%@", @"test6");
+    NSLog(@"value: %@\n", elementName);
+    NSLog(@"value: %@\n", qualifiedName);
+    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
+    
+}
+
+//取得我们需要的节点的数据
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    
+
+    
+    //此处解析出来全部为单个的字段
+    NSLog(@"%@", @"test7");
+    
+
+    
+}
 
 /*
 #pragma mark - Navigation

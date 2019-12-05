@@ -9,7 +9,8 @@
 #import "WaitingApplyViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
-#import "../PendingPage/PendingListCell.h"
+//#import "../PendingPage/PendingListCell.h"
+#import "ApplyListCell.h"
 
 
 static NSString * identifier = @"LeaveListCell";
@@ -49,7 +50,7 @@ static NSString * identifier = @"LeaveListCell";
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     //e注册自定义 cell
-    [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[ApplyListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     
 
@@ -203,7 +204,7 @@ static NSString * identifier = @"LeaveListCell";
   //      cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
   //  }
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-     PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+     ApplyListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
     
@@ -218,20 +219,6 @@ static NSString * identifier = @"LeaveListCell";
   
  
     return cell;
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"请假记录";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-//    NSLog(@"%@",@"tableView3-begin");
-//    // 返回底部文字
-    return @"";
 }
 
 @end

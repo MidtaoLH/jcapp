@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ApplyListCell : UITableViewCell
 
-@property (nonatomic,strong) Pending * leavelistitem;
+@property (nonatomic,strong) Pending * pendinglistitem;
 
 
 

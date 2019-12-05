@@ -11,7 +11,8 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+/** 设置全局变量的属性. */
+@property (nonatomic, strong) UIImageView *userPhotoimageView;
 
 @end
 

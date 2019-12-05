@@ -197,22 +197,7 @@ NSInteger currentPageCount;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    if(cell == nil)
-    {
-        if([indexPath row] == [self.listOfMovies count])
-        {
-            //新建一个单元格, 并且将其样式调整成我们需要的样子.
-            cell=[[UITableViewCell alloc] initWithFrame:CGRectZero
-                  
-                                        reuseIdentifier:@"LoadMoreIdentifier"];
-            cell.font = [UIFont boldSystemFontOfSize:13];
-            cell.textLabel.text = @"读取更多...";
-        }
-    }
-    else
-    {
-        cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
-    }
+    cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
     return cell;
 }
 
@@ -220,11 +205,6 @@ NSInteger currentPageCount;
 {
     if([indexPath row] == [self.listOfMovies count])
     {
-        UITableViewCell *loadMoreCell=[tableView cellForRowAtIndexPath:indexPath];
-        loadMoreCell.textLabel.text=@"正在读取更多信息 …";
-        [self performSelectorInBackground:@selector(loadMore) withObject:nil];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        return;
     }
     else
     {

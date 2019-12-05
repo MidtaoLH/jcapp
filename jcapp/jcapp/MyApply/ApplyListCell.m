@@ -7,8 +7,7 @@
 //
 
 #import "ApplyListCell.h"
-#import "../SDWebImage/UIImageView+WebCache.h"
-#import "../CommonConst.h"
+#import "../AppDelegate.h"
 
 #define kMargin 10
 
@@ -31,7 +30,7 @@
  if (!_leaveStatusLable) {
  _leaveStatusLable = [[UILabel alloc] init];
  _leaveStatusLable.font = [UIFont systemFontOfSize:15];
- _leaveStatusLable.textColor = [UIColor grayColor];
+ _leaveStatusLable.textColor = Color_ProcessStutasColor;
  }
  return _leaveStatusLable;
  }
@@ -103,12 +102,13 @@
     
     //加载网络图片
     NSUserDefaults * userdefaults = [NSUserDefaults standardUserDefaults];
-    UIImageView *imageView = [[UIImageView alloc] init];
-    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,[userdefaults objectForKey:@"username"]];
-    NSLog(@"userurlString:%@", userurlString);
-    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+//    UIImageView *imageView = [[UIImageView alloc] init];
+//    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,[userdefaults objectForKey:@"username"]];
+//    NSLog(@"userurlString:%@", userurlString);
+//    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
     //NSLog(@"imageView:%@", imageView);
-    self.imageView.image=imageView.image;
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    self.imageView.image=myDelegate.userPhotoimageView.image;
     
     self.beignDateLable.text = _leavelistitem.BeignDate;
     

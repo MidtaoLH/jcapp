@@ -19,6 +19,10 @@
 #import "Leave/LeaveDetailController.h"
 
 #import "PendingPage/PendingViewController.h"
+#import "AppDelegate.h"
+#import "SDWebImage/UIImageView+WebCache.h"
+#import "CommonConst.h"
+
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
@@ -190,6 +194,12 @@
         {
             //返回1为1显示登陆成功
             message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
+            //将当前用户的头像存到全局变量
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+            myDelegate.userPhotoimageView=imageView;
             
             //保存用户名密码
             NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];

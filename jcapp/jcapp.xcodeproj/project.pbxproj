@@ -125,6 +125,7 @@
 		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
+		EB30A3F22398940C00EEAE1E /* LeaveWaitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A3F12398940C00EEAE1E /* LeaveWaitCell.m */; };
 		EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4315E1237FB413007D1213 /* AppDelegate.m */; };
 		EB4315E5237FB413007D1213 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4315E4237FB413007D1213 /* ViewController.m */; };
 		EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB4315E9237FB414007D1213 /* Assets.xcassets */; };
@@ -385,6 +386,8 @@
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
+		EB30A3F02398940C00EEAE1E /* LeaveWaitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveWaitCell.h; sourceTree = "<group>"; };
+		EB30A3F12398940C00EEAE1E /* LeaveWaitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveWaitCell.m; sourceTree = "<group>"; };
 		EB4315DD237FB413007D1213 /* jcapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jcapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4315E0237FB413007D1213 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EB4315E1237FB413007D1213 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -491,6 +494,8 @@
 		77AA030523910CF600881B0F /* Leave */ = {
 			isa = PBXGroup;
 			children = (
+				EB30A3F02398940C00EEAE1E /* LeaveWaitCell.h */,
+				EB30A3F12398940C00EEAE1E /* LeaveWaitCell.m */,
 				7756E8782397FC1200BF6944 /* LeaveDetailCell.h */,
 				7756E8792397FC1200BF6944 /* LeaveDetailCell.m */,
 				7756E8762397FC1100BF6944 /* LeaveDetailController.h */,
@@ -1020,6 +1025,7 @@
 				AF0ABEE3238F9B5A00F46278 /* SDImageCodersManager.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
+				EB30A3F22398940C00EEAE1E /* LeaveWaitCell.m in Sources */,
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,

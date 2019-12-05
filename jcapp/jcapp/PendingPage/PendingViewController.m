@@ -18,7 +18,6 @@ static NSString * identifier = @"PendingListCell";
 @end
 
 @implementation PendingViewController
-NSInteger currentPage;
 NSInteger currentPageCount;
 @synthesize listOfMovies;
 
@@ -37,8 +36,7 @@ NSInteger currentPageCount;
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
-    currentPage=1;
-    currentPageCount=5;
+    currentPageCount=[Common_PageSize intValue];
     [self LoadData];
     
     // 添加头部的下拉刷新
@@ -59,9 +57,8 @@ NSInteger currentPageCount;
     NSString *userid = [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
-    NSString *currentPagestr = [NSString stringWithFormat: @"%ld", (long)currentPage];
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",currentPagestr,currentPageCountstr,@"19",@"19",@"4"];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,@"19",@"19",@"4"];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -88,7 +85,7 @@ NSInteger currentPageCount;
 - (void)footerClick {
     // 可在此处实现上拉加载时要执行的代码
     // ......
-    currentPageCount++;
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]	;
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];
@@ -210,24 +207,6 @@ NSInteger currentPageCount;
     {
         //其它单元格的事件
     }
-}
--(void)loadMore
-{
-    //当你按下这个按钮的时候, 意味着你需要看下一页了, 因此当前页码加1
-    currentPage++;
-    [self LoadData];//通过调用GetRecord方法, 将数据取出.
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    // 返回顶部标题
-    return @"";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    // 返回底部文字
-    return @"";
 }
 
 @end

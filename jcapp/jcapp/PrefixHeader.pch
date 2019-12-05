@@ -22,7 +22,7 @@
 /*列表申请状态的e颜色*/
 #define Color_ProcessStutasColor  [UIColor colorWithRed:0/255.0 green:204/255.0 blue:204/255.0 alpha:1]
 /*列表默认加载行数*/
-#define Common_PageSize @"10"
+#define Common_PageSize @"5"
 /*列表下拉叠加行数*/
 #define Common_PageSizeAdd @"10"
 

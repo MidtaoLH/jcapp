@@ -76,8 +76,8 @@ NSInteger currentPageCount;
 - (void)headerClick {
     // 可在此处实现下拉刷新时要执行的代码
     // ......
-    if(currentPageCount>1)
-        currentPageCount--;
+    //if(currentPageCount>1)
+    //currentPageCount--;
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];

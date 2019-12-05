@@ -30,7 +30,7 @@
  if (!_leaveStatusLable) {
  _leaveStatusLable = [[UILabel alloc] init];
  _leaveStatusLable.font = [UIFont systemFontOfSize:15];
- _leaveStatusLable.textColor = [UIColor grayColor];
+ _leaveStatusLable.textColor = Color_ProcessStutasColor;
  }
  return _leaveStatusLable;
  }
@@ -108,8 +108,6 @@
 //    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
     //NSLog(@"imageView:%@", imageView);
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    NSLog(@"userPhotoimageView:%@", @"2323232323");
-    NSLog(@"userPhotoimageView:%@", myDelegate.userPhotoimageView);
     self.imageView.image=myDelegate.userPhotoimageView.image;
     
     self.beignDateLable.text = _leavelistitem.BeignDate;

@@ -24,13 +24,6 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     
-    //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"待申请记录";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
     
     //设置需要访问的ws和传入参数
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -46,11 +39,18 @@ static NSString * identifier = @"LeaveListCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+    
+    [super viewDidLoad];
+    
+    //设置顶部导航栏的显示名称
+    self.navigationItem.title=@"待申请记录";
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     //e注册自定义 cell
     [_NewTableView registerClass:[ApplyListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
-    
-    [super viewDidLoad];
     
 
     

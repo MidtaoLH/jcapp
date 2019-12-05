@@ -10,6 +10,7 @@
 		7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E8752397FC1100BF6944 /* LeaveDetailController.m */; };
 		7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7756E8772397FC1200BF6944 /* LeaveDetailController.xib */; };
 		7756E87C2397FC1300BF6944 /* LeaveDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E8792397FC1200BF6944 /* LeaveDetailCell.m */; };
+		7756E87F2397FD0D00BF6944 /* LeaveWaitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E87E2397FD0D00BF6944 /* LeaveWaitCell.m */; };
 		775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6190238BBE8D00985FF3 /* MJExtensionConst.m */; };
 		775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6192238BBE8D00985FF3 /* MJFoundation.m */; };
 		775B61A6238BBE8D00985FF3 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B6194238BBE8D00985FF3 /* MJProperty.m */; };
@@ -164,6 +165,8 @@
 		7756E8772397FC1200BF6944 /* LeaveDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeaveDetailController.xib; sourceTree = "<group>"; };
 		7756E8782397FC1200BF6944 /* LeaveDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveDetailCell.h; sourceTree = "<group>"; };
 		7756E8792397FC1200BF6944 /* LeaveDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveDetailCell.m; sourceTree = "<group>"; };
+		7756E87D2397FD0C00BF6944 /* LeaveWaitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveWaitCell.h; sourceTree = "<group>"; };
+		7756E87E2397FD0D00BF6944 /* LeaveWaitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveWaitCell.m; sourceTree = "<group>"; };
 		775B618E238BBE8D00985FF3 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		775B618F238BBE8D00985FF3 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
 		775B6190238BBE8D00985FF3 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
@@ -491,6 +494,8 @@
 		77AA030523910CF600881B0F /* Leave */ = {
 			isa = PBXGroup;
 			children = (
+				7756E87D2397FD0C00BF6944 /* LeaveWaitCell.h */,
+				7756E87E2397FD0D00BF6944 /* LeaveWaitCell.m */,
 				7756E8782397FC1200BF6944 /* LeaveDetailCell.h */,
 				7756E8792397FC1200BF6944 /* LeaveDetailCell.m */,
 				7756E8762397FC1100BF6944 /* LeaveDetailController.h */,
@@ -1020,6 +1025,7 @@
 				AF0ABEE3238F9B5A00F46278 /* SDImageCodersManager.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
+				7756E87F2397FD0D00BF6944 /* LeaveWaitCell.m in Sources */,
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,

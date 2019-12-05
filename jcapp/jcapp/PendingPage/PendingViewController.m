@@ -18,7 +18,6 @@ static NSString * identifier = @"PendingListCell";
 @end
 
 @implementation PendingViewController
-NSInteger currentPageCount;
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {

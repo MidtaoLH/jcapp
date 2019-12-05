@@ -7,67 +7,73 @@
 //
 
 #import "LeaveDetailCell.h"
+
 #define kMargin 10
 
 @interface LeaveDetailCell()
 
-@property (nonatomic, strong) UILabel *leaveDateLable;
-@property (nonatomic, strong) UILabel *beignDateLable;
-@property (nonatomic, strong) UILabel *endDateLable;
-@property (nonatomic, strong) UILabel *leaveTypeLable;
-@property (nonatomic, strong) UILabel *leaveStatusLable;
+@property (nonatomic, strong) UILabel *lblleaveDate;
+@property (nonatomic, strong) UILabel *lblempname;
+@property (nonatomic, strong) UILabel *lblgroupname;
+@property (nonatomic, strong) UILabel *lbllevelname;
+@property (nonatomic, strong) UILabel *lblremark;
 
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
 @implementation LeaveDetailCell
 
-- (UILabel *)leaveStatusLable {
+- (UILabel *)lblleaveDate {
     
-    if (!_leaveStatusLable) {
-        _leaveStatusLable = [[UILabel alloc] init];
-        _leaveStatusLable.font = [UIFont systemFontOfSize:15];
-        _leaveStatusLable.textColor = [UIColor greenColor];
+    if (!_lblleaveDate) {
+        _lblleaveDate = [[UILabel alloc] init];
+        _lblleaveDate.font = [UIFont systemFontOfSize:15];
+        _lblleaveDate.textColor = [UIColor grayColor];
     }
-    return _leaveStatusLable;
+    return _lblleaveDate;
 }
 
-- (UILabel *)leaveDateLable {
+- (UILabel *)lblgroupname {
     
-    if (!_leaveDateLable) {
-        _leaveDateLable = [[UILabel alloc] init];
-        _leaveDateLable.font = [UIFont systemFontOfSize:15];
-        _leaveDateLable.textColor = [UIColor grayColor];
+    if (!_lblgroupname) {
+        _lblgroupname = [[UILabel alloc] init];
+        _lblgroupname.font = [UIFont systemFontOfSize:15];
+        _lblgroupname.textColor = [UIColor grayColor];
     }
-    return _leaveDateLable;
+    return _lblgroupname;
 }
-- (UILabel *)beignDateLable {
+- (UILabel *)lbllevelname {
     
-    if (!_beignDateLable) {
-        _beignDateLable = [[UILabel alloc] init];
-        _beignDateLable.font = [UIFont systemFontOfSize:15];
-        _beignDateLable.textColor = [UIColor grayColor];
+    if (!_lbllevelname) {
+        _lbllevelname = [[UILabel alloc] init];
+        _lbllevelname.font = [UIFont systemFontOfSize:15];
+        _lbllevelname.textColor = [UIColor grayColor];
     }
-    return _beignDateLable;
+    return _lbllevelname;
 }
 
-- (UILabel *)endDateLable {
+- (UILabel *)lblremark {
     
-    if (!_endDateLable) {
-        _endDateLable = [[UILabel alloc] init];
-        _endDateLable.font = [UIFont systemFontOfSize:15];
-        _endDateLable.textColor = [UIColor grayColor];
+    if (!_lblremark) {
+        _lblremark = [[UILabel alloc] init];
+        _lblremark.font = [UIFont systemFontOfSize:15];
+        _lblremark.textColor = [UIColor grayColor];
+        _lblremark.height = 1;
+        
+        //设置换行
+        _lblremark.lineBreakMode = UILineBreakModeWordWrap;
+        _lblremark.numberOfLines = 0;
     }
-    return _endDateLable;
+    return _lblremark;
 }
-- (UILabel *)leaveTypeLable {
+- (UILabel *)lblempname {
     
-    if (!_leaveTypeLable) {
-        _leaveTypeLable = [[UILabel alloc] init];
-        _leaveTypeLable.font = [UIFont systemFontOfSize:15];
-        _leaveTypeLable.textColor = [UIColor grayColor];
+    if (!_lblempname) {
+        _lblempname = [[UILabel alloc] init];
+        _lblempname.font = [UIFont systemFontOfSize:15];
+        _lblempname.textColor = [UIColor grayColor];
     }
-    return _leaveTypeLable;
+    return _lblempname;
 }
 
 
@@ -78,72 +84,79 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        [self.contentView addSubview:self.endDateLable];
-        [self.contentView  addSubview:self.leaveTypeLable];
-        [self.contentView  addSubview:self.beignDateLable];
-        [self.contentView  addSubview:self.leaveStatusLable];
-        [self.contentView  addSubview:self.leaveDateLable];
+        [self.contentView addSubview:self.lblremark];
+        [self.contentView  addSubview:self.lblempname];
+        [self.contentView  addSubview:self.lblleaveDate];
+        [self.contentView  addSubview:self.lblgroupname];
+        [self.contentView  addSubview:self.lbllevelname];
     }
     return self;
 }
 
--(void)setLeavelistitem:(LeaveListModel *)leavelistitem
+
+-(void)setLeavedetail:(LeaveDeatil *)leavedetail
 {
-    _leavelistitem =leavelistitem;
+    _leavedetail =leavedetail;
     
-    self.textLabel.text = _leavelistitem.CaseName;
+    self.textLabel.text = _leavedetail.name;
     
-    self.leaveStatusLable.text = _leavelistitem.LeaveStatusTxt;
-    if([_leavelistitem.LeaveStatusTxt  isEqualToString:  @"已驳回"])
-    {
-        _leaveStatusLable.textColor = [UIColor redColor];
-    }
-    
-    self.leaveDateLable.text = _leavelistitem.LeaveDate;
+    self.lbllevelname.text = _leavedetail.levelname;
+ 
+    self.lblgroupname.text = _leavedetail.groupname;
     
     self.imageView.image =[UIImage imageNamed:@"01.jpg"];
+ 
+ 
+         self.lblremark.text =  _leavedetail.Remark;
+ 
+ 
+        /*
+         NSString * strremark = [[NSString alloc]initWithFormat:@"%@\n%@",[_leavedetail.Remark  substringToIndex:5],[_leavedetail.Remark substringFromIndex:_leavedetail.Remark.length- 5]];
+         
+         self.lblremark.text =  strremark;
+         
+         CGSize size = [self sizeThatFits:CGSizeMake(self.lblremark.frame.size.height, MAXFLOAT)];
+         CGRect frame = self.lblremark.frame;
+         frame.size.height = size.height;
+         [self.lblremark setFrame:frame];
+         
+         */
+
+  
     
-    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_leavelistitem.BeignDate];
-    
-    self.beignDateLable.text = strbegindate;
-    
-    NSString * strendate =[[NSString alloc]initWithFormat:@"%@%@",@"结束时间：",_leavelistitem.EndDate];
-    
-    self.endDateLable.text = strendate;
-    
-    NSString * strLeaveTypeTxt =[[NSString alloc]initWithFormat:@"%@%@",@"请假类型：",_leavelistitem.LeaveTypeTxt];
-    
-    self.leaveTypeLable.text = strLeaveTypeTxt;
-    
+     self.lblleaveDate.text = _leavedetail.TaskDate;
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
     
-    CGFloat     width = self.bounds.size.width;
+    CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat imageWH= height - 2*kMargin;
+    CGFloat imageWH= height - 10* kMargin;
     
-    CGFloat leaveDateWidth = 80;
+    CGFloat leaveDateWidth = 90;
     
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
     
+    //先设置图片大小和位置
     self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
     
-    self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    //设置日期未知
+    self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     
+    //设置名称
     self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    //s设置部门
+    self.lblgroupname.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    //级别名称和 员工名
+    self.lbllevelname.frame = CGRectMake(2*kMargin+imageWH + 80,  kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
-    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
     
 }
 - (void)awakeFromNib {

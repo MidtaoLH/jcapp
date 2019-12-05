@@ -88,8 +88,7 @@
     self.textLabel.text = _pendinglistitem.CaseName;
     self.pendingStatusLable.text = _pendinglistitem.CaseStatusTxt;
     self.pendingDateLable.text = _pendinglistitem.CaseDate;
-    
-    //将当前用户的头像存到全局变量
+     
     UIImageView *imageView = [[UIImageView alloc] init];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
     [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];

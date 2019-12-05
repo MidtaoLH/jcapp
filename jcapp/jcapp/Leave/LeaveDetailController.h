@@ -40,11 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *imgvleavestatus;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblleavestatus;
-
-
-// 添加数据源
-@property (strong,nonatomic) NSMutableArray *listOfMovies;
-
+ 
+@property (strong,nonatomic) NSMutableArray *listdetail;
+@property (strong,nonatomic) NSMutableArray *listhead;
 @end
 
 NS_ASSUME_NONNULL_END

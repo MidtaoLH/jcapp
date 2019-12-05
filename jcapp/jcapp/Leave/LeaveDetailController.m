@@ -8,10 +8,13 @@
 
 #import "LeaveDetailController.h"
 #import "MJExtension.h"
-#import "../Model/LeaveListModel.h"
+#import "../Model/LeaveHead.h"
+#import "../Model/LeaveDeatil.h"
 #import "LeaveDetailCell.h"
 
 @interface LeaveDetailController ()
+
+@property (strong,nonatomic) LeaveHead *leavehead;
 
 @end
 
@@ -19,7 +22,8 @@
 
 static NSString *identifier =@"LeaveDetailCell";
 
-@synthesize listOfMovies;
+@synthesize listdetail;
+@synthesize listhead;
 
 - (void)viewDidLoad {
     
@@ -27,7 +31,7 @@ static NSString *identifier =@"LeaveDetailCell";
     
     //设置需要访问的ws和传入参数
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveList"];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveDetail"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -49,12 +53,18 @@ static NSString *identifier =@"LeaveDetailCell";
     _imgvleavestatus.layer.cornerRadius = _imgvleavestatus.frame.size.width / 2;
     
     _imgvleavestatus.backgroundColor = [UIColor greenColor];
-}
-
--(void)setempvalue
-{
+    [self setlblcolor];
     
 }
+-(void)setlblcolor
+{
+    _lblempgroup.textColor = [UIColor grayColor];
+    _lblleavedate.textColor = [UIColor grayColor];
+    _lblapplydate.textColor = [UIColor grayColor];
+    _lblleavecounts.textColor = [UIColor grayColor];
+    _lblleaveremark.textColor = [UIColor grayColor];
+}
+
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -73,19 +83,61 @@ static NSString *identifier =@"LeaveDetailCell";
     NSLog(@"%@", xmlString);
     
     // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"ds\":"];
+    NSRange endRagne = [xmlString rangeOfString:@",\"ds1\":"];
+    
+    NSRange startRange2 =[xmlString rangeOfString:@",\"ds1\":"];
+    NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
+    
+    //获取明细表数据
+    NSRange reusltRagnedetail = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
+    NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail];
+    
+    NSString *requestTmp2 = [NSString stringWithString:resultString2];
+    NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
+    NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
+    listdetail = [LeaveDeatil mj_objectArrayWithKeyValuesArray:resultDic2];
+    
+    //获取头表数据
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
+ 
     NSLog(@"%@", resultString);
     
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+    
+    listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
+    for (LeaveHead *p1 in listhead) {
+        _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+        
+        _lblleavestatus.text = p1.LeaveStatusTxt;
+        _emplbl.text = p1.EmpCName;
+        _lblempgroup.text = p1.groupname;
+        
+        NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.LeaveDate];
+        
+        _lblapplydate.text = strapplydate;
+        
+        NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"请假时间：",p1.BeignDate,p1.EndDate];
+        
+        _lblleavedate.text = strleavedate;
+        
+        _lblleavetype.text = p1.LeaveTypeTxt;
+        
+        NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.LeavePlanNum];
+        
+        _lblleavecounts.text =strleavecounts;
+        
+        NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.LeaveDescribe];
+        
+        _lblleaveremark.text = strleaveremark;
+    }
+
+    
+    
+    NSLog(@"%@", resultString2);
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -190,7 +242,7 @@ static NSString *identifier =@"LeaveDetailCell";
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
     NSLog(@"%@",@"tableView-begin");
-    return self.listOfMovies.count;
+    return self.listdetail.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -198,25 +250,7 @@ static NSString *identifier =@"LeaveDetailCell";
     
     LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
  
-    cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
-    
-    LeaveListModel * listmodel = self.listOfMovies[indexPath.row];
- 
-    _emplbl.text = listmodel.CaseName;
-    
-    _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
-    
-    _lblleavestatus.text = @"承认中";
-    
-    _lblempgroup.text = @"上海销售部";
-    
-    _lblapplydate.text = @"申请时间：2019-12-12";
-    
-    _lblleavedate.text = @"请假时间：2019-12-23 -- 2019-12-23";
-    
-    _lblleavetype.text = @"事假";
-    
-    
+    cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
     return cell;
 }
 

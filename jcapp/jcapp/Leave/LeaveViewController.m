@@ -56,7 +56,7 @@ static NSString * identifier = @"LeaveListCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
+    NSLog(@"%@	",@"connection1-begin");
     //upateData = [[NSData alloc] initWithData:data];
     //默认对于中文的支持不好
     //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);

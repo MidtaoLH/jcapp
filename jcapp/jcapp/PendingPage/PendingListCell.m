@@ -7,7 +7,7 @@
 //
 
 #import "PendingListCell.h"
-
+#import "../SDWebImage/UIImageView+WebCache.h"
 #define kMargin 10
 
 @interface PendingListCell()
@@ -88,7 +88,12 @@
     self.textLabel.text = _pendinglistitem.CaseName;
     self.pendingStatusLable.text = _pendinglistitem.CaseStatusTxt;
     self.pendingDateLable.text = _pendinglistitem.CaseDate;
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
+    
+    //将当前用户的头像存到全局变量
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
     self.beignDateLable.text = _pendinglistitem.BeignDate;
     self.endDateLable.text = _pendinglistitem.EndDate;
     if(_pendinglistitem.CaseTypeTxt!=NULL)
@@ -101,17 +106,20 @@
     [super layoutSubviews];
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    CGFloat imageWH= height - 2*kMargin;
+    CGFloat imageWH=  width/5;
     CGFloat leaveDateWidth = 80;
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     self.pendingDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     self.pendingTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.pendingStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH, txtH);
+    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
+    
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

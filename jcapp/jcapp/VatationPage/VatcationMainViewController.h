@@ -23,6 +23,9 @@ UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelega
     IBOutlet UIImageView *imageview;
     UIDatePicker*datePicker;
     NSLocale*datelocale;
+    NSString *flagstring;
+    NSString *xmlString;
+     NSMutableDictionary *info;
     
 }
 

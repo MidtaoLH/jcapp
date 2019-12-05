@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 /** 设置全局变量的属性. */
+//用户头像
 @property (nonatomic, strong) UIImageView *userPhotoimageView;
 
 @end

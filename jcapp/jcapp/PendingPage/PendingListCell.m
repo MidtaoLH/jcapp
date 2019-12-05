@@ -27,18 +27,17 @@
     
     if (!_pendingStatusLable) {
         _pendingStatusLable = [[UILabel alloc] init];
-        _pendingStatusLable.font = [UIFont systemFontOfSize:14];
+        _pendingStatusLable.font = kFont_Lable_14;
         _pendingStatusLable.textColor = Color_ProcessStutasColor;
     }
     return _pendingStatusLable;
 }
-
 - (UILabel *)pendingDateLable {
     
     if (!_pendingDateLable) {
         _pendingDateLable = [[UILabel alloc] init];
-        _pendingDateLable.font = [UIFont systemFontOfSize:12];
-        _pendingDateLable.textColor = [UIColor grayColor];
+        _pendingDateLable.font = kFont_Lable_12;
+        _pendingDateLable.textColor = kColor_Gray;
     }
     return _pendingDateLable;
 }
@@ -46,18 +45,17 @@
     
     if (!_beignDateLable) {
         _beignDateLable = [[UILabel alloc] init];
-        _beignDateLable.font = [UIFont systemFontOfSize:13];
-        _beignDateLable.textColor = [UIColor grayColor];
+        _beignDateLable.font = kFont_Lable_13;
+        _beignDateLable.textColor = kColor_Gray;
     }
     return _beignDateLable;
 }
-
 - (UILabel *)endDateLable {
     
     if (!_endDateLable) {
         _endDateLable = [[UILabel alloc] init];
-        _endDateLable.font = [UIFont systemFontOfSize:13];
-        _endDateLable.textColor = [UIColor grayColor];
+        _endDateLable.font = kFont_Lable_13;
+        _endDateLable.textColor =kColor_Gray;
     }
     return _endDateLable;
 }
@@ -65,20 +63,16 @@
     
     if (!_pendingTypeLable) {
         _pendingTypeLable = [[UILabel alloc] init];
-        _pendingTypeLable.font = [UIFont systemFontOfSize:13];
-        _pendingTypeLable.textColor = [UIColor grayColor];
+        _pendingTypeLable.font = kFont_Lable_13;
+        _pendingTypeLable.textColor = kColor_Gray;
     }
     return _pendingTypeLable;
 }
-
-
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
         [self.contentView addSubview:self.endDateLable];
         [self.contentView  addSubview:self.pendingTypeLable];
         [self.contentView  addSubview:self.beignDateLable];
@@ -91,25 +85,17 @@
 -(void)setPendinglistitem:(Pending *)pendinglistitem
 {
     _pendinglistitem =pendinglistitem;
-    
     self.textLabel.text = _pendinglistitem.CaseName;
-    
     self.pendingStatusLable.text = _pendinglistitem.CaseStatusTxt;
-    
     self.pendingDateLable.text = _pendinglistitem.CaseDate;
-    
     self.imageView.image =[UIImage imageNamed:@"01.jpg"];
-    
     self.beignDateLable.text = _pendinglistitem.BeignDate;
-    
     self.endDateLable.text = _pendinglistitem.EndDate;
-    
     if(_pendinglistitem.CaseTypeTxt!=NULL)
     {
         self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];
     }   
 }
-
 -(void)layoutSubviews
 {
     [super layoutSubviews];
@@ -126,8 +112,6 @@
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.pendingStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH, txtH);
-    
-
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -28,7 +28,7 @@
     if (!_pendingStatusLable) {
         _pendingStatusLable = [[UILabel alloc] init];
         _pendingStatusLable.font = [UIFont systemFontOfSize:14];
-        _pendingStatusLable.textColor = [UIColor redColor];
+        _pendingStatusLable.textColor = Color_ProcessStutasColor;
     }
     return _pendingStatusLable;
 }

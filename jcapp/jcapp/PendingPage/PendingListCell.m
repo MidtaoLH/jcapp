@@ -11,7 +11,7 @@
 #define kMargin 10
 
 @interface PendingListCell()
-
+@property (nonatomic, strong) UILabel *pendingCaseName;
 @property (nonatomic, strong) UILabel *pendingDateLable;
 @property (nonatomic, strong) UILabel *beignDateLable;
 @property (nonatomic, strong) UILabel *endDateLable;
@@ -23,22 +23,21 @@
 
 @implementation PendingListCell
 
-
-- (UILabel *)leaveStatusLable {
+- (UILabel *)pendingStatusLable {
     
     if (!_pendingStatusLable) {
         _pendingStatusLable = [[UILabel alloc] init];
-        _pendingStatusLable.font = [UIFont systemFontOfSize:15];
-        _pendingStatusLable.textColor = [UIColor grayColor];
+        _pendingStatusLable.font = [UIFont systemFontOfSize:14];
+        _pendingStatusLable.textColor = [UIColor redColor];
     }
     return _pendingStatusLable;
 }
 
-- (UILabel *)leaveDateLable {
+- (UILabel *)pendingDateLable {
     
     if (!_pendingDateLable) {
         _pendingDateLable = [[UILabel alloc] init];
-        _pendingDateLable.font = [UIFont systemFontOfSize:15];
+        _pendingDateLable.font = [UIFont systemFontOfSize:12];
         _pendingDateLable.textColor = [UIColor grayColor];
     }
     return _pendingDateLable;
@@ -47,7 +46,7 @@
     
     if (!_beignDateLable) {
         _beignDateLable = [[UILabel alloc] init];
-        _beignDateLable.font = [UIFont systemFontOfSize:15];
+        _beignDateLable.font = [UIFont systemFontOfSize:13];
         _beignDateLable.textColor = [UIColor grayColor];
     }
     return _beignDateLable;
@@ -57,16 +56,16 @@
     
     if (!_endDateLable) {
         _endDateLable = [[UILabel alloc] init];
-        _endDateLable.font = [UIFont systemFontOfSize:15];
+        _endDateLable.font = [UIFont systemFontOfSize:13];
         _endDateLable.textColor = [UIColor grayColor];
     }
     return _endDateLable;
 }
-- (UILabel *)leaveTypeLable {
+- (UILabel *)pendingTypeLable {
     
     if (!_pendingTypeLable) {
         _pendingTypeLable = [[UILabel alloc] init];
-        _pendingTypeLable.font = [UIFont systemFontOfSize:15];
+        _pendingTypeLable.font = [UIFont systemFontOfSize:13];
         _pendingTypeLable.textColor = [UIColor grayColor];
     }
     return _pendingTypeLable;
@@ -81,10 +80,10 @@
     if (self) {
         
         [self.contentView addSubview:self.endDateLable];
-        [self.contentView  addSubview:self.leaveTypeLable];
+        [self.contentView  addSubview:self.pendingTypeLable];
         [self.contentView  addSubview:self.beignDateLable];
-        [self.contentView  addSubview:self.leaveStatusLable];
-        [self.contentView  addSubview:self.leaveDateLable];
+        [self.contentView  addSubview:self.pendingStatusLable];
+        [self.contentView  addSubview:self.pendingDateLable];
     }
     return self;
 }
@@ -93,60 +92,50 @@
 {
     _pendinglistitem =pendinglistitem;
     
-    self.textLabel.text = @"李四提交的请假";
+    self.textLabel.text = _pendinglistitem.CaseName;
     
-    self.leaveStatusLable.text = @"承认中";
+    self.pendingStatusLable.text = _pendinglistitem.CaseStatusTxt;
     
-    self.leaveDateLable.text = @"2019.12.12";
+    self.pendingDateLable.text = _pendinglistitem.CaseDate;
     
     self.imageView.image =[UIImage imageNamed:@"01.jpg"];
     
-    self.beignDateLable.text = @"开始时间:2019.12.12";
+    self.beignDateLable.text = _pendinglistitem.BeignDate;
     
-    self.endDateLable.text = @"结束时间:2019.12.12";
+    self.endDateLable.text = _pendinglistitem.EndDate;
     
-    self.leaveTypeLable.text = @"请假类型:事假";
-    
+    if(_pendinglistitem.CaseTypeTxt!=NULL)
+    {
+        self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];
+    }   
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    CGFloat     width = self.bounds.size.width;
+    CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    
     CGFloat imageWH= height - 2*kMargin;
-    
     CGFloat leaveDateWidth = 80;
-    
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-    
     self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
-    
-    self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
-    
-    self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
-    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
+    self.pendingDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    self.pendingTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.pendingStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH, txtH);
     
-    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
+
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
 }
-
 @end

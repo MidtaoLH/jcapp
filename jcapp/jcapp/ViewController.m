@@ -222,7 +222,7 @@
             //跳转到首页
             UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
             
-            [self presentViewController:tabBarCtrl animated:NO completion:nil];
+            [self presentViewController:tabBarCtrl animated:YES completion:nil];
             
         }
         

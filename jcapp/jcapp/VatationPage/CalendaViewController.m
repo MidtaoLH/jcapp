@@ -94,7 +94,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     //设置时间格式
-    formatter.dateFormat = @"yyyy年 MM月 dd日";
+    formatter.dateFormat = @"yyyy-MM-dd";
     
     
     

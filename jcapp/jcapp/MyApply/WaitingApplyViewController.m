@@ -9,20 +9,24 @@
 #import "WaitingApplyViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
+//#import "../PendingPage/PendingListCell.h"
 #import "ApplyListCell.h"
+#import "../MJRefresh/MJRefresh.h"
 
 
-static NSString * identifier = @"LeaveListCell";
+static NSString * identifier = @"PendingListCell";
 
 @interface WaitingApplyViewController ()
 
 @end
 
 @implementation WaitingApplyViewController
-
+NSInteger currentPageCountwait;
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
+    
+    [super viewDidLoad];
     
     //设置顶部导航栏的显示名称
     self.navigationItem.title=@"待申请记录";
@@ -30,15 +34,36 @@ static NSString * identifier = @"LeaveListCell";
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    
-    //设置需要访问的ws和传入参数
+    //e注册自定义 cell
+    [_NewTableView registerClass:[ApplyListCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 150;
+    currentPageCountwait=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid = [defaults objectForKey:@"userid"];
-    NSString *empid = @"21";//[defaults objectForKey:@"EmpID"];
-
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetPendingInfo?code=%@&userID=%@&menuID=%@", userid,empid,@"2"];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
     
+    [self LoadData];
+    
+    // 添加头部的下拉刷新
+    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+    self.NewTableView.mj_header = header;
+
+    // 添加底部的上拉加载
+    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+    self.NewTableView.mj_footer = footer;
+}
+
+-(void)LoadData
+{
+    //设置需要访问的ws和传入参数
+    // code, string userID, string menuID
+    //设置需要访问的ws和传入参数
+    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"2"];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -46,15 +71,31 @@ static NSString * identifier = @"LeaveListCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    //e注册自定义 cell
-    [_NewTableView registerClass:[ApplyListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
-    
-    [super viewDidLoad];
-    
+}
 
-    
-    //NSLog(@"%@",@"viewDidLoad-end");
+// 2.实现下拉刷新和上拉加载的事件。
+// 头部的下拉刷新触发事件
+- (void)headerClick {
+    // 可在此处实现下拉刷新时要执行的代码
+    // ......
+    //if(currentPageCount>1)
+    //currentPageCount--;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_header endRefreshing];
+}
+// 底部的上拉加载触发事件
+- (void)footerClick {
+    // 可在此处实现上拉加载时要执行的代码
+    // ......
+    currentPageCountwait=currentPageCountwait+[Common_PageSizeAdd intValue];
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_footer endRefreshing];
 }
 
 
@@ -71,7 +112,7 @@ static NSString * identifier = @"LeaveListCell";
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@", @"kaishidayin");
+    NSLog(@"%@", @"34443333kaishidayin");
     NSLog(@"%@", xmlString);
     
     // 字符串截取
@@ -197,41 +238,23 @@ static NSString * identifier = @"LeaveListCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-  //  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-  //  if (cell == nil){
-  //      cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
-  //  }
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
      ApplyListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
-   // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
-    
- //  LeaveListModel *m =self.listOfMovies[indexPath.row];//取出数据元素
-    
- //  cell.textLabel.text = m.LeaveVersion;
-    
-  //  cell.detailTextLabel.text = m.LeaveApplyCode;
-    
-  
- 
+    cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
+
     return cell;
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"请假记录";
-}
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-//    NSLog(@"%@",@"tableView3-begin");
-//    // 返回底部文字
-    return @"";
+    if([indexPath row] == [self.listOfMovies count])
+    {
+    }
+    else
+    {
+        //其它单元格的事件
+    }
 }
 
 @end

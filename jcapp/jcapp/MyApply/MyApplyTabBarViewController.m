@@ -56,6 +56,11 @@
     nav.tabBarItem.title = @"待处理";
     
     [self addChildViewController: nav];
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.hidesBackButton=false;
+    self.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
+    
     //设置字体
 //    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:25], NSFontAttributeName, nil] forState:UIControlStateNormal];
 
@@ -94,11 +99,28 @@
 //
 //    });
 //}
-
-
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
+    //UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(goBack)];
+    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
+    //UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    //backItem.title =@"返回";
     
-    self.navigationController.navigationBarHidden = YES;
-    
+    [self.navigationItem setLeftBarButtonItem:backItem];
+    self.navigationItem.title=@"待申请记录";
 }
+
+- (void)goBack {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    //[self.navigationController setNavigationBarHidden:NO animated:NO];
+////    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+////    temporaryBarButtonItem.title =@"返回";
+////    self.navigationItem.hidesBackButton=false;
+////    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+//}
 @end

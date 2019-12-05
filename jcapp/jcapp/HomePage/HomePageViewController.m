@@ -367,9 +367,13 @@ static NSString *identifier =@"TableViewCell";
         switch (index) {
             case 0:
             {
-                UITabBarController *tabBarCtrl = [[MyApplyTabBarViewController alloc]init];
-                
-                [self presentViewController:tabBarCtrl animated:NO completion:nil];
+                //UITabBarController *tabBarCtrl = [[MyApplyTabBarViewController alloc]init];
+                //[self presentViewController:tabBarCtrl animated:NO completion:nil];
+                UITabBarController *vc = [[MyApplyTabBarViewController alloc] init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+                [self presentViewController:navigationController animated:YES completion:nil];
+                //[self presentViewController:navigationController animated:YES completion:^{}];
+
                 //[self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
             }
                 break;
@@ -377,7 +381,7 @@ static NSString *identifier =@"TableViewCell";
             {
                 UITabBarController *tabBarCtrl = [[PendingTabBarViewController alloc]init];
                 
-                [self presentViewController:tabBarCtrl animated:NO completion:nil];
+                [self presentViewController:tabBarCtrl animated:YES completion:nil];
             }
                 break;
             case 2:
@@ -410,7 +414,7 @@ static NSString *identifier =@"TableViewCell";
                 NSLog(@"点击第1个按键");
                 UITabBarController *tabBarCtrl = [[LeaveTabBarViewController alloc]init];
                 
-                [self presentViewController:tabBarCtrl animated:NO completion:nil];
+                [self presentViewController:tabBarCtrl animated:YES completion:nil];
                 
 //                LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
 //                //从底部划入

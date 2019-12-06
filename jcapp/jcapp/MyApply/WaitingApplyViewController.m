@@ -29,7 +29,7 @@ NSInteger currentPageCountwait;
     [super viewDidLoad];
     
     //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"待申请记录";
+//    self.navigationItem.title=@"待申请记录";
 //    //设置子视图的f导航栏的返回按钮
 //    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
 //    temporaryBarButtonItem.title =@"返回";
@@ -54,6 +54,8 @@ NSInteger currentPageCountwait;
     MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
+    
+    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
 }
 
 -(void)LoadData

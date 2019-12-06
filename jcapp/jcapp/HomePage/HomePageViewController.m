@@ -367,14 +367,12 @@ static NSString *identifier =@"TableViewCell";
         switch (index) {
             case 0:
             {
-                //UITabBarController *tabBarCtrl = [[MyApplyTabBarViewController alloc]init];
-                //[self presentViewController:tabBarCtrl animated:NO completion:nil];
-                UITabBarController *vc = [[MyApplyTabBarViewController alloc] init];
-                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-                [self presentViewController:navigationController animated:YES completion:nil];
                 //[self presentViewController:navigationController animated:YES completion:^{}];
 
                 //[self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+                UITabBarController *tabBarCtrl = [[MyApplyTabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 1:

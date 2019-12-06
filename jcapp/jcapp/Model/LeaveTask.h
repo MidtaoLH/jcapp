@@ -1,8 +1,8 @@
 //
-//  LeaveDeatil.h
+//  LeaveTask.h
 //  jcapp
 //
-//  Created by zclmac on 2019/12/4.
+//  Created by zclmac on 2019/12/6.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LeaveDeatil : NSObject
+@interface LeaveTask : NSObject
 
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * groupname;
@@ -21,10 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * TaskDate;
 
 @property (nonatomic,copy) NSString * Remark;
- 
-@property (nonatomic,copy) NSString * TaskNodeOperateType;
-@property (nonatomic,copy) NSString * TaskAuditeStatus;
-@property (nonatomic,copy) NSString * ProcessStutas;
 
 @end
 

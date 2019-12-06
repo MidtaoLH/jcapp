@@ -7,6 +7,7 @@
 //
 
 #import "LeaveDetailCell.h"
+#import "MultiParamButton.h"
 
 #define kMargin 10
 
@@ -18,11 +19,31 @@
 @property (nonatomic, strong) UILabel *lbllevelname;
 @property (nonatomic, strong) UILabel *lblremark;
 
+@property (nonatomic, strong) MultiParamButton *btnemail;
+
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
 @implementation LeaveDetailCell
 
+- (MultiParamButton *)btnemail {
+    
+    if (!_btnemail) {
+        _btnemail = [[MultiParamButton alloc] init];
+       [_btnemail setTitle:@"提醒他" forState:UIControlStateNormal];
+        _btnemail.backgroundColor = [UIColor orangeColor];
+        // 一行代码给按钮添加事件
+       [_btnemail addTarget:self action:@selector(action:)   forControlEvents:UIControlEventTouchUpInside];
+ 
+    }
+    return _btnemail;
+}
+-(void)action:(id)sender{
+    MultiParamButton* multiParamButton = (MultiParamButton* )sender;
+    
+    NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
+ 
+}
 - (UILabel *)lblleaveDate {
     
     if (!_lblleaveDate) {
@@ -89,6 +110,7 @@
         [self.contentView  addSubview:self.lblleaveDate];
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
+        [self.contentView  addSubview:self.btnemail];
     }
     return self;
 }
@@ -105,9 +127,8 @@
     self.lblgroupname.text = _leavedetail.groupname;
     
     self.imageView.image =[UIImage imageNamed:@"01.jpg"];
- 
- 
-         self.lblremark.text =  _leavedetail.Remark;
+
+    self.lblremark.text =  _leavedetail.Remark;
  
  
         /*
@@ -125,6 +146,22 @@
   
     
      self.lblleaveDate.text = _leavedetail.TaskDate;
+    
+    self.btnemail.hidden = YES;
+    if([_leavedetail.TaskNodeOperateType isEqualToString: @"2"])
+    {
+        if([_leavedetail.TaskAuditeStatus isEqualToString: @"1"] || [_leavedetail.TaskAuditeStatus isEqualToString: @"2"] )
+        {
+            if([_leavedetail.ProcessStutas isEqualToString: @"2"] || [_leavedetail.ProcessStutas isEqualToString: @"3"]  || [_leavedetail.ProcessStutas isEqualToString: @"4"] )
+            {
+                self.btnemail.hidden = NO;
+                NSDictionary* paramDic = @{@"one":@"one",@"two":@2,@"third":@(3)};
+                self.btnemail.multiParamDic= paramDic;
+ 
+            }
+        }
+    }
+    
 }
 
 -(void)layoutSubviews
@@ -158,6 +195,7 @@
     
     self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
     
+    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

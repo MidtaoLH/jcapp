@@ -179,6 +179,9 @@
 		EBAD2E9B239A12C7004FAE82 /* LTSCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E8F239A12C7004FAE82 /* LTSCalendarViewController.m */; };
 		EBAD2E9C239A12C7004FAE82 /* LTSCalendarWeekDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E91239A12C7004FAE82 /* LTSCalendarWeekDayView.m */; };
 		EBAD2E9D239A12C7004FAE82 /* LTSCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E93239A12C7004FAE82 /* LTSCircleView.m */; };
+		EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */; };
+		EBAD2EA2239A1424004FAE82 /* AttendanceSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAD2EA0239A1424004FAE82 /* AttendanceSummaryViewController.xib */; };
+		EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2EA3239A148D004FAE82 /* AttendanceTabBarViewController.m */; };
 		EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB5CDE2238545B700FCA5B5 /* UsersViewController.m */; };
 		EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBB5CDE3238545B700FCA5B5 /* UsersViewController.xib */; };
 		EBCF6BF923974D4300893A02 /* Pending.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BF823974D4300893A02 /* Pending.m */; };
@@ -537,6 +540,11 @@
 		EBAD2E91239A12C7004FAE82 /* LTSCalendarWeekDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarWeekDayView.m; sourceTree = "<group>"; };
 		EBAD2E92239A12C7004FAE82 /* LTSCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCircleView.h; sourceTree = "<group>"; };
 		EBAD2E93239A12C7004FAE82 /* LTSCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCircleView.m; sourceTree = "<group>"; };
+		EBAD2E9E239A1424004FAE82 /* AttendanceSummaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceSummaryViewController.h; sourceTree = "<group>"; };
+		EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceSummaryViewController.m; sourceTree = "<group>"; };
+		EBAD2EA0239A1424004FAE82 /* AttendanceSummaryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceSummaryViewController.xib; sourceTree = "<group>"; };
+		EBAD2EA3239A148D004FAE82 /* AttendanceTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceTabBarViewController.m; sourceTree = "<group>"; };
+		EBAD2EA5239A1499004FAE82 /* AttendanceTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceTabBarViewController.h; sourceTree = "<group>"; };
 		EBB5CDE1238545B700FCA5B5 /* UsersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UsersViewController.h; sourceTree = "<group>"; };
 		EBB5CDE2238545B700FCA5B5 /* UsersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UsersViewController.m; sourceTree = "<group>"; };
 		EBB5CDE3238545B700FCA5B5 /* UsersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UsersViewController.xib; sourceTree = "<group>"; };
@@ -1089,6 +1097,11 @@
 				EBAD2E79239A1257004FAE82 /* AttendanceCalendarViewController.h */,
 				EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */,
 				EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */,
+				EBAD2E9E239A1424004FAE82 /* AttendanceSummaryViewController.h */,
+				EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */,
+				EBAD2EA0239A1424004FAE82 /* AttendanceSummaryViewController.xib */,
+				EBAD2EA3239A148D004FAE82 /* AttendanceTabBarViewController.m */,
+				EBAD2EA5239A1499004FAE82 /* AttendanceTabBarViewController.h */,
 			);
 			path = AttendanceCalendar;
 			sourceTree = "<group>";
@@ -1264,6 +1277,7 @@
 				AF7EC2FA2396151100257CF1 /* WaitingApplyViewController.xib in Resources */,
 				EB30A4B02398CF7F00EEAE1E /* ReviewApprovalDetailsViewController.xib in Resources */,
 				EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */,
+				EBAD2EA2239A1424004FAE82 /* AttendanceSummaryViewController.xib in Resources */,
 				EB30A48F2398CECE00EEAE1E /* MJRefresh.bundle in Resources */,
 				7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */,
 				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
@@ -1343,6 +1357,7 @@
 				77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,
+				EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */,
 				EBAD2E99239A12C7004FAE82 /* LTSCalendarManager.m in Sources */,
 				AF0ABEE1238F9B5A00F46278 /* SDImageCoder.m in Sources */,
 				AF0ABECE238F9B5A00F46278 /* NSData+ImageContentType.m in Sources */,
@@ -1433,6 +1448,7 @@
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
+				EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */,
 				EBAD2E9B239A12C7004FAE82 /* LTSCalendarViewController.m in Sources */,
 				EB30A4942398CECE00EEAE1E /* UIScrollView+MJRefresh.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,

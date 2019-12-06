@@ -18,7 +18,8 @@
 #import "../PendingPage/PendingViewController.h"
 #import "../MyApply/MyApplyTabBarViewController.h"
 #import "../PendingPage/PendingTabBarViewController.h"
-
+#import "../AttendanceCalendar/AttendanceTabBarViewController.h"
+#import "../AttendanceCalendar/AttendanceCalendarViewController.h"
 /**屏幕尺寸-宽度*/
 #define kWidth ([UIScreen mainScreen].bounds.size.width)
 /**屏幕尺寸-高度*/
@@ -453,7 +454,8 @@ static NSString *identifier =@"TableViewCell";
         switch (index) {
             case 0:
             {
-                NSLog(@"点击第一个按键");
+                UITabBarController *tabBarCtrl = [[AttendanceTabBarViewController alloc]init];
+                [self presentViewController:tabBarCtrl animated:YES completion:nil];
             }
                 break;
             case 1:

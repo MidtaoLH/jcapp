@@ -169,16 +169,6 @@
 		EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A358F238E35DE006573A9 /* UserInfo.m */; };
 		EBAD2E7C239A1257004FAE82 /* AttendanceCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */; };
 		EBAD2E7D239A1257004FAE82 /* AttendanceCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */; };
-		EBAD2E94239A12C7004FAE82 /* LTSCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E80239A12C7004FAE82 /* LTSCalendarAppearance.m */; };
-		EBAD2E95239A12C7004FAE82 /* LTSCalendarCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E82239A12C7004FAE82 /* LTSCalendarCollectionCell.m */; };
-		EBAD2E96239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E84239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.m */; };
-		EBAD2E97239A12C7004FAE82 /* LTSCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E86239A12C7004FAE82 /* LTSCalendarContentView.m */; };
-		EBAD2E98239A12C7004FAE82 /* LTSCalendarDayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E88239A12C7004FAE82 /* LTSCalendarDayItem.m */; };
-		EBAD2E99239A12C7004FAE82 /* LTSCalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E8B239A12C7004FAE82 /* LTSCalendarManager.m */; };
-		EBAD2E9A239A12C7004FAE82 /* LTSCalendarScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E8D239A12C7004FAE82 /* LTSCalendarScrollView.m */; };
-		EBAD2E9B239A12C7004FAE82 /* LTSCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E8F239A12C7004FAE82 /* LTSCalendarViewController.m */; };
-		EBAD2E9C239A12C7004FAE82 /* LTSCalendarWeekDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E91239A12C7004FAE82 /* LTSCalendarWeekDayView.m */; };
-		EBAD2E9D239A12C7004FAE82 /* LTSCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E93239A12C7004FAE82 /* LTSCircleView.m */; };
 		EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */; };
 		EBAD2EA2239A1424004FAE82 /* AttendanceSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAD2EA0239A1424004FAE82 /* AttendanceSummaryViewController.xib */; };
 		EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2EA3239A148D004FAE82 /* AttendanceTabBarViewController.m */; };
@@ -519,27 +509,6 @@
 		EBAD2E79239A1257004FAE82 /* AttendanceCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceCalendarViewController.h; sourceTree = "<group>"; };
 		EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceCalendarViewController.m; sourceTree = "<group>"; };
 		EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceCalendarViewController.xib; sourceTree = "<group>"; };
-		EBAD2E7F239A12C7004FAE82 /* LTSCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarAppearance.h; sourceTree = "<group>"; };
-		EBAD2E80239A12C7004FAE82 /* LTSCalendarAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarAppearance.m; sourceTree = "<group>"; };
-		EBAD2E81239A12C7004FAE82 /* LTSCalendarCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarCollectionCell.h; sourceTree = "<group>"; };
-		EBAD2E82239A12C7004FAE82 /* LTSCalendarCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarCollectionCell.m; sourceTree = "<group>"; };
-		EBAD2E83239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		EBAD2E84239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarCollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		EBAD2E85239A12C7004FAE82 /* LTSCalendarContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarContentView.h; sourceTree = "<group>"; };
-		EBAD2E86239A12C7004FAE82 /* LTSCalendarContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarContentView.m; sourceTree = "<group>"; };
-		EBAD2E87239A12C7004FAE82 /* LTSCalendarDayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarDayItem.h; sourceTree = "<group>"; };
-		EBAD2E88239A12C7004FAE82 /* LTSCalendarDayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarDayItem.m; sourceTree = "<group>"; };
-		EBAD2E89239A12C7004FAE82 /* LTSCalendarEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarEventSource.h; sourceTree = "<group>"; };
-		EBAD2E8A239A12C7004FAE82 /* LTSCalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarManager.h; sourceTree = "<group>"; };
-		EBAD2E8B239A12C7004FAE82 /* LTSCalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarManager.m; sourceTree = "<group>"; };
-		EBAD2E8C239A12C7004FAE82 /* LTSCalendarScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarScrollView.h; sourceTree = "<group>"; };
-		EBAD2E8D239A12C7004FAE82 /* LTSCalendarScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarScrollView.m; sourceTree = "<group>"; };
-		EBAD2E8E239A12C7004FAE82 /* LTSCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarViewController.h; sourceTree = "<group>"; };
-		EBAD2E8F239A12C7004FAE82 /* LTSCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarViewController.m; sourceTree = "<group>"; };
-		EBAD2E90239A12C7004FAE82 /* LTSCalendarWeekDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCalendarWeekDayView.h; sourceTree = "<group>"; };
-		EBAD2E91239A12C7004FAE82 /* LTSCalendarWeekDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCalendarWeekDayView.m; sourceTree = "<group>"; };
-		EBAD2E92239A12C7004FAE82 /* LTSCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCircleView.h; sourceTree = "<group>"; };
-		EBAD2E93239A12C7004FAE82 /* LTSCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCircleView.m; sourceTree = "<group>"; };
 		EBAD2E9E239A1424004FAE82 /* AttendanceSummaryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceSummaryViewController.h; sourceTree = "<group>"; };
 		EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceSummaryViewController.m; sourceTree = "<group>"; };
 		EBAD2EA0239A1424004FAE82 /* AttendanceSummaryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceSummaryViewController.xib; sourceTree = "<group>"; };
@@ -1045,7 +1014,6 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
-				EBAD2E7E239A12C7004FAE82 /* LTSCalendar */,
 				EBAD2E78239A120B004FAE82 /* AttendanceCalendar */,
 				EB30A4502398CECE00EEAE1E /* MJRefresh */,
 				EBCF6BFB23974DB600893A02 /* PendingPage */,
@@ -1104,34 +1072,6 @@
 				EBAD2EA5239A1499004FAE82 /* AttendanceTabBarViewController.h */,
 			);
 			path = AttendanceCalendar;
-			sourceTree = "<group>";
-		};
-		EBAD2E7E239A12C7004FAE82 /* LTSCalendar */ = {
-			isa = PBXGroup;
-			children = (
-				EBAD2E7F239A12C7004FAE82 /* LTSCalendarAppearance.h */,
-				EBAD2E80239A12C7004FAE82 /* LTSCalendarAppearance.m */,
-				EBAD2E81239A12C7004FAE82 /* LTSCalendarCollectionCell.h */,
-				EBAD2E82239A12C7004FAE82 /* LTSCalendarCollectionCell.m */,
-				EBAD2E83239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.h */,
-				EBAD2E84239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.m */,
-				EBAD2E85239A12C7004FAE82 /* LTSCalendarContentView.h */,
-				EBAD2E86239A12C7004FAE82 /* LTSCalendarContentView.m */,
-				EBAD2E87239A12C7004FAE82 /* LTSCalendarDayItem.h */,
-				EBAD2E88239A12C7004FAE82 /* LTSCalendarDayItem.m */,
-				EBAD2E89239A12C7004FAE82 /* LTSCalendarEventSource.h */,
-				EBAD2E8A239A12C7004FAE82 /* LTSCalendarManager.h */,
-				EBAD2E8B239A12C7004FAE82 /* LTSCalendarManager.m */,
-				EBAD2E8C239A12C7004FAE82 /* LTSCalendarScrollView.h */,
-				EBAD2E8D239A12C7004FAE82 /* LTSCalendarScrollView.m */,
-				EBAD2E8E239A12C7004FAE82 /* LTSCalendarViewController.h */,
-				EBAD2E8F239A12C7004FAE82 /* LTSCalendarViewController.m */,
-				EBAD2E90239A12C7004FAE82 /* LTSCalendarWeekDayView.h */,
-				EBAD2E91239A12C7004FAE82 /* LTSCalendarWeekDayView.m */,
-				EBAD2E92239A12C7004FAE82 /* LTSCircleView.h */,
-				EBAD2E93239A12C7004FAE82 /* LTSCircleView.m */,
-			);
-			path = LTSCalendar;
 			sourceTree = "<group>";
 		};
 		EBB5CDE02385458700FCA5B5 /* UsersPage */ = {
@@ -1335,7 +1275,6 @@
 				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
 				EB30A4882398CECE00EEAE1E /* MJRefreshAutoStateFooter.m in Sources */,
 				AF7EC2D823960EDF00257CF1 /* ApplyListCell.m in Sources */,
-				EBAD2E9D239A12C7004FAE82 /* LTSCircleView.m in Sources */,
 				77F10CFB2394F9EC005679B0 /* LeaveListModel.m in Sources */,
 				EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */,
 				AF0ABEDA238F9B5A00F46278 /* SDAnimatedImageView.m in Sources */,
@@ -1348,17 +1287,14 @@
 				AF0ABEEB238F9B5A00F46278 /* SDMemoryCache.m in Sources */,
 				AF0ABEF4238F9B5A00F46278 /* SDWebImageError.m in Sources */,
 				AF0ABEE3238F9B5A00F46278 /* SDImageCodersManager.m in Sources */,
-				EBAD2E95239A12C7004FAE82 /* LTSCalendarCollectionCell.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
 				7756E87F2397FD0D00BF6944 /* LeaveWaitCell.m in Sources */,
-				EBAD2E97239A12C7004FAE82 /* LTSCalendarContentView.m in Sources */,
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,
 				EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */,
-				EBAD2E99239A12C7004FAE82 /* LTSCalendarManager.m in Sources */,
 				AF0ABEE1238F9B5A00F46278 /* SDImageCoder.m in Sources */,
 				AF0ABECE238F9B5A00F46278 /* NSData+ImageContentType.m in Sources */,
 				AF0ABF01238F9B5A00F46278 /* UIImageView+WebCache.m in Sources */,
@@ -1383,7 +1319,6 @@
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				AF0ABEE6238F9B5A00F46278 /* SDImageGraphics.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
-				EBAD2E98239A12C7004FAE82 /* LTSCalendarDayItem.m in Sources */,
 				EB30A4872398CECE00EEAE1E /* MJRefreshAutoNormalFooter.m in Sources */,
 				AF0ABEDE238F9B5A00F46278 /* SDImageCacheConfig.m in Sources */,
 				AF7EC2CD23960BC900257CF1 /* MyApplyTabBarViewController.m in Sources */,
@@ -1412,7 +1347,6 @@
 				AF0ABECD238F9B5A00F46278 /* NSButton+WebCache.m in Sources */,
 				AF0ABED5238F9B5A00F46278 /* SDWeakProxy.m in Sources */,
 				EB30A4912398CECE00EEAE1E /* MJRefreshConst.m in Sources */,
-				EBAD2E94239A12C7004FAE82 /* LTSCalendarAppearance.m in Sources */,
 				AF0ABEF1238F9B5A00F46278 /* SDWebImageDownloaderConfig.m in Sources */,
 				AF0ABEF7238F9B5A00F46278 /* SDWebImagePrefetcher.m in Sources */,
 				AF0ABEFD238F9B5A00F46278 /* UIImage+Metadata.m in Sources */,
@@ -1426,7 +1360,6 @@
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,
 				EB30A4B12398CF7F00EEAE1E /* EditApprovalDetailsViewController.m in Sources */,
 				EB30A4AE2398CF7F00EEAE1E /* ReviewApprovalDetailsViewController.m in Sources */,
-				EBAD2E9C239A12C7004FAE82 /* LTSCalendarWeekDayView.m in Sources */,
 				AF0ABEE0238F9B5A00F46278 /* SDImageCachesManager.m in Sources */,
 				775B61BC238C10FB00985FF3 /* WJWebserviceHttpRequest.m in Sources */,
 				EB4315F0237FB414007D1213 /* main.m in Sources */,
@@ -1449,7 +1382,6 @@
 				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
 				EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */,
-				EBAD2E9B239A12C7004FAE82 /* LTSCalendarViewController.m in Sources */,
 				EB30A4942398CECE00EEAE1E /* UIScrollView+MJRefresh.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,
 				AF0ABEFC238F9B5A00F46278 /* UIImage+MemoryCacheCost.m in Sources */,
@@ -1465,9 +1397,7 @@
 				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
 				AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */,
 				EB30A49D2398CF1300EEAE1E /* MJRefreshBackGifFooter.m in Sources */,
-				EBAD2E96239A12C7004FAE82 /* LTSCalendarCollectionViewFlowLayout.m in Sources */,
 				EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */,
-				EBAD2E9A239A12C7004FAE82 /* LTSCalendarScrollView.m in Sources */,
 				AF0ABEF2238F9B5A00F46278 /* SDWebImageDownloaderOperation.m in Sources */,
 				77FF8B2F2398EDD800C64307 /* LeaveDeatil.m in Sources */,
 				EB30A48B2398CECE00EEAE1E /* MJRefreshBackStateFooter.m in Sources */,

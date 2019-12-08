@@ -11,6 +11,7 @@
 #import "../Model/LeaveHead.h"
 #import "../Model/LeaveDeatil.h"
 #import "LeaveDetailCell.h"
+#import "../Model/LeaveTask.h"
 
 @interface LeaveDetailController ()
 
@@ -24,6 +25,7 @@ static NSString *identifier =@"LeaveDetailCell";
 
 @synthesize listdetail;
 @synthesize listhead;
+@synthesize  listtask;
 
 - (void)viewDidLoad {
     
@@ -88,10 +90,11 @@ static NSString *identifier =@"LeaveDetailCell";
     
     NSRange startRange2 =[xmlString rangeOfString:@",\"ds1\":"];
     NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
-    
-    //获取明细表数据
-    NSRange reusltRagnedetail = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
-    NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail];
+ 
+
+    //获取回览明细表数据
+    NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
+    NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
     
     NSString *requestTmp2 = [NSString stringWithString:resultString2];
     NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
@@ -251,6 +254,7 @@ static NSString *identifier =@"LeaveDetailCell";
     LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
  
     cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
+    
     return cell;
 }
 

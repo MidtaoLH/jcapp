@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "../BSLCalendar/BSLCalendar.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AttendanceCalendarViewController : UIViewController
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
 @end
 
 NS_ASSUME_NONNULL_END

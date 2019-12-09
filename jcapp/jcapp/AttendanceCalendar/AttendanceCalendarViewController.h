@@ -11,9 +11,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AttendanceCalendarViewController : UIViewController
+{
+    NSString *infoString;
+    NSMutableDictionary *userinfo;
+    NSString *infocurrentTagName;
+    NSString *infocurrentValue;
+    NSString *inforesultString;
+    NSString *allString;
+}
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+
 @end
 
 NS_ASSUME_NONNULL_END

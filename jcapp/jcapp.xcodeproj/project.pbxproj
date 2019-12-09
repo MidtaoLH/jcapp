@@ -128,6 +128,7 @@
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
 		AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */; };
 		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
+		EB013570239E070100222B5E /* MyDateTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01356F239E070100222B5E /* MyDateTimeView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
 		EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4532398CECE00EEAE1E /* MJRefreshAutoFooter.m */; };
@@ -440,6 +441,8 @@
 		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
+		EB01356E239E070100222B5E /* MyDateTimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDateTimeView.h; sourceTree = "<group>"; };
+		EB01356F239E070100222B5E /* MyDateTimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDateTimeView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
@@ -908,6 +911,15 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
+		EB01356D239E070100222B5E /* Dateview */ = {
+			isa = PBXGroup;
+			children = (
+				EB01356E239E070100222B5E /* MyDateTimeView.h */,
+				EB01356F239E070100222B5E /* MyDateTimeView.m */,
+			);
+			path = Dateview;
+			sourceTree = "<group>";
+		};
 		EB30A4502398CECE00EEAE1E /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -1045,6 +1057,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				EB01356D239E070100222B5E /* Dateview */,
 				EBFCD8FC239D2317005A99EB /* BSLCalendar */,
 				EBAD2E78239A120B004FAE82 /* AttendanceCalendar */,
 				EB30A4502398CECE00EEAE1E /* MJRefresh */,
@@ -1479,6 +1492,7 @@
 				EB30A48C2398CECE00EEAE1E /* MJRefreshGifHeader.m in Sources */,
 				AF0ABEE5238F9B5A00F46278 /* SDImageGIFCoder.m in Sources */,
 				AF0ABED4238F9B5A00F46278 /* SDInternalMacros.m in Sources */,
+				EB013570239E070100222B5E /* MyDateTimeView.m in Sources */,
 				EB30A4842398CECE00EEAE1E /* MJRefreshFooter.m in Sources */,
 				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
 				AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */,

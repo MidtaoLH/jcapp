@@ -23,12 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnloginout;
 @property (nonatomic, strong) NSMutableData *mResponseData;
 @end
-NSString *infoString;
-NSMutableDictionary *userinfo;
-NSString *infocurrentTagName;
-NSString *infocurrentValue;
-NSString *inforesultString;
-NSString *allString;
+
 @implementation UsersViewController
 - (void)viewDidLoad {
     

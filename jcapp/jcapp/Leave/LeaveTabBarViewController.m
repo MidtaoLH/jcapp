@@ -67,10 +67,22 @@
     return YES;
 }
 - (void)viewWillAppear:(BOOL)animated {
-
-    self.navigationController.navigationBarHidden = YES;
-
+    //[self.navigationController setNavigationBarHidden:NO animated:NO];
+    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
+    
+    [self.navigationItem setLeftBarButtonItem:backItem];
+    self.navigationItem.title=@"待请假记录";
 }
+
+- (void)goBack {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+//- (void)viewWillAppear:(BOOL)animated {
+//
+//    self.navigationController.navigationBarHidden = YES;
+//
+//}
 
 
 @end

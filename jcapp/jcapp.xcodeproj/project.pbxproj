@@ -34,6 +34,7 @@
 		77F10CFE2394FD1A005679B0 /* LeaveListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F10CFD2394FD1A005679B0 /* LeaveListCell.m */; };
 		77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */ = {isa = PBXBuildFile; fileRef = 77FF8B2B2398EDA400C64307 /* LeaveHead.m */; };
 		77FF8B2F2398EDD800C64307 /* LeaveDeatil.m in Sources */ = {isa = PBXBuildFile; fileRef = 77FF8B2E2398EDD800C64307 /* LeaveDeatil.m */; };
+		8D76FA95239E4D3C00184982 /* LeaveStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D76FA94239E4D3C00184982 /* LeaveStatusModel.m */; };
 		8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8409F5238FA3A300A58623 /* CalendaViewController.m */; };
 		8D8409F8238FA3A300A58623 /* CalendaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8409F6238FA3A300A58623 /* CalendaViewController.xib */; };
 		8D8954BB239662A600F1E109 /* WayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8954B9239662A600F1E109 /* WayViewController.m */; };
@@ -258,6 +259,8 @@
 		77FF8B2B2398EDA400C64307 /* LeaveHead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveHead.m; sourceTree = "<group>"; };
 		77FF8B2D2398EDD800C64307 /* LeaveDeatil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveDeatil.h; sourceTree = "<group>"; };
 		77FF8B2E2398EDD800C64307 /* LeaveDeatil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveDeatil.m; sourceTree = "<group>"; };
+		8D76FA93239E4D3C00184982 /* LeaveStatusModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveStatusModel.h; sourceTree = "<group>"; };
+		8D76FA94239E4D3C00184982 /* LeaveStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveStatusModel.m; sourceTree = "<group>"; };
 		8D8409F4238FA3A300A58623 /* CalendaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendaViewController.h; sourceTree = "<group>"; };
 		8D8409F5238FA3A300A58623 /* CalendaViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendaViewController.m; sourceTree = "<group>"; };
 		8D8409F6238FA3A300A58623 /* CalendaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendaViewController.xib; sourceTree = "<group>"; };
@@ -678,6 +681,8 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8D76FA93239E4D3C00184982 /* LeaveStatusModel.h */,
+				8D76FA94239E4D3C00184982 /* LeaveStatusModel.m */,
 				EBCF6BF823974D4300893A02 /* Pending.m */,
 				EBCF6BF723974D3300893A02 /* Pending.h */,
 				AF0ABC41238F5FCE00F46278 /* NoticeNews.h */,
@@ -1460,6 +1465,7 @@
 				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
 				AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */,
 				EB30A49D2398CF1300EEAE1E /* MJRefreshBackGifFooter.m in Sources */,
+				8D76FA95239E4D3C00184982 /* LeaveStatusModel.m in Sources */,
 				EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */,
 				EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */,
 				AF0ABEF2238F9B5A00F46278 /* SDWebImageDownloaderOperation.m in Sources */,

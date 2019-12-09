@@ -50,6 +50,8 @@
     [recognizery setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [self addGestureRecognizer:recognizer];
     [self addGestureRecognizer:recognizery];
+    
+    
  
 }
 - (void)selectMonth:(void (^)(BOOL increase))selectBlock{

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/UsersPage/UsersViewController.m"
-            timestampString = "597495862.351135"
+            timestampString = "597557029.6696841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
             landmarkName = "-connection:didReceiveData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/BSLCalendar/ControlsView/WeeksView.m"
-            timestampString = "597500732.9322751"
+            filePath = "jcapp/Dateview/MyDateTimeView.m"
+            timestampString = "597561662.700158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "-buttonClick:"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-configButtonClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

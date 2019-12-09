@@ -129,6 +129,7 @@
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
 		AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */; };
 		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
+		EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00A226239E6CA600378B0B /* WHUCalDrawView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
 		EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4532398CECE00EEAE1E /* MJRefreshAutoFooter.m */; };
@@ -163,8 +164,6 @@
 		EB30A4B52398CF7F00EEAE1E /* PendingApprovedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4AC2398CF7F00EEAE1E /* PendingApprovedViewController.m */; };
 		EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */; };
 		EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */; };
-		EB41A3F7239E40FE00DA623A /* WHUCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EA239E40FD00DA623A /* WHUCalendarCell.m */; };
-		EB41A3F8239E40FE00DA623A /* WHUCalendarFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EC239E40FD00DA623A /* WHUCalendarFlowLayout.m */; };
 		EB41A3F9239E40FE00DA623A /* WHUCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */; };
 		EB41A3FA239E40FE00DA623A /* WHUCalendarPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F1239E40FD00DA623A /* WHUCalendarPopView.m */; };
 		EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F3239E40FD00DA623A /* WHUCalendarView.m */; };
@@ -443,6 +442,8 @@
 		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
+		EB00A225239E6CA600378B0B /* WHUCalDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalDrawView.h; sourceTree = "<group>"; };
+		EB00A226239E6CA600378B0B /* WHUCalDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalDrawView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
@@ -507,10 +508,6 @@
 		EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditApprovalDetailsViewController.xib; sourceTree = "<group>"; };
 		EB41A3E7239E40FD00DA623A /* WHUCalendarCal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarCal.h; sourceTree = "<group>"; };
 		EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarCal.m; sourceTree = "<group>"; };
-		EB41A3E9239E40FD00DA623A /* WHUCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarCell.h; sourceTree = "<group>"; };
-		EB41A3EA239E40FD00DA623A /* WHUCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarCell.m; sourceTree = "<group>"; };
-		EB41A3EB239E40FD00DA623A /* WHUCalendarFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarFlowLayout.h; sourceTree = "<group>"; };
-		EB41A3EC239E40FD00DA623A /* WHUCalendarFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarFlowLayout.m; sourceTree = "<group>"; };
 		EB41A3ED239E40FD00DA623A /* WHUCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarItem.h; sourceTree = "<group>"; };
 		EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarItem.m; sourceTree = "<group>"; };
 		EB41A3EF239E40FD00DA623A /* WHUCalendarMarcro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarMarcro.h; sourceTree = "<group>"; };
@@ -1029,12 +1026,10 @@
 		EB41A3E6239E40FD00DA623A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				EB00A225239E6CA600378B0B /* WHUCalDrawView.h */,
+				EB00A226239E6CA600378B0B /* WHUCalDrawView.m */,
 				EB41A3E7239E40FD00DA623A /* WHUCalendarCal.h */,
 				EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */,
-				EB41A3E9239E40FD00DA623A /* WHUCalendarCell.h */,
-				EB41A3EA239E40FD00DA623A /* WHUCalendarCell.m */,
-				EB41A3EB239E40FD00DA623A /* WHUCalendarFlowLayout.h */,
-				EB41A3EC239E40FD00DA623A /* WHUCalendarFlowLayout.m */,
 				EB41A3ED239E40FD00DA623A /* WHUCalendarItem.h */,
 				EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */,
 				EB41A3EF239E40FD00DA623A /* WHUCalendarMarcro.h */,
@@ -1333,6 +1328,7 @@
 				EB30A48D2398CECE00EEAE1E /* MJRefreshNormalHeader.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
 				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
+				EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */,
 				EB30A4882398CECE00EEAE1E /* MJRefreshAutoStateFooter.m in Sources */,
 				AF7EC2D823960EDF00257CF1 /* ApplyListCell.m in Sources */,
 				77F10CFB2394F9EC005679B0 /* LeaveListModel.m in Sources */,
@@ -1430,7 +1426,6 @@
 				EBCF6BF923974D4300893A02 /* Pending.m in Sources */,
 				AF0ABED6238F9B5A00F46278 /* UIColor+HexString.m in Sources */,
 				AF0ABF02238F9B5A00F46278 /* UIView+WebCache.m in Sources */,
-				EB41A3F7239E40FE00DA623A /* WHUCalendarCell.m in Sources */,
 				AF0ABEDF238F9B5A00F46278 /* SDImageCacheDefine.m in Sources */,
 				EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */,
 				776D632C239A98F50030C96A /* MultiParamButton.m in Sources */,
@@ -1446,7 +1441,6 @@
 				7756E87C2397FC1300BF6944 /* LeaveDetailCell.m in Sources */,
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
-				EB41A3F8239E40FE00DA623A /* WHUCalendarFlowLayout.m in Sources */,
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
 				EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */,
 				EB30A4942398CECE00EEAE1E /* UIScrollView+MJRefresh.m in Sources */,

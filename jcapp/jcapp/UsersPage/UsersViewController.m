@@ -11,7 +11,7 @@
 #import "ZDYTTabBarViewController.h"
 #import "UserInfo.h"
 #import "MJExtension.h"
-
+#import "AppDelegate.h"
 @interface UsersViewController
 ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
@@ -23,12 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnloginout;
 @property (nonatomic, strong) NSMutableData *mResponseData;
 @end
-NSString *infoString;
-NSMutableDictionary *userinfo;
-NSString *infocurrentTagName;
-NSString *infocurrentValue;
-NSString *inforesultString;
-NSString *allString;
+
 @implementation UsersViewController
 - (void)viewDidLoad {
     
@@ -381,27 +376,10 @@ NSString *allString;
         self.lblcode.text=userinfo.code;
         self.lbldept.text=userinfo.dept;
         self.lblimagename.text=userinfo.name;
-        NSString *urlString =[NSString stringWithFormat:@"http://47.94.85.101:8095/APP/Image/%@.png",self.lblcode.text];
-        NSData *imgdata = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
-        UIImage *image = [UIImage imageWithData:imgdata]; // 取得图片
-        // 本地沙盒目录
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        // 得到本地沙盒中名为"MyImage"的路径，"MyImage"是保存的图片名
-        NSString *imageFilePath = [path stringByAppendingPathComponent:self.lblcode.text];
-        // 将取得的图片写入本地的沙盒中，其中0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
-        BOOL success = [UIImageJPEGRepresentation(image, 1) writeToFile:imageFilePath  atomically:YES];
-        if (success){
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-            
-            NSString *filePath = [[paths objectAtIndex:0]stringByAppendingPathComponent:
-                                  [NSString stringWithFormat:self.lblcode.text]];
-            // 保存文件的名称
-            UIImage *img = [UIImage imageWithContentsOfFile:filePath];
-            // 保存文件的名称
-            [self.myHeadPortrait setImage:img];
-            self.lblimagename.hidden=YES;
-            [self updateImage:img];
-        }
+        
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
+        self.lblimagename.hidden=YES;
     }
 }
 -(void)loadinfo{

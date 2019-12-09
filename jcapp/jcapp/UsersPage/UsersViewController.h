@@ -11,7 +11,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UsersViewController : UIViewController
-
+{
+    NSString *infoString;
+    NSMutableDictionary *userinfo;
+    NSString *infocurrentTagName;
+    NSString *infocurrentValue;
+    NSString *inforesultString;
+    NSString *allString;
+}
 @end
 
 NS_ASSUME_NONNULL_END

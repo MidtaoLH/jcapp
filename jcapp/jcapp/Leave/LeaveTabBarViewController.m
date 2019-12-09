@@ -40,7 +40,7 @@
     item3.selectedImage = [[UIImage imageNamed:@"tabbar_person_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
 
-    NSArray *controllers = @[@"LeaveViewController",@"VatcationMainViewController",@"VatcationMainViewController"];
+    NSArray *controllers = @[@"WaitApplyViewController",@"VatcationMainViewController",@"WaitApplyViewController"];
     for (int i = 0; i < 3; i++) {
         Class cls = NSClassFromString([NSString stringWithFormat:@"%@",controllers[i]]);
         UIViewController *controller = (UIViewController *)[[cls alloc] init];
@@ -67,10 +67,22 @@
     return YES;
 }
 - (void)viewWillAppear:(BOOL)animated {
-
-    self.navigationController.navigationBarHidden = YES;
-
+    //[self.navigationController setNavigationBarHidden:NO animated:NO];
+    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
+    
+    [self.navigationItem setLeftBarButtonItem:backItem];
+    self.navigationItem.title=@"待请假记录";
 }
+
+- (void)goBack {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+//- (void)viewWillAppear:(BOOL)animated {
+//
+//    self.navigationController.navigationBarHidden = YES;
+//
+//}
 
 
 @end

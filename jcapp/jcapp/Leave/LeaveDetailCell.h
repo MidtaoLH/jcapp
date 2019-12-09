@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "../Model/LeaveListModel.h"
+#import "../Model/LeaveDeatil.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LeaveDetailCell : UITableViewCell
 
-@property (nonatomic,strong) LeaveListModel * leavelistitem;
+@property (nonatomic,strong) LeaveDeatil * leavedetail;
 
 @end
 

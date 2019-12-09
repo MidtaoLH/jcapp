@@ -40,7 +40,7 @@
     item3.selectedImage = [[UIImage imageNamed:@"tabbar_person_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
 
-    NSArray *controllers = @[@"LeaveViewController",@"VatcationMainViewController",@"VatcationMainViewController"];
+    NSArray *controllers = @[@"WaitApplyViewController",@"VatcationMainViewController",@"WaitApplyViewController"];
     for (int i = 0; i < 3; i++) {
         Class cls = NSClassFromString([NSString stringWithFormat:@"%@",controllers[i]]);
         UIViewController *controller = (UIViewController *)[[cls alloc] init];

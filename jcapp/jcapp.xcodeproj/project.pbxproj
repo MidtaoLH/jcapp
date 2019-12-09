@@ -128,7 +128,6 @@
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
 		AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */; };
 		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
-		EB013570239E070100222B5E /* MyDateTimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB01356F239E070100222B5E /* MyDateTimeView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
 		EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4532398CECE00EEAE1E /* MJRefreshAutoFooter.m */; };
@@ -181,13 +180,6 @@
 		EBCF6C0123974DE300893A02 /* PendingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFD23974DE300893A02 /* PendingListCell.m */; };
 		EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFE23974DE300893A02 /* PendingViewController.m */; };
 		EBCF6C0323974DE300893A02 /* PendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBCF6BFF23974DE300893A02 /* PendingViewController.xib */; };
-		EBFCD90E239D2318005A99EB /* BSLCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD8FE239D2317005A99EB /* BSLCalendar.m */; };
-		EBFCD90F239D2318005A99EB /* BSLMonthCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD901239D2317005A99EB /* BSLMonthCollectionView.m */; };
-		EBFCD910239D2318005A99EB /* CalendaDaysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD903239D2317005A99EB /* CalendaDaysCell.m */; };
-		EBFCD911239D2318005A99EB /* WeeksView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD905239D2317005A99EB /* WeeksView.m */; };
-		EBFCD912239D2318005A99EB /* MonthOpeartion.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD908239D2317005A99EB /* MonthOpeartion.m */; };
-		EBFCD913239D2318005A99EB /* NSDate+Decomposer.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD90A239D2317005A99EB /* NSDate+Decomposer.m */; };
-		EBFCD914239D2318005A99EB /* CalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFCD90D239D2317005A99EB /* CalendarModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,8 +433,6 @@
 		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
-		EB01356E239E070100222B5E /* MyDateTimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDateTimeView.h; sourceTree = "<group>"; };
-		EB01356F239E070100222B5E /* MyDateTimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDateTimeView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
@@ -540,20 +530,6 @@
 		EBCF6BFE23974DE300893A02 /* PendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingViewController.m; sourceTree = "<group>"; };
 		EBCF6BFF23974DE300893A02 /* PendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PendingViewController.xib; sourceTree = "<group>"; };
 		EBCF6C0023974DE300893A02 /* PendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingViewController.h; sourceTree = "<group>"; };
-		EBFCD8FD239D2317005A99EB /* BSLCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSLCalendar.h; sourceTree = "<group>"; };
-		EBFCD8FE239D2317005A99EB /* BSLCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSLCalendar.m; sourceTree = "<group>"; };
-		EBFCD900239D2317005A99EB /* BSLMonthCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSLMonthCollectionView.h; sourceTree = "<group>"; };
-		EBFCD901239D2317005A99EB /* BSLMonthCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSLMonthCollectionView.m; sourceTree = "<group>"; };
-		EBFCD902239D2317005A99EB /* CalendaDaysCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendaDaysCell.h; sourceTree = "<group>"; };
-		EBFCD903239D2317005A99EB /* CalendaDaysCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendaDaysCell.m; sourceTree = "<group>"; };
-		EBFCD904239D2317005A99EB /* WeeksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeksView.h; sourceTree = "<group>"; };
-		EBFCD905239D2317005A99EB /* WeeksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeksView.m; sourceTree = "<group>"; };
-		EBFCD907239D2317005A99EB /* MonthOpeartion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthOpeartion.h; sourceTree = "<group>"; };
-		EBFCD908239D2317005A99EB /* MonthOpeartion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthOpeartion.m; sourceTree = "<group>"; };
-		EBFCD909239D2317005A99EB /* NSDate+Decomposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Decomposer.h"; sourceTree = "<group>"; };
-		EBFCD90A239D2317005A99EB /* NSDate+Decomposer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Decomposer.m"; sourceTree = "<group>"; };
-		EBFCD90C239D2317005A99EB /* CalendarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarModel.h; sourceTree = "<group>"; };
-		EBFCD90D239D2317005A99EB /* CalendarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -911,15 +887,6 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
-		EB01356D239E070100222B5E /* Dateview */ = {
-			isa = PBXGroup;
-			children = (
-				EB01356E239E070100222B5E /* MyDateTimeView.h */,
-				EB01356F239E070100222B5E /* MyDateTimeView.m */,
-			);
-			path = Dateview;
-			sourceTree = "<group>";
-		};
 		EB30A4502398CECE00EEAE1E /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -1057,8 +1024,6 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
-				EB01356D239E070100222B5E /* Dateview */,
-				EBFCD8FC239D2317005A99EB /* BSLCalendar */,
 				EBAD2E78239A120B004FAE82 /* AttendanceCalendar */,
 				EB30A4502398CECE00EEAE1E /* MJRefresh */,
 				EBCF6BFB23974DB600893A02 /* PendingPage */,
@@ -1153,51 +1118,6 @@
 				EBCF6BFF23974DE300893A02 /* PendingViewController.xib */,
 			);
 			path = PendingPage;
-			sourceTree = "<group>";
-		};
-		EBFCD8FC239D2317005A99EB /* BSLCalendar */ = {
-			isa = PBXGroup;
-			children = (
-				EBFCD8FD239D2317005A99EB /* BSLCalendar.h */,
-				EBFCD8FE239D2317005A99EB /* BSLCalendar.m */,
-				EBFCD8FF239D2317005A99EB /* ControlsView */,
-				EBFCD906239D2317005A99EB /* Manager */,
-				EBFCD90B239D2317005A99EB /* Model */,
-			);
-			path = BSLCalendar;
-			sourceTree = "<group>";
-		};
-		EBFCD8FF239D2317005A99EB /* ControlsView */ = {
-			isa = PBXGroup;
-			children = (
-				EBFCD900239D2317005A99EB /* BSLMonthCollectionView.h */,
-				EBFCD901239D2317005A99EB /* BSLMonthCollectionView.m */,
-				EBFCD902239D2317005A99EB /* CalendaDaysCell.h */,
-				EBFCD903239D2317005A99EB /* CalendaDaysCell.m */,
-				EBFCD904239D2317005A99EB /* WeeksView.h */,
-				EBFCD905239D2317005A99EB /* WeeksView.m */,
-			);
-			path = ControlsView;
-			sourceTree = "<group>";
-		};
-		EBFCD906239D2317005A99EB /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				EBFCD907239D2317005A99EB /* MonthOpeartion.h */,
-				EBFCD908239D2317005A99EB /* MonthOpeartion.m */,
-				EBFCD909239D2317005A99EB /* NSDate+Decomposer.h */,
-				EBFCD90A239D2317005A99EB /* NSDate+Decomposer.m */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		EBFCD90B239D2317005A99EB /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EBFCD90C239D2317005A99EB /* CalendarModel.h */,
-				EBFCD90D239D2317005A99EB /* CalendarModel.m */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1360,7 +1280,6 @@
 				AF0ABF0B238FC9B000F46278 /* AutoButton.m in Sources */,
 				AF0ABEFF238F9B5A00F46278 /* UIImage+Transform.m in Sources */,
 				AF0ABEF0238F9B5A00F46278 /* SDWebImageDownloader.m in Sources */,
-				EBFCD913239D2318005A99EB /* NSDate+Decomposer.m in Sources */,
 				EB30A48D2398CECE00EEAE1E /* MJRefreshNormalHeader.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
 				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
@@ -1373,7 +1292,6 @@
 				8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */,
 				775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */,
 				775B61A9238BBE8D00985FF3 /* NSObject+MJClass.m in Sources */,
-				EBFCD90E239D2318005A99EB /* BSLCalendar.m in Sources */,
 				AF0ABEF9238F9B5A00F46278 /* UIButton+WebCache.m in Sources */,
 				AF0ABF0C238FC9B000F46278 /* AutoLableView.m in Sources */,
 				AF0ABEEB238F9B5A00F46278 /* SDMemoryCache.m in Sources */,
@@ -1386,14 +1304,12 @@
 				77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,
-				EBFCD914239D2318005A99EB /* CalendarModel.m in Sources */,
 				EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */,
 				AF0ABEE1238F9B5A00F46278 /* SDImageCoder.m in Sources */,
 				AF0ABECE238F9B5A00F46278 /* NSData+ImageContentType.m in Sources */,
 				AF0ABF01238F9B5A00F46278 /* UIImageView+WebCache.m in Sources */,
 				775B61A7238BBE8D00985FF3 /* MJPropertyKey.m in Sources */,
 				AF0ABED3238F9B5A00F46278 /* SDImageCachesManagerOperation.m in Sources */,
-				EBFCD912239D2318005A99EB /* MonthOpeartion.m in Sources */,
 				EB30A4932398CECE00EEAE1E /* UIScrollView+MJExtension.m in Sources */,
 				776D6329239A51E00030C96A /* LeaveTask.m in Sources */,
 				8D8B0CFD2397B020009CFEA0 /* TableCell.m in Sources */,
@@ -1428,7 +1344,6 @@
 				EB30A48A2398CECE00EEAE1E /* MJRefreshBackNormalFooter.m in Sources */,
 				EB30A4B52398CF7F00EEAE1E /* PendingApprovedViewController.m in Sources */,
 				AF0ABF15238FC9CF00F46278 /* UIView+SDAutoLayout.m in Sources */,
-				EBFCD90F239D2318005A99EB /* BSLMonthCollectionView.m in Sources */,
 				AF0ABEE2238F9B5A00F46278 /* SDImageCoderHelper.m in Sources */,
 				AF0ABEEE238F9B5A00F46278 /* SDWebImageCompat.m in Sources */,
 				AF0ABEF6238F9B5A00F46278 /* SDWebImageManager.m in Sources */,
@@ -1481,8 +1396,6 @@
 				EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */,
 				EB30A4942398CECE00EEAE1E /* UIScrollView+MJRefresh.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,
-				EBFCD910239D2318005A99EB /* CalendaDaysCell.m in Sources */,
-				EBFCD911239D2318005A99EB /* WeeksView.m in Sources */,
 				AF0ABEFC238F9B5A00F46278 /* UIImage+MemoryCacheCost.m in Sources */,
 				AF0ABEE9238F9B5A00F46278 /* SDImageLoadersManager.m in Sources */,
 				AF0ABECF238F9B5A00F46278 /* NSImage+Compatibility.m in Sources */,
@@ -1492,7 +1405,6 @@
 				EB30A48C2398CECE00EEAE1E /* MJRefreshGifHeader.m in Sources */,
 				AF0ABEE5238F9B5A00F46278 /* SDImageGIFCoder.m in Sources */,
 				AF0ABED4238F9B5A00F46278 /* SDInternalMacros.m in Sources */,
-				EB013570239E070100222B5E /* MyDateTimeView.m in Sources */,
 				EB30A4842398CECE00EEAE1E /* MJRefreshFooter.m in Sources */,
 				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
 				AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */,

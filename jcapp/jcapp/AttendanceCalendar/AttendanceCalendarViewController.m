@@ -11,7 +11,6 @@
 #import "UserInfo.h"
 #import "AppDelegate.h"
 #import "MJExtension.h"
-#import "../Dateview/MyDateTimeView.h"
 @interface AttendanceCalendarViewController () 
 
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
@@ -41,18 +40,7 @@
     self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
     headimageW = self.view.frame.size.width * 0.3;
      self.lbldate.frame=CGRectMake(self.myHeadPortrait.width+self.lblname.width+20, tabBarHeight, headimageW, headimageH);
-    
-    MyDateTimeView *dateView = [[MyDateTimeView alloc]initWithFrame:CGRectMake(self.myHeadPortrait.width+self.lblname.width+self.lbldate.width+20, tabBarHeight+35, 30, 30)];
-    dateView.pickerViewMode = MyDatePickerViewDateYearMonthMode;
-    [self.view addSubview:dateView];
-    
-    BSLCalendar *calendar = [[BSLCalendar alloc]initWithFrame:CGRectMake(20,tabBarHeight+self.myHeadPortrait.height, CGRectGetWidth(self.view.bounds)-40, 300)];
-    [self.view addSubview:calendar];
-    
-    calendar.showChineseCalendar = YES;
-    [calendar selectDateOfMonth:^(NSInteger year, NSInteger month, NSInteger day) {
-        NSLog(@"%ld年/%ld月/%ld日",(long)year,(long)month,(long)day);
-    }];
+     
     
     NSDate *date =[NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];

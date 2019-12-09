@@ -25,6 +25,7 @@ UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelega
     NSLocale*datelocale;
     NSString *flagstring;
     NSString *xmlString;
+    NSString *edittype;
      NSMutableDictionary *info;
     
 }
@@ -37,6 +38,11 @@ UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelega
 
 @property (nonatomic, retain)IBOutlet UIImageView *imageview;
 
+@property (nonatomic, retain)IBOutlet UIButton *waybutton;
+
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfLeave;
+
 -(IBAction)onClickButtonnext:(id)sender;
 
 -(IBAction)textFieldDoneEditing:(id)sender;
@@ -45,6 +51,9 @@ UITableViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelega
 
 -(IBAction)backgroundTap:(id)sender;
 
+-(IBAction)onClickButtonapply:(id)sender;
+
+-(IBAction)onClickButtonway:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END

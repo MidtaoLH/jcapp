@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CalendaViewController : UIViewController{
      IBOutlet UIDatePicker *picker;
+    NSString *dateStr;
 }
 -(IBAction)datechanged:(id)sender;
 -(IBAction)onClickButton:(id)sender;

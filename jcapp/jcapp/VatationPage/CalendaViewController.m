@@ -14,63 +14,79 @@
 
 @implementation CalendaViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    picker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 300)];
+
+     UIDatePicker *oneDatePicker = [[UIDatePicker alloc] init];
     
-    // 设置日期选择控件的地区
+        oneDatePicker.frame = CGRectMake(0, 112, 375, 216); // 设置显示的位置和大小
     
-    [picker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
+        
     
-    //    [myDatePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_SC"]];
+        oneDatePicker.date = [NSDate date]; // 设置初始时间
     
-    //默认为当天。
+        // [oneDatePicker setDate:[NSDate dateWithTimeIntervalSinceNow:48 * 20 * 18] animated:YES]; // 设置时间，有动画效果
     
-    [picker setCalendar:[NSCalendar currentCalendar]];
+        oneDatePicker.timeZone = [NSTimeZone timeZoneWithName:@"GTM+8"]; // 设置时区，中国在东八区
     
-    //    设置DatePicker的时区。
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
+    NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
     
-    //    默认为设置为：[datePicker setTimeZone:[NSTimeZone defaultTimeZone]];
+
     
-    //    设置DatePicker的日期。
+        oneDatePicker.minimumDate = minDate; // 设置最小时间
     
-    //    默认设置为:
+        oneDatePicker.maximumDate = maxDate; // 设置最大时间
     
-    [picker setDate:[NSDate date]];
+        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
+    oneDatePicker.locale = locale;
+
+        
     
-    //    minimumDate设置DatePicker的允许的最小日期。
+        oneDatePicker.datePickerMode = UIDatePickerModeDate; // 设置样式
     
-    //    maximumDate设置DatePicker的允许的最大日期
+        // 以下为全部样式
     
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        // typedef NS_ENUM(NSInteger, UIDatePickerMode) {
     
-    NSDate *currentDate = [NSDate date];
+        //    UIDatePickerModeTime,           // 只显示时间
     
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
+        //    UIDatePickerModeDate,           // 只显示日期
     
-    [comps setDay:10];//设置最大时间为：当前时间推后10天
+        //    UIDatePickerModeDateAndTime,    // 显示日期和时间
     
-    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+        //    UIDatePickerModeCountDownTimer  // 只显示小时和分钟 倒计时定时器
     
-    [comps setDay:0];//设置最小时间为：当前时间
+      [oneDatePicker addTarget:self action:@selector(oneDatePickerValueChanged:)forControlEvents:UIControlEventValueChanged]; // 添加监听器
     
-    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+     
     
-    [picker setMaximumDate:maxDate];
+        [self.view addSubview:oneDatePicker]; // 添加到View上
     
-    [picker setMinimumDate:minDate];
-    
-    
-    
-    
-    
-    
-    
- 
+
+
     
     
     // Do any additional setup after loading the view from its nib.
+}
+
+
+- (void)oneDatePickerValueChanged:(UIDatePicker *) sender {
+    
+
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    //设置时间格式
+    formatter.dateFormat = @"yyyy-MM-dd";
+    dateStr = [formatter  stringFromDate:sender.date];
+    NSLog(@"%@",dateStr);
+        
+
+    
 }
 
 /*
@@ -82,11 +98,6 @@
     // Pass the selected object to the new view controller.
 }
 */
--(IBAction)datechanged:(id)sender {
-    
-  
-      NSLog(@"%@", @"test");
-}
 
 -(IBAction)onClickButton:(id)sender {
   
@@ -96,9 +107,7 @@
     //设置时间格式
     formatter.dateFormat = @"yyyy-MM-dd";
     
-    
-    
-    NSString *dateStr = [formatter  stringFromDate:picker.date];
+ 
      NSLog(@"%@",dateStr);
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];

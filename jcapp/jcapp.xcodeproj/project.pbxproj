@@ -34,6 +34,7 @@
 		8D8409F8238FA3A300A58623 /* CalendaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8409F6238FA3A300A58623 /* CalendaViewController.xib */; };
 		8D8954BB239662A600F1E109 /* WayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8954B9239662A600F1E109 /* WayViewController.m */; };
 		8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8954BA239662A600F1E109 /* WayViewController.xib */; };
+		8D8A142E239E194A00FA23FA /* LeaveStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8A142D239E194A00FA23FA /* LeaveStatusModel.m */; };
 		8D8B0CFA239796DB009CFEA0 /* Way.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B0CF9239796DB009CFEA0 /* Way.m */; };
 		8D8B0CFD2397B020009CFEA0 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B0CFC2397B020009CFEA0 /* TableCell.m */; };
 		8D920938238CDC59006E43CC /* VatationPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D920935238CDC59006E43CC /* VatationPageViewController.m */; };
@@ -240,6 +241,8 @@
 		8D8954B8239662A600F1E109 /* WayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WayViewController.h; sourceTree = "<group>"; };
 		8D8954B9239662A600F1E109 /* WayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WayViewController.m; sourceTree = "<group>"; };
 		8D8954BA239662A600F1E109 /* WayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WayViewController.xib; sourceTree = "<group>"; };
+		8D8A142C239E194A00FA23FA /* LeaveStatusModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveStatusModel.h; sourceTree = "<group>"; };
+		8D8A142D239E194A00FA23FA /* LeaveStatusModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveStatusModel.m; sourceTree = "<group>"; };
 		8D8B0CF8239796DB009CFEA0 /* Way.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Way.h; sourceTree = "<group>"; };
 		8D8B0CF9239796DB009CFEA0 /* Way.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Way.m; sourceTree = "<group>"; };
 		8D8B0CFB2397B01F009CFEA0 /* TableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
@@ -644,6 +647,8 @@
 				8D936BDD2396302A000473ED /* UserLogin.m */,
 				8D8B0CF8239796DB009CFEA0 /* Way.h */,
 				8D8B0CF9239796DB009CFEA0 /* Way.m */,
+				8D8A142C239E194A00FA23FA /* LeaveStatusModel.h */,
+				8D8A142D239E194A00FA23FA /* LeaveStatusModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1250,6 +1255,7 @@
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF0ABF03238F9B5A00F46278 /* UIView+WebCacheOperation.m in Sources */,
+				8D8A142E239E194A00FA23FA /* LeaveStatusModel.m in Sources */,
 				AF0ABEE1238F9B5A00F46278 /* SDImageCoder.m in Sources */,
 				AF0ABECE238F9B5A00F46278 /* NSData+ImageContentType.m in Sources */,
 				AF0ABF01238F9B5A00F46278 /* UIImageView+WebCache.m in Sources */,

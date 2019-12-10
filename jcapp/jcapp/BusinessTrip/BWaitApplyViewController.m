@@ -9,7 +9,8 @@
 #import "BWaitApplyViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
-#import "../PendingPage/PendingListCell.h"
+//#import "../PendingPage/PendingListCell.h"
+#import "BusinessTripCell.h"
 #import "../MJRefresh/MJRefresh.h"
 
 
@@ -35,8 +36,8 @@ NSInteger currentPageCountbwait;
     //    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     //self.parentViewController.navigationItem.backBarButtonItem=temporaryBarButtonItem;
     //e注册自定义 cell
-    [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    [_NewTableView registerClass:[BusinessTripCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 120;
     currentPageCountbwait=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -75,7 +76,7 @@ NSInteger currentPageCountbwait;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountbwait];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"32"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"0"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -253,7 +254,7 @@ NSInteger currentPageCountbwait;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-    PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    BusinessTripCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
     cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
     

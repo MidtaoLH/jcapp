@@ -131,7 +131,7 @@ NSInteger currentPageCountwait2;
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
-    
+    [self.NewTableView reloadData];
     NSLog(@"%@",@"connection1-end");
 }
 
@@ -158,7 +158,7 @@ NSInteger currentPageCountwait2;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
-    [self.NewTableView reloadData];
+//    [self.NewTableView reloadData];
 }
 
 //解析xml回调方法

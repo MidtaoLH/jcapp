@@ -12,22 +12,37 @@
 #import "../Model/LeaveDeatil.h"
 #import "LeaveDetailCell.h"
 #import "../Model/LeaveTask.h"
+#import "LeaveImageCell.h"
+
+#define kCount 6  //图片总张数
+
+ static long step = 0; //记录时钟动画调用次数
 
 @interface LeaveDetailController ()
+{
+    CGFloat scaleMini;
+    CGFloat scaleMax;
+}
 
 @property (strong,nonatomic) LeaveHead *leavehead;
+ 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 
 @end
 
 @implementation LeaveDetailController
 
 static NSString *identifier =@"LeaveDetailCell";
+static NSString *identifierImage =@"LeaveImageCell.h";
 
 @synthesize listdetail;
 @synthesize listhead;
-@synthesize  listtask;
+@synthesize  listtask; 
 
 - (void)viewDidLoad {
+    
+    
+    [super viewDidLoad];
     
     self.title = @"请假";
     
@@ -46,9 +61,11 @@ static NSString *identifier =@"LeaveDetailCell";
     //e注册自定义 cell
     [_NewTableView registerClass:[LeaveDetailCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
+
+    [_ImageTableView registerClass:[LeaveImageCell class] forCellReuseIdentifier:identifierImage];
+    _ImageTableView.rowHeight = 150;
     
-    [super viewDidLoad];
-    NSLog(@"%@",@"viewDidLoad-end");
+        NSLog(@"%@",@"viewDidLoad-end");
     
     _imgvleavestatus.layer.masksToBounds = YES;
     
@@ -56,8 +73,52 @@ static NSString *identifier =@"LeaveDetailCell";
     
     _imgvleavestatus.backgroundColor = [UIColor greenColor];
     [self setlblcolor];
+
+    /*
+    self.scrollview.frame=CGRectMake(0, 236, self.view.frame.size.width, 200);
+    self.scrollview.backgroundColor= UIColor.orangeColor;
+    self.scrollview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
+    int index = 0;
+    //
+    //    图片的宽
+    CGFloat imageW = 100;
+    //    CGFloat imageW = 300;
+    //    图片高
+    CGFloat imageH = 100;
+    //    图片的Y
+    CGFloat imageY = 50;
+    
+    for (int i = 0; i < 3; i++) {
+        index=i;
+        UIImageView *imageView = [[UIImageView alloc] init];
+        //        图片X
+        CGFloat imageX = i * imageW + i*50;
+ 
+        //        设置图片
+        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        imageView.image = [UIImage imageNamed:name];
+ 
+        imageView.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
+        [imageView addGestureRecognizer:tap];
+        //        隐藏指示条
+        self.scrollview.showsHorizontalScrollIndicator = NO;
+        
+        //        设置frame
+        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+        [self.scrollview addSubview:imageView];
+        
+    }
+    // 2.设置scrollview的滚动范围-----
+    CGFloat contentW = 500 *imageW;
+    //不允许在垂直方向上进行滚动
+    self.scrollview.contentSize = CGSizeMake(contentW, 0);
+    
+    */
 }
+ 
 -(void)setlblcolor
 {
     _lblempgroup.textColor = [UIColor grayColor];
@@ -235,6 +296,7 @@ static NSString *identifier =@"LeaveDetailCell";
     NSLog(@"%@",@"numberOfSectionsInTableView-begin");
     // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
     // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
+ 
     return 1;
 }
 
@@ -245,17 +307,41 @@ static NSString *identifier =@"LeaveDetailCell";
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
     NSLog(@"%@",@"tableView-begin");
-    return self.listdetail.count;
+  //  return self.listdetail.count;
+    
+    if ([tableView isEqual:self.NewTableView]) {
+        
+        NSLog(@"%@",@"tableView-begin");
+        return self.listdetail.count;
+        
+    } else if ([tableView isEqual:self.ImageTableView]) {
+        
+        return 1;
+        
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    if ([tableView isEqual:self.NewTableView]) {
+        LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+        
+        cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
+        
+        return cell;
+    } else if ([tableView isEqual:self.ImageTableView]) {
+        
+        LeaveImageCell * cell = [self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
+        
+        cell.str  = @"Rem【ar【k【k2";
+        
+        return cell;
+        
+    }
+    return 0;
  
-    cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
-    
-    return cell;
 }
 
 @end

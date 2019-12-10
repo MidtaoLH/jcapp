@@ -11,12 +11,14 @@
 #import "UserInfo.h"
 #import "AppDelegate.h"
 #import "MJExtension.h"
-@interface AttendanceCalendarViewController () 
-
+#import "../Calendar/WHUCalendarView.h"
+#import "../Calendar/WHUCalendarPopView.h"
+@interface AttendanceCalendarViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
 @property (weak, nonatomic) IBOutlet UILabel *lbldept;
-@property (weak, nonatomic) IBOutlet UILabel *lbldate;
 @property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
+@property (weak, nonatomic) WHUCalendarPopView *pop;
+@property (weak, nonatomic) IBOutlet WHUCalendarView *calview;
 @end
 
 @implementation AttendanceCalendarViewController
@@ -24,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
+    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
     CGFloat headimageW = self.view.frame.size.width * 0.25;
     CGFloat headimageH = headimageW;
     self.myHeadPortrait.frame = CGRectMake(20, tabBarHeight, headimageW, headimageH);
@@ -39,17 +41,35 @@
      self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/5, headimageW, headimageH);
     self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
     headimageW = self.view.frame.size.width * 0.3;
-     self.lbldate.frame=CGRectMake(self.myHeadPortrait.width+self.lblname.width+20, tabBarHeight, headimageW, headimageH);
-     
     
-    NSDate *date =[NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy"];
-    NSInteger currentYear=[[formatter stringFromDate:date] integerValue];
-    [formatter setDateFormat:@"MM"];
-    NSInteger currentMonth=[[formatter stringFromDate:date]integerValue];
-    self.lbldate.text=[NSString stringWithFormat:@"%ld年%ld月",currentYear,currentMonth];
+    self.calview.tagStringOfDate=^NSString*(NSArray* calm,NSArray* itemDateArray){
+        NSLog(@"%@",calm);
+        //如果当前日期中的天数,可以被5整除,显示 预约
+        if([itemDateArray[2] integerValue]%5==0){
+            return @"预约";
+        }
+        else{
+            return nil;
+        }
+    };
+    self.calview.onDateSelectBlk=^(NSDate* date){
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy年MM月dd"];
+        NSString *dateString = [format stringFromDate:date];
+        NSLog(@"calview:%@",dateString);
+    };
+    self.pop=[[WHUCalendarPopView alloc] init];
+    self.pop.onDateSelectBlk=^(NSDate* date){
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy年MM月dd"];
+        NSString *dateString = [format stringFromDate:date];
+        NSLog(@"%@",dateString);
+    };
+    
     [self loadinfo];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];

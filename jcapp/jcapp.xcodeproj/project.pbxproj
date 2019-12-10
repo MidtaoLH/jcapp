@@ -113,6 +113,12 @@
 		AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */; };
 		AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF269C45238D5F010058F3E0 /* WebViewController.m */; };
 		AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF269C46238D5F010058F3E0 /* WebViewController.xib */; };
+		AF3FFE56239F88BE00834A73 /* BusinessTripTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE54239F88BD00834A73 /* BusinessTripTabBarViewController.m */; };
+		AF3FFE5D239F890700834A73 /* BWaitApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF3FFE58239F890700834A73 /* BWaitApplyViewController.xib */; };
+		AF3FFE5E239F890700834A73 /* BApprovedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF3FFE59239F890700834A73 /* BApprovedViewController.xib */; };
+		AF3FFE5F239F890700834A73 /* BApprovedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE5B239F890700834A73 /* BApprovedViewController.m */; };
+		AF3FFE60239F890700834A73 /* BWaitApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE5C239F890700834A73 /* BWaitApplyViewController.m */; };
+		AF3FFE63239F892200834A73 /* BusinessTripCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE62239F892200834A73 /* BusinessTripCell.m */; };
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
 		AF7EC2CD23960BC900257CF1 /* MyApplyTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7EC2CC23960BC900257CF1 /* MyApplyTabBarViewController.m */; };
 		AF7EC2D823960EDF00257CF1 /* ApplyListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7EC2D623960EDF00257CF1 /* ApplyListCell.m */; };
@@ -129,6 +135,7 @@
 		AFF2375923838E4C002AEAFB /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AFF2375723838E4C002AEAFB /* HomePageViewController.xib */; };
 		AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */; };
 		AFFE90B9238E5145009DE419 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFE90B8238E5145009DE419 /* ScrollView.m */; };
+		EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00A226239E6CA600378B0B /* WHUCalDrawView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
 		EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4532398CECE00EEAE1E /* MJRefreshAutoFooter.m */; };
@@ -163,8 +170,6 @@
 		EB30A4B52398CF7F00EEAE1E /* PendingApprovedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4AC2398CF7F00EEAE1E /* PendingApprovedViewController.m */; };
 		EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */; };
 		EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */; };
-		EB41A3F7239E40FE00DA623A /* WHUCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EA239E40FD00DA623A /* WHUCalendarCell.m */; };
-		EB41A3F8239E40FE00DA623A /* WHUCalendarFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EC239E40FD00DA623A /* WHUCalendarFlowLayout.m */; };
 		EB41A3F9239E40FE00DA623A /* WHUCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */; };
 		EB41A3FA239E40FE00DA623A /* WHUCalendarPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F1239E40FD00DA623A /* WHUCalendarPopView.m */; };
 		EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F3239E40FD00DA623A /* WHUCalendarView.m */; };
@@ -416,6 +421,16 @@
 		AF269C44238D5F000058F3E0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		AF269C45238D5F010058F3E0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		AF269C46238D5F010058F3E0 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		AF3FFE54239F88BD00834A73 /* BusinessTripTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessTripTabBarViewController.m; sourceTree = "<group>"; };
+		AF3FFE55239F88BE00834A73 /* BusinessTripTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessTripTabBarViewController.h; sourceTree = "<group>"; };
+		AF3FFE57239F890700834A73 /* BWaitApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWaitApplyViewController.h; sourceTree = "<group>"; };
+		AF3FFE58239F890700834A73 /* BWaitApplyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BWaitApplyViewController.xib; sourceTree = "<group>"; };
+		AF3FFE59239F890700834A73 /* BApprovedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BApprovedViewController.xib; sourceTree = "<group>"; };
+		AF3FFE5A239F890700834A73 /* BApprovedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BApprovedViewController.h; sourceTree = "<group>"; };
+		AF3FFE5B239F890700834A73 /* BApprovedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BApprovedViewController.m; sourceTree = "<group>"; };
+		AF3FFE5C239F890700834A73 /* BWaitApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWaitApplyViewController.m; sourceTree = "<group>"; };
+		AF3FFE61239F892200834A73 /* BusinessTripCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessTripCell.h; sourceTree = "<group>"; };
+		AF3FFE62239F892200834A73 /* BusinessTripCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessTripCell.m; sourceTree = "<group>"; };
 		AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDYTTabBarViewController.m; sourceTree = "<group>"; };
 		AF6BC9DC2386AD2000C381EB /* ZDYTTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDYTTabBarViewController.h; sourceTree = "<group>"; };
 		AF7EC2CB23960BC900257CF1 /* MyApplyTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyApplyTabBarViewController.h; sourceTree = "<group>"; };
@@ -443,6 +458,8 @@
 		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
+		EB00A225239E6CA600378B0B /* WHUCalDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalDrawView.h; sourceTree = "<group>"; };
+		EB00A226239E6CA600378B0B /* WHUCalDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalDrawView.m; sourceTree = "<group>"; };
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
@@ -507,10 +524,6 @@
 		EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditApprovalDetailsViewController.xib; sourceTree = "<group>"; };
 		EB41A3E7239E40FD00DA623A /* WHUCalendarCal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarCal.h; sourceTree = "<group>"; };
 		EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarCal.m; sourceTree = "<group>"; };
-		EB41A3E9239E40FD00DA623A /* WHUCalendarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarCell.h; sourceTree = "<group>"; };
-		EB41A3EA239E40FD00DA623A /* WHUCalendarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarCell.m; sourceTree = "<group>"; };
-		EB41A3EB239E40FD00DA623A /* WHUCalendarFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarFlowLayout.h; sourceTree = "<group>"; };
-		EB41A3EC239E40FD00DA623A /* WHUCalendarFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarFlowLayout.m; sourceTree = "<group>"; };
 		EB41A3ED239E40FD00DA623A /* WHUCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarItem.h; sourceTree = "<group>"; };
 		EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarItem.m; sourceTree = "<group>"; };
 		EB41A3EF239E40FD00DA623A /* WHUCalendarMarcro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarMarcro.h; sourceTree = "<group>"; };
@@ -872,6 +885,23 @@
 			path = SDAutoLayout;
 			sourceTree = "<group>";
 		};
+		AF3FFE53239F881400834A73 /* BusinessTrip */ = {
+			isa = PBXGroup;
+			children = (
+				AF3FFE61239F892200834A73 /* BusinessTripCell.h */,
+				AF3FFE62239F892200834A73 /* BusinessTripCell.m */,
+				AF3FFE57239F890700834A73 /* BWaitApplyViewController.h */,
+				AF3FFE5C239F890700834A73 /* BWaitApplyViewController.m */,
+				AF3FFE58239F890700834A73 /* BWaitApplyViewController.xib */,
+				AF3FFE5A239F890700834A73 /* BApprovedViewController.h */,
+				AF3FFE5B239F890700834A73 /* BApprovedViewController.m */,
+				AF3FFE59239F890700834A73 /* BApprovedViewController.xib */,
+				AF3FFE55239F88BE00834A73 /* BusinessTripTabBarViewController.h */,
+				AF3FFE54239F88BD00834A73 /* BusinessTripTabBarViewController.m */,
+			);
+			path = BusinessTrip;
+			sourceTree = "<group>";
+		};
 		AF7EC2CA23960B5000257CF1 /* MyApply */ = {
 			isa = PBXGroup;
 			children = (
@@ -1029,12 +1059,10 @@
 		EB41A3E6239E40FD00DA623A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				EB00A225239E6CA600378B0B /* WHUCalDrawView.h */,
+				EB00A226239E6CA600378B0B /* WHUCalDrawView.m */,
 				EB41A3E7239E40FD00DA623A /* WHUCalendarCal.h */,
 				EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */,
-				EB41A3E9239E40FD00DA623A /* WHUCalendarCell.h */,
-				EB41A3EA239E40FD00DA623A /* WHUCalendarCell.m */,
-				EB41A3EB239E40FD00DA623A /* WHUCalendarFlowLayout.h */,
-				EB41A3EC239E40FD00DA623A /* WHUCalendarFlowLayout.m */,
 				EB41A3ED239E40FD00DA623A /* WHUCalendarItem.h */,
 				EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */,
 				EB41A3EF239E40FD00DA623A /* WHUCalendarMarcro.h */,
@@ -1073,6 +1101,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				AF3FFE53239F881400834A73 /* BusinessTrip */,
 				EB41A3E6239E40FD00DA623A /* Calendar */,
 				EBAD2E78239A120B004FAE82 /* AttendanceCalendar */,
 				EB30A4502398CECE00EEAE1E /* MJRefresh */,
@@ -1274,6 +1303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBCF6C0323974DE300893A02 /* PendingViewController.xib in Resources */,
+				AF3FFE5E239F890700834A73 /* BApprovedViewController.xib in Resources */,
 				AF7EC2FA2396151100257CF1 /* WaitingApplyViewController.xib in Resources */,
 				EB30A4B02398CF7F00EEAE1E /* ReviewApprovalDetailsViewController.xib in Resources */,
 				EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */,
@@ -1292,6 +1322,7 @@
 				77AA030F23910D8C00881B0F /* LeaveViewController.xib in Resources */,
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
+				AF3FFE5D239F890700834A73 /* BWaitApplyViewController.xib in Resources */,
 				8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */,
 				EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */,
 				AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */,
@@ -1333,6 +1364,7 @@
 				EB30A48D2398CECE00EEAE1E /* MJRefreshNormalHeader.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
 				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
+				EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */,
 				EB30A4882398CECE00EEAE1E /* MJRefreshAutoStateFooter.m in Sources */,
 				AF7EC2D823960EDF00257CF1 /* ApplyListCell.m in Sources */,
 				77F10CFB2394F9EC005679B0 /* LeaveListModel.m in Sources */,
@@ -1350,6 +1382,7 @@
 				AF0ABEE3238F9B5A00F46278 /* SDImageCodersManager.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
+				AF3FFE60239F890700834A73 /* BWaitApplyViewController.m in Sources */,
 				7756E87F2397FD0D00BF6944 /* LeaveWaitCell.m in Sources */,
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */,
@@ -1379,6 +1412,7 @@
 				AF0ABEEC238F9B5A00F46278 /* SDWebImageCacheKeyFilter.m in Sources */,
 				AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */,
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
+				AF3FFE5F239F890700834A73 /* BApprovedViewController.m in Sources */,
 				AF0ABEE6238F9B5A00F46278 /* SDImageGraphics.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
 				EB30A4872398CECE00EEAE1E /* MJRefreshAutoNormalFooter.m in Sources */,
@@ -1430,7 +1464,6 @@
 				EBCF6BF923974D4300893A02 /* Pending.m in Sources */,
 				AF0ABED6238F9B5A00F46278 /* UIColor+HexString.m in Sources */,
 				AF0ABF02238F9B5A00F46278 /* UIView+WebCache.m in Sources */,
-				EB41A3F7239E40FE00DA623A /* WHUCalendarCell.m in Sources */,
 				AF0ABEDF238F9B5A00F46278 /* SDImageCacheDefine.m in Sources */,
 				EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */,
 				776D632C239A98F50030C96A /* MultiParamButton.m in Sources */,
@@ -1446,7 +1479,6 @@
 				7756E87C2397FC1300BF6944 /* LeaveDetailCell.m in Sources */,
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
-				EB41A3F8239E40FE00DA623A /* WHUCalendarFlowLayout.m in Sources */,
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
 				EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */,
 				EB30A4942398CECE00EEAE1E /* UIScrollView+MJRefresh.m in Sources */,
@@ -1455,6 +1487,7 @@
 				AF0ABEE9238F9B5A00F46278 /* SDImageLoadersManager.m in Sources */,
 				AF0ABECF238F9B5A00F46278 /* NSImage+Compatibility.m in Sources */,
 				775B61AB238BBE8D00985FF3 /* NSObject+MJKeyValue.m in Sources */,
+				AF3FFE63239F892200834A73 /* BusinessTripCell.m in Sources */,
 				77F10CFE2394FD1A005679B0 /* LeaveListCell.m in Sources */,
 				775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */,
 				EB30A48C2398CECE00EEAE1E /* MJRefreshGifHeader.m in Sources */,
@@ -1470,6 +1503,7 @@
 				EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */,
 				AF0ABEF2238F9B5A00F46278 /* SDWebImageDownloaderOperation.m in Sources */,
 				77FF8B2F2398EDD800C64307 /* LeaveDeatil.m in Sources */,
+				AF3FFE56239F88BE00834A73 /* BusinessTripTabBarViewController.m in Sources */,
 				EB30A48B2398CECE00EEAE1E /* MJRefreshBackStateFooter.m in Sources */,
 				AF0ABEDB238F9B5A00F46278 /* SDDiskCache.m in Sources */,
 				775B61AC238BBE8D00985FF3 /* NSObject+MJProperty.m in Sources */,

@@ -1,3 +1,4 @@
+
 #import "WHUCalendarYMSelectView.h"
 #define WHUCalendarYMSelectView_Piker_Height 150.0f
 #define WHUCalendarYMSelectView_Margin 10.0f
@@ -7,6 +8,7 @@
 @property(nonatomic,strong) NSArray* yearArr;
 @property(nonatomic,assign) NSInteger curYear;
 @property(nonatomic,assign) NSInteger yearRange;
+//@property(nonatomic,assign) NSInteger currentYear;
 @end
 @implementation WHUCalendarYMSelectView
 -(id)initWithFrame:(CGRect)frame{
@@ -26,7 +28,7 @@
 }
 
 -(void)setupViews{
-    _yearRange=20;
+    _yearRange=100;
     _pickerView=[[UIPickerView alloc] init];
     _pickerView.translatesAutoresizingMaskIntoConstraints=NO;
     [self addSubview:_pickerView];
@@ -43,10 +45,16 @@
     self.curYear=com.year;
     [_pickerView selectRow:_yearRange inComponent:0 animated:NO];
     [_pickerView selectRow:com.month-1 inComponent:1 animated:NO];
+    
+    //NSDate *date =[NSDate date];
+    //NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //[formatter setDateFormat:@"yyyy"];
+    //_currentYear=[[formatter stringFromDate:date] integerValue];
 }
 
 
 -(NSString*)selectdDateStr{
+
   NSInteger year=2015-_yearRange+[_pickerView selectedRowInComponent:0];
   NSInteger month=[_pickerView selectedRowInComponent:1]+1;
   return [NSString stringWithFormat:@"%ld年%ld月",(long)year,(long)month];
@@ -60,7 +68,7 @@
 // pickerView 每列个数
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
-        return 41;
+        return _yearRange*2+1;
     }
     
     return 12;
@@ -85,6 +93,7 @@
 -(NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if (component == 0) {
+        
         row=2015-_yearRange+row;
         return  [NSString stringWithFormat:@"%ld年",(long)row];
     } else {

@@ -13,10 +13,18 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WayViewController : UIViewController <UITableViewDataSource,
 UITableViewDelegate>{
     
-     IBOutlet UITableView *tableview;
-     NSMutableArray *wayArray;
-     NSMutableDictionary *info;
-     NSString *xmlString;
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
+    NSString *userID;
+    NSString *empID;
+    
+    NSMutableArray *array;
+    NSMutableArray *array2;
+    NSInteger _page;
+    NSInteger _pageSize;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;

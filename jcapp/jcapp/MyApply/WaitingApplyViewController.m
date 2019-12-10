@@ -12,6 +12,8 @@
 #import "../PendingPage/PendingListCell.h"
 //#import "ApplyListCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "../VatationPage/VatcationMainViewController.h"
+#import "../AppDelegate.h"
 
 
 static NSString * identifier = @"PendingListCell";
@@ -251,12 +253,16 @@ NSInteger currentPageCountwait;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
-    }
-    else
-    {
-        //其它单元格的事件
+    Pending * pending = self.listOfMovies[indexPath.row];
+    NSLog(@"pending.PicID:%@",pending.DocumentName);
+    //根据不同类型的单据跳转到不同的画面
+    if([pending.DocumentName isEqualToString:@"请假"]){
+        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
+        //app.leaveid
+        VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
+        //order.hidesBottomBarWhenPushed = YES;
+    //    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
+        [self presentViewController:order animated:YES completion:nil];
     }
 }
 

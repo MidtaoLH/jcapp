@@ -15,5 +15,10 @@
 //用户头像
 @property (nonatomic, strong) UIImageView *userPhotoimageView;
 
+
+@property (nonatomic, strong) NSString *leaveid;
+
+@property (nonatomic, strong) NSString *processid;
+
 @end
 

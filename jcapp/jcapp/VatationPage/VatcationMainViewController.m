@@ -12,8 +12,11 @@
 #import "ViewController.h"
 #import "WayViewController.h"
 #import "../MJExtension/MJExtension.h"
+#import "../Model/LeaveStatusModel.h"
+#import "AppDelegate.h"
 
 
+NSString * flag = @"flase";
 @interface VatcationMainViewController ()
 
 @end
@@ -22,12 +25,17 @@
 
 @synthesize txttime;
 @synthesize textviewreason1;
+@synthesize listOfLeave;
+@synthesize waybutton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     txttime.textAlignment = NSTextAlignmentRight;//
     //初始化一个UIImageView的对象
-
+    waybutton.multipleTouchEnabled  = NO;
+    //此处判断是不是新增，新增为new，编辑为edit；
+    edittype = @"NEW";
+    
     imageview.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [imageview addGestureRecognizer:singleTap];
@@ -513,8 +521,16 @@
     NSString *vatcationtime = txttime.text;
 NSString *reason = textviewreason1.text;
     
+    
+    //XINZENG SHI WEI 0
+    int *leaveid = 0;
+    int *processid = 0;
+    
+    
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@", userid,Groupid,EmpID,type,timestart,timeend,vatcationtime,reason,name];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@", edittype,userid,Groupid,EmpID,type,timestart,timeend,vatcationtime,reason,name,@0,@0];
+    
+    
     
     NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -529,11 +545,170 @@ NSString *reason = textviewreason1.text;
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+ 
+}
+
+-(IBAction)onClickButtonapply:(id)sender {
     
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *vatcationname = [defaults objectForKey:@"vatcationname"];
+    NSString *timestart = [defaults objectForKey:@"timestart"];
+    NSString *timeend = [defaults objectForKey:@"timeend"];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *EmpID = [defaults objectForKey:@"EmpID"];
+    NSString *name = [defaults objectForKey:@"empname"];
+    NSString *Groupid = [defaults objectForKey:@"Groupid"];
+    NSString *type = [defaults objectForKey:@"vatcationname"];
+
+    if(vatcationname.length > 0)
+    {
+        
+    }
+    else
+    {
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: @"请假类型不能为空！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if(timestart.length > 0)
+    {
+        
+    }
+    else
+    {
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: @"开始时间不能为空！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if(timeend.length > 0)
+    {
+        
+    }
+    else
+    {
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: @"结束时间不能为空！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if(txttime.text.length > 0)
+    {
+        
+    }
+    else
+    {
+        
+        NSLog(@"time%@",txttime.text);
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: @"时长不能为空！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    if(textviewreason1.text.length > 0)
+    {
+        
+    }
+    else
+    {
+        NSLog(@"textviewreason1%@",textviewreason1.text);
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: @"请假事由不能为空！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    
+    NSLog(@"%@", userid);
+    NSLog(@"%@", Groupid);
+    NSLog(@"%@", EmpID);
+    NSLog(@"%@", type);
+    NSLog(@"%@", timestart);
+    NSLog(@"%@", timeend);
+    NSLog(@"%@", txttime.text);
+    NSLog(@"%@", textviewreason1.text);
+    NSLog(@"%@", name);
+    
+    //timestart = timestart.trim
+    
+    NSString *vatcationtime = txttime.text;
+    NSString *reason = textviewreason1.text;
+    
+    //设置需要访问的ws和传入参数
+       NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnapply?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@", edittype,userid,Groupid,EmpID,type,timestart,timeend,vatcationtime,reason,name,0,0];
+    
+    NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@", strURL);
+    
+    NSURL *url = [NSURL URLWithString:urlStringUTF8];
+    
+    
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
+    
+    
+   
+}
+
+-(IBAction)onClickButtonway:(id)sender {
+    
+    
+    WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    
+    
+    if([ flag isEqualToString:@"flase"])
+    {
+        return ;
+    }
+    else
+    {
+        
+        //tiaozhuan
+        NSLog(@"%@", @"wybuttonclick");
+    }
     
     
 }
+
+
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -562,10 +737,30 @@ NSString *reason = textviewreason1.text;
     
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    //listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
+    listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
     
-    NSString *test = [[NSString alloc] initWithData:resData encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",test);
+    if(listOfLeave.count > 0)
+    {
+        
+        LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
+        
+
+        if ([ m.Status isEqualToString:@"suess"])
+        {
+            
+            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+            myDelegate.leaveid =m.LeaveID;
+            myDelegate.processid =m.ProcessID;
+            flag = @"true";
+        }
+        
+    }
+   
+    
+    
+    
+    //NSString *test = [[NSString alloc] initWithData:resData encoding:NSUTF8StringEncoding];
+    //NSLog(@"%@",test);
     
     
 }

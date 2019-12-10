@@ -20,6 +20,9 @@
 @property (nonatomic, strong) UILabel *leaveTypeLable;
 @property (nonatomic, strong) UILabel *leaveStatusLable;
 
+@property (nonatomic, strong) UIButton *leaveadd;
+
+
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
@@ -34,6 +37,18 @@
         _leaveStatusLable.textColor = [UIColor grayColor];
     }
     return _leaveStatusLable;
+}
+
+- (UIButton *)leaveadd {
+    
+    if (!_leaveadd) {
+        _leaveadd = [[UIButton alloc] init];
+        //_leaveadd.font = [UIFont systemFontOfSize:15];
+        _leaveadd.backgroundColor = [UIColor blueColor];
+
+        //_leaveadd.textColor = [UIColor grayColor];
+    }
+    return _leaveadd;
 }
 
 - (UILabel *)leaveDateLable {
@@ -89,59 +104,95 @@
         [self.contentView  addSubview:self.beignDateLable];
         [self.contentView  addSubview:self.leaveStatusLable];
         [self.contentView  addSubview:self.leaveDateLable];
+        
+        
+     
+    
+        [self.leaveadd setTitle:@"title"forState:UIControlStateNormal];
+        
+        [self.leaveadd addTarget:self action:@selector(btnclick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.contentView  addSubview:self.leaveadd];
     }
     return self;
 }
 
+- (void)btnclick:(UIButton *)sender
+{
+    
+    NSLog(@"%@",@"dianjishijian");
+    
+
+}
+
+
+
+
+
+
 -(void)setWaylist:(Way *)Waylist
 {
-    NSLog(@"%@",@"tablecell2");
     
     _Waylist =Waylist;
     
-    self.textLabel.text = @"李四提交的请假";
+    if([ _Waylist.name isEqualToString:@"button"])
+    {
+       self.leaveadd.hidden = NO;
+        self.textLabel.hidden = YES;
+        self.leaveStatusLable.hidden = YES;
+        self.leaveDateLable.hidden = YES;
+    }
+    else
+    {
+        self.leaveadd.hidden = YES;
+        self.textLabel.hidden = NO;
+        self.leaveStatusLable.hidden = NO;
+        self.leaveDateLable.hidden = NO;
+
+        
+        
+        self.textLabel.text = _Waylist.name;
+        self.leaveStatusLable.text = _Waylist.levelname;;
+        self.leaveDateLable.text = _Waylist.groupname;;
+        
+    }
     
-    self.leaveStatusLable.text = @"承认中";
     
-    self.leaveDateLable.text = @"2019.12.12";
     
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
+    //self.leaveadd.titleLabel.text=@"123";
+    //self.textLabel.hidden = YES;
+    //self.leaveadd.hidden = YES;
+    /*UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;*/
     
-    self.beignDateLable.text = @"开始时间:2019.12.12";
     
-    self.endDateLable.text = @"结束时间:2019.12.12";
     
-    self.leaveTypeLable.text = @"请假类型:事假";
+    
     
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    CGFloat     width = self.bounds.size.width;
+    CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    
-    CGFloat imageWH= height - 2*kMargin;
-    
+    CGFloat imageWH=  width/5;
     CGFloat leaveDateWidth = 80;
-    
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-    
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
-    
-    self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
-    
-    self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
-    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
+    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
+    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    self.leaveDateLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
+    self.leaveadd.frame=CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
     
-    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
 }
 - (void)awakeFromNib {

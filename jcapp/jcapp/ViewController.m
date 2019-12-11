@@ -17,6 +17,8 @@
 #import "Leave/LeaveViewController.h"
 #import "Leave/LeaveTabBar.h"
 #import "Leave/LeaveDetailController.h"
+#import "Notice/NewViewController.h"
+
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
@@ -102,15 +104,11 @@
 
 }
 -(IBAction)onClickButtonLeave:(id)sender {
-   LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
+   NewViewController * valueView = [[NewViewController alloc] initWithNibName:@"NewViewController"bundle:[NSBundle mainBundle]];
     //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转
-    [self presentModalViewController:valueView animated:YES];
-    
- //   UITabBarController *tabBarCtrl = [[LeaveTabBar alloc]init];
-    
- //   [self presentViewController:tabBarCtrl animated:NO completion:nil];
+    [self presentModalViewController:valueView animated:YES]; 
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {

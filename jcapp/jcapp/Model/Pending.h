@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * ApplyManPhoto;
 @property (nonatomic,copy) NSString * PicID;
 @property (nonatomic,copy) NSString * AidFK;
+@property (nonatomic,copy) NSString * DocumentID_FK;
+@property (nonatomic,copy) NSString * DocumentName;
 @end
 
 NS_ASSUME_NONNULL_END

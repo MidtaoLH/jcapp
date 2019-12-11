@@ -1,29 +1,26 @@
 //
-//  LeaveViewController.m
+//  ApprovingViewController.m
 //  jcapp
 //
-//  Created by zclmac on 2019/11/29.
+//  Created by youkare on 2019/12/2.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "WaitingApplyViewController.h"
+#import "BApprovedViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
-#import "../PendingPage/PendingListCell.h"
-//#import "ApplyListCell.h"
+#import "BusinessTripCell.h"
 #import "../MJRefresh/MJRefresh.h"
-#import "../VatationPage/VatcationMainViewController.h"
-#import "../AppDelegate.h"
 
 
 static NSString * identifier = @"PendingListCell";
 
-@interface WaitingApplyViewController ()
+@interface BApprovedViewController ()
 
 @end
 
-@implementation WaitingApplyViewController
-NSInteger currentPageCountwait;
+@implementation BApprovedViewController
+NSInteger currentPageCountbapproved;
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
@@ -31,27 +28,27 @@ NSInteger currentPageCountwait;
     [super viewDidLoad];
     
     //设置顶部导航栏的显示名称
-//    self.navigationItem.title=@"待申请记录";
-//    //设置子视图的f导航栏的返回按钮
-//    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-//    temporaryBarButtonItem.title =@"返回";
-//    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    //    self.navigationItem.title=@"待申请记录";
+    //    //设置子视图的f导航栏的返回按钮
+    //    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    //    temporaryBarButtonItem.title =@"返回";
+    //    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     //self.parentViewController.navigationItem.backBarButtonItem=temporaryBarButtonItem;
     //e注册自定义 cell
-    [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[BusinessTripCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
-    currentPageCountwait=[Common_PageSize intValue];
+    currentPageCountbapproved=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     
-    [self LoadData];
+    //[self LoadData];
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
     [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
     self.NewTableView.mj_header = header;
-
+    
     // 添加底部的上拉加载
     MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
@@ -59,14 +56,18 @@ NSInteger currentPageCountwait;
     
     _NewTableView.top=-_NewTableView.mj_header.size.height+5;
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self LoadData];
+    [self.NewTableView reloadData];
+}
 -(void)LoadData
 {
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
-    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"2"];
+    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountbapproved];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"1"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -95,7 +96,7 @@ NSInteger currentPageCountwait;
 - (void)footerClick {
     // 可在此处实现上拉加载时要执行的代码
     // ......
-    currentPageCountwait=currentPageCountwait+[Common_PageSizeAdd intValue];
+    currentPageCountbapproved=currentPageCountbapproved+[Common_PageSizeAdd intValue];
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];
@@ -244,26 +245,23 @@ NSInteger currentPageCountwait;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
-     PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    BusinessTripCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
     cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
-
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Pending * pending = self.listOfMovies[indexPath.row];
-    NSLog(@"pending.PicID:%@",pending.DocumentName);
-    //根据不同类型的单据跳转到不同的画面
-    if([pending.DocumentName isEqualToString:@"请假"]){
-        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-        //app.leaveid
-        VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
-        //order.hidesBottomBarWhenPushed = YES;
-    //    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
-        [self presentViewController:order animated:YES completion:nil];
+    if([indexPath row] == [self.listOfMovies count])
+    {
+    }
+    else
+    {
+        //其它单元格的事件
     }
 }
 
 @end
+

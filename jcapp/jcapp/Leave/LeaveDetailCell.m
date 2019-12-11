@@ -8,6 +8,7 @@
 
 #import "LeaveDetailCell.h"
 #import "MultiParamButton.h"
+#import "MJExtension.h"
 
 #define kMargin 10
 
@@ -43,7 +44,130 @@
     
     NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
  
+    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"taskid"];
+ 
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", @"1",obj1 ];
+    NSLog(@"%@", strURL);
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+
 }
+//系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8 一
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSLog(@"%@    ",@"connection1-begin");
+    //upateData = [[NSData alloc] initWithData:data];
+    //默认对于中文的支持不好
+    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
+    //如果是非UTF－8  NSXMLParser会报错。
+    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
+    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    
+    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@", @"kaishidayin");
+    NSLog(@"%@", xmlString);
+    
+    // 字符串截取
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    NSString *resultString = [xmlString substringWithRange:reusltRagne];
+    
+    NSLog(@"%@", resultString);
+ 
+    NSLog(@"%@",@"connection1-end");
+}
+
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: [error localizedDescription]
+                               message: [error localizedFailureReason]
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    NSLog(@"%@",@"connection2-end");
+}
+
+//解析返回的xml系统自带方法不需要h中声明 二s
+- (void) connectionDidFinishLoading: (NSURLConnection*) connection {
+    
+    NSLog(@"%@", @"kaishijiex");    //开始解析XML
+    
+    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+    ipParser.delegate = self;
+    [ipParser parse];
+    NSLog(@"%@",@"connectionDidFinishLoading-end");
+ 
+}
+
+//解析xml回调方法 六
+- (void)parserDidStartDocument:(NSXMLParser *)parser {
+    info = [[NSMutableDictionary alloc] initWithCapacity: 1];
+    
+    NSLog(@"%@",@"parserDidStartDocument-end");
+}
+
+//回调方法出错弹框
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: [parseError localizedDescription]
+                               message: [parseError localizedFailureReason]
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    NSLog(@"%@",@"parser-end");
+}
+
+//解析返回xml的节点elementName 三
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qualifiedName
+    attributes:(NSDictionary *)attributeDict  {
+    NSLog(@"value2: %@\n", elementName);
+    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
+    currentTagName = elementName;
+    
+    NSLog(@"%@",@"parser2-end");
+}
+
+//取得我们需要的节点的数据 四
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    
+    NSLog(@"%@",@"parser3-begin");
+    
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName {
+    
+}
+
+//循环解析d节点 五
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+    
+    NSLog(@"%@",@"parserDidEndDocument-begin");
+    
+    NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
+    for (id key in info) {
+        [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
+    }
+    
+    //[outstring release];
+    //[xmlString release];
+}
+
+
+
 - (UILabel *)lblleaveDate {
     
     if (!_lblleaveDate) {
@@ -155,7 +279,7 @@
             if([_leavedetail.ProcessStutas isEqualToString: @"2"] || [_leavedetail.ProcessStutas isEqualToString: @"3"]  || [_leavedetail.ProcessStutas isEqualToString: @"4"] )
             {
                 self.btnemail.hidden = NO;
-                NSDictionary* paramDic = @{@"one":@"one",@"two":@2,@"third":@(3)};
+                NSDictionary* paramDic = @{@"taskid":_leavedetail.TaskInstanceID};
                 self.btnemail.multiParamDic= paramDic;
  
             }

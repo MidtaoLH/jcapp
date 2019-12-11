@@ -1,8 +1,8 @@
 //
-//  WayViewController.h
+//  ApprovingViewController.h
 //  jcapp
 //
-//  Created by zhaodan on 2019/12/3.
+//  Created by youkare on 2019/12/2.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -10,9 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WayViewController : UIViewController <UITableViewDataSource,
-UITableViewDelegate>{
-    
+@interface BApprovedViewController : UIViewController
+{
     NSString *xmlString;
     NSMutableDictionary *info;
     NSString *currentTagName;
@@ -25,13 +24,12 @@ UITableViewDelegate>{
     NSMutableArray *array2;
     NSInteger _page;
     NSInteger _pageSize;
-    
 }
+
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
 // 添加数据源
-@property (strong,nonatomic) NSMutableArray *listOfWay;
-
+@property (strong,nonatomic) NSMutableArray *listOfMovies;
 
 @end
 

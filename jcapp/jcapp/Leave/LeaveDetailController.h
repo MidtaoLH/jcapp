@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
+@property (weak, nonatomic) IBOutlet UITableView *ImageTableView;
+
 @property (weak, nonatomic) IBOutlet UILabel *emplbl;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblempgroup;
@@ -44,8 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray *listdetail;
 @property (strong,nonatomic) NSMutableArray *listhead;
 @property (strong,nonatomic) NSMutableArray *listtask;
-
-
+ 
 @end
 
 NS_ASSUME_NONNULL_END

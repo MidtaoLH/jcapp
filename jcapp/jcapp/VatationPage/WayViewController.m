@@ -10,11 +10,10 @@
 #import "../Model/Way.h"
 #import "../MJExtension/MJExtension.h"
 #import "TableCell.h"
+#import "../MJRefresh/MJRefresh.h"
 
 
 static NSString * identifier = @"TableCell";
-
-
 
 
 @interface WayViewController ()
@@ -22,19 +21,51 @@ static NSString * identifier = @"TableCell";
 @end
 
 @implementation WayViewController
+
+NSInteger currentPageCountwait_new;
 @synthesize listOfWay;
-
-
-
 
 
 - (void)viewDidLoad {
     
+    [super viewDidLoad];
+    
+    
+    //e注册自定义 cell
+    [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 150;
+    currentPageCountwait_new=[Common_PageSize intValue];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    
+    [self LoadData];
+    
+    // 添加头部的下拉刷新
+    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+    self.NewTableView.mj_header = header;
+    
+    // 添加底部的上拉加载
+    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+    self.NewTableView.mj_footer = footer;
+    
+    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+}
+
+-(void)LoadData
+{
+    //设置需要访问的ws和传入参数
+    // code, string userID, string menuID
+    //设置需要访问的ws和传入参数
+    //NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait];
+    //NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"2"];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *id = [defaults objectForKey:@"userid"];
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@", id];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@&processid=%@", userid,@"22755"];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -43,53 +74,52 @@ static NSString * identifier = @"TableCell";
                                    initWithRequest:request
                                    delegate:self];
     
-    [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
-    
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
-    NSLog(@"%@", @"way2是否走到这里1");
-    
-    return 1;
-}
-
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    NSLog(@"%@", @"way3是否走到这里1");
-    return 5;
-}
-
--(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    NSLog(@"%@", @"way4是否走到这里1");
-    TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    
-    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
-
-    return cell;
-}
-
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-
     
 }
 
-//调用ws之后的方法
+// 2.实现下拉刷新和上拉加载的事件。
+// 头部的下拉刷新触发事件
+- (void)headerClick {
+    // 可在此处实现下拉刷新时要执行的代码
+    // ......
+    //if(currentPageCount>1)
+    //currentPageCount--;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_header endRefreshing];
+}
+// 底部的上拉加载触发事件
+- (void)footerClick {
+    // 可在此处实现上拉加载时要执行的代码
+    // ......
+    currentPageCountwait_new=currentPageCountwait_new+[Common_PageSizeAdd intValue];
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_footer endRefreshing];
+}
+
+
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
     NSLog(@"%@",@"connection1-begin");
-
+    //upateData = [[NSData alloc] initWithData:data];
+    //默认对于中文的支持不好
+    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
+    //如果是非UTF－8  NSXMLParser会报错。
+    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
+    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
+    NSLog(@"%@", @"34443333kaishidayin");
+    NSLog(@"%@", xmlString);
+    
+    // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
@@ -101,17 +131,15 @@ static NSString * identifier = @"TableCell";
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
     
     
-    
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
     
+    NSLog(@"%@",@"connection1-end");
 }
 
 //弹出消息框
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
-    
-    NSLog(@"%@", @"test2");
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle: [error localizedDescription]
                                message: [error localizedFailureReason]
@@ -119,35 +147,31 @@ static NSString * identifier = @"TableCell";
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    //[errorAlert release];
-    
+    NSLog(@"%@",@"connection2-end");
 }
+
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
+    
+    NSLog(@"%@", @"kaishijiex");    //开始解析XML
     
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
-    NSString *message = @"";
+    NSLog(@"%@",@"connectionDidFinishLoading-end");
     
-    if(listOfWay.count > 0)
-    {
-        
-        Way *m =self.listOfWay[0];//取出数据元素
-         NSLog(@"%@", m.levelname);
-        NSLog(@"%@", m.name);
-    }
+    [self.NewTableView reloadData];
 }
 
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-    NSLog(@"%@", @"test4");
     info = [[NSMutableDictionary alloc] initWithCapacity: 1];
+    
+    NSLog(@"%@",@"parserDidStartDocument-end");
 }
 
 //回调方法出错弹框
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
-    NSLog(@"%@", @"test5");
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle: [parseError localizedDescription]
                                message: [parseError localizedFailureReason]
@@ -155,7 +179,7 @@ static NSString * identifier = @"TableCell";
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    //[errorAlert release];
+    NSLog(@"%@",@"parser-end");
 }
 
 //解析返回xml的节点elementName
@@ -163,15 +187,19 @@ static NSString * identifier = @"TableCell";
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-   
+    NSLog(@"value2: %@\n", elementName);
+    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
+    currentTagName = elementName;
+    
+    NSLog(@"%@",@"parser2-end");
 }
 
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-
- 
+    
+    NSLog(@"%@",@"parser3-begin");
+    
 }
-
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
@@ -181,35 +209,56 @@ static NSString * identifier = @"TableCell";
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     
+    NSLog(@"%@",@"parserDidEndDocument-begin");
+    
+    NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
+    for (id key in info) {
+        [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
+    }
+    
+    //[outstring release];
+    //[xmlString release];
 }
 
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//有多少组
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSLog(@"%@",@"numberOfSectionsInTableView-begin");
+    // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
+    // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
+    return 1;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+//如果不设置section 默认就1组
+//每组多少行
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
+    // 这里是返回节点的行数
+    NSLog(@"%@",@"tableView-begin");
+    return self.listOfWay.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
+    TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == [self.listOfWay count])
+    {
+    }
+    else
+    {
+        //其它单元格的事件
+    }
+}
+
 @end

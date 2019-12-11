@@ -12,7 +12,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LeaveDetailCell : UITableViewCell
-
+{
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
+}
 @property (nonatomic,strong) LeaveDeatil * leavedetail;
 
 @end

@@ -29,7 +29,7 @@
     CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
     CGFloat headimageW = self.view.frame.size.width * 0.25;
     CGFloat headimageH = headimageW;
-    self.myHeadPortrait.frame = CGRectMake(20, tabBarHeight, headimageW, headimageH);
+    self.myHeadPortrait.frame = CGRectMake(20, tabBarHeight*0.9, headimageW, headimageH);
     //这句必须写
     self.myHeadPortrait.layer.masksToBounds = YES;
     self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
@@ -46,7 +46,7 @@
         NSLog(@"%@",calm);
         //如果当前日期中的天数,可以被5整除,显示 预约
         if([itemDateArray[2] integerValue]%5==0){
-            return @"预约";
+            return @"请假";
         }
         else{
             return nil;

@@ -212,11 +212,12 @@
                                
                             }
             
-             [defaults setObject:m.id forKey:@"userid"];
-             [defaults setObject:m.EmpID forKey:@"EmpID"];
+            [defaults setObject:m.id forKey:@"userid"];
+            [defaults setObject:m.EmpID forKey:@"EmpID"];
             [defaults setObject:m.name forKey:@"empname"];
             [defaults setObject:m.Groupid forKey:@"Groupid"];
             [defaults setObject:m.GroupName forKey:@"GroupName"];
+            [defaults setObject:m.UserNO forKey:@"UserNO"];
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页

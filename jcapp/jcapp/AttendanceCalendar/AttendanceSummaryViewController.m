@@ -38,8 +38,8 @@
     
     headimageW = self.view.frame.size.width * 0.25;
     headimageH =  headimageW;
-    self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/5, headimageW, headimageH);
-    self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/6, headimageW, headimageH);
+    self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/6, headimageW, headimageH);
+    self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
     [self loadinfo];
    
     
@@ -59,42 +59,15 @@
 }
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *user = [defaults objectForKey:@"username"];
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetUserInfo?id=%@",user];
-    //id,password,oldPassword
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
-}
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([infoString containsString:@"xmlns"])
-    {
-        infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        // 字符串截取
-        NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-        NSRange endRagne = [infoString rangeOfString:@"]</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [infoString substringWithRange:reusltRagne];
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        UserInfo *userinfo = [UserInfo mj_objectWithKeyValues:resultDic];
-        self.lblname.text=userinfo.name;
-        self.lbldept.text=userinfo.dept;
-        
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-        [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
-        
-    }
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    empname = [defaults objectForKey:@"empname"];
+    groupname = [defaults objectForKey:@"GroupName"];
+ 
+    self.lblname.text=empname;
+    self.lbldept.text=groupname;
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
 }
 - (IBAction)startDateButtonOnClicked:(id)sender {
     

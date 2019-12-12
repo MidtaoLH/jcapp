@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "YUFoldingTableView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AttendanceSummaryViewController : UIViewController
+@interface AttendanceSummaryViewController :  UIViewController  <YUFoldingTableViewDelegate>
 {
     NSString *infoString;
     NSMutableDictionary *userinfo;
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *inforesultString;
     NSString *allString;
 }
-@end
+@property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
 
+@property (nonatomic, assign) NSInteger index;
+@end
 NS_ASSUME_NONNULL_END

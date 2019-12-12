@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** mingcheng */
 @property (copy, nonatomic) NSString *Groupid;
 
+/** mingcheng */
+@property (copy, nonatomic) NSString *GroupName;
 @end
 
 NS_ASSUME_NONNULL_END

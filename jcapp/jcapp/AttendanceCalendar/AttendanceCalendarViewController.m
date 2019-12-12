@@ -38,7 +38,7 @@
     
     headimageW = self.view.frame.size.width * 0.25;
     headimageH =  headimageW;
-     self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/5, headimageW, headimageH);
+     self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/6, headimageW, headimageH);
     self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
     headimageW = self.view.frame.size.width * 0.3;
     

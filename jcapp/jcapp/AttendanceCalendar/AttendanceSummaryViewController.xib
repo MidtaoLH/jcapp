@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttendanceSummaryViewController">
             <connections>
+                <outlet property="btndate" destination="1Pv-J7-iJi" id="eZh-Kl-GV0"/>
                 <outlet property="lbldept" destination="OEb-ql-saH" id="SgA-QV-7RZ"/>
                 <outlet property="lblname" destination="3qW-rZ-r9t" id="XN7-YI-cmS"/>
                 <outlet property="myHeadPortrait" destination="yXy-h8-qDF" id="Zpy-ja-4dM"/>
@@ -39,9 +40,21 @@
                     <rect key="frame" x="22" y="69" width="80" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pv-J7-iJi">
+                    <rect key="frame" x="273" y="94" width="30" height="34"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="startDateButtonOnClicked:" destination="-1" eventType="touchUpInside" id="pWv-q3-nVL"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="37.681159420289859" y="34.821428571428569"/>
         </view>
     </objects>
 </document>

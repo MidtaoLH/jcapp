@@ -10,10 +10,15 @@
 #import "UserInfo.h"
 #import "AppDelegate.h"
 #import "MJExtension.h"
-@interface AttendanceSummaryViewController ()
+#import "ITDatePickerController.h"
+
+@interface AttendanceSummaryViewController ()<ITDatePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
 @property (weak, nonatomic) IBOutlet UILabel *lbldept;
 @property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
+@property (weak, nonatomic) IBOutlet UIButton *btndate;
+@property (strong, nonatomic) NSDate *startDate;
+- (IBAction)startDateButtonOnClicked:(id)sender;
 @end
 
 @implementation AttendanceSummaryViewController
@@ -33,9 +38,19 @@
     headimageW = self.view.frame.size.width * 0.25;
     headimageH =  headimageW;
     self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/5, headimageW, headimageH);
-    self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
-    headimageW = self.view.frame.size.width * 0.3;
-     [self loadinfo];
+    self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/6, headimageW, headimageH);
+    [self loadinfo];
+   
+    
+    headimageH =  headimageW;
+    headimageW = self.view.frame.size.width * 0.35;
+    self.btndate.frame=CGRectMake(self.myHeadPortrait.width+ self.lblname.width+20, tabBarHeight, headimageW, headimageH);
+    
+    NSDate *newDate = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy年MM月"];
+    NSString *dateString = [format stringFromDate:newDate];
+    [self.btndate setTitle:dateString forState:UIControlStateNormal];
 }
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -74,6 +89,25 @@
         AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
         [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
         
+    }
+}
+- (IBAction)startDateButtonOnClicked:(id)sender {
+    
+    ITDatePickerController *datePickerController = [[ITDatePickerController alloc] init];
+    datePickerController.tag = 100;                     // Tag, which may be used in delegate methods
+    datePickerController.delegate = self;               // Set the callback object
+    datePickerController.showToday = NO;                // Whether to show "today", default is yes
+    datePickerController.defaultDate = self.startDate;  // Default date
+ 
+    [self presentViewController:datePickerController animated:YES completion:nil];
+}
+- (void)datePickerController:(ITDatePickerController *)datePickerController didSelectedDate:(NSDate *)date dateString:(NSString *)dateString {
+    
+    NSInteger tag = datePickerController.tag;
+    UIButton *button = [self.view viewWithTag:tag];
+    [self.btndate setTitle:dateString forState:UIControlStateNormal];
+    if (datePickerController.tag == 100) {
+        self.startDate = date;
     }
 }
 @end

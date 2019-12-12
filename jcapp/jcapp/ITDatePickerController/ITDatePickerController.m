@@ -1,10 +1,4 @@
-//
-//  ITDatePickerController.m
-//  ITDatePickerControllerSampleCode
-//
-//  Created by Wit on 2017/8/10.
-//  Copyright © 2017年 Wit. All rights reserved.
-//
+
 
 #import "ITDatePickerController.h"
 
@@ -382,13 +376,9 @@ UIPickerViewDataSource>
 - (void)confirmButtonOnClicked:(UIButton *)sender {
     
     if ([self.delegate respondsToSelector:@selector(datePickerController:didSelectedDate:dateString:)]) {
-        NSString *dateString = [NSString stringWithFormat:@"%ld.%02ld", self.selectedYear, self.selectedMonth];
-        NSDate *selectedDate = [self.dateFormatter dateFromString:dateString];
-        if (self.selectedYear == self.thisYear &&
-            self.selectedMonth == self.thisMonth &&
-            self.showToday) {
-            dateString = @"至今";
-        }
+        NSString *dateString = [NSString stringWithFormat:@"%ld年%02ld月", self.selectedYear, self.selectedMonth];
+        NSString *dateStringNew = [NSString stringWithFormat:@"%ld.%02ld", self.selectedYear, self.selectedMonth];
+        NSDate *selectedDate = [self.dateFormatter dateFromString:dateStringNew];
         
         kITLocalDate(selectedDate);
         
@@ -679,7 +669,8 @@ UIPickerViewDataSource>
 
 - (UIBarButtonItem *)confirmButton {
     if (!_confirmButton) {
-        _confirmButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(confirmButtonOnClicked:)];
+        _confirmButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self
+            action:@selector(confirmButtonOnClicked:)];
     }
     return _confirmButton;
 }

@@ -209,6 +209,7 @@
 		EBCF6C0123974DE300893A02 /* PendingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFD23974DE300893A02 /* PendingListCell.m */; };
 		EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFE23974DE300893A02 /* PendingViewController.m */; };
 		EBCF6C0323974DE300893A02 /* PendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBCF6BFF23974DE300893A02 /* PendingViewController.xib */; };
+		EBFB0DD423A279290092A504 /* new.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFB0DD323A279290092A504 /* new.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -615,6 +616,8 @@
 		EBCF6BFE23974DE300893A02 /* PendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingViewController.m; sourceTree = "<group>"; };
 		EBCF6BFF23974DE300893A02 /* PendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PendingViewController.xib; sourceTree = "<group>"; };
 		EBCF6C0023974DE300893A02 /* PendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingViewController.h; sourceTree = "<group>"; };
+		EBFB0DD323A279290092A504 /* new.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = new.m; sourceTree = "<group>"; };
+		EBFB0DD523A279340092A504 /* new.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = new.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1021,6 +1024,8 @@
 			children = (
 				EBCDCDFC23A270CA00FDF02E /* MCDatePickerView.h */,
 				EBCDCDFB23A270CA00FDF02E /* MCDatePickerView.m */,
+				EBFB0DD323A279290092A504 /* new.m */,
+				EBFB0DD523A279340092A504 /* new.h */,
 			);
 			path = ITDatePickerController;
 			sourceTree = "<group>";
@@ -1539,6 +1544,7 @@
 				77AA03132391159F00881B0F /* WaitApplyViewController.m in Sources */,
 				AF0ABEE4238F9B5A00F46278 /* SDImageFrame.m in Sources */,
 				8D936BDE2396302A000473ED /* UserLogin.m in Sources */,
+				EBFB0DD423A279290092A504 /* new.m in Sources */,
 				AF0ABEED238F9B5A00F46278 /* SDWebImageCacheSerializer.m in Sources */,
 				EBCF6C0123974DE300893A02 /* PendingListCell.m in Sources */,
 				8D88D48B23A0EB3200C5AD8F /* Group.m in Sources */,

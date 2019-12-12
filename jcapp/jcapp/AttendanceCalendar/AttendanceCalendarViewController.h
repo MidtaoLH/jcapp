@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *infocurrentValue;
     NSString *inforesultString;
     NSString *allString;
+    NSString *groupname;
+    NSString *empname;
+    NSString *empID;
+    NSString *userID;
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 

@@ -147,7 +147,6 @@
 		EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00A226239E6CA600378B0B /* WHUCalDrawView.m */; };
 		EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB029E95238B7BC100358E21 /* AlterPWDController.m */; };
 		EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB029E96238B7BC100358E21 /* AlterPWDController.xib */; };
-		EB2D814323A0D7760007DD02 /* ITDatePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D814223A0D7760007DD02 /* ITDatePickerController.m */; };
 		EB2D814623A0D81A0007DD02 /* AttendanceCalendarMonthDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D814523A0D81A0007DD02 /* AttendanceCalendarMonthDetail.m */; };
 		EB2D814823A0D90B0007DD02 /* AttendanceCalendarMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D814723A0D90B0007DD02 /* AttendanceCalendarMonth.m */; };
 		EB2D814C23A0D9E50007DD02 /* AttendanceCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D814B23A0D9E50007DD02 /* AttendanceCalendar.m */; };
@@ -497,8 +496,6 @@
 		EB029E94238B7BC100358E21 /* AlterPWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlterPWDController.h; sourceTree = "<group>"; };
 		EB029E95238B7BC100358E21 /* AlterPWDController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlterPWDController.m; sourceTree = "<group>"; };
 		EB029E96238B7BC100358E21 /* AlterPWDController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlterPWDController.xib; sourceTree = "<group>"; };
-		EB2D814123A0D7760007DD02 /* ITDatePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITDatePickerController.h; sourceTree = "<group>"; };
-		EB2D814223A0D7760007DD02 /* ITDatePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITDatePickerController.m; sourceTree = "<group>"; };
 		EB2D814423A0D8030007DD02 /* AttendanceCalendarMonthDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceCalendarMonthDetail.h; sourceTree = "<group>"; };
 		EB2D814523A0D81A0007DD02 /* AttendanceCalendarMonthDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceCalendarMonthDetail.m; sourceTree = "<group>"; };
 		EB2D814723A0D90B0007DD02 /* AttendanceCalendarMonth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceCalendarMonth.m; sourceTree = "<group>"; };
@@ -1024,8 +1021,6 @@
 			children = (
 				EBCDCDFC23A270CA00FDF02E /* MCDatePickerView.h */,
 				EBCDCDFB23A270CA00FDF02E /* MCDatePickerView.m */,
-				EB2D814123A0D7760007DD02 /* ITDatePickerController.h */,
-				EB2D814223A0D7760007DD02 /* ITDatePickerController.m */,
 			);
 			path = ITDatePickerController;
 			sourceTree = "<group>";
@@ -1595,7 +1590,6 @@
 				AF0ABEFA238F9B5A00F46278 /* UIImage+ForceDecode.m in Sources */,
 				8D88D48E23A0EE8B00C5AD8F /* Emp.m in Sources */,
 				EBAD2EA4239A148D004FAE82 /* AttendanceTabBarViewController.m in Sources */,
-				EB2D814323A0D7760007DD02 /* ITDatePickerController.m in Sources */,
 				EB30A4942398CECE00EEAE1E /* UIScrollView+MJRefresh.m in Sources */,
 				AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */,
 				AF0ABEFC238F9B5A00F46278 /* UIImage+MemoryCacheCost.m in Sources */,

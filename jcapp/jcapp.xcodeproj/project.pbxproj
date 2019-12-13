@@ -114,13 +114,14 @@
 		AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABF18238FCD3200F46278 /* UIColor+Hex.m */; };
 		AF269C47238D5F010058F3E0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF269C45238D5F010058F3E0 /* WebViewController.m */; };
 		AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF269C46238D5F010058F3E0 /* WebViewController.xib */; };
+		AF3D92A123A22DEC00001C73 /* BusinessTripEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3D929F23A22DEC00001C73 /* BusinessTripEditViewController.m */; };
+		AF3D92A223A22DEC00001C73 /* BusinessTripEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF3D92A023A22DEC00001C73 /* BusinessTripEditViewController.xib */; };
 		AF3FFE56239F88BE00834A73 /* BusinessTripTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE54239F88BD00834A73 /* BusinessTripTabBarViewController.m */; };
 		AF3FFE5D239F890700834A73 /* BWaitApplyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF3FFE58239F890700834A73 /* BWaitApplyViewController.xib */; };
 		AF3FFE5E239F890700834A73 /* BApprovedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF3FFE59239F890700834A73 /* BApprovedViewController.xib */; };
 		AF3FFE5F239F890700834A73 /* BApprovedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE5B239F890700834A73 /* BApprovedViewController.m */; };
 		AF3FFE60239F890700834A73 /* BWaitApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE5C239F890700834A73 /* BWaitApplyViewController.m */; };
 		AF3FFE63239F892200834A73 /* BusinessTripCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF3FFE62239F892200834A73 /* BusinessTripCell.m */; };
-		AF6A5C8823A0C9EE001C0832 /* BusinessTripEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6A5C8623A0C9EE001C0832 /* BusinessTripEditViewController.m */; };
 		AF6A5C8C23A0D737001C0832 /* BusinessTripPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6A5C8B23A0D737001C0832 /* BusinessTripPlaceCell.m */; };
 		AF6BC9DF2386AD2000C381EB /* ZDYTTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */; };
 		AF7EC2CD23960BC900257CF1 /* MyApplyTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF7EC2CC23960BC900257CF1 /* MyApplyTabBarViewController.m */; };
@@ -426,6 +427,9 @@
 		AF269C44238D5F000058F3E0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		AF269C45238D5F010058F3E0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		AF269C46238D5F010058F3E0 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		AF3D929E23A22DEC00001C73 /* BusinessTripEditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusinessTripEditViewController.h; sourceTree = "<group>"; };
+		AF3D929F23A22DEC00001C73 /* BusinessTripEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusinessTripEditViewController.m; sourceTree = "<group>"; };
+		AF3D92A023A22DEC00001C73 /* BusinessTripEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessTripEditViewController.xib; sourceTree = "<group>"; };
 		AF3FFE54239F88BD00834A73 /* BusinessTripTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessTripTabBarViewController.m; sourceTree = "<group>"; };
 		AF3FFE55239F88BE00834A73 /* BusinessTripTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessTripTabBarViewController.h; sourceTree = "<group>"; };
 		AF3FFE57239F890700834A73 /* BWaitApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWaitApplyViewController.h; sourceTree = "<group>"; };
@@ -436,8 +440,6 @@
 		AF3FFE5C239F890700834A73 /* BWaitApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWaitApplyViewController.m; sourceTree = "<group>"; };
 		AF3FFE61239F892200834A73 /* BusinessTripCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessTripCell.h; sourceTree = "<group>"; };
 		AF3FFE62239F892200834A73 /* BusinessTripCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessTripCell.m; sourceTree = "<group>"; };
-		AF6A5C8523A0C9EE001C0832 /* BusinessTripEditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusinessTripEditViewController.h; sourceTree = "<group>"; };
-		AF6A5C8623A0C9EE001C0832 /* BusinessTripEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusinessTripEditViewController.m; sourceTree = "<group>"; };
 		AF6A5C8A23A0D737001C0832 /* BusinessTripPlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessTripPlaceCell.h; sourceTree = "<group>"; };
 		AF6A5C8B23A0D737001C0832 /* BusinessTripPlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessTripPlaceCell.m; sourceTree = "<group>"; };
 		AF6BC9DA2386AD2000C381EB /* ZDYTTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDYTTabBarViewController.m; sourceTree = "<group>"; };
@@ -911,8 +913,9 @@
 				AF3FFE59239F890700834A73 /* BApprovedViewController.xib */,
 				AF3FFE55239F88BE00834A73 /* BusinessTripTabBarViewController.h */,
 				AF3FFE54239F88BD00834A73 /* BusinessTripTabBarViewController.m */,
-				AF6A5C8523A0C9EE001C0832 /* BusinessTripEditViewController.h */,
-				AF6A5C8623A0C9EE001C0832 /* BusinessTripEditViewController.m */,
+				AF3D929E23A22DEC00001C73 /* BusinessTripEditViewController.h */,
+				AF3D929F23A22DEC00001C73 /* BusinessTripEditViewController.m */,
+				AF3D92A023A22DEC00001C73 /* BusinessTripEditViewController.xib */,
 			);
 			path = BusinessTrip;
 			sourceTree = "<group>";
@@ -1328,6 +1331,7 @@
 				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
 				AF7EC2EC2396140B00257CF1 /* ApprovingViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
+				AF3D92A223A22DEC00001C73 /* BusinessTripEditViewController.xib in Resources */,
 				EBAD2E7D239A1257004FAE82 /* AttendanceCalendarViewController.xib in Resources */,
 				AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */,
 				AF7EC2F12396147B00257CF1 /* ApprovedViewController.xib in Resources */,
@@ -1379,7 +1383,6 @@
 				EB30A48D2398CECE00EEAE1E /* MJRefreshNormalHeader.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
 				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
-				AF6A5C8823A0C9EE001C0832 /* BusinessTripEditViewController.m in Sources */,
 				EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */,
 				EB30A4882398CECE00EEAE1E /* MJRefreshAutoStateFooter.m in Sources */,
 				AF7EC2D823960EDF00257CF1 /* ApplyListCell.m in Sources */,
@@ -1469,6 +1472,7 @@
 				EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */,
 				8D8954BB239662A600F1E109 /* WayViewController.m in Sources */,
 				AF0ABED7238F9B5A00F46278 /* SDAnimatedImage.m in Sources */,
+				AF3D92A123A22DEC00001C73 /* BusinessTripEditViewController.m in Sources */,
 				EB30A4892398CECE00EEAE1E /* MJRefreshBackGifFooter.m in Sources */,
 				AF0ABEF8238F9B5A00F46278 /* SDWebImageTransition.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,

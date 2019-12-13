@@ -2,7 +2,7 @@
 //  BusinessTripEditViewController.h
 //  jcapp
 //
-//  Created by youkare on 2019/12/11.
+//  Created by youkare on 2019/12/12.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -10,14 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BusinessTripEditViewController : UIViewController
+@interface BusinessTripEditViewController  : UIViewController<UITableViewDataSource,
+UITableViewDelegate>
 {
-    NSString *xmlString;
-    NSMutableDictionary *info;
-    NSString *userID;
-    NSString *empID;
-    NSString *currentTagName;
+    
+    IBOutlet UITableView *tableViewPlace;
+    NSMutableArray *myData;
+    NSInteger totalcount;
+    NSInteger totalHeight;
 }
 @end
-
 NS_ASSUME_NONNULL_END

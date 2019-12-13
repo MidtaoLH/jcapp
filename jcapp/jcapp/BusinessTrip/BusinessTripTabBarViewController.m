@@ -9,6 +9,7 @@
 #import "BusinessTripTabBarViewController.h"
 #import "BWaitApplyViewController.h"
 #import "BApprovedViewController.h"
+#import "BusinessTripEditViewController.h"
 
 @interface BusinessTripTabBarViewController ()
 
@@ -39,7 +40,7 @@
     item3.selectedImage = [[UIImage imageNamed:@"tabbar_person_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     
-    NSArray *controllers = @[@"BWaitApplyViewController",@"BApprovedViewController",@"BApprovedViewController"];
+    NSArray *controllers = @[@"BWaitApplyViewController",@"BusinessTripEditViewController",@"BApprovedViewController"];
     for (int i = 0; i < 3; i++) {
         Class cls = NSClassFromString([NSString stringWithFormat:@"%@",controllers[i]]);
         UIViewController *controller = (UIViewController *)[[cls alloc] init];
@@ -58,9 +59,9 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == self.viewControllers[1]) {
         //点击中间tabbarItem，不切换，让当前页面跳转
-//        VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
-//        order.hidesBottomBarWhenPushed = YES;
-//        [(UINavigationController *)tabBarController.selectedViewController pushViewController:order animated:YES];
+        BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
+        order.hidesBottomBarWhenPushed = YES;
+        [(UINavigationController *)tabBarController.selectedViewController pushViewController:order animated:YES];
         return NO;
     }
     return YES;

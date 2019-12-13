@@ -15,6 +15,7 @@ UITableViewDelegate>
 {
     
     IBOutlet UITableView *tableViewPlace;
+    IBOutlet UITableView *tableViewDays;
     NSMutableArray *myData;
     NSInteger totalcount;
     NSInteger totalHeight;

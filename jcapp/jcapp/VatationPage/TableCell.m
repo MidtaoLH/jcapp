@@ -7,7 +7,9 @@
 //
 
 #import "TableCell.h"
-
+#import "AddButton.h"
+#import "MJExtension.h"
+#import "AddWayView.h"
 
 #define kMargin 10
 
@@ -20,7 +22,7 @@
 @property (nonatomic, strong) UILabel *leaveTypeLable;
 @property (nonatomic, strong) UILabel *leaveStatusLable;
 
-@property (nonatomic, strong) UIButton *leaveadd;
+@property (nonatomic, strong) AddButton *btnAdd;
 
 
 // (nonatomic, strong)   (nonatomic,weak)
@@ -28,7 +30,18 @@
 
 @implementation TableCell
 
-
+- (AddButton *)btnAdd {
+    
+    if (!_btnAdd) {
+        _btnAdd = [[AddButton alloc] init];
+        [_btnAdd setTitle:@"+" forState:UIControlStateNormal];
+        _btnAdd.backgroundColor = [UIColor orangeColor];
+        // 一行代码给按钮添加事件
+        //[_btnAdd addTarget:self action:@selector(btnclick:)   forControlEvents:UIControlEventTouchUpInside];
+        [_btnAdd addTarget:self action:@selector(action:)   forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _btnAdd;
+}
 - (UILabel *)leaveStatusLable {
     
     if (!_leaveStatusLable) {
@@ -37,18 +50,6 @@
         _leaveStatusLable.textColor = [UIColor grayColor];
     }
     return _leaveStatusLable;
-}
-
-- (UIButton *)leaveadd {
-    
-    if (!_leaveadd) {
-        _leaveadd = [[UIButton alloc] init];
-        //_leaveadd.font = [UIFont systemFontOfSize:15];
-        _leaveadd.backgroundColor = [UIColor blueColor];
-
-        //_leaveadd.textColor = [UIColor grayColor];
-    }
-    return _leaveadd;
 }
 
 - (UILabel *)leaveDateLable {
@@ -104,29 +105,44 @@
         [self.contentView  addSubview:self.beignDateLable];
         [self.contentView  addSubview:self.leaveStatusLable];
         [self.contentView  addSubview:self.leaveDateLable];
-        
-        
-     
-    
-        [self.leaveadd setTitle:@"title"forState:UIControlStateNormal];
-        
-        [self.leaveadd addTarget:self action:@selector(btnclick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.contentView  addSubview:self.leaveadd];
+
+        [self.contentView  addSubview:self.btnAdd];
     }
     return self;
 }
 
-- (void)btnclick:(UIButton *)sender
-{
-    
-    NSLog(@"%@",@"dianjishijian");
-    
 
+
+//获取控制器
+- (UIViewController *)viewController{
+        for (UIView* next = [self superview]; next; next = next.superview) {
+                UIResponder *nextResponder = [next nextResponder];
+                if ([nextResponder isKindOfClass:[UIViewController class]]) {
+                        return (UIViewController *)nextResponder;
+                    }
+            }
+        return nil;
 }
 
+//点击事件
 
+- (void)action:(id)sender
+{
+    
+    AddButton* multiParamButton = (AddButton* )sender;
+   
 
+    NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
+    
+    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
+    
+    NSLog(@"%@",obj1);
+    
+    AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
+    [[self viewController] presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    
+    
+}
 
 
 
@@ -134,17 +150,21 @@
 {
     
     _Waylist =Waylist;
-    
+    NSLog(@"%@",_Waylist.name);
     if([ _Waylist.name isEqualToString:@"button"])
     {
-       self.leaveadd.hidden = NO;
+       self.btnAdd.hidden = NO;
         self.textLabel.hidden = YES;
         self.leaveStatusLable.hidden = YES;
         self.leaveDateLable.hidden = YES;
+        
+        
+        NSDictionary* paramDic = @{@"levelname":_Waylist.levelname};
+        self.btnAdd.multiParamDic= paramDic;
     }
     else
     {
-        self.leaveadd.hidden = YES;
+        self.btnAdd.hidden = YES;
         self.textLabel.hidden = NO;
         self.leaveStatusLable.hidden = NO;
         self.leaveDateLable.hidden = NO;
@@ -189,7 +209,10 @@
     self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
-    self.leaveadd.frame=CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
+    //self.leaveadd.frame=CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
+    
+    
+    self.btnAdd.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     

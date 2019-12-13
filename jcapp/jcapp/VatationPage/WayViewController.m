@@ -11,7 +11,7 @@
 #import "../MJExtension/MJExtension.h"
 #import "TableCell.h"
 #import "../MJRefresh/MJRefresh.h"
-
+#import "AddWayView.h"
 
 static NSString * identifier = @"TableCell";
 

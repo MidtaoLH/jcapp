@@ -13,18 +13,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AttendanceSummaryViewController :  UIViewController  <YUFoldingTableViewDelegate>
 {
-    NSString *infoString;
-    NSMutableDictionary *userinfo;
-    NSString *infocurrentTagName;
-    NSString *infocurrentValue;
-    NSString *inforesultString;
-    NSString *allString;
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
     
     NSString *groupname;
     NSString *empname;
     NSString *empID;
     NSString *userID;
 }
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfMovies;
+@property (strong,nonatomic) NSMutableArray *listOfMoviesDetail;
 @property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
 
 @property (nonatomic, assign) NSInteger index;

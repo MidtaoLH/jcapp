@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BusinessTripPlaceCell : UITableViewCell
 
-@property (nonatomic,strong) Pending * pendinglistitem;
+@property (nonatomic,strong) NSString * placelistitem;
 
 
 

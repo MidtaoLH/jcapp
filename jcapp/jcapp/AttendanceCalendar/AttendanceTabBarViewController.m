@@ -35,7 +35,7 @@
     nav = [[UINavigationController alloc] initWithRootViewController: yjcVC];
     nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_essence_icon.png"];
     nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_essence_icon.png"];
-    nav.tabBarItem.title = @"考勤日历汇总";
+    nav.tabBarItem.title = @"考勤日历月汇总";
     [self addChildViewController: nav];
     
     //设置字体

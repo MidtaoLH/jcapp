@@ -11,82 +11,81 @@
 #define kMargin 10
 
 @interface BusinessTripPlaceCell()
-@property (nonatomic, strong) UILabel *pendingCaseName;
-@property (nonatomic, strong) UILabel *pendingDateLable;
-@property (nonatomic, strong) UILabel *beignDateLable;
-@property (nonatomic, strong) UILabel *endDateLable;
-@property (nonatomic, strong) UILabel *pendingTypeLable;
+@property (nonatomic, strong) UILabel *requiredSign;
+@property (nonatomic, strong) UILabel *placeLable;
+@property (nonatomic, strong) UITextField *placeEdit;
+@property (nonatomic, strong) UIButton *addBtn;
+@property (nonatomic, strong) UIButton *deleteBtn;
 
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
 @implementation BusinessTripPlaceCell
 
-- (UILabel *)pendingDateLable {
+- (UILabel *)requiredSign {
     
-    if (!_pendingDateLable) {
-        _pendingDateLable = [[UILabel alloc] init];
-        _pendingDateLable.font = kFont_Lable_12;
-        _pendingDateLable.textColor = kColor_Gray;
+    if (!_requiredSign) {
+        _requiredSign = [[UILabel alloc] init];
+        _requiredSign.font = kFont_Lable_12;
+        _requiredSign.textColor = kColor_Gray;
     }
-    return _pendingDateLable;
+    return _requiredSign;
 }
-- (UILabel *)beignDateLable {
+- (UILabel *)placeLable {
     
-    if (!_beignDateLable) {
-        _beignDateLable = [[UILabel alloc] init];
-        _beignDateLable.font = kFont_Lable_13;
-        _beignDateLable.textColor = kColor_Gray;
+    if (!_placeLable) {
+        _placeLable = [[UILabel alloc] init];
+        _placeLable.font = kFont_Lable_13;
+        _placeLable.textColor = kColor_Gray;
     }
-    return _beignDateLable;
+    return _placeLable;
 }
-- (UILabel *)endDateLable {
+- (UITextField *)placeEdit {
     
-    if (!_endDateLable) {
-        _endDateLable = [[UILabel alloc] init];
-        _endDateLable.font = kFont_Lable_13;
-        _endDateLable.textColor =kColor_Gray;
+    if (!_placeEdit) {
+        _placeEdit = [[UITextField alloc] init];
+        _placeEdit.font = kFont_Lable_13;
+        _placeEdit.textColor =kColor_Gray;
     }
-    return _endDateLable;
+    return _placeEdit;
 }
-- (UILabel *)pendingTypeLable {
+- (UIButton *)addBtn {
     
-    if (!_pendingTypeLable) {
-        _pendingTypeLable = [[UILabel alloc] init];
-        _pendingTypeLable.font = kFont_Lable_13;
-        _pendingTypeLable.textColor = kColor_Gray;
+    if (!_addBtn) {
+        _addBtn = [[UIButton alloc] init];
     }
-    return _pendingTypeLable;
+    return _addBtn;
+}
+
+- (UIButton *)deleteBtn {
+    
+    if (!_deleteBtn) {
+        _deleteBtn = [[UIButton alloc] init];
+    }
+    return _addBtn;
 }
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self.contentView addSubview:self.endDateLable];
-        [self.contentView  addSubview:self.pendingTypeLable];
-        [self.contentView  addSubview:self.beignDateLable];
-        [self.contentView  addSubview:self.pendingDateLable];
+        [self.contentView addSubview:self.requiredSign];
+//        [self.contentView  addSubview:self.placeLable];
+//        [self.contentView  addSubview:self.placeEdit];
+//        [self.contentView  addSubview:self.addBtn];
+//        [self.contentView  addSubview:self.deleteBtn];
     }
     return self;
 }
 
--(void)setPendinglistitem:(Pending *)pendinglistitem
+-(void)setPlacelistitem:(Pending *)placelistitem
 {
-    _pendinglistitem =pendinglistitem;
-    self.textLabel.text = _pendinglistitem.CaseName;
-    self.pendingDateLable.text = _pendinglistitem.CaseDate;
-     
-    UIImageView *imageView = [[UIImageView alloc] init];
-    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-    self.imageView.image=imageView.image;
-    self.beignDateLable.text = _pendinglistitem.BeignDate;
-    self.endDateLable.text = _pendinglistitem.EndDate;
-    if(_pendinglistitem.CaseTypeTxt!=NULL)
-    {
-        self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];
-    }   
+    self.requiredSign.text = @"必";
+    
+//    self.placeLable.text = @"出差地点";
+//    self.placeEdit.text = @"ru";
+//    [self.addBtn setTitle:@"+" forState:0];
+//    [self.deleteBtn setTitle:@"-" forState:0];
 }
 -(void)layoutSubviews
 {
@@ -96,14 +95,11 @@
     CGFloat imageWH=  width/5;
     CGFloat leaveDateWidth = 80;
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/5;
-    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
-    self.pendingDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
-    self.pendingTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
-    
+    self.requiredSign.frame = CGRectMake(kMargin,kMargin, 10, 50);
+    self.placeLable.frame = CGRectMake(2*kMargin+10, kMargin, 40, 50);
+    self.placeEdit.frame = CGRectMake(3*kMargin+50, kMargin, 40, 50);
+    self.addBtn.frame = CGRectMake(4*kMargin+90, kMargin, 40, 50);
+    self.deleteBtn.frame = CGRectMake(5*kMargin+110, kMargin, 40, 50);
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
 }

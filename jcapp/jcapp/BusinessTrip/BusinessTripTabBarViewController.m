@@ -59,12 +59,18 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if (viewController == self.viewControllers[1]) {
+    if (viewController == self.viewControllers[0]) {
+        self.navigationItem.title=@"待申请记录";
+    }else if (viewController == self.viewControllers[1]) {
+        self.navigationItem.title=@"出差申请";
         //点击中间tabbarItem，不切换，让当前页面跳转
-        SWFormInfoController *order = [[SWFormInfoController alloc] init];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
         order.hidesBottomBarWhenPushed = YES;
         [(UINavigationController *)tabBarController.selectedViewController pushViewController:order animated:YES];
         return NO;
+    }else if (viewController == self.viewControllers[2]) {
+        self.navigationItem.title=@"出差记录";
     }
     return YES;
 }

@@ -33,8 +33,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
     self.genders = @[@"男",@"女"];
     [self datas];
+    self.formTableView.frame=CGRectMake(0,140, self.view.frame.size.width, 500);
 }
 
 /**

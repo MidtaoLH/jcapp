@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "../SWForm/SWFormBaseController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BusinessTripEditViewController  : UIViewController<UITableViewDataSource,
-UITableViewDelegate>
+@interface BusinessTripEditViewController  : SWFormBaseController
 {
     
     IBOutlet UITableView *tableViewPlace;
-    IBOutlet UITableView *tableViewDays;
-    NSMutableArray *myData;
-    NSInteger totalcount;
-    NSInteger totalHeight;
+    UIDatePicker*datePicker;
+    //NSMutableArray *myData;
+//    NSInteger totalcount;
+//    NSInteger totalHeight;
 }
 @end
 NS_ASSUME_NONNULL_END

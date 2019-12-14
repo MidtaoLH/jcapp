@@ -12,7 +12,11 @@
  SWFormBaseController 表单基类，所有表单必须继承于BaseController，实现了表单动态配置
  */
 @interface SWFormBaseController : UIViewController
-
+{
+    //NSInteger totalcount;
+    NSInteger totalHeight;
+    NSMutableArray *myData;
+}
 /**
  表单tableView
  */

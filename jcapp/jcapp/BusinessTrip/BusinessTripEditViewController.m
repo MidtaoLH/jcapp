@@ -27,6 +27,20 @@ static NSInteger rowHeight=50;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, self.view.height-44.0, self.view.width, 44.0)];
+    
+    [self.view addSubview:toolBar];
+
+    UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
+    addBtn.width=self.view.width/2;
+    
+    UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
+    NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
+    submitBtn.width=self.view.width/2;
+    
+    [toolBar setItems:toolbarItems animated:NO];
+    
     datePicker = [[UIDatePicker alloc] init]; datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     
@@ -120,14 +134,14 @@ static NSInteger rowHeight=50;
         actionSheet.tag = 10;
         [actionSheet showInView:weakSelf.view];
     };
-    [items addObject:_gender];
+    //[items addObject:_gender];
     
     self.reason = SWFormItem_Add(@"出差事由", @"请输入出差事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
     self.reason.showLength = YES;
     [items addObject:_reason];
     
     self.image = SWFormItem_Add(@"图片", nil, SWFormItemTypeImage, YES, NO, UIKeyboardTypeDefault);
-    //self.image.images = @[@"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=f04093d6da00baa1ae214ffb2e68dc7e/34fae6cd7b899e5160ce642e49a7d933c8950d43.jpg", @"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=b360ab28790e0cf3b4fa46bb633e9773/e850352ac65c10387071c8f8b9119313b07e89f8.jpg", @""];
+    self.image.images = @[@"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=f04093d6da00baa1ae214ffb2e68dc7e/34fae6cd7b899e5160ce642e49a7d933c8950d43.jpg", @"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=b360ab28790e0cf3b4fa46bb633e9773/e850352ac65c10387071c8f8b9119313b07e89f8.jpg"];
     [items addObject:_image];
     
     SWFormSectionItem *sectionItem = SWSectionItem(items);
@@ -147,12 +161,12 @@ static NSInteger rowHeight=50;
     
     UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     submitBtn.bounds = CGRectMake(0, 0, 100, 40);
-    submitBtn.center = footer.center;
+    submitBtn.bottom = footer.bottom;
     submitBtn.backgroundColor = [UIColor orangeColor];
     [submitBtn setTitle:@"提交" forState:UIControlStateNormal];
     [submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [submitBtn addTarget:self action:@selector(submitAction) forControlEvents:UIControlEventTouchUpInside];
-    [footer addSubview:submitBtn];
+    //[footer addSubview:submitBtn];
     
     return footer;
 }
@@ -174,7 +188,29 @@ static NSInteger rowHeight=50;
 //        }
 //    }
 }
-
+- (void)addAction {
+    [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
+        
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
+        //convert object to data
+        NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
+        //print out the data contents
+        NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"json字典里面的内容为--》%@", text );
+        text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        
+        
+        NSString *outputStr = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+ $,/?%#[]",kCFStringEncodingUTF8));
+        NSLog(@"outputStr字典里面的内容为--》%@", outputStr );
+        //        NSLog(@"selectImages === %@", self.image.selectImages);
+//        //NSLog(@"images === %@", image.images);
+//        NSLog(@"businessTripEnd === %@", self.businessTripEnd.info);
+//        NSLog(@"businessTripStart === %@", self.businessTripStart.info);
+        
+    } failure:^(NSString *error) {
+        NSLog(@"error====%@",error);
+    }];
+}
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
@@ -331,13 +367,4 @@ static NSInteger rowHeight=50;
 //    //_inputView.inputText.text = [NSString stringWithFormat:@"回复 %@ :", name.text];
 //    // 加上对应的回复昵称
 //}
-
-- (IBAction)addPlace:(id)sender {
-    //totalcount++;
-    totalHeight=totalHeight+rowHeight;
-    tableViewPlace.height=totalHeight;
-    [tableViewPlace reloadData];
-}
-
-
 @end

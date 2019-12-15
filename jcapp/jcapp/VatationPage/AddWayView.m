@@ -121,7 +121,7 @@
     
     myDelegate.way_empid =lbempid.text;
     myDelegate.way_empname =lbempname.text;
-    
+    myDelegate.way_refresh = @"true";
     
      [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
     

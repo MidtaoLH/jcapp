@@ -28,5 +28,7 @@
 
 @property (nonatomic, strong) NSString *way_empname;
 
+@property (nonatomic, strong) NSString *way_refresh;
+
 @end
 

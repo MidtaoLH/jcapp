@@ -16,6 +16,7 @@
                 <outlet property="lbempname" destination="ExR-G1-J7n" id="Tol-4Y-EHz"/>
                 <outlet property="lbgroupid" destination="oYH-TH-0BM" id="Tzp-hq-ygN"/>
                 <outlet property="lbgroupname" destination="fgE-KD-KZX" id="yZK-yB-Iw3"/>
+                <outlet property="savebutton" destination="6r5-g3-VmM" id="FAa-Ih-ewN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="vVW-Fh-uvO"/>
             </connections>
         </placeholder>
@@ -50,6 +51,9 @@
                     <rect key="frame" x="332" y="53" width="31" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="保存"/>
+                    <connections>
+                        <action selector="onClickButtonsave:" destination="-1" eventType="touchUpInside" id="9uc-zk-QJh"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYH-TH-0BM">
                     <rect key="frame" x="24" y="626" width="42" height="21"/>

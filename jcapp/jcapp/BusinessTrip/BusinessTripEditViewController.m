@@ -28,19 +28,6 @@ static NSInteger rowHeight=50;
 {
     [super viewDidLoad];
     
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, self.view.height-44.0, self.view.width, 44.0)];
-    
-    [self.view addSubview:toolBar];
-
-    UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
-    addBtn.width=self.view.width/2;
-    
-    UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
-    NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
-    submitBtn.width=self.view.width/2;
-    
-    [toolBar setItems:toolbarItems animated:NO];
-    
     datePicker = [[UIDatePicker alloc] init]; datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     
@@ -57,7 +44,23 @@ static NSInteger rowHeight=50;
     [self datas];
     self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, self.view.height-44.0, self.view.width, 44.0)];
+    
+    [self.view addSubview:toolBar];
+    
+    UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
+    addBtn.width=self.view.width/2;
+    
+    UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
+    NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
+    submitBtn.width=self.view.width/2;
+    
+    [toolBar setItems:toolbarItems animated:NO];
+    
+}
 /**
  数据源处理
  */
@@ -175,7 +178,7 @@ static NSInteger rowHeight=50;
 {
     UIDatePicker *datePicker = (UIDatePicker *)[actionSheet viewWithTag:101];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy年 MM月 dd日";
+    formatter.dateFormat = @"yyyy-MM-dd";
     NSString *timesp = [formatter stringFromDate:datePicker.date];
     self.businessTripStart.info =timesp;
     [self.formTableView reloadData];

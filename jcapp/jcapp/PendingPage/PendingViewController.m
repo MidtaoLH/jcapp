@@ -55,11 +55,11 @@ static NSString * identifier = @"PendingListCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
     NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *empID = [defaults objectForKey:@"EmpID"];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,@"19",@"19",@"4"];
-    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userid,@"4"];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -174,8 +174,6 @@ static NSString * identifier = @"PendingListCell";
         [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
     }
 }
-
-
 //有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -183,7 +181,6 @@ static NSString * identifier = @"PendingListCell";
     // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
     return 1;
 }
-
 //如果不设置section 默认就1组
 //每组多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

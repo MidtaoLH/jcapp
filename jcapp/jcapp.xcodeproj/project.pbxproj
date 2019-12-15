@@ -209,6 +209,7 @@
 		EBCF6C0123974DE300893A02 /* PendingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFD23974DE300893A02 /* PendingListCell.m */; };
 		EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFE23974DE300893A02 /* PendingViewController.m */; };
 		EBCF6C0323974DE300893A02 /* PendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBCF6BFF23974DE300893A02 /* PendingViewController.xib */; };
+		EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDBCC423A369F70019B752 /* AttendanceListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -615,6 +616,8 @@
 		EBCF6BFE23974DE300893A02 /* PendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingViewController.m; sourceTree = "<group>"; };
 		EBCF6BFF23974DE300893A02 /* PendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PendingViewController.xib; sourceTree = "<group>"; };
 		EBCF6C0023974DE300893A02 /* PendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingViewController.h; sourceTree = "<group>"; };
+		EBFDBCC423A369F70019B752 /* AttendanceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceListCell.m; sourceTree = "<group>"; };
+		EBFDBCC623A36A010019B752 /* AttendanceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceListCell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1253,6 +1256,8 @@
 				EBAD2EA0239A1424004FAE82 /* AttendanceSummaryViewController.xib */,
 				EBAD2EA3239A148D004FAE82 /* AttendanceTabBarViewController.m */,
 				EBAD2EA5239A1499004FAE82 /* AttendanceTabBarViewController.h */,
+				EBFDBCC423A369F70019B752 /* AttendanceListCell.m */,
+				EBFDBCC623A36A010019B752 /* AttendanceListCell.h */,
 			);
 			path = AttendanceCalendar;
 			sourceTree = "<group>";
@@ -1531,6 +1536,7 @@
 				AF0ABF15238FC9CF00F46278 /* UIView+SDAutoLayout.m in Sources */,
 				AF0ABEE2238F9B5A00F46278 /* SDImageCoderHelper.m in Sources */,
 				AF0ABEEE238F9B5A00F46278 /* SDWebImageCompat.m in Sources */,
+				EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */,
 				AF6A5C8C23A0D737001C0832 /* BusinessTripPlaceCell.m in Sources */,
 				AF0ABEF6238F9B5A00F46278 /* SDWebImageManager.m in Sources */,
 				AF0ABED9238F9B5A00F46278 /* SDAnimatedImageView+WebCache.m in Sources */,

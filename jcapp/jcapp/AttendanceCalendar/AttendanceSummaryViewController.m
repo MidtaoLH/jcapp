@@ -29,6 +29,12 @@
 @synthesize listOfMoviesDetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
+    
     CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
     CGFloat headimageW = self.view.frame.size.width * 0.25;
     CGFloat headimageH = headimageW;

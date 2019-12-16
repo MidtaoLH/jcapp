@@ -7,69 +7,60 @@
  */
 
 #import "UIImageView+HighlightedWebCache.h"
-
-#if SD_UIKIT
-
 #import "UIView+WebCacheOperation.h"
-#import "UIView+WebCache.h"
 
-static NSString * const SDHighlightedImageOperationKey = @"UIImageViewImageOperationHighlighted";
+#define UIImageViewHighlightedWebCacheOperationKey @"highlightedImage"
 
 @implementation UIImageView (HighlightedWebCache)
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url {
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url {
     [self sd_setHighlightedImageWithURL:url options:0 progress:nil completed:nil];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url options:(SDWebImageOptions)options {
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options {
     [self sd_setHighlightedImageWithURL:url options:options progress:nil completed:nil];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url options:(SDWebImageOptions)options context:(nullable SDWebImageContext *)context {
-    [self sd_setHighlightedImageWithURL:url options:options context:context progress:nil completed:nil];
-}
-
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url completed:(nullable SDExternalCompletionBlock)completedBlock {
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url completed:(SDWebImageCompletionBlock)completedBlock {
     [self sd_setHighlightedImageWithURL:url options:0 progress:nil completed:completedBlock];
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url options:(SDWebImageOptions)options completed:(nullable SDExternalCompletionBlock)completedBlock {
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options completed:(SDWebImageCompletionBlock)completedBlock {
     [self sd_setHighlightedImageWithURL:url options:options progress:nil completed:completedBlock];
 }
 
-- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options progress:(nullable SDImageLoaderProgressBlock)progressBlock completed:(nullable SDExternalCompletionBlock)completedBlock {
-    [self sd_setHighlightedImageWithURL:url options:options context:nil progress:progressBlock completed:completedBlock];
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock {
+    [self sd_cancelCurrentHighlightedImageLoad];
+
+    if (url) {
+        __weak UIImageView      *wself    = self;
+        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            if (!wself) return;
+            dispatch_main_sync_safe (^
+                                     {
+                                         if (!wself) return;
+                                         if (image) {
+                                             wself.highlightedImage = image;
+                                             [wself setNeedsLayout];
+                                         }
+                                         if (completedBlock && finished) {
+                                             completedBlock(image, error, cacheType, url);
+                                         }
+                                     });
+        }];
+        [self sd_setImageLoadOperation:operation forKey:UIImageViewHighlightedWebCacheOperationKey];
+    } else {
+        dispatch_main_async_safe(^{
+            NSError *error = [NSError errorWithDomain:@"SDWebImageErrorDomain" code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
+            if (completedBlock) {
+                completedBlock(nil, error, SDImageCacheTypeNone, url);
+            }
+        });
+    }
 }
 
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                              options:(SDWebImageOptions)options
-                              context:(nullable SDWebImageContext *)context
-                             progress:(nullable SDImageLoaderProgressBlock)progressBlock
-                            completed:(nullable SDExternalCompletionBlock)completedBlock {
-    //@weakify(self);
-    SDWebImageMutableContext *mutableContext;
-    if (context) {
-        mutableContext = [context mutableCopy];
-    } else {
-        mutableContext = [NSMutableDictionary dictionary];
-    }
-    mutableContext[SDWebImageContextSetImageOperationKey] = SDHighlightedImageOperationKey;
-    [self sd_internalSetImageWithURL:url
-                    placeholderImage:nil
-                             options:options
-                             context:mutableContext
-                       setImageBlock:^(UIImage * _Nullable image, NSData * _Nullable imageData, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                           //@strongify(self);
-                           self.highlightedImage = image;
-                       }
-                            progress:progressBlock
-                           completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-                               if (completedBlock) {
-                                   completedBlock(image, error, cacheType, imageURL);
-                               }
-                           }];
+- (void)sd_cancelCurrentHighlightedImageLoad {
+    [self sd_cancelImageLoadOperationWithKey:UIImageViewHighlightedWebCacheOperationKey];
 }
 
 @end
-
-#endif

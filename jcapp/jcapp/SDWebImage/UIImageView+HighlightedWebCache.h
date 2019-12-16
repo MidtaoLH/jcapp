@@ -6,10 +6,8 @@
  * file that was distributed with this source code.
  */
 
+#import <UIKit/UIKit.h>
 #import "SDWebImageCompat.h"
-
-#if SD_UIKIT
-
 #import "SDWebImageManager.h"
 
 /**
@@ -24,7 +22,7 @@
  *
  * @param url The url for the image.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url NS_REFINED_FOR_SWIFT;
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url;
 
 /**
  * Set the imageView `highlightedImage` with an `url` and custom options.
@@ -34,21 +32,7 @@
  * @param url     The url for the image.
  * @param options The options to use when downloading the image. @see SDWebImageOptions for the possible values.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                              options:(SDWebImageOptions)options NS_REFINED_FOR_SWIFT;
-
-/**
- * Set the imageView `highlightedImage` with an `url`, custom options and context.
- *
- * The download is asynchronous and cached.
- *
- * @param url     The url for the image.
- * @param options The options to use when downloading the image. @see SDWebImageOptions for the possible values.
- * @param context     A context contains different options to perform specify changes or processes, see `SDWebImageContextOption`. This hold the extra objects which `options` enum can not hold.
- */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                              options:(SDWebImageOptions)options
-                              context:(nullable SDWebImageContext *)context;
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options;
 
 /**
  * Set the imageView `highlightedImage` with an `url`.
@@ -59,11 +43,10 @@
  * @param completedBlock A block called when operation has been completed. This block has no return value
  *                       and takes the requested UIImage as first parameter. In case of error the image parameter
  *                       is nil and the second parameter may contain an NSError. The third parameter is a Boolean
- *                       indicating if the image was retrieved from the local cache or from the network.
+ *                       indicating if the image was retrived from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                            completed:(nullable SDExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url completed:(SDWebImageCompletionBlock)completedBlock;
 
 /**
  * Set the imageView `highlightedImage` with an `url` and custom options.
@@ -75,12 +58,10 @@
  * @param completedBlock A block called when operation has been completed. This block has no return value
  *                       and takes the requested UIImage as first parameter. In case of error the image parameter
  *                       is nil and the second parameter may contain an NSError. The third parameter is a Boolean
- *                       indicating if the image was retrieved from the local cache or from the network.
+ *                       indicating if the image was retrived from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                              options:(SDWebImageOptions)options
-                            completed:(nullable SDExternalCompletionBlock)completedBlock;
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options completed:(SDWebImageCompletionBlock)completedBlock;
 
 /**
  * Set the imageView `highlightedImage` with an `url` and custom options.
@@ -90,40 +71,17 @@
  * @param url            The url for the image.
  * @param options        The options to use when downloading the image. @see SDWebImageOptions for the possible values.
  * @param progressBlock  A block called while image is downloading
- *                       @note the progress block is executed on a background queue
  * @param completedBlock A block called when operation has been completed. This block has no return value
  *                       and takes the requested UIImage as first parameter. In case of error the image parameter
  *                       is nil and the second parameter may contain an NSError. The third parameter is a Boolean
- *                       indicating if the image was retrieved from the local cache or from the network.
+ *                       indicating if the image was retrived from the local cache or from the network.
  *                       The fourth parameter is the original image url.
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                              options:(SDWebImageOptions)options
-                             progress:(nullable SDImageLoaderProgressBlock)progressBlock
-                            completed:(nullable SDExternalCompletionBlock)completedBlock;
+- (void)sd_setHighlightedImageWithURL:(NSURL *)url options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock;
 
 /**
- * Set the imageView `highlightedImage` with an `url`, custom options and context.
- *
- * The download is asynchronous and cached.
- *
- * @param url            The url for the image.
- * @param options        The options to use when downloading the image. @see SDWebImageOptions for the possible values.
- * @param context     A context contains different options to perform specify changes or processes, see `SDWebImageContextOption`. This hold the extra objects which `options` enum can not hold.
- * @param progressBlock  A block called while image is downloading
- *                       @note the progress block is executed on a background queue
- * @param completedBlock A block called when operation has been completed. This block has no return value
- *                       and takes the requested UIImage as first parameter. In case of error the image parameter
- *                       is nil and the second parameter may contain an NSError. The third parameter is a Boolean
- *                       indicating if the image was retrieved from the local cache or from the network.
- *                       The fourth parameter is the original image url.
+ * Cancel the current download
  */
-- (void)sd_setHighlightedImageWithURL:(nullable NSURL *)url
-                              options:(SDWebImageOptions)options
-                              context:(nullable SDWebImageContext *)context
-                             progress:(nullable SDImageLoaderProgressBlock)progressBlock
-                            completed:(nullable SDExternalCompletionBlock)completedBlock;
+- (void)sd_cancelCurrentHighlightedImageLoad;
 
 @end
-
-#endif

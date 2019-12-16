@@ -1,5 +1,5 @@
 //
-//  LeaveImageCell.h
+//  ImageViewParam.h
 //  jcapp
 //
 //  Created by zclmac on 2019/12/10.
@@ -10,9 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LeaveImageCell : UITableViewCell
-   @property (nonatomic, copy) NSString *str;
- 
+@interface ImageViewParam : UIImageView
+@property(nonatomic,strong) NSDictionary* multiParamDic;
 @end
 
 NS_ASSUME_NONNULL_END

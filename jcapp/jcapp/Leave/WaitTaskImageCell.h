@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LeaveImageCell : UITableViewCell
+@interface WaitTaskImageCell : UITableViewCell
    @property (nonatomic, copy) NSString *str;
  
 @end

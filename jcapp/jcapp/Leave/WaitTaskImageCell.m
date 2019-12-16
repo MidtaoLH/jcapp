@@ -6,18 +6,18 @@
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "LeaveImageCell.h"
+#import "WaitTaskImageCell.h"
 #import "ImageViewParam.h"
-#import "LeaveDetailCell.h"
+#import "WaitTaskCell.h"
 #import "LookImageController.h"
 
-@interface LeaveImageCell ()<UIScrollViewDelegate>
+@interface WaitTaskImageCell ()<UIScrollViewDelegate>
 {
     CGRect oldframe ;
 }
 @end
 
-@implementation LeaveImageCell
+@implementation WaitTaskImageCell
 
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

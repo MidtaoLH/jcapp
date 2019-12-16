@@ -29,22 +29,24 @@ NSString * identifierac= @"AttendanceListCell";
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     [self loadinfo];
+    
     CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
     CGFloat headimageW = self.view.frame.size.width * 0.25;
     CGFloat headimageH = headimageW;
     self.myHeadPortrait.frame = CGRectMake(20, tabBarHeight*0.9, headimageW, headimageH);
     //这句必须写
     self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
-    headimageW = self.view.frame.size.width * 0.25;
-    headimageH =  headimageW;
+    
     self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/6, headimageW, headimageH);
     self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
-    //e注册自定义 cell
-    [_NewTableView registerClass:[AttendanceListCell class] forCellReuseIdentifier:identifierac];
-    _NewTableView.rowHeight = 100;
+   
     headimageW = self.view.frame.size.width;
     headimageH =  self.view.frame.size.height;
     self.NewTableView.frame = CGRectMake(0, self.myHeadPortrait.height+tabBarHeight+self.calview.height, headimageW, 300);
+    
+    //e注册自定义 cell
+    [_NewTableView registerClass:[AttendanceListCell class] forCellReuseIdentifier:identifierac];
+    _NewTableView.rowHeight = 100;
     self.calview.onDateSelectBlk=^(NSDate* date){
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd"];
@@ -63,16 +65,12 @@ NSString * identifierac= @"AttendanceListCell";
         return msg;
     };
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     empname = [defaults objectForKey:@"empname"];
     groupname = [defaults objectForKey:@"GroupName"];
-    
     self.lblname.text=empname;
     self.lbldept.text=groupname;
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
@@ -90,30 +88,6 @@ NSString * identifierac= @"AttendanceListCell";
                                    initWithRequest:request
                                    delegate:self];
 }
-
-//系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    if([xmlString containsString:@"AttendanceCalendarTime"])
-    {
-        listOfMovies = [AttendanceCalendar mj_objectArrayWithKeyValuesArray:resultDic];
-       
-    }
-    else
-    {
-        listOfMoviesDetail = [AttendanceCalendarDetail mj_objectArrayWithKeyValuesArray:resultDic];
-        [self.NewTableView reloadData];
-        [self.NewTableView layoutIfNeeded];
-    }
-}
 -(void)loadacdinfo:(NSString *)acdate
 {
     NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceDetail?empid=%@&attime=%@",empID,acdate];
@@ -124,6 +98,32 @@ NSString * identifierac= @"AttendanceListCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+}
+//系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([xmlString containsString:@"AttendanceCalendarTime"])
+        {
+            listOfMovies = [AttendanceCalendar mj_objectArrayWithKeyValuesArray:resultDic];
+            //[self.calview reloadInputViews];
+        }
+        else
+        {
+            listOfMoviesDetail = [AttendanceCalendarDetail mj_objectArrayWithKeyValuesArray:resultDic];
+            [self.NewTableView reloadData];
+            [self.NewTableView layoutIfNeeded];
+            [self.NewTableView layoutIfNeeded];
+        }
+    });
 }
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
@@ -186,9 +186,5 @@ NSString * identifierac= @"AttendanceListCell";
     AttendanceListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifierac forIndexPath:indexPath];
     cell.attendancelistitem =self.listOfMoviesDetail[indexPath.row];//取出数据元素
     return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 @end

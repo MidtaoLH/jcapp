@@ -43,8 +43,7 @@
     self.myHeadPortrait.layer.masksToBounds = YES;
     self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
     self.myHeadPortrait.image = [UIImage imageNamed:@"1"];
-    self.myHeadPortrait.backgroundColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-    
+ 
     headimageW = self.view.frame.size.width * 0.25;
     headimageH =  headimageW;
     self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/6, headimageW, headimageH);

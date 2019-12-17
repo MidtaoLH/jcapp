@@ -9,6 +9,9 @@
 #import "NewViewController.h"
 #import "MJExtension.h"
 #import "../Model/NoticeNews.h"
+#import "NoticeCell.h"
+#import "NoticeDetailController.h"
+
 
 @interface NewViewController ()
 
@@ -17,12 +20,14 @@
 
 @implementation NewViewController
 
-static NSString *identifier =@"TableViewCell";
+static NSString *identifier =@"NoticeCell";
 
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
-     
+    
+    [super viewDidLoad];
+    
     NSLog(@"%@",@"viewDidLoad-bgn");
  
     //设置需要访问的ws和传入参数
@@ -37,28 +42,10 @@ static NSString *identifier =@"TableViewCell";
                                    initWithRequest:request
                                    delegate:self];
  
-    
-   /* listOfMovies = [[NSMutableArray alloc] init];
-    
-    [listOfMovies addObject:@"I Love Tony"];
-    [listOfMovies addObject:@"美丽心灵"];
-    [listOfMovies addObject:@"雨人"];
-    [listOfMovies addObject:@"波拉克"];
-    [listOfMovies addObject:@"暗物质"];
-    [listOfMovies addObject:@"天才瑞普利"];
-    [listOfMovies addObject:@"猫鼠游戏"];
-    [listOfMovies addObject:@"香水"];
-    [listOfMovies addObject:@"一级恐惧"];
-    [listOfMovies addObject:@"心灵捕手"];
-    [listOfMovies addObject:@"莫扎特传"];
-    [listOfMovies addObject:@"证据"];
-    [listOfMovies addObject:@"海上钢琴师"];
-    [listOfMovies addObject:@"电锯惊魂"];
-    [listOfMovies addObject:@"沉默的羔羊"];
-    [listOfMovies addObject:@"非常嫌疑犯"];
-    [listOfMovies addObject:@"寻找弗罗斯特"];*/
-   
-    [super viewDidLoad];
+    //注册自定义 cell
+    [_NewTableView registerClass:[NoticeCell class] forCellReuseIdentifier:identifier];
+     _NewTableView.rowHeight = 100;
+ 
    NSLog(@"%@",@"viewDidLoad-end");
 }
 
@@ -66,14 +53,7 @@ static NSString *identifier =@"TableViewCell";
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
      NSLog(@"%@",@"connection1-begin");
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
- //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
- //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
- //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
- //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
-   
+ 
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
     NSLog(@"%@", @"kaishidayin");
@@ -175,9 +155,6 @@ static NSString *identifier =@"TableViewCell";
     for (id key in info) {
         [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
     }
-
-    //[outstring release];
-    //[xmlString release];
 }
 
 
@@ -202,38 +179,28 @@ static NSString *identifier =@"TableViewCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
- 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if (cell == nil){
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
-    }
-    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
- // UITableViewCell *cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
- 
-    NoticeNews *m =self.listOfMovies[indexPath.row];//取出数据元素
- 
-    cell.textLabel.text = m.NewsTheme;
- 
-    cell.detailTextLabel.text = m.NewsContent;
+    NoticeCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    cell.noticelist =self.listOfMovies[indexPath.row];//取出数据元素
     
     return cell;
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 返回顶部标题
-    NSLog(@"%@",@"tableView2-begin");
-    return @"公告";
+    
+    NSLog(@"%d",indexPath.row);
+
+    NoticeDetailController * valueView = [[NoticeDetailController alloc] initWithNibName:@"NoticeDetailController"bundle:[NSBundle mainBundle]];
+    
+    valueView.noticeitem =self.listOfMovies[indexPath.row];
+        
+    //从底部划入
+    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    //跳转
+    [self presentModalViewController:valueView animated:YES];
+    
 }
-
--(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    NSLog(@"%@",@"tableView3-begin");
-    // 返回底部文字
-    return @"中道益通";
-}
-
-
 
 
 

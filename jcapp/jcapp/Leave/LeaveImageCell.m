@@ -7,6 +7,15 @@
 //
 
 #import "LeaveImageCell.h"
+#import "ImageViewParam.h"
+#import "LeaveDetailCell.h"
+#import "LookImageController.h"
+
+@interface LeaveImageCell ()<UIScrollViewDelegate>
+{
+    CGRect oldframe ;
+}
+@end
 
 @implementation LeaveImageCell
 
@@ -47,17 +56,71 @@
         // 图片X
         CGFloat imageX = i * imageW + i * 10;
         
-        UIImageView *imageView = [[UIImageView alloc] init];
+        ImageViewParam *imageView = [[ImageViewParam alloc] init];
         
         imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
         
         NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
         imageView.image = [UIImage imageNamed:name];
         
+        NSDictionary* paramDic = @{@"taskid": @"3" };
+        imageView.multiParamDic= paramDic;
+ 
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choseImage:)];
+        [imageView addGestureRecognizer:tap];
+        imageView.userInteractionEnabled = YES;
+        
          [self.contentView addSubview:imageView];
         
         i++;
     }
+}
+//触发点击事件
+-(void)choseImage:(UITapGestureRecognizer *)sender{
+    ImageViewParam *imageviewitem = (ImageViewParam *)sender.view;
+ 
+    NSLog(@"Vvvverify : %@", imageviewitem.multiParamDic);
+ 
+    LookImageController * valueView = [[LookImageController alloc] initWithNibName:@"LookImageController"bundle:[NSBundle mainBundle]];
+    //从底部划入
+    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    
+   // UIViewController * idos = [receiveEventFirstResponser:self];
+    //跳转
+  //  [idos presentModalViewController:valueView animated:YES];
+  
+}
+
+-(UIViewController *)receiveEventFirstResponser:(id)responser{
+    /**
+     1.responser:当前响应事件的对象:如按钮,view等常用的控件,甚至当我们点击cell时可传入tableView
+     2.任何可响应事件的对象都继承自UIResponder
+     */
+    UIResponder *currentResponder = (UIResponder *)responser;
+    UIViewController *responderVC = nil;
+    if(currentResponder && [currentResponder isKindOfClass:[UIViewController class]]){
+        responderVC = (UIViewController *)currentResponder;
+        return responderVC;
+    }
+    UIResponder *nextResponder = currentResponder.nextResponder;
+    if(nextResponder && [nextResponder isKindOfClass:[UIViewController class]]){
+        responderVC = (UIViewController *)nextResponder;
+        return responderVC;
+    }
+    /**
+     条件值:用来控制循环的结束
+     */
+    NSInteger condition = 1;
+     responderVC = nil;
+    while (condition) {
+        if(nextResponder && [nextResponder  isKindOfClass:[UIViewController class]]){
+            responderVC = (UIViewController *)nextResponder;
+            condition = 0;
+        }else{
+            nextResponder = nextResponder.nextResponder;
+        }
+    }
+    return responderVC;
 }
 
 - (void)awakeFromNib {

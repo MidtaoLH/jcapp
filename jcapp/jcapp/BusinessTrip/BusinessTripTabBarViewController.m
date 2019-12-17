@@ -75,7 +75,7 @@
     return YES;
 }
 - (void)viewWillAppear:(BOOL)animated {
-    //[self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
     
     [self.navigationItem setLeftBarButtonItem:backItem];

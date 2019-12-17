@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LeaveImageCell : UITableViewCell
    @property (nonatomic, copy) NSString *str;
+ 
 @end
 
 NS_ASSUME_NONNULL_END

@@ -29,6 +29,12 @@
 @synthesize listOfMoviesDetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //设置子视图的f导航栏的返回按钮
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+    temporaryBarButtonItem.title =@"返回";
+    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
+    
+    
     CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
     CGFloat headimageW = self.view.frame.size.width * 0.25;
     CGFloat headimageH = headimageW;
@@ -53,12 +59,10 @@
     NSDate *newDate = [NSDate date];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"yyyy年MM月"];
-    NSString *dateString = [format stringFromDate:newDate];
-    [self.btndate setTitle:dateString forState:UIControlStateNormal];
+    self.startDate = [format stringFromDate:newDate];
+    [self.btndate setTitle:self.startDate forState:UIControlStateNormal];
     
-    [self loadacinfo];
-    [self loadacdinfo];
-
+    [self loadacinfo:self.startDate];
 }
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -66,15 +70,15 @@
     empID = [defaults objectForKey:@"EmpID"];
     empname = [defaults objectForKey:@"empname"];
     groupname = [defaults objectForKey:@"GroupName"];
-    
     self.lblname.text=empname;
     self.lbldept.text=groupname;
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
 }
--(void)loadacinfo{
+-(void)loadacinfo:(NSString *)acdate
+{
     //设置需要访问的ws和传入参数
-    NSString *dateStr=self.btndate.titleLabel.text;
+    NSString *dateStr=acdate;
   
     dateStr = [dateStr stringByReplacingOccurrencesOfString:@"月" withString:@""];
     
@@ -91,9 +95,10 @@
                                    initWithRequest:request
                                    delegate:self];
 }
--(void)loadacdinfo{
+-(void)loadacdinfo:(NSString *)acdate
+{
     //设置需要访问的ws和传入参数
-    NSString *dateStr=self.btndate.titleLabel.text;
+    NSString *dateStr=acdate;
     
     dateStr = [dateStr stringByReplacingOccurrencesOfString:@"月" withString:@""];
     
@@ -135,12 +140,14 @@
          listOfMovies = [AttendanceCalendarMonth mj_objectArrayWithKeyValuesArray:resultDic];
         if(listOfMovies.count>0)
         {
-           [self loadacdinfo];
+            [self loadacdinfo:self.startDate];            
         }
         else
         {
             listOfMoviesDetail= [AttendanceCalendarMonthDetail mj_objectArrayWithKeyValuesArray:resultDic];
         }
+        [self.foldingTableView reloadData];
+        [self.foldingTableView layoutIfNeeded];
     }
     //[self.listOfMovies addObjectsFromArray:self.listMovies];
     // 创建tableView
@@ -156,7 +163,7 @@
 -(void)didSelectDateResult:(NSString *)resultDate{
     [self.btndate setTitle:resultDate forState:UIControlStateNormal];
     self.startDate = resultDate;
-    [self loadacinfo];
+    [self loadacinfo:self.startDate];
 }
 // 创建tableView
 - (void)setupFoldingTableView

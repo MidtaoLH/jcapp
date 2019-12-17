@@ -1,8 +1,8 @@
 //
-//  TaskViewTabBarViewController.h
+//  AttendanceSummaryTabBarViewController.h
 //  jcapp
 //
-//  Created by lh on 2019/12/15.
+//  Created by lh on 2019/12/5.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TaskViewTabBarViewController : UIViewController
-
+@interface TaskViewTabBarViewController : UITabBarController
+/**/
 @end
 
 NS_ASSUME_NONNULL_END

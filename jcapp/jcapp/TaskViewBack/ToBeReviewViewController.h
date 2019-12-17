@@ -11,7 +11,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ToBeReviewViewController : UIViewController
+{
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
+    NSInteger currentPageCount;
+}
+@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfMovies;
 @end
 
 NS_ASSUME_NONNULL_END

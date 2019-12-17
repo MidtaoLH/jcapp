@@ -1,8 +1,8 @@
 //
-//  AlreadyEndViewController.h
+//  LeavePendingViewController.h
 //  jcapp
 //
-//  Created by lh on 2019/12/15.
+//  Created by lh on 2019/12/2.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -11,7 +11,18 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AlreadyEndViewController : UIViewController
+{
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
+    NSInteger currentPageCount;
+}
+@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfMovies;
 @end
 
 NS_ASSUME_NONNULL_END

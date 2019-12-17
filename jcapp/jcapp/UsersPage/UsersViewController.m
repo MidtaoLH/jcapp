@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
 @property (weak, nonatomic) IBOutlet UILabel *lblcode;
 @property (weak, nonatomic) IBOutlet UILabel *lbldept;
-@property (weak, nonatomic) IBOutlet UILabel *lblimagename;
 @property (weak, nonatomic) IBOutlet UITableView *userslist;
 @property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
 @property (weak, nonatomic) IBOutlet UIButton *btnloginout;
@@ -46,8 +45,7 @@
     self.myHeadPortrait.image = [UIImage imageNamed:@"1"];
     self.myHeadPortrait.backgroundColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
     
-    self.lblimagename.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    self.lblimagename.text=@"用户名";
+    
     
     self.userslist.delegate=self;
     self.userslist.dataSource=self;
@@ -252,7 +250,6 @@
             UIImage *img = [UIImage imageWithContentsOfFile:filePath];
             // 保存文件的名称
             [self.myHeadPortrait setImage:img];
-            self.lblimagename.hidden=YES;
             [self updateImage:img];
         }
         UIGraphicsEndImageContext();
@@ -375,25 +372,24 @@
         self.lblname.text=userinfo.name;
         self.lblcode.text=userinfo.code;
         self.lbldept.text=userinfo.dept;
-        self.lblimagename.text=userinfo.name;
         
         AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
         [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
-        self.lblimagename.hidden=YES;
+     
     }
 }
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *user = [defaults objectForKey:@"username"];
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetUserInfo?id=%@",user];
-    //id,password,oldPassword
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                       initWithRequest:request
-                                       delegate:self];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    empname = [defaults objectForKey:@"empname"];
+    groupname = [defaults objectForKey:@"GroupName"];
+    code= [defaults objectForKey:@"UserNO"];
+    self.lblcode.text=code;
+    self.lblname.text=empname;
+    self.lbldept.text=groupname;
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
 }
 @end
 

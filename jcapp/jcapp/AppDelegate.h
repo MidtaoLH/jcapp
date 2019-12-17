@@ -20,5 +20,15 @@
 
 @property (nonatomic, strong) NSString *processid;
 
+@property (nonatomic, strong) NSString *way_groupid;
+
+@property (nonatomic, strong) NSString *way_groupname;
+
+@property (nonatomic, strong) NSString *way_empid;
+
+@property (nonatomic, strong) NSString *way_empname;
+
+@property (nonatomic, strong) NSString *way_refresh;
+
 @end
 

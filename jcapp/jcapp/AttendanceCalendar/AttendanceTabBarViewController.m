@@ -16,6 +16,7 @@
 
 @implementation AttendanceTabBarViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //    CGRect tempRect = self.view.frame;
@@ -35,7 +36,7 @@
     nav = [[UINavigationController alloc] initWithRootViewController: yjcVC];
     nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_essence_icon.png"];
     nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_essence_icon.png"];
-    nav.tabBarItem.title = @"考勤日历汇总";
+    nav.tabBarItem.title = @"考勤日历月汇总";
     [self addChildViewController: nav];
     
     //设置字体
@@ -43,44 +44,25 @@
     
     
 }
-//- (void)viewDidLayoutSubviews{
-//    //    NSLog(@"%s",__func__);
-//    //此方法在创建每个子View时都会调用，此类中调用两次，下方代码只需要一次
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        CGRect frame = CGRectMake(0
-//                                  , self.tabBar.frame.origin.y-41
-//                                  , self.tabBar.frame.size.width
-//                                  , 90);
-//        self.tabBar.frame = frame;
-//        //NSLog(@"%lf, %lf, %lf, %lf,", self.tabBar.frame.origin.x, self.tabBar.frame.origin.y, self.tabBar.frame.size.width, self.tabBar.frame.size.height);
-//        //        self.tabBar.backgroundColor = [UIColor redColor];
-//
-//        UINavigationController *nav;
-//        UIViewController *mainVC = [[HomePageViewController alloc]init];
-//        nav = [[UINavigationController alloc] initWithRootViewController: mainVC];
-//        nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_essence_icon.png"];
-//        nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_essence_icon.png"];
-//        nav.tabBarItem.title = @"首页";
-//
-//        [self addChildViewController: nav];
-//
-//        UIViewController* mineVC = [[UsersViewController alloc] init];
-//        nav = [[UINavigationController alloc] initWithRootViewController: mineVC];
-//        nav.tabBarItem.image = [UIImage imageNamed:@"tabBar_friendTrends_icon.png"];
-//        nav.tabBarItem.selectedImage = [UIImage imageNamed:@"tabBar_friendTrends_icon.png"];
-//        nav.tabBarItem.title = @"我的";
-//
-//        //[self addChildViewController: nav];
-//        [self.tabBar addSubview:nav];
-//
-//    });
-//}
-
-
--(void)viewWillAppear:(BOOL)animated {
-    
-    self.navigationController.navigationBarHidden = YES;
-    
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (viewController == self.viewControllers[0]) {
+        self.navigationItem.title=@"考勤日历";
+    }else if (viewController == self.viewControllers[1]) {
+        self.navigationItem.title=@"已审批记录";
+    }
+    return YES;
 }
+- (void)viewWillAppear:(BOOL)animated {
+    //[self.navigationController setNavigationBarHidden:NO animated:NO];
+    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(goBack)];
+    
+    [self.navigationItem setLeftBarButtonItem:backItem];
+    self.navigationItem.title=@"考勤日历";
+}
+
+- (void)goBack {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
 @end

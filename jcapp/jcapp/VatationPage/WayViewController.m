@@ -11,6 +11,8 @@
 #import "../MJExtension/MJExtension.h"
 #import "TableCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "AddWayView.h"
+#import "AppDelegate.h"
 
 
 static NSString * identifier = @"TableCell";
@@ -39,20 +41,74 @@ NSInteger currentPageCountwait_new;
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     
-    [self LoadData];
+     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.way_refresh =@"false";
+    if(listOfWay.count > 0)
+    {
+       
+       
+        //myDelegate.userPhotoimageView;
+        
+        Way *m = [Way new] ;
+        
+        m.levelname = @"一级审批人";
+        m.name = myDelegate.way_empname;
+        m.groupname = myDelegate.way_groupname;
+        m.level =@"1";
+        
+         NSLog(@"%@", @"是否赋值成功");
+        NSLog(@"%@", m.name);
+        
+        
+        [listOfWay insertObject:m atIndex:1];
+         NSLog(@"%@", @"添加成功");
+        
+        
+        
+        
+        self.NewTableView.reloadData;
+    }
+    else
+    {
+        [self LoadData];
+        // 添加头部的下拉刷新
+        MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+        [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+        self.NewTableView.mj_header = header;
+        
+        // 添加底部的上拉加载
+        MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+        [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+        self.NewTableView.mj_footer = footer;
+        
+        _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    }
     
-    // 添加头部的下拉刷新
-    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
-    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
-    self.NewTableView.mj_header = header;
     
-    // 添加底部的上拉加载
-    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
-    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
-    self.NewTableView.mj_footer = footer;
-    
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    NSLog(@"%@", @"刷新成功");
+   
 }
+
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    
+    [super viewWillAppear:animated];
+    
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    //myDelegate.userPhotoimageView;
+    
+    if ([myDelegate.way_refresh isEqualToString:@"true"]) {
+        
+        NSLog(@"执行刷新了");
+        
+        [self viewDidLoad];
+    }
+    
+}
+
+
 
 -(void)LoadData
 {
@@ -236,7 +292,7 @@ NSInteger currentPageCountwait_new;
 {
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
-    NSLog(@"%@",@"tableView-begin");
+    
     return self.listOfWay.count;
 }
 
@@ -259,6 +315,107 @@ NSInteger currentPageCountwait_new;
     {
         //其它单元格的事件
     }
+}
+
+-(IBAction)onClickButtonsave:(id)sender {
+    
+    NSLog(@"%@",@"测试josn发宋");
+
+    
+    // 1.定义一个字典数组
+    Way *user1 = [[Way alloc] init];
+    user1.levelname = @"Jack";
+    user1.name = @"11";
+    
+    user1.groupname = @"2";
+    user1.level = @"TEST";
+    
+    Way *user2 = [[Way alloc] init];
+    user2.levelname = @"Jack1";
+    user2.name = @"111";
+    
+    user2.groupname = @"21";
+    user2.level = @"TEST1";
+    
+    Way *user3 = [[Way alloc] init];
+    user3.levelname = @"Jack11";
+    user3.name = @"1111";
+    
+    user3.groupname = @"211";
+    user3.level = @"TEST11";
+    
+    
+    NSArray *userArray = @[user1, user2, user3];
+    
+    // Model array -> JSON array
+    NSArray *dictArray = [Way mj_keyValuesArrayWithObjectArray:userArray];
+
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictArray options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    
+        jsonString = [NSString stringWithFormat:@"%@",jsonString];
+
+    
+    NSLog(@"%@",jsonString);
+
+    jsonString = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    
+    NSString *outputStr = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)jsonString,NULL,(CFStringRef)@"!*'();:@&=+ $,/?%#[]",kCFStringEncodingUTF8));
+        
+
+    
+    
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/jsontest?strjosn=%@", outputStr];
+    NSURL *url = [NSURL URLWithString:strURL];
+    
+    NSLog(@"%@",strURL);
+    
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
+    
+    
+    /*
+    NSData *data = [NSJSONSerialization dataWithJSONObject:listOfWay options:NSJSONWritingPrettyPrinted error:nil];
+    
+    NSString *tempStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"－－－－－－－－%@",tempStr);
+    
+    
+    
+    NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:
+                             listOfWay, @"json",
+                             nil];
+    
+    
+    convert object to data
+    NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3
+                                                      options:NSJSONWritingPrettyPrinted error:nil];
+    
+    //print out the data contents
+    NSString* text =[[NSString alloc] initWithData:jsonData
+                                          encoding:NSUTF8StringEncoding];
+
+    
+    //NSData *jsonData = [NSJSONSerialization dataWithJSONObject:listOfWay options:0 error:nil];
+    
+    //NSLog(@"%@",@"测试josn发宋转data");
+    
+    //NSString *strJson = [[NSString alloc] initWithData:listOfWay encoding:NSUTF8StringEncoding];
+    
+   //NSLog(@"%@",@"测试josn发宋转json");
+    */
+    
+   
 }
 
 @end

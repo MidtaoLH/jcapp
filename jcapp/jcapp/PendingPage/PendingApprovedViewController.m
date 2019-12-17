@@ -54,10 +54,11 @@ static NSString * identifier = @"PendingListCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
     NSString *userid = [defaults objectForKey:@"userid"];
+    NSString *empID = [defaults objectForKey:@"EmpID"];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,@"19",@"19",@"6"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userid,@"6"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

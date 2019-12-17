@@ -6,22 +6,32 @@
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import <UIKit/UIKit.h> 
+#import <UIKit/UIKit.h>
+#import "../Calendar/WHUCalendarView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AttendanceCalendarViewController : UIViewController
 {
-    NSString *infoString;
-    NSMutableDictionary *userinfo;
-    NSString *infocurrentTagName;
-    NSString *infocurrentValue;
-    NSString *inforesultString;
-    NSString *allString;
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
+    
+    NSString *groupname;
+    NSString *empname;
+    NSString *empID;
+    NSString *userID; 
 }
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfMovies;
+@property (strong,nonatomic) NSMutableArray *listOfMoviesDetail;
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
-
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
-
+@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
+@property (weak, nonatomic) IBOutlet WHUCalendarView *calview;
+@property (weak, nonatomic) IBOutlet UILabel *lblname;
+@property (weak, nonatomic) IBOutlet UILabel *lbldept;
+@property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
 @end
-
 NS_ASSUME_NONNULL_END

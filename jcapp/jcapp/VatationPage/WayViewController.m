@@ -51,21 +51,56 @@ NSInteger currentPageCountwait_new;
         
         Way *m = [Way new] ;
         
-        m.levelname = @"一级审批人";
+        m.levelname = myDelegate.way_post_level;
         m.name = myDelegate.way_empname;
+        m.nameid= myDelegate.way_empid;
         m.groupname = myDelegate.way_groupname;
-        m.level =@"1";
-        
-         NSLog(@"%@", @"是否赋值成功");
-        NSLog(@"%@", m.name);
+        m.groupid =myDelegate.way_groupid;
+        if([m.levelname isEqualToString:@"一级审批人"])
+        {
+            m.level =@"1";
+        }
+        else if([m.levelname isEqualToString:@"二级审批人"])
+        {
+            m.level =@"2";
+        }
+       
+        else if([m.levelname isEqualToString:@"三级审批人"])
+        {
+            m.level =@"3";
+        }
+        else if([m.levelname isEqualToString:@"四级审批人"])
+        {
+            m.level =@"4";
+        }
+        else if([m.levelname isEqualToString:@"五级审批人"])
+        {
+            m.level =@"5";
+        }
+        else if([m.levelname isEqualToString:@"六级审批人"])
+        {
+            m.level =@"6";
+        }
+        else if([m.levelname isEqualToString:@"七级审批人"])
+        {
+            m.level =@"7";
+        }
+        else if([m.levelname isEqualToString:@"回览人"])
+        {
+            m.level =@"99";
+        }
+        else
+        {
+            m.level =@"1";
+        }
+    
+        m.editflag = @"1";
+       
         
         
         [listOfWay insertObject:m atIndex:1];
          NSLog(@"%@", @"添加成功");
-        
-        
-        
-        
+
         self.NewTableView.reloadData;
     }
     else
@@ -118,10 +153,13 @@ NSInteger currentPageCountwait_new;
     //NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait];
     //NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"2"];
     
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@&processid=%@", userid,@"22755"];
+    //myDelegate.processid
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -162,13 +200,6 @@ NSInteger currentPageCountwait_new;
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"%@",@"connection1-begin");
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
@@ -320,100 +351,76 @@ NSInteger currentPageCountwait_new;
 -(IBAction)onClickButtonsave:(id)sender {
     
     NSLog(@"%@",@"测试josn发宋");
-
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"userid"];
     
-    // 1.定义一个字典数组
-    Way *user1 = [[Way alloc] init];
-    user1.levelname = @"Jack";
-    user1.name = @"11";
-    
-    user1.groupname = @"2";
-    user1.level = @"TEST";
-    
-    Way *user2 = [[Way alloc] init];
-    user2.levelname = @"Jack1";
-    user2.name = @"111";
-    
-    user2.groupname = @"21";
-    user2.level = @"TEST1";
-    
-    Way *user3 = [[Way alloc] init];
-    user3.levelname = @"Jack11";
-    user3.name = @"1111";
-    
-    user3.groupname = @"211";
-    user3.level = @"TEST11";
-    
-    
-    NSArray *userArray = @[user1, user2, user3];
-    
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     // Model array -> JSON array
-    NSArray *dictArray = [Way mj_keyValuesArrayWithObjectArray:userArray];
+    NSArray *dictArray = [Way mj_keyValuesArrayWithObjectArray:listOfWay];
 
-    
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictArray options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
-    
-        jsonString = [NSString stringWithFormat:@"%@",jsonString];
-
-    
     NSLog(@"%@",jsonString);
-
-    jsonString = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     
+    jsonString = [NSString stringWithFormat:@"%@",jsonString];
     
-    NSString *outputStr = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)jsonString,NULL,(CFStringRef)@"!*'();:@&=+ $,/?%#[]",kCFStringEncodingUTF8));
-        
-
-    
-    
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/jsontest?strjosn=%@", outputStr];
-    NSURL *url = [NSURL URLWithString:strURL];
-    
-    NSLog(@"%@",strURL);
-    
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
+    //////////////////////////////////
+    NSString *post = [NSString stringWithFormat:@"strjson=%@&userid=%@&processid=%@",
+                      jsonString,userid,@"22755"];
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+    NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/InsertProcessChange?"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postData];
     NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+                                   initWithRequest:request delegate:self];
+    if (!connection) {
+        NSLog(@"Failed to submit request");
+    } else {
+        NSLog(@"Request submitted");
+    }
     
+    
+    
+    
+    /////////////////////////////////////////
+
     
     
     /*
-    NSData *data = [NSJSONSerialization dataWithJSONObject:listOfWay options:NSJSONWritingPrettyPrinted error:nil];
+     NSData *data = [NSJSONSerialization dataWithJSONObject:listOfWay options:NSJSONWritingPrettyPrinted error:nil];
+     
+     NSString *tempStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+     
+     NSLog(@"－－－－－－－－%@",tempStr);
+     
+     
+     
+     NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:
+     listOfWay, @"json",
+     nil];
+     
+     
+     convert object to data
+     NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3
+     options:NSJSONWritingPrettyPrinted error:nil];
+     
+     //print out the data contents
+     NSString* text =[[NSString alloc] initWithData:jsonData
+     encoding:NSUTF8StringEncoding];
+     
+     
+     //NSData *jsonData = [NSJSONSerialization dataWithJSONObject:listOfWay options:0 error:nil];
+     
+     //NSLog(@"%@",@"测试josn发宋转data");
+     
+     //NSString *strJson = [[NSString alloc] initWithData:listOfWay encoding:NSUTF8StringEncoding];
+     
+     //NSLog(@"%@",@"测试josn发宋转json");
+     */
     
-    NSString *tempStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"－－－－－－－－%@",tempStr);
-    
-    
-    
-    NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:
-                             listOfWay, @"json",
-                             nil];
-    
-    
-    convert object to data
-    NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3
-                                                      options:NSJSONWritingPrettyPrinted error:nil];
-    
-    //print out the data contents
-    NSString* text =[[NSString alloc] initWithData:jsonData
-                                          encoding:NSUTF8StringEncoding];
-
-    
-    //NSData *jsonData = [NSJSONSerialization dataWithJSONObject:listOfWay options:0 error:nil];
-    
-    //NSLog(@"%@",@"测试josn发宋转data");
-    
-    //NSString *strJson = [[NSString alloc] initWithData:listOfWay encoding:NSUTF8StringEncoding];
-    
-   //NSLog(@"%@",@"测试josn发宋转json");
-    */
     
    
 }

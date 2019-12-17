@@ -10,6 +10,7 @@
 #import "AddButton.h"
 #import "MJExtension.h"
 #import "AddWayView.h"
+#import "AppDelegate.h"
 
 #define kMargin 10
 
@@ -136,7 +137,11 @@
     
     NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
     
-    NSLog(@"%@",obj1);
+
+    
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.way_post_level =obj1;
+    
     
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
     [[self viewController] presentViewController:nextVc animated:YES completion:nil];//跳转到下一个

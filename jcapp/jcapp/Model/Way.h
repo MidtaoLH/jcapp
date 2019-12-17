@@ -17,14 +17,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** mingcheng */
 @property (copy, nonatomic) NSString *name;
-
 /** id */
+@property (copy, nonatomic) NSString *nameid;
+
+/** nameg */
 @property (copy, nonatomic) NSString *groupname;
+/** id */
+@property (copy, nonatomic) NSString *groupid;
 
 /** yonghuming */
 @property (copy, nonatomic) NSString *level;
 
-
+@property (copy, nonatomic) NSString *editflag;
 
 @end
 

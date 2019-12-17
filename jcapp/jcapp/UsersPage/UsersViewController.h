@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *empID;
     NSString *userID;
     NSString *code;
-    
+    NSString *username;
 }
 @end
 

@@ -121,7 +121,6 @@ NSString * identifierac= @"AttendanceListCell";
             listOfMoviesDetail = [AttendanceCalendarDetail mj_objectArrayWithKeyValuesArray:resultDic];
             [self.NewTableView reloadData];
             [self.NewTableView layoutIfNeeded];
-            [self.NewTableView layoutIfNeeded];
         }
     });
 }

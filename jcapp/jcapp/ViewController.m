@@ -14,15 +14,20 @@
 #import "MJExtension/MJExtension.h"
 #import "Model/UserLogin.h"
 
+#import "ExamineProj/ExamineEditLController.h"
+
 #import "Leave/LeaveViewController.h"
 #import "Leave/LeaveTabBar.h"
 #import "Leave/LeaveDetailController.h"
 #import "Notice/NewViewController.h"
-
+#import "Leave/WaitTaskController.h"
+#import "DemoTableViewVC/SDTableViewController.h"
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
-#import "SDWebImage/UIImageView+WebCache.h"
+//#import "SDWebImage/UIImageView+WebCache.h"
+
+
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -104,11 +109,15 @@
 
 }
 -(IBAction)onClickButtonLeave:(id)sender {
-   NewViewController * valueView = [[NewViewController alloc] initWithNibName:@"NewViewController"bundle:[NSBundle mainBundle]];
-    //从底部划入
+     
+    
+     ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
+     //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-    //跳转
-    [self presentModalViewController:valueView animated:YES]; 
+     //跳转
+     [self presentModalViewController:valueView animated:YES];
+     
+
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {
@@ -194,7 +203,7 @@
             //将当前用户的头像存到全局变量
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+//            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
             AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
             myDelegate.userPhotoimageView=imageView;
             

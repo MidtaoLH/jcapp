@@ -1,8 +1,8 @@
 //
-//  AddButton.h
+//  DelButton.h
 //  jcapp
 //
-//  Created by zhaodan on 2019/12/10.
+//  Created by zhaodan on 2019/12/16.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -10,9 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AddButton : UIButton
+@interface DelButton : UIButton
+
 @property(nonatomic,strong) NSDictionary* multiParamDic;
 @property(nonatomic,strong) NSDictionary* multiParamDicindex;
+
 @end
 
 NS_ASSUME_NONNULL_END

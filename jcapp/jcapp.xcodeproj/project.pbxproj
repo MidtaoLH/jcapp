@@ -108,6 +108,7 @@
 		8D936BDE2396302A000473ED /* UserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936BDD2396302A000473ED /* UserLogin.m */; };
 		8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */; };
 		8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */; };
+		8DADCA3B23A8B40700BFDC9E /* DelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DADCA3A23A8B40700BFDC9E /* DelButton.m */; };
 		AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABC40238F5FCE00F46278 /* NoticeNews.m */; };
 		AF0ABE56238F85A900F46278 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0ABE55238F85A900F46278 /* MapKit.framework */; };
 		AF0ABE58238F85CC00F46278 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0ABE57238F85CC00F46278 /* ImageIO.framework */; };
@@ -495,6 +496,8 @@
 		8DA5572A238E1A3E005C7706 /* VatcationMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VatcationMainViewController.h; sourceTree = "<group>"; };
 		8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VatcationMainViewController.m; sourceTree = "<group>"; };
 		8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VatcationMainViewController.xib; sourceTree = "<group>"; };
+		8DADCA3923A8B40700BFDC9E /* DelButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DelButton.h; sourceTree = "<group>"; };
+		8DADCA3A23A8B40700BFDC9E /* DelButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DelButton.m; sourceTree = "<group>"; };
 		AF0ABC40238F5FCE00F46278 /* NoticeNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeNews.m; sourceTree = "<group>"; };
 		AF0ABC41238F5FCE00F46278 /* NoticeNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNews.h; sourceTree = "<group>"; };
 		AF0ABE55238F85A900F46278 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -702,7 +705,6 @@
 		AFF2375723838E4C002AEAFB /* HomePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageViewController.xib; sourceTree = "<group>"; };
 		AFFE34D523975D7800B03076 /* LeaveTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveTabBarViewController.h; sourceTree = "<group>"; };
 		AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTabBarViewController.m; sourceTree = "<group>"; };
-		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
 		EB00A225239E6CA600378B0B /* WHUCalDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalDrawView.h; sourceTree = "<group>"; };
@@ -1116,6 +1118,8 @@
 				8D7C7DEE23A095710076F644 /* AddWayView.xib */,
 				8D7C7DF123A098290076F644 /* SkyAssociationMenuView.h */,
 				8D7C7DF223A098290076F644 /* SkyAssociationMenuView.m */,
+				8DADCA3923A8B40700BFDC9E /* DelButton.h */,
+				8DADCA3A23A8B40700BFDC9E /* DelButton.m */,
 			);
 			path = VatationPage;
 			sourceTree = "<group>";
@@ -1729,7 +1733,6 @@
 				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				EB4315EE237FB414007D1213 /* Info.plist */,
 				EB4315EF237FB414007D1213 /* main.m */,
-				AFFE34D92397A4A700B03076 /* CommonConst.h */,
 			);
 			path = jcapp;
 			sourceTree = "<group>";
@@ -2008,6 +2011,7 @@
 				EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */,
 				EB30A4882398CECE00EEAE1E /* MJRefreshAutoStateFooter.m in Sources */,
 				AF9B0F2A23A36555008138EB /* MBProgressHUD.m in Sources */,
+				8DADCA3B23A8B40700BFDC9E /* DelButton.m in Sources */,
 				AF7EC2D823960EDF00257CF1 /* ApplyListCell.m in Sources */,
 				77F10CFB2394F9EC005679B0 /* LeaveListModel.m in Sources */,
 				EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */,

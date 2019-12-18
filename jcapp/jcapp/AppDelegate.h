@@ -32,5 +32,10 @@
 
 @property (nonatomic, strong) NSString *way_post_level;
 
+@property (nonatomic, strong) NSString *way_post_index;
+
+@property (nonatomic, strong) NSString *way_post_delete;
+
+@property (nonatomic, strong) NSString *way_post_index_delete;
 @end
 

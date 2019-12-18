@@ -17,6 +17,19 @@
 		7702DB3823A0B64B00483CF1 /* ImageViewParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 7702DB3723A0B64B00483CF1 /* ImageViewParam.m */; };
 		7702DE3023A127D300483CF1 /* LookImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7702DE2E23A127D300483CF1 /* LookImageController.m */; };
 		7702DE3123A127D300483CF1 /* LookImageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7702DE2F23A127D300483CF1 /* LookImageController.xib */; };
+		7706232F23A9FC8E00030735 /* MdlGoOutList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7706232E23A9FC8E00030735 /* MdlGoOutList.m */; };
+		7706233323AA189000030735 /* GoOutDeatileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7706233123AA188F00030735 /* GoOutDeatileController.m */; };
+		7706233423AA189000030735 /* GoOutDeatileController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7706233223AA188F00030735 /* GoOutDeatileController.xib */; };
+		7706233723AA21FE00030735 /* GoOutDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7706233623AA21FE00030735 /* GoOutDetailCell.m */; };
+		7706233A23AA220E00030735 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7706233923AA220E00030735 /* ImageCell.m */; };
+		7706233D23AA23F900030735 /* MdlEvection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7706233C23AA23F900030735 /* MdlEvection.m */; };
+		7706234023AA257900030735 /* MdlEvectionDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 7706233F23AA257900030735 /* MdlEvectionDetail.m */; };
+		7708A4CB23A8D26C0098A450 /* GoOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7708A4C923A8D26C0098A450 /* GoOutViewController.m */; };
+		7708A4CC23A8D26C0098A450 /* GoOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7708A4CA23A8D26C0098A450 /* GoOutViewController.xib */; };
+		7708A4CF23A8D3530098A450 /* GoOutViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7708A4CE23A8D3530098A450 /* GoOutViewCell.m */; };
+		7708A4D323A8D6E90098A450 /* GoOutWaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7708A4D123A8D6E90098A450 /* GoOutWaitController.m */; };
+		7708A4D423A8D6E90098A450 /* GoOutWaitController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7708A4D223A8D6E90098A450 /* GoOutWaitController.xib */; };
+		7708A4D723A8D7C30098A450 /* GoOutWaitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7708A4D623A8D7C30098A450 /* GoOutWaitCell.m */; };
 		770EAAA723A35A7300986A89 /* SDNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770EAAA523A35A7300986A89 /* SDNavigationController.m */; };
 		772B6C7B23A20B58003CE53D /* WaitTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C7823A20B57003CE53D /* WaitTaskController.m */; };
 		772B6C7C23A20B58003CE53D /* WaitTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C7A23A20B58003CE53D /* WaitTaskController.xib */; };
@@ -313,6 +326,29 @@
 		7702DE2D23A127D300483CF1 /* LookImageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookImageController.h; sourceTree = "<group>"; };
 		7702DE2E23A127D300483CF1 /* LookImageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookImageController.m; sourceTree = "<group>"; };
 		7702DE2F23A127D300483CF1 /* LookImageController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LookImageController.xib; sourceTree = "<group>"; };
+		7706232D23A9FC8E00030735 /* MdlGoOutList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MdlGoOutList.h; sourceTree = "<group>"; };
+		7706232E23A9FC8E00030735 /* MdlGoOutList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MdlGoOutList.m; sourceTree = "<group>"; };
+		7706233023AA188F00030735 /* GoOutDeatileController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoOutDeatileController.h; sourceTree = "<group>"; };
+		7706233123AA188F00030735 /* GoOutDeatileController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoOutDeatileController.m; sourceTree = "<group>"; };
+		7706233223AA188F00030735 /* GoOutDeatileController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoOutDeatileController.xib; sourceTree = "<group>"; };
+		7706233523AA21FE00030735 /* GoOutDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoOutDetailCell.h; sourceTree = "<group>"; };
+		7706233623AA21FE00030735 /* GoOutDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoOutDetailCell.m; sourceTree = "<group>"; };
+		7706233823AA220E00030735 /* ImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
+		7706233923AA220E00030735 /* ImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
+		7706233B23AA23F900030735 /* MdlEvection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MdlEvection.h; sourceTree = "<group>"; };
+		7706233C23AA23F900030735 /* MdlEvection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MdlEvection.m; sourceTree = "<group>"; };
+		7706233E23AA257900030735 /* MdlEvectionDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MdlEvectionDetail.h; sourceTree = "<group>"; };
+		7706233F23AA257900030735 /* MdlEvectionDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MdlEvectionDetail.m; sourceTree = "<group>"; };
+		7708A4C823A8D26C0098A450 /* GoOutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoOutViewController.h; sourceTree = "<group>"; };
+		7708A4C923A8D26C0098A450 /* GoOutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoOutViewController.m; sourceTree = "<group>"; };
+		7708A4CA23A8D26C0098A450 /* GoOutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoOutViewController.xib; sourceTree = "<group>"; };
+		7708A4CD23A8D3530098A450 /* GoOutViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoOutViewCell.h; sourceTree = "<group>"; };
+		7708A4CE23A8D3530098A450 /* GoOutViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoOutViewCell.m; sourceTree = "<group>"; };
+		7708A4D023A8D6E90098A450 /* GoOutWaitController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoOutWaitController.h; sourceTree = "<group>"; };
+		7708A4D123A8D6E90098A450 /* GoOutWaitController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoOutWaitController.m; sourceTree = "<group>"; };
+		7708A4D223A8D6E90098A450 /* GoOutWaitController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoOutWaitController.xib; sourceTree = "<group>"; };
+		7708A4D523A8D7C30098A450 /* GoOutWaitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoOutWaitCell.h; sourceTree = "<group>"; };
+		7708A4D623A8D7C30098A450 /* GoOutWaitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoOutWaitCell.m; sourceTree = "<group>"; };
 		770EAAA523A35A7300986A89 /* SDNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDNavigationController.m; sourceTree = "<group>"; };
 		770EAAA623A35A7300986A89 /* SDNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDNavigationController.h; sourceTree = "<group>"; };
 		772B6C7823A20B57003CE53D /* WaitTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitTaskController.m; sourceTree = "<group>"; };
@@ -947,6 +983,30 @@
 			path = Leave;
 			sourceTree = "<group>";
 		};
+		77D133DC23A89C9400017574 /* GoOut */ = {
+			isa = PBXGroup;
+			children = (
+				7708A4D523A8D7C30098A450 /* GoOutWaitCell.h */,
+				7708A4D623A8D7C30098A450 /* GoOutWaitCell.m */,
+				7708A4CD23A8D3530098A450 /* GoOutViewCell.h */,
+				7708A4CE23A8D3530098A450 /* GoOutViewCell.m */,
+				7708A4C823A8D26C0098A450 /* GoOutViewController.h */,
+				7708A4C923A8D26C0098A450 /* GoOutViewController.m */,
+				7708A4CA23A8D26C0098A450 /* GoOutViewController.xib */,
+				7708A4D023A8D6E90098A450 /* GoOutWaitController.h */,
+				7708A4D123A8D6E90098A450 /* GoOutWaitController.m */,
+				7708A4D223A8D6E90098A450 /* GoOutWaitController.xib */,
+				7706233023AA188F00030735 /* GoOutDeatileController.h */,
+				7706233123AA188F00030735 /* GoOutDeatileController.m */,
+				7706233223AA188F00030735 /* GoOutDeatileController.xib */,
+				7706233523AA21FE00030735 /* GoOutDetailCell.h */,
+				7706233623AA21FE00030735 /* GoOutDetailCell.m */,
+				7706233823AA220E00030735 /* ImageCell.h */,
+				7706233923AA220E00030735 /* ImageCell.m */,
+			);
+			path = GoOut;
+			sourceTree = "<group>";
+		};
 		77D83DBE23A353F700534120 /* SDPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1099,6 +1159,12 @@
 				EB2D814B23A0D9E50007DD02 /* AttendanceCalendar.m */,
 				EB2D814D23A0DAE30007DD02 /* AttendanceCalendarDetail.m */,
 				EB2D814F23A0DAEE0007DD02 /* AttendanceCalendarDetail.h */,
+				7706232D23A9FC8E00030735 /* MdlGoOutList.h */,
+				7706232E23A9FC8E00030735 /* MdlGoOutList.m */,
+				7706233B23AA23F900030735 /* MdlEvection.h */,
+				7706233C23AA23F900030735 /* MdlEvection.m */,
+				7706233E23AA257900030735 /* MdlEvectionDetail.h */,
+				7706233F23AA257900030735 /* MdlEvectionDetail.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1631,6 +1697,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				77D133DC23A89C9400017574 /* GoOut */,
 				7700054723A36E550079B49F /* ExamineProj */,
 				77D83DFB23A3540500534120 /* DemoTableViewVC */,
 				77D83DBE23A353F700534120 /* SDPhotoBrowser */,
@@ -1874,8 +1941,10 @@
 				7702DE3123A127D300483CF1 /* LookImageController.xib in Resources */,
 				AF7EC2EC2396140B00257CF1 /* ApprovingViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
+				7708A4CC23A8D26C0098A450 /* GoOutViewController.xib in Resources */,
 				AF3D92A223A22DEC00001C73 /* BusinessTripEditViewController.xib in Resources */,
 				EBAD2E7D239A1257004FAE82 /* AttendanceCalendarViewController.xib in Resources */,
+				7706233423AA189000030735 /* GoOutDeatileController.xib in Resources */,
 				EB5A26C623A734F70077F2A5 /* AlreadyEndViewController.xib in Resources */,
 				AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */,
 				AF9B0F8223A3678D008138EB /* SWForm.bundle in Resources */,
@@ -1891,6 +1960,7 @@
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
 				AF3FFE5D239F890700834A73 /* BWaitApplyViewController.xib in Resources */,
+				7708A4D423A8D6E90098A450 /* GoOutWaitController.xib in Resources */,
 				7700056323A373F80079B49F /* ExamineEditLController.xib in Resources */,
 				8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */,
 				8D7C7DF023A095710076F644 /* AddWayView.xib in Resources */,
@@ -1981,6 +2051,7 @@
 				77D83DF423A353F800534120 /* UIButton+WebCache.m in Sources */,
 				AF9B0F8C23A3678D008138EB /* SWFormItem.m in Sources */,
 				778CEEDB239FD84600583966 /* LeaveImageCell.m in Sources */,
+				7706234023AA257900030735 /* MdlEvectionDetail.m in Sources */,
 				8D8B0CFA239796DB009CFEA0 /* Way.m in Sources */,
 				EB2D814623A0D81A0007DD02 /* AttendanceCalendarMonthDetail.m in Sources */,
 				775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */,
@@ -1991,10 +2062,12 @@
 				AF9B0F4223A36555008138EB /* UIImageView+EMWebCache.m in Sources */,
 				AF9B0F8723A3678D008138EB /* SWFormSelectCell.m in Sources */,
 				AF9B0F8F23A3678D008138EB /* SelwynExpandableTextView.m in Sources */,
+				7706233323AA189000030735 /* GoOutDeatileController.m in Sources */,
 				AFFE34D723975D7800B03076 /* LeaveTabBarViewController.m in Sources */,
 				EBB5CDE4238545B700FCA5B5 /* UsersViewController.m in Sources */,
 				AF3FFE5F239F890700834A73 /* BApprovedViewController.m in Sources */,
 				EB4315E5237FB413007D1213 /* ViewController.m in Sources */,
+				7706232F23A9FC8E00030735 /* MdlGoOutList.m in Sources */,
 				EB30A4872398CECE00EEAE1E /* MJRefreshAutoNormalFooter.m in Sources */,
 				7702DB3523A096F000483CF1 /* NoticeDetailController.m in Sources */,
 				AF7EC2CD23960BC900257CF1 /* MyApplyTabBarViewController.m in Sources */,
@@ -2005,8 +2078,10 @@
 				77D83DF623A353F800534120 /* UIImage+MultiFormat.m in Sources */,
 				EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */,
 				AF9B0F5223A36555008138EB /* TZAssetCell.m in Sources */,
+				7706233A23AA220E00030735 /* ImageCell.m in Sources */,
 				EB30A48E2398CECE00EEAE1E /* MJRefreshStateHeader.m in Sources */,
 				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
+				7708A4CB23A8D26C0098A450 /* GoOutViewController.m in Sources */,
 				EB30A49E2398CF1300EEAE1E /* MJRefreshBackNormalFooter.m in Sources */,
 				AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */,
 				77D83E0623A3540600534120 /* SDDemoCell.m in Sources */,
@@ -2015,6 +2090,7 @@
 				EB30A4B52398CF7F00EEAE1E /* PendingApprovedViewController.m in Sources */,
 				AF0ABF15238FC9CF00F46278 /* UIView+SDAutoLayout.m in Sources */,
 				AF9B0F2823A36555008138EB /* Factory.m in Sources */,
+				7706233D23AA23F900030735 /* MdlEvection.m in Sources */,
 				EB5A26CA23A7351F0077F2A5 /* TaskBackInfoViewController.m in Sources */,
 				AF9B0F5023A36555008138EB /* PSTGridLayoutSection.m in Sources */,
 				EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */,
@@ -2038,6 +2114,7 @@
 				EB30A4912398CECE00EEAE1E /* MJRefreshConst.m in Sources */,
 				AF9B0F4623A36555008138EB /* PSTCollectionViewCell.m in Sources */,
 				AF9B0F3423A36555008138EB /* EMSDImageCache.m in Sources */,
+				7708A4CF23A8D3530098A450 /* GoOutViewCell.m in Sources */,
 				AF9B0F8423A3678D008138EB /* SWFormBaseCell.m in Sources */,
 				EBCDCDFD23A270CA00FDF02E /* MCDatePickerView.m in Sources */,
 				AF9B0F2C23A36555008138EB /* MWGridCell.m in Sources */,
@@ -2112,6 +2189,7 @@
 				AF9B0F3723A36555008138EB /* EMSDWebImageDownloader.m in Sources */,
 				77F10CFE2394FD1A005679B0 /* LeaveListCell.m in Sources */,
 				77D83DEF23A353F800534120 /* SDWebImageDecoder.m in Sources */,
+				7708A4D723A8D7C30098A450 /* GoOutWaitCell.m in Sources */,
 				77D83E0823A3540600534120 /* SDPhotoItem.m in Sources */,
 				775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */,
 				EB30A48C2398CECE00EEAE1E /* MJRefreshGifHeader.m in Sources */,
@@ -2125,6 +2203,7 @@
 				8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */,
 				7700055B23A36ED20079B49F /* ExamineEditCell.m in Sources */,
 				AF7EC2FB2396151100257CF1 /* WaitingApplyViewController.m in Sources */,
+				7706233723AA21FE00030735 /* GoOutDetailCell.m in Sources */,
 				EB5A26B623A7340C0077F2A5 /* ToBeReviewViewController.m in Sources */,
 				EB30A49D2398CF1300EEAE1E /* MJRefreshBackGifFooter.m in Sources */,
 				AF9B0F5B23A36555008138EB /* UIView+Layout.m in Sources */,
@@ -2138,6 +2217,7 @@
 				EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */,
 				AF9B0F9523A36856008138EB /* SWFormInfoController.m in Sources */,
 				77FF8B2F2398EDD800C64307 /* LeaveDeatil.m in Sources */,
+				7708A4D323A8D6E90098A450 /* GoOutWaitController.m in Sources */,
 				AF9B0F3D23A36555008138EB /* UIButton+EMWebCache.m in Sources */,
 				AF3FFE56239F88BE00834A73 /* BusinessTripTabBarViewController.m in Sources */,
 				AF9B0F3323A36555008138EB /* DACircularProgressView.m in Sources */,

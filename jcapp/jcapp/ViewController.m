@@ -22,6 +22,9 @@
 #import "Notice/NewViewController.h"
 #import "Leave/WaitTaskController.h"
 #import "DemoTableViewVC/SDTableViewController.h"
+#import "GoOut/GoOutViewController.h"
+#import "GoOut/GoOutWaitController.h"
+#import "GoOut/GoOutDeatileController.h"
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
@@ -109,9 +112,8 @@
 
 }
 -(IBAction)onClickButtonLeave:(id)sender {
-     
-    
-     ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
+
+     LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
      //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转

@@ -40,6 +40,7 @@
 #define kColor_Gray   [UIColor grayColor]
 #define kColor_Black  [UIColor blackColor]
 #define kColor_White  [UIColor whiteColor]
+#define kColor_Cyan  [UIColor cyanColor]
 #define kColor_Red    [UIColor redColor]
 #define kColor_Blue   [UIColor blueColor]
 #define kColor_Green  [UIColor greenColor]

@@ -354,8 +354,6 @@
     NSLog(@"%@", infoString);
     if([infoString containsString:@"xmlns"])
     {
-        infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
         // 字符串截取
         NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
         NSRange endRagne = [infoString rangeOfString:@"]</string>"];

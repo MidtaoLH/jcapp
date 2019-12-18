@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AddButton : UIButton
 @property(nonatomic,strong) NSDictionary* multiParamDic;
+@property(nonatomic,strong) NSDictionary* multiParamDicindex;
 @end
 
 NS_ASSUME_NONNULL_END

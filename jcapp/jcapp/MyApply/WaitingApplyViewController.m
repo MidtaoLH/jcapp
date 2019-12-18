@@ -13,6 +13,8 @@
 //#import "ApplyListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "../VatationPage/VatcationMainViewController.h"
+#import "../VatationPage/VatcationMainView.h"
+
 #import "../AppDelegate.h"
 
 
@@ -260,6 +262,8 @@ NSInteger currentPageCountwait;
         AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
         //app.leaveid
         VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
+        
+        
         //order.hidesBottomBarWhenPushed = YES;
     //    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
         [self presentViewController:order animated:YES completion:nil];

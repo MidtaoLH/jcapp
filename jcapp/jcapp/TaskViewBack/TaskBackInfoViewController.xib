@@ -11,6 +11,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TaskBackInfoViewController">
             <connections>
+                <outlet property="ImageTableView" destination="grA-Je-E7J" id="okV-ud-zzG"/>
+                <outlet property="NewTableView" destination="STa-LN-Ant" id="cEC-4G-dIJ"/>
+                <outlet property="emplbl" destination="0li-Pz-5Jy" id="MdP-8F-tlG"/>
+                <outlet property="imgvemp" destination="era-dv-Ioj" id="zMG-O8-maV"/>
+                <outlet property="imgvprocstatus" destination="9jw-Uf-7hb" id="Ww5-tc-bcH"/>
+                <outlet property="lblapplydate" destination="tEm-nH-shE" id="X5v-av-Kxf"/>
+                <outlet property="lblempgroup" destination="4EY-46-nAs" id="vvA-iN-Pxj"/>
+                <outlet property="lblproccounts" destination="viX-0B-h3l" id="xJp-U3-KSb"/>
+                <outlet property="lblprocdate" destination="ghw-gB-zq5" id="cyu-Y2-Dfh"/>
+                <outlet property="lblprocremark" destination="rX1-6i-VAF" id="wFd-WT-85h"/>
+                <outlet property="lblprocstatus" destination="m7s-HU-F8Q" id="BPF-CL-ahd"/>
+                <outlet property="lblproctype" destination="4Bk-Dh-7O0" id="qfX-eS-tI5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -80,24 +92,32 @@
                     <rect key="frame" x="0.0" y="287" width="414" height="164"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="RrY-mH-A12"/>
+                        <outlet property="delegate" destination="-1" id="Rh3-Jr-gZW"/>
+                    </connections>
                 </tableView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="STa-LN-Ant">
-                    <rect key="frame" x="0.0" y="488" width="414" height="374"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7s-HU-F8Q">
-                    <rect key="frame" x="300" y="80" width="80" height="80"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="承认履历" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aeZ-Ke-U3C">
                     <rect key="frame" x="7" y="459" width="70" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="STa-LN-Ant">
+                    <rect key="frame" x="0.0" y="488" width="414" height="374"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Dfi-6a-sPj"/>
+                        <outlet property="delegate" destination="-1" id="N3s-sm-eXF"/>
+                    </connections>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7s-HU-F8Q">
+                    <rect key="frame" x="300" y="78" width="80" height="80"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

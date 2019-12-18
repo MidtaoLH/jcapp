@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) Way * Waylist;
 
+@property (copy,nonatomic) NSString *index;
 
 @end
 

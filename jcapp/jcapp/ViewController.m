@@ -11,6 +11,7 @@
 #import "HomePage/ZDYTTabBarViewController.h"
 #import "VatationPage/VatationPageViewController.h"
 #import "VatationPage/VatcationMainViewController.h"
+#import "VatationPage/VatcationMainView.h"
 #import "MJExtension/MJExtension.h"
 #import "Model/UserLogin.h"
 
@@ -22,6 +23,9 @@
 #import "Notice/NewViewController.h"
 #import "Leave/WaitTaskController.h"
 #import "DemoTableViewVC/SDTableViewController.h"
+#import "GoOut/GoOutViewController.h"
+#import "GoOut/GoOutWaitController.h"
+#import "GoOut/GoOutDeatileController.h"
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
@@ -96,8 +100,11 @@
                  [self presentModalViewController:valueView animated:YES];
     */
     
+    
+
+    
    
-    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
+    VatcationMainView *nextVc = [[VatcationMainView alloc]init];//初始化下一个界面
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 
@@ -109,9 +116,8 @@
 
 }
 -(IBAction)onClickButtonLeave:(id)sender {
-     
-    
-     ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
+
+     LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
      //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转

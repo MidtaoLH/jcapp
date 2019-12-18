@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) NSString *processid;
 
+@property (nonatomic, strong) NSString *Vatcation_refresh;
+
 @property (nonatomic, strong) NSString *way_groupid;
 
 @property (nonatomic, strong) NSString *way_groupname;
@@ -35,6 +37,18 @@
 @property (nonatomic, strong) NSString *way_refresh;
 
 @property (nonatomic, strong) NSString *way_post_level;
+
+@property (nonatomic, strong) NSString *way_post_index;
+
+@property (nonatomic, strong) NSString *way_post_delete;
+
+@property (nonatomic, strong) NSString *way_post_index_delete;
+
+@property (nonatomic, strong) NSString *AppRoveType;
+
+@property (nonatomic, strong) NSString *TimeStart;
+
+@property (nonatomic, strong) NSString *TimeEnd;
 
 @end
 

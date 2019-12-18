@@ -414,8 +414,8 @@ NSString * flag = @"flase";
     NSString *Groupid = [defaults objectForKey:@"Groupid"];
     NSString *type = [defaults objectForKey:@"vatcationname"];
 
-    
-    
+    NSUInteger *imagecount = 3;
+    NSString *applycode = @"";
     
     if(vatcationname.length > 0)
     {
@@ -528,7 +528,7 @@ NSString *reason = textviewreason1.text;
     
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@", edittype,userid,Groupid,EmpID,type,timestart,timeend,vatcationtime,reason,name,@0,@0];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", edittype,userid,Groupid,EmpID,type,timestart,timeend,vatcationtime,reason,name,@0,@0,imagecount,applycode];
     
     
     

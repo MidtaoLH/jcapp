@@ -64,7 +64,7 @@ NSInteger currentPageCountwait1;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait1];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"31"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"31"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

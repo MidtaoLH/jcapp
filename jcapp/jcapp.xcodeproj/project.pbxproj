@@ -669,7 +669,6 @@
 		AFF2375723838E4C002AEAFB /* HomePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageViewController.xib; sourceTree = "<group>"; };
 		AFFE34D523975D7800B03076 /* LeaveTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveTabBarViewController.h; sourceTree = "<group>"; };
 		AFFE34D623975D7800B03076 /* LeaveTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTabBarViewController.m; sourceTree = "<group>"; };
-		AFFE34D92397A4A700B03076 /* CommonConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonConst.h; sourceTree = "<group>"; };
 		AFFE90B7238E5145009DE419 /* ScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
 		AFFE90B8238E5145009DE419 /* ScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
 		EB00A225239E6CA600378B0B /* WHUCalDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalDrawView.h; sourceTree = "<group>"; };
@@ -1667,7 +1666,6 @@
 				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				EB4315EE237FB414007D1213 /* Info.plist */,
 				EB4315EF237FB414007D1213 /* main.m */,
-				AFFE34D92397A4A700B03076 /* CommonConst.h */,
 			);
 			path = jcapp;
 			sourceTree = "<group>";

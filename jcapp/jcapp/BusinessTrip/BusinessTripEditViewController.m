@@ -10,6 +10,8 @@
 #import "SWForm.h"
 #import "SWFormHandler.h"
 #import "../VatationPage/CalendaViewController.h"
+#import "../MJRefresh/MJRefresh.h"
+#import "../MJExtension/MJExtension.h"
 
 static NSInteger rowHeight=50;
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
@@ -27,6 +29,11 @@ static NSInteger rowHeight=50;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    empname = [defaults objectForKey:@"empname"];
+    groupid = [defaults objectForKey:@"Groupid"];
     
     datePicker = [[UIDatePicker alloc] init]; datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
@@ -201,15 +208,24 @@ static NSInteger rowHeight=50;
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"json字典里面的内容为--》%@", text );
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSLog(@"text字典里面的内容为--》%@", text );
         
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&strdetail=%@",
+                          userID,@"0",@"0",empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,@"1",text];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/BusinessTripSave?"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request delegate:self];
+        if (!connection) {
+            NSLog(@"Failed to submit request");
+        } else {
+            NSLog(@"Request submitted");
+        }
         
-        NSString *outputStr = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+ $,/?%#[]",kCFStringEncodingUTF8));
-        NSLog(@"outputStr字典里面的内容为--》%@", outputStr );
-        //        NSLog(@"selectImages === %@", self.image.selectImages);
-//        //NSLog(@"images === %@", image.images);
-//        NSLog(@"businessTripEnd === %@", self.businessTripEnd.info);
-//        NSLog(@"businessTripStart === %@", self.businessTripStart.info);
-        
+
     } failure:^(NSString *error) {
         NSLog(@"error====%@",error);
     }];
@@ -287,6 +303,33 @@ static NSInteger rowHeight=50;
     }
     
 }
+
+//系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSLog(@"%@",@"connection1-begin");
+    
+    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@", @"34443333kaishidayin");
+    NSLog(@"%@", xmlString);
+    
+    // 字符串截取
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    NSString *resultString = [xmlString substringWithRange:reusltRagne];
+    
+    NSLog(@"%@", resultString);
+    
+    NSString *requestTmp = [NSString stringWithString:resultString];
+    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    
+    NSLog(@"%@",@"connection1-end");
+}
+
 //如果不设置section 默认就1组
 //每组多少行
 //- (NSInteger)tableView:(UITableView *)name numberOfRowsInSection:(NSInteger)section

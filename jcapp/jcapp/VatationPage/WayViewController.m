@@ -17,7 +17,7 @@
 
 static NSString * identifier = @"TableCell";
 
-
+NSString * saveflag = @"flase";
 @interface WayViewController ()
 
 @end
@@ -45,66 +45,81 @@ NSInteger currentPageCountwait_new;
     myDelegate.way_refresh =@"false";
     if(listOfWay.count > 0)
     {
-       
-       
-        //myDelegate.userPhotoimageView;
-        
-        Way *m = [Way new] ;
-        
-        m.levelname = myDelegate.way_post_level;
-        m.name = myDelegate.way_empname;
-        m.nameid= myDelegate.way_empid;
-        m.groupname = myDelegate.way_groupname;
-        m.groupid =myDelegate.way_groupid;
-        if([m.levelname isEqualToString:@"一级审批人"])
-        {
-            m.level =@"1";
-        }
-        else if([m.levelname isEqualToString:@"二级审批人"])
-        {
-            m.level =@"2";
-        }
-       
-        else if([m.levelname isEqualToString:@"三级审批人"])
-        {
-            m.level =@"3";
-        }
-        else if([m.levelname isEqualToString:@"四级审批人"])
-        {
-            m.level =@"4";
-        }
-        else if([m.levelname isEqualToString:@"五级审批人"])
-        {
-            m.level =@"5";
-        }
-        else if([m.levelname isEqualToString:@"六级审批人"])
-        {
-            m.level =@"6";
-        }
-        else if([m.levelname isEqualToString:@"七级审批人"])
-        {
-            m.level =@"7";
-        }
-        else if([m.levelname isEqualToString:@"回览人"])
-        {
-            m.level =@"99";
+        if ([myDelegate.way_post_delete isEqualToString:@"true"]) {
+            myDelegate.way_post_delete = @"false";
+            int *index = [myDelegate.way_post_index_delete intValue];
+            
+           // [listOfWay insertObject:m atIndex:index];
+            [listOfWay removeObjectAtIndex:index];
+            
+            NSLog(@"%@", @"添加成功");
+            
+            self.NewTableView.reloadData;
         }
         else
         {
-            m.level =@"1";
+            //myDelegate.userPhotoimageView;
+            
+            Way *m = [Way new] ;
+            
+            m.levelname = myDelegate.way_post_level;
+            m.name = myDelegate.way_empname;
+            m.nameid= myDelegate.way_empid;
+            m.groupname = myDelegate.way_groupname;
+            m.groupid =myDelegate.way_groupid;
+            if([m.levelname isEqualToString:@"一级审批人"])
+            {
+                m.level =@"1";
+            }
+            else if([m.levelname isEqualToString:@"二级审批人"])
+            {
+                m.level =@"2";
+            }
+            
+            else if([m.levelname isEqualToString:@"三级审批人"])
+            {
+                m.level =@"3";
+            }
+            else if([m.levelname isEqualToString:@"四级审批人"])
+            {
+                m.level =@"4";
+            }
+            else if([m.levelname isEqualToString:@"五级审批人"])
+            {
+                m.level =@"5";
+            }
+            else if([m.levelname isEqualToString:@"六级审批人"])
+            {
+                m.level =@"6";
+            }
+            else if([m.levelname isEqualToString:@"七级审批人"])
+            {
+                m.level =@"7";
+            }
+            else if([m.levelname isEqualToString:@"回览人"])
+            {
+                m.level =@"99";
+            }
+            else
+            {
+                m.level =@"1";
+            }
+            
+            m.editflag = @"1";
+            
+            int *index = [myDelegate.way_post_index intValue];
+            
+            [listOfWay insertObject:m atIndex:index];
+            NSLog(@"%@", @"添加成功");
+            
+            self.NewTableView.reloadData;
         }
-    
-        m.editflag = @"1";
        
         
-        
-        [listOfWay insertObject:m atIndex:1];
-         NSLog(@"%@", @"添加成功");
-
-        self.NewTableView.reloadData;
     }
     else
     {
+        saveflag = @"false";
         [self LoadData];
         // 添加头部的下拉刷新
         MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -116,7 +131,7 @@ NSInteger currentPageCountwait_new;
         [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
         self.NewTableView.mj_footer = footer;
         
-        _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+        _NewTableView.top=-_NewTableView.mj_header.size.height+100;
     }
     
     
@@ -214,12 +229,42 @@ NSInteger currentPageCountwait_new;
     
     NSLog(@"%@", resultString);
     
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+    if([saveflag isEqualToString:@"false"])
+    {
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
+    }
+    else
+    {
+        if([resultString isEqualToString:@"suess"])
+        {
+           
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"保存结果"
+                                  message: @"保存成功"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"保存结果"
+                                  message: resultString
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }
     
     
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
     
     NSLog(@"%@",@"connection1-end");
 }
@@ -331,26 +376,27 @@ NSInteger currentPageCountwait_new;
 {
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    NSLog(@"%@",@"测试setway");
     
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
-    
+    NSLog(@"%@",@"测试setindex");
+   
+    cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfWay count])
-    {
-    }
-    else
-    {
-        //其它单元格的事件
-    }
+   NSLog(@"%@",@"电视机删除");
 }
+
+
+
 
 -(IBAction)onClickButtonsave:(id)sender {
     
     NSLog(@"%@",@"测试josn发宋");
+    saveflag = @"true";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     
@@ -423,6 +469,14 @@ NSInteger currentPageCountwait_new;
     
     
    
+}
+
+
+- (void)cellAddBtnClicked:(id)sender event:(id)event
+{
+    
+   NSLog(@"%@",@"dianjishanchu");
+    
 }
 
 @end

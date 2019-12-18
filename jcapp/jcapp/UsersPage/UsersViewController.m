@@ -42,11 +42,6 @@
     //这句必须写
     self.myHeadPortrait.layer.masksToBounds = YES;
     self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
-    self.myHeadPortrait.image = [UIImage imageNamed:@"1"];
-    self.myHeadPortrait.backgroundColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-    
-    
-    
     self.userslist.delegate=self;
     self.userslist.dataSource=self;
     self.userslist.bounces = NO;
@@ -251,6 +246,11 @@
             // 保存文件的名称
             [self.myHeadPortrait setImage:img];
             [self updateImage:img];
+            
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl, username];
+            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+            myDelegate.userPhotoimageView=imageView;
         }
         UIGraphicsEndImageContext();
         //上传图片,以文件形式,还是base64在这调用就ok
@@ -305,7 +305,7 @@
     ////添加分界线，换行
     [body appendFormat:@"%@\r\n",MPboundary];
     //声明pic字段，文件名为boris.png
-    NSString *imagename = [self CharacterStringMainString:self.lblcode.text AddDigit:30 AddString:@" "];
+    NSString *imagename = [self CharacterStringMainString:username AddDigit:30 AddString:@" "];
     [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",imagename];
     //声明上传文件的格式
     [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
@@ -385,6 +385,7 @@
     empname = [defaults objectForKey:@"empname"];
     groupname = [defaults objectForKey:@"GroupName"];
     code= [defaults objectForKey:@"UserNO"];
+    username= [defaults objectForKey:@"username"];
     self.lblcode.text=code;
     self.lblname.text=empname;
     self.lbldept.text=groupname;

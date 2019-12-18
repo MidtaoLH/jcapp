@@ -25,7 +25,7 @@
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
-//#import "SDWebImage/UIImageView+WebCache.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 
 
 
@@ -203,7 +203,7 @@
             //将当前用户的头像存到全局变量
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
-//            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
             AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
             myDelegate.userPhotoimageView=imageView;
             

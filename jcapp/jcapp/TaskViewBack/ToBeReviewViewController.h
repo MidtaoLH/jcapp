@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
+
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfMovies;
 @end

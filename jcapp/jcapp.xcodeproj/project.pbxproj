@@ -242,6 +242,9 @@
 		EB30A4B42398CF7F00EEAE1E /* PendingApprovedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB30A4A92398CF7E00EEAE1E /* PendingApprovedViewController.xib */; };
 		EB30A4B52398CF7F00EEAE1E /* PendingApprovedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4AC2398CF7F00EEAE1E /* PendingApprovedViewController.m */; };
 		EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */; };
+		EB40CCA423A9A83F0087B882 /* ViewBackInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB40CCA323A9A83F0087B882 /* ViewBackInfo.m */; };
+		EB40CCA723A9A8900087B882 /* ViewBackDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EB40CCA623A9A8900087B882 /* ViewBackDetail.m */; };
+		EB40CCAB23A9A9080087B882 /* ViewBackTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EB40CCAA23A9A9080087B882 /* ViewBackTask.m */; };
 		EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */; };
 		EB41A3F9239E40FE00DA623A /* WHUCalendarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3EE239E40FD00DA623A /* WHUCalendarItem.m */; };
 		EB41A3FA239E40FE00DA623A /* WHUCalendarPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F1239E40FD00DA623A /* WHUCalendarPopView.m */; };
@@ -255,6 +258,7 @@
 		EB4315FA237FB414007D1213 /* jcappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4315F9237FB414007D1213 /* jcappTests.m */; };
 		EB431605237FB414007D1213 /* jcappUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB431604237FB414007D1213 /* jcappUITests.m */; };
 		EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A358F238E35DE006573A9 /* UserInfo.m */; };
+		EB523C2123AA266F0035FABE /* TaskBackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB523C2023AA266E0035FABE /* TaskBackListCell.m */; };
 		EB5A26B623A7340C0077F2A5 /* ToBeReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A26B423A7340C0077F2A5 /* ToBeReviewViewController.m */; };
 		EB5A26B723A7340C0077F2A5 /* ToBeReviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26B523A7340C0077F2A5 /* ToBeReviewViewController.xib */; };
 		EB5A26C523A734F70077F2A5 /* AlreadyEndViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A26C323A734F70077F2A5 /* AlreadyEndViewController.m */; };
@@ -745,6 +749,12 @@
 		EB30A4AB2398CF7F00EEAE1E /* PendingTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingTabBarViewController.h; sourceTree = "<group>"; };
 		EB30A4AC2398CF7F00EEAE1E /* PendingApprovedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingApprovedViewController.m; sourceTree = "<group>"; };
 		EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditApprovalDetailsViewController.xib; sourceTree = "<group>"; };
+		EB40CCA323A9A83F0087B882 /* ViewBackInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewBackInfo.m; sourceTree = "<group>"; };
+		EB40CCA523A9A8710087B882 /* ViewBackInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewBackInfo.h; sourceTree = "<group>"; };
+		EB40CCA623A9A8900087B882 /* ViewBackDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewBackDetail.m; sourceTree = "<group>"; };
+		EB40CCA823A9A89A0087B882 /* ViewBackDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewBackDetail.h; sourceTree = "<group>"; };
+		EB40CCA923A9A8F80087B882 /* ViewBackTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewBackTask.h; sourceTree = "<group>"; };
+		EB40CCAA23A9A9080087B882 /* ViewBackTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewBackTask.m; sourceTree = "<group>"; };
 		EB41A3E7239E40FD00DA623A /* WHUCalendarCal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarCal.h; sourceTree = "<group>"; };
 		EB41A3E8239E40FD00DA623A /* WHUCalendarCal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarCal.m; sourceTree = "<group>"; };
 		EB41A3ED239E40FD00DA623A /* WHUCalendarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarItem.h; sourceTree = "<group>"; };
@@ -773,6 +783,8 @@
 		EB431606237FB414007D1213 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB4A358E238E3519006573A9 /* UserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		EB4A358F238E35DE006573A9 /* UserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		EB523C2023AA266E0035FABE /* TaskBackListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskBackListCell.m; sourceTree = "<group>"; };
+		EB523C2223AA26880035FABE /* TaskBackListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskBackListCell.h; sourceTree = "<group>"; };
 		EB5A26B323A7340C0077F2A5 /* ToBeReviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToBeReviewViewController.h; sourceTree = "<group>"; };
 		EB5A26B423A7340C0077F2A5 /* ToBeReviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToBeReviewViewController.m; sourceTree = "<group>"; };
 		EB5A26B523A7340C0077F2A5 /* ToBeReviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToBeReviewViewController.xib; sourceTree = "<group>"; };
@@ -1099,6 +1111,12 @@
 				EB2D814B23A0D9E50007DD02 /* AttendanceCalendar.m */,
 				EB2D814D23A0DAE30007DD02 /* AttendanceCalendarDetail.m */,
 				EB2D814F23A0DAEE0007DD02 /* AttendanceCalendarDetail.h */,
+				EB40CCA323A9A83F0087B882 /* ViewBackInfo.m */,
+				EB40CCA523A9A8710087B882 /* ViewBackInfo.h */,
+				EB40CCA623A9A8900087B882 /* ViewBackDetail.m */,
+				EB40CCA823A9A89A0087B882 /* ViewBackDetail.h */,
+				EB40CCA923A9A8F80087B882 /* ViewBackTask.h */,
+				EB40CCAA23A9A9080087B882 /* ViewBackTask.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1700,6 +1718,8 @@
 				EB5A26CC23A7355D0077F2A5 /* TaskViewTabBarViewController.h */,
 				EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */,
 				EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */,
+				EB523C2023AA266E0035FABE /* TaskBackListCell.m */,
+				EB523C2223AA26880035FABE /* TaskBackListCell.h */,
 			);
 			path = TaskViewBack;
 			sourceTree = "<group>";
@@ -1953,6 +1973,7 @@
 				775B61A9238BBE8D00985FF3 /* NSObject+MJClass.m in Sources */,
 				AF9B0F8623A3678D008138EB /* SWFormInputCell.m in Sources */,
 				AF9B0F8E23A3678D008138EB /* NSString+SWForm.m in Sources */,
+				EB523C2123AA266F0035FABE /* TaskBackListCell.m in Sources */,
 				AF9B0F4323A36555008138EB /* UIView+EMWebCacheOperation.m in Sources */,
 				AF0ABF0C238FC9B000F46278 /* AutoLableView.m in Sources */,
 				772B6C7B23A20B58003CE53D /* WaitTaskController.m in Sources */,
@@ -2061,6 +2082,7 @@
 				AF9B0F9023A3678D008138EB /* SWFormCompat.m in Sources */,
 				EBCF6BF923974D4300893A02 /* Pending.m in Sources */,
 				77D83DEC23A353F800534120 /* NSData+ImageContentType.m in Sources */,
+				EB40CCAB23A9A9080087B882 /* ViewBackTask.m in Sources */,
 				AF9B0F8523A3678D008138EB /* SWFormImageCell.m in Sources */,
 				AF9B0F3C23A36555008138EB /* NSData+EMImageContentType.m in Sources */,
 				AF9B0F5A23A36555008138EB /* TZVideoPlayerController.m in Sources */,
@@ -2115,7 +2137,9 @@
 				77D83E0823A3540600534120 /* SDPhotoItem.m in Sources */,
 				775B61AD238BBE8D00985FF3 /* NSString+MJExtension.m in Sources */,
 				EB30A48C2398CECE00EEAE1E /* MJRefreshGifHeader.m in Sources */,
+				EB40CCA723A9A8900087B882 /* ViewBackDetail.m in Sources */,
 				EB41A3FC239E40FE00DA623A /* WHUCalendarYMSelectView.m in Sources */,
+				EB40CCA423A9A83F0087B882 /* ViewBackInfo.m in Sources */,
 				7702DB2D23A08A6000483CF1 /* NoticeCell.m in Sources */,
 				EB5A26CF23A7355D0077F2A5 /* TaskViewTabBarViewController.m in Sources */,
 				AF9B0F3823A36555008138EB /* EMSDWebImageDownloaderOperation.m in Sources */,

@@ -21,6 +21,8 @@
 #import "../AttendanceCalendar/AttendanceTabBarViewController.h"
 #import "../AttendanceCalendar/AttendanceCalendarViewController.h"
 #import "../BusinessTrip/BusinessTripTabBarViewController.h"
+
+#import "../TaskViewBack/TaskViewTabBarViewController.h"
 /**屏幕尺寸-宽度*/
 #define kWidth ([UIScreen mainScreen].bounds.size.width)
 /**屏幕尺寸-高度*/
@@ -389,7 +391,9 @@ static NSString *identifier =@"TableViewCell";
                 break;
             case 2:
             {
-                NSLog(@"点击第三个按键");
+                UITabBarController *tabBarCtrl = [[TaskViewTabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 3:

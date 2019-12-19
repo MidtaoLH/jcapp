@@ -12,6 +12,7 @@
 #import "BusinessTripEditViewController.h"
 #import "SWFormCommonController.h"
 #import "SWFormInfoController.h"
+#import "../AppDelegate.h"
 
 @interface BusinessTripTabBarViewController ()
 
@@ -64,6 +65,10 @@
     }else if (viewController == self.viewControllers[1]) {
         self.navigationItem.title=@"出差申请";
         //点击中间tabbarItem，不切换，让当前页面跳转
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.businessTripid=@"0";
+        myDelegate.processid=@"0";
+        myDelegate.pageType=@"1";
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
         order.hidesBottomBarWhenPushed = YES;

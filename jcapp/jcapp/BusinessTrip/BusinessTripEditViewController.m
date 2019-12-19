@@ -12,6 +12,7 @@
 #import "../VatationPage/CalendaViewController.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "../MJExtension/MJExtension.h"
+#import "../AppDelegate.h"
 
 static NSInteger rowHeight=50;
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
@@ -50,6 +51,7 @@ static NSInteger rowHeight=50;
     self.genders = @[@"男",@"女"];
     [self datas];
     self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -67,6 +69,29 @@ static NSInteger rowHeight=50;
     
     [toolBar setItems:toolbarItems animated:NO];
     
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    if([myDelegate.pageType isEqualToString:@"2"]){
+        //修改画面 加载数据
+        [self LoadData];
+    }
+    
+}
+//修改画面 初始化 加载数据
+-(void)LoadData
+{
+    //设置需要访问的ws和传入参数
+    // code, string userID, string menuID
+    //设置需要访问的ws和传入参数
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",empID,userID,@"0"];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
 }
 /**
  数据源处理
@@ -79,17 +104,35 @@ static NSInteger rowHeight=50;
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
-        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert.view addSubview:datePicker];
         
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"确定" destructiveButtonTitle:nil otherButtonTitles:nil];
-
-        [actionSheet showInView:self.view];
-        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-        datePicker.tag = 101;
-        datePicker.datePickerMode = 1;
-        [actionSheet addSubview:datePicker];
-        
-        [actionSheet showInView:weakSelf.view];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+            //实例化一个NSDateFormatter对象
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+            //求出当天的时间字符串
+            NSLog(@"%@",dateString);
+            self.businessTripStart.info=dateString;
+            [self.formTableView reloadData];
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            　 }];
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:^{ }];
+//        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+//
+//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"确定" destructiveButtonTitle:nil otherButtonTitles:nil];
+//
+//        [actionSheet showInView:self.view];
+//        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+//        datePicker.tag = 101;
+//        datePicker.datePickerMode = 1;
+//        [actionSheet addSubview:datePicker];
+//
+//        [actionSheet showInView:weakSelf.view];
 //        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 //
 //        [defaults setObject:@"tableviewstart" forKey:@"type"];
@@ -213,7 +256,10 @@ static NSInteger rowHeight=50;
         NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&strdetail=%@",
                           userID,@"0",@"0",empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,@"1",text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
-        NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/BusinessTripSave?"];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *webServiceURL = [NSURL URLWithString:strURL];
+        
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
         [request setHTTPMethod:@"POST"];
         [request setHTTPBody:postData];
@@ -227,19 +273,62 @@ static NSInteger rowHeight=50;
         
 
     } failure:^(NSString *error) {
-        NSLog(@"error====%@",error);
+        //NSLog(@"error====%@",error);
+        //返回不为1显示登陆失败
+        NSString *message = [[NSString alloc] initWithFormat:@"%@", error];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }];
 }
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
-        NSLog(@"selectImages === %@", self.image.selectImages);
-        //NSLog(@"images === %@", image.images);
-        NSLog(@"businessTripEnd === %@", self.businessTripEnd.info);
-        NSLog(@"businessTripStart === %@", self.businessTripStart.info);
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
+        //convert object to data
+        NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
+        //print out the data contents
+        NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"json字典里面的内容为--》%@", text );
+        text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSLog(@"text字典里面的内容为--》%@", text );
+        
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&strdetail=%@",
+                          userID,@"0",@"0",empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,@"4",text];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *webServiceURL = [NSURL URLWithString:strURL];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request delegate:self];
+        if (!connection) {
+            NSLog(@"Failed to submit request");
+        } else {
+            NSLog(@"Request submitted");
+        }
+        
         
     } failure:^(NSString *error) {
-        NSLog(@"error====%@",error);
+        //NSLog(@"error====%@",error);
+        //返回不为1显示登陆失败
+        NSString *message = [[NSString alloc] initWithFormat:@"%@", error];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }];
 }
 

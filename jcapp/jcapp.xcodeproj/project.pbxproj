@@ -291,6 +291,9 @@
 		EBCF6C0123974DE300893A02 /* PendingListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFD23974DE300893A02 /* PendingListCell.m */; };
 		EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCF6BFE23974DE300893A02 /* PendingViewController.m */; };
 		EBCF6C0323974DE300893A02 /* PendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBCF6BFF23974DE300893A02 /* PendingViewController.xib */; };
+		EBD9A81523AB0DBE00EC78CD /* ViewBackTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD9A81123AB0DBD00EC78CD /* ViewBackTask.m */; };
+		EBD9A81623AB0DBE00EC78CD /* ViewBackDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD9A81323AB0DBD00EC78CD /* ViewBackDetail.m */; };
+		EBD9A81723AB0DBE00EC78CD /* ViewBackInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD9A81423AB0DBD00EC78CD /* ViewBackInfo.m */; };
 		EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDBCC423A369F70019B752 /* AttendanceListCell.m */; };
 		EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFE6E8723AB0D5100A64AE5 /* TaskBackListCell.m */; };
 /* End PBXBuildFile section */
@@ -849,6 +852,12 @@
 		EBCF6BFE23974DE300893A02 /* PendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingViewController.m; sourceTree = "<group>"; };
 		EBCF6BFF23974DE300893A02 /* PendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PendingViewController.xib; sourceTree = "<group>"; };
 		EBCF6C0023974DE300893A02 /* PendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingViewController.h; sourceTree = "<group>"; };
+		EBD9A80F23AB0DBD00EC78CD /* ViewBackTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewBackTask.h; sourceTree = "<group>"; };
+		EBD9A81023AB0DBD00EC78CD /* ViewBackInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewBackInfo.h; sourceTree = "<group>"; };
+		EBD9A81123AB0DBD00EC78CD /* ViewBackTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewBackTask.m; sourceTree = "<group>"; };
+		EBD9A81223AB0DBD00EC78CD /* ViewBackDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewBackDetail.h; sourceTree = "<group>"; };
+		EBD9A81323AB0DBD00EC78CD /* ViewBackDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewBackDetail.m; sourceTree = "<group>"; };
+		EBD9A81423AB0DBD00EC78CD /* ViewBackInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewBackInfo.m; sourceTree = "<group>"; };
 		EBFDBCC423A369F70019B752 /* AttendanceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceListCell.m; sourceTree = "<group>"; };
 		EBFDBCC623A36A010019B752 /* AttendanceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceListCell.h; sourceTree = "<group>"; };
 		EBFE6E8623AB0D5100A64AE5 /* TaskBackListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskBackListCell.h; sourceTree = "<group>"; };
@@ -1138,6 +1147,12 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EBD9A81223AB0DBD00EC78CD /* ViewBackDetail.h */,
+				EBD9A81323AB0DBD00EC78CD /* ViewBackDetail.m */,
+				EBD9A81023AB0DBD00EC78CD /* ViewBackInfo.h */,
+				EBD9A81423AB0DBD00EC78CD /* ViewBackInfo.m */,
+				EBD9A80F23AB0DBD00EC78CD /* ViewBackTask.h */,
+				EBD9A81123AB0DBD00EC78CD /* ViewBackTask.m */,
 				8D76FA93239E4D3C00184982 /* LeaveStatusModel.h */,
 				8D76FA94239E4D3C00184982 /* LeaveStatusModel.m */,
 				EBCF6BF823974D4300893A02 /* Pending.m */,
@@ -2014,6 +2029,7 @@
 			files = (
 				AF7EC2EB2396140B00257CF1 /* ApprovingViewController.m in Sources */,
 				EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */,
+				EBD9A81523AB0DBE00EC78CD /* ViewBackTask.m in Sources */,
 				EB30A4922398CECE00EEAE1E /* NSBundle+MJRefresh.m in Sources */,
 				EB2D815623A1EAE40007DD02 /* YUFoldingTableView.m in Sources */,
 				775B61AA238BBE8D00985FF3 /* NSObject+MJCoding.m in Sources */,
@@ -2049,6 +2065,7 @@
 				AF9B0F3223A36555008138EB /* MWZoomingScrollView.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
+				EBD9A81623AB0DBE00EC78CD /* ViewBackDetail.m in Sources */,
 				AF3FFE60239F890700834A73 /* BWaitApplyViewController.m in Sources */,
 				7756E87F2397FD0D00BF6944 /* LeaveWaitCell.m in Sources */,
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
@@ -2181,6 +2198,7 @@
 				77D83DED23A353F800534120 /* SDImageCache.m in Sources */,
 				EB2D814C23A0D9E50007DD02 /* AttendanceCalendar.m in Sources */,
 				AF9B0F4023A36555008138EB /* UIImage+EMWebP.m in Sources */,
+				EBD9A81723AB0DBE00EC78CD /* ViewBackInfo.m in Sources */,
 				AF9B0F2D23A36555008138EB /* MWGridViewController.m in Sources */,
 				AF0ABF14238FC9CF00F46278 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				77D83DEA23A353F800534120 /* SDWaitingView.m in Sources */,

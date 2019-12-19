@@ -12,6 +12,7 @@
 #import "UserInfo.h"
 #import "MJExtension.h"
 #import "AppDelegate.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 @interface UsersViewController
 ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
@@ -247,8 +248,10 @@
             [self.myHeadPortrait setImage:img];
             [self updateImage:img];
             
+
             UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl, username];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
             AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
             myDelegate.userPhotoimageView=imageView;
         }
@@ -306,7 +309,8 @@
     [body appendFormat:@"%@\r\n",MPboundary];
     //声明pic字段，文件名为boris.png
     NSString *imagename = [self CharacterStringMainString:username AddDigit:30 AddString:@" "];
-    [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",imagename];
+    NSString *name = [self CharacterStringMainString:@"pic" AddDigit:20 AddString:@" "];
+    [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n",name,imagename];
     //声明上传文件的格式
     [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
     //声明结束符：--AaB03x--

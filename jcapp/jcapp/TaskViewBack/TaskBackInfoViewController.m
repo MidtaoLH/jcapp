@@ -16,6 +16,7 @@
 #import "../Model/ViewBackTask.h"
 #import "../Model/ViewBackDetail.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
+#import "Masonry.h"
 #define kCount 6  //图片总张数
 
 static long step = 0; //记录时钟动画调用次数
@@ -40,31 +41,149 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 @synthesize  listtask;
 @synthesize  listdetail;
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
-  
-    
-    //注册自定义 cell
-    [_NewTableView registerClass:[TaskBackListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 100;
-    
-    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
-    _ImageTableView.rowHeight = 150;
-    
-    _imgvprocstatus.layer.masksToBounds = YES;
-    
-    _imgvprocstatus.layer.cornerRadius = _imgvprocstatus.frame.size.width / 2;
-    
-    _imgvprocstatus.backgroundColor = kColor_Cyan;
-    [self setlblcolor];
-    
     _srcStringArray = @[@"http://47.94.85.101:8095/img/01.jpg",
                         @"http://ww2.sinaimg.cn/thumbnail/98719e4agw1e5j49zmf21j20c80c8mxi.jpg",
                         ];
+    [self loadstyle];
     [self loadInfo];
     [self loadTaskInfo];
     //[self loadImageInfo];
+}
+-(void)loadstyle{
+    _emplbl.font=kFont_Lable_15;
+    _lblempgroup.textColor = [UIColor grayColor];
+    _lblempgroup.font=kFont_Lable_14;
+    _lblprocdate.textColor = [UIColor grayColor];
+    _lblprocdate.font=kFont_Lable_14;
+    _lblapplydate.textColor = [UIColor grayColor];
+    _lblapplydate.font=kFont_Lable_14;
+    _lblproccounts.textColor = [UIColor grayColor];
+    _lblproccounts.font=kFont_Lable_14;
+    _lblprocremark.textColor = [UIColor grayColor];
+    _lblprocremark.font=kFont_Lable_14;
+    _lblprocstatus.font=kFont_Lable_18;
+    _lblproctype.font=kFont_Lable_16;
+    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
     
+    _imgvprocstatus.backgroundColor = kColor_Cyan;
+    NSInteger ColSize=[Common_ColSize intValue];//列宽
+    NSInteger RowSize=[Common_RowSize intValue];//行高
+    NSInteger UserIamgeSize=[Common_UserImageSize intValue];//头像图片大小
+    NSInteger StatusImageSize=[Common_StatusImageSize intValue];//状态图片
+    NSInteger TxTHeight=[Common_TxTHeight intValue];//文本高度
+    NSInteger TxTWidth=[Common_TxTWidth intValue];//文本宽度
+    NSInteger TableHeight=[Common_TableHeight intValue];//列表高度
+    NSInteger ImageTableHeight=[Common_ImageTableHeight intValue];//图片列表高度
+    NSInteger TableRowHeight=[Common_TableRowHeight intValue];
+    NSInteger ImageTableRowHeight=[Common_ImageTableRowHeight intValue];
+    
+    //注册自定义 cell
+    [_NewTableView registerClass:[TaskBackListCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = TableRowHeight;
+    
+    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
+    _ImageTableView.rowHeight = ImageTableRowHeight;
+    [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(UserIamgeSize,UserIamgeSize));
+    }];
+    [_imgvprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加右
+        make.right.mas_equalTo(-ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(StatusImageSize,StatusImageSize));
+    }];
+    [_lblprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加右
+        make.right.mas_equalTo(-ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(StatusImageSize,StatusImageSize));
+    }];
+    [_emplbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_lblempgroup mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_lblapplydate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+RowSize*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_lblproctype mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_lblprocdate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_lblproccounts mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*4);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_lblprocremark mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+    }];
+    [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*6);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(self.view.width, ImageTableHeight));
+    }];
+    // 审批列表view添加约束
+    [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(self.view.width, TableHeight));
+        // 添加左 下
+        make.left.and.bottom.mas_equalTo(0);
+    }];
+    _imgvemp.layer.masksToBounds = YES;
+    _imgvemp.layer.cornerRadius = self.imgvemp.width * 0.5;
+    
+    _imgvprocstatus.layer.masksToBounds = YES;
+    _imgvprocstatus.layer.cornerRadius = self.imgvprocstatus.width * 0.5;
 }
 -(void)loadInfo
 {
@@ -113,14 +232,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
                                    delegate:self];
     
 }
--(void)setlblcolor
-{
-    _lblempgroup.textColor = [UIColor grayColor];
-    _lblprocdate.textColor = [UIColor grayColor];
-    _lblapplydate.textColor = [UIColor grayColor];
-    _lblproccounts.textColor = [UIColor grayColor];
-    _lblprocremark.textColor = [UIColor grayColor];
-}
 
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
@@ -146,8 +257,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         
         self.lblproctype.text=viewBackInfo.HistoryType;
         self.lblprocdate.text=[NSString stringWithFormat:@"%@时间：%@～%@",viewBackInfo.DocumentName,viewBackInfo.strattime,viewBackInfo.endtime];
-        self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
-        self.lblprocremark.text=[NSString stringWithFormat:@"%@事由：",viewBackInfo.DocumentName,viewBackInfo.ProcDescribe];
+        self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+        self.lblprocremark.text=[NSString stringWithFormat:@"%@事由：%@",viewBackInfo.DocumentName,viewBackInfo.ProcDescribe];
         self.lblprocstatus.text=viewBackInfo.ProcStatus;
         
         UIImageView *imageView = [[UIImageView alloc] init];
@@ -273,5 +384,24 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     return 0;
     
 }
-
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_ImageTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_ImageTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 @end

@@ -70,7 +70,7 @@ static NSString * identifier = @"PendingListCell";
                                    delegate:self];
 }
 
-// 2.实现下拉刷新和上拉加载的事件。
+// 2.实现下拉刷新和上拉加载的事件。
 // 头部的下拉刷新触发事件
 - (void)headerClick {
     // 可在此处实现下拉刷新时要执行的代码

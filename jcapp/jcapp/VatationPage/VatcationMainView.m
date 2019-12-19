@@ -1,12 +1,12 @@
 //
-//  BusinessTripEditViewController.m
+//  VatcationMainView.m
 //  jcapp
 //
-//  Created by youkare on 2019/12/12.
+//  Created by zhaodan on 2019/12/17.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-#import "BusinessTripEditViewController.h"
+#import "VatcationMainView.h"
 #import "SWForm.h"
 #import "SWFormHandler.h"
 #import "../VatationPage/CalendaViewController.h"
@@ -14,7 +14,7 @@
 #import "../MJExtension/MJExtension.h"
 
 static NSInteger rowHeight=50;
-@interface BusinessTripEditViewController ()<UIActionSheetDelegate>
+@interface VatcationMainView ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
 @property (nonatomic, strong) SWFormItem *businessTripStart;
 @property (nonatomic, strong) SWFormItem *businessTripEnd;
@@ -22,12 +22,13 @@ static NSInteger rowHeight=50;
 @property (nonatomic, strong) SWFormItem *gender;
 @property (nonatomic, strong) SWFormItem *reason;
 @property (nonatomic, strong) SWFormItem *image;
+
+@property (nonatomic, strong) NSMutableData *mResponseData;
 @end
 
-@implementation BusinessTripEditViewController
+@implementation VatcationMainView
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -46,11 +47,12 @@ static NSInteger rowHeight=50;
     tableViewPlace.rowHeight=rowHeight;
     myData = [[NSMutableArray alloc]initWithObjects:@"",nil];
     //[myData insertObject:@"f" atIndex:0];
-
+    
     self.genders = @[@"男",@"女"];
     [self datas];
     self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -75,62 +77,99 @@ static NSInteger rowHeight=50;
     SWWeakSelf
     NSMutableArray *items = [NSMutableArray array];
     
-    self.businessTripStart = SWFormItem_Add(@"出发日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
+    self.businessTripStart = SWFormItem_Add(@"开始时间", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
         NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
         
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"确定" destructiveButtonTitle:nil otherButtonTitles:nil];
-
-        [actionSheet showInView:self.view];
+   /////
         UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-        datePicker.tag = 101;
-        datePicker.datePickerMode = 1;
-        [actionSheet addSubview:datePicker];
-        
-        [actionSheet showInView:weakSelf.view];
-//        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-//
-//        [defaults setObject:@"tableviewstart" forKey:@"type"];
-//        [defaults synchronize];//保存到磁盘
-//        CalendaViewController *nextVc = [[CalendaViewController alloc]init];//初始化下一个界面
-//        [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+        datePicker.datePickerMode = UIDatePickerModeTime;
+        datePicker.frame = CGRectMake(0, 40,272,60);
+        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+        fmt.dateFormat = @"yyyy-MM-dd";
+        NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
+        NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
+            datePicker.minimumDate = minDate; // 设置最小时间
+            datePicker.maximumDate = maxDate; // 设置最大时间
+            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
+        datePicker.locale = locale;
+            datePicker.datePickerMode = UIDatePickerModeDate;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置\n\n" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert.view addSubview:datePicker];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+            //设置时间格式
+            dateFormat.dateFormat = @"yyyy-MM-dd";
+
+            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+            
+            NSLog(@"%@",dateString);
+            
+            self.businessTripStart.info =dateString;
+            [self.formTableView reloadData];
+        }];
+
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        }];
+
+        [alert addAction:ok];//添加按钮
+        [alert addAction:cancel];//添加按钮
+        [self presentViewController:alert animated:YES completion:^{ }];
+        ////////
+
     };
     [items addObject:_businessTripStart];
     
-    self.businessTripEnd = SWFormItem_Add(@"返回日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
+    self.businessTripEnd = SWFormItem_Add(@"结束时间", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     self.businessTripEnd.maxInputLength = 30;
     //self.age.info=@"2019-12-15";
     self.businessTripEnd.itemSelectCompletion = ^(SWFormItem *item) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert.view addSubview:datePicker];
+
+        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
         
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        /////
+        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+        datePicker.datePickerMode = UIDatePickerModeTime;
+        datePicker.frame = CGRectMake(0, 40,272,60);
+        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+        fmt.dateFormat = @"yyyy-MM-dd";
+        NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
+        NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
+            datePicker.minimumDate = minDate; // 设置最小时间
+            datePicker.maximumDate = maxDate; // 设置最大时间
+            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
+        datePicker.locale = locale;
+            datePicker.datePickerMode = UIDatePickerModeDate;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置\n\n" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert.view addSubview:datePicker];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
-            //实例化一个NSDateFormatter对象
-            [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+            //设置时间格式
+            dateFormat.dateFormat = @"yyyy-MM-dd";
+            
             NSString *dateString = [dateFormat stringFromDate:datePicker.date];
-            //求出当天的时间字符串
+            
             NSLog(@"%@",dateString);
-            self.businessTripEnd.info=dateString;
+            
+            self.businessTripEnd.info =dateString;
             [self.formTableView reloadData];
         }];
+        
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            　 }];
-        [alert addAction:ok];
-        [alert addAction:cancel];
+            
+        }];
+        
+        [alert addAction:ok];//添加按钮
+        [alert addAction:cancel];//添加按钮
         [self presentViewController:alert animated:YES completion:^{ }];
-//        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-//
-//        [defaults setObject:@"tableviewsend" forKey:@"type"];
-//        [defaults synchronize];//保存到磁盘
-//        CalendaViewController *nextVc = [[CalendaViewController alloc]init];//初始化下一个界面
-//        [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+        ////////
     };
     [items addObject:_businessTripEnd];
     
-    self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
+    self.businessNum = SWFormItem_Add(@"请假时长(h)", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 5;
     self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
     [items addObject:_businessNum];
@@ -146,7 +185,7 @@ static NSInteger rowHeight=50;
     };
     //[items addObject:_gender];
     
-    self.reason = SWFormItem_Add(@"出差事由", @"请输入出差事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
+    self.reason = SWFormItem_Add(@"请假理由", @"请输入请假事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
     self.reason.showLength = YES;
     [items addObject:_reason];
     
@@ -191,12 +230,12 @@ static NSInteger rowHeight=50;
     [self.formTableView reloadData];
     //[actionSheet release];
     
-//    if (actionSheet.tag == 10) {
-//        if (buttonIndex != 0) {
-//            //self.gender.info = self.genders[buttonIndex-1];
-//            [self.formTableView reloadData];
-//        }
-//    }
+    //    if (actionSheet.tag == 10) {
+    //        if (buttonIndex != 0) {
+    //            //self.gender.info = self.genders[buttonIndex-1];
+    //            [self.formTableView reloadData];
+    //        }
+    //    }
 }
 - (void)addAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
@@ -225,7 +264,7 @@ static NSInteger rowHeight=50;
             NSLog(@"Request submitted");
         }
         
-
+        
     } failure:^(NSString *error) {
         NSLog(@"error====%@",error);
     }];
@@ -238,10 +277,107 @@ static NSInteger rowHeight=50;
         NSLog(@"businessTripEnd === %@", self.businessTripEnd.info);
         NSLog(@"businessTripStart === %@", self.businessTripStart.info);
         
+        if(self.image.images.count >0)
+        {
+            for(int i = 0;i<self.image.images.count;i++)
+            {
+                UIImage *image = self.image.images[0];
+                //字典里面装的是你要上传的内容
+                NSDictionary *parameters = @{};
+                
+                //上传的接口
+                NSString* urlstring = @"http://47.94.85.101:8095/UploadHandler.ashx";
+                //分界线的标识符
+                NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
+                //根据url初始化request
+                NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
+                                                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                    timeoutInterval:10];
+                //分界线 --AaB03x
+                NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
+                //结束符 AaB03x--
+                NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
+                //    //要上传的图片
+                //    UIImage *image=[params objectForKey:@"pic"];
+                //得到图片的data
+                NSData *data = UIImagePNGRepresentation(image);
+                //http body的字符串
+                NSMutableString *body=[[NSMutableString alloc]init];
+                //参数的集合的所有key的集合
+                NSArray *keys= [parameters allKeys];
+                
+                //遍历keys
+                for(int i=0;i<[keys count];i++)
+                {
+                    //得到当前key
+                    NSString *key=[keys objectAtIndex:i];
+                    //如果key不是pic，说明value是字符类型，比如name：Boris
+                    if(![key isEqualToString:@"pic"])
+                    {
+                        //添加分界线，换行
+                        [body appendFormat:@"%@\r\n",MPboundary];
+                        //添加字段名称，换2行
+                        [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
+                        //添加字段的值
+                        [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
+                    }
+                }
+                ////添加分界线，换行
+                [body appendFormat:@"%@\r\n",MPboundary];
+                //声明pic字段，文件名为boris.png
+                NSString *imagename = [self CharacterStringMainString:@"test" AddDigit:30 AddString:@" "];
+                [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",imagename];
+                //声明上传文件的格式
+                [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
+                //声明结束符：--AaB03x--
+                NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
+                //声明myRequestData，用来放入http body
+                NSMutableData *myRequestData=[NSMutableData data];
+                //将body字符串转化为UTF8格式的二进制
+                [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+                //将image的data加入
+                [myRequestData appendData:data];
+                //加入结束符--AaB03x--
+                [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+                //设置HTTPHeader中Content-Type的值
+                NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
+                //设置HTTPHeader
+                [request setValue:content forHTTPHeaderField:@"Content-Type"];
+                //设置Content-Length
+                [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
+                //设置http body
+                [request setHTTPBody:myRequestData];
+                //http method
+                [request setHTTPMethod:@"POST"];
+                //建立连接，设置代理
+                NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+                //设置接受response的data
+                if (conn) {
+                    _mResponseData = [[NSMutableData alloc] init];
+                }
+            }
+        }
+    
+    
     } failure:^(NSString *error) {
         NSLog(@"error====%@",error);
     }];
+    
 }
+
+
+
+- (NSString*)CharacterStringMainString:(NSString*)MainString AddDigit:(int)AddDigit AddString:(NSString*)AddString
+{
+    NSString*ret = [[NSString alloc]init];
+    
+    ret = MainString;
+    for(int y =0;y < (AddDigit - MainString.length) ;y++ ){
+        ret = [NSString stringWithFormat:@"%@%@",ret,AddString];
+    }
+    return ret;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -413,4 +549,5 @@ static NSInteger rowHeight=50;
 //    //_inputView.inputText.text = [NSString stringWithFormat:@"回复 %@ :", name.text];
 //    // 加上对应的回复昵称
 //}
+
 @end

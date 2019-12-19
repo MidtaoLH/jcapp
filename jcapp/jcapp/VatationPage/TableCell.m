@@ -11,6 +11,8 @@
 #import "MJExtension.h"
 #import "AddWayView.h"
 #import "AppDelegate.h"
+#import "DelButton.h"
+#import "WayViewController.h"
 
 #define kMargin 10
 
@@ -24,7 +26,7 @@
 @property (nonatomic, strong) UILabel *leaveStatusLable;
 
 @property (nonatomic, strong) AddButton *btnAdd;
-
+@property (nonatomic, strong) DelButton *btndel;
 
 // (nonatomic, strong)   (nonatomic,weak)
 @end
@@ -42,6 +44,19 @@
         [_btnAdd addTarget:self action:@selector(action:)   forControlEvents:UIControlEventTouchUpInside];
     }
     return _btnAdd;
+}
+
+- (DelButton *)btndel {
+    
+    if (!_btndel) {
+        _btndel = [[DelButton alloc] init];
+        [_btndel setTitle:@"删除" forState:UIControlStateNormal];
+        _btndel.backgroundColor = [UIColor orangeColor];
+        // 一行代码给按钮添加事件
+        //[_btnAdd addTarget:self action:@selector(btnclick:)   forControlEvents:UIControlEventTouchUpInside];
+        [_btndel addTarget:self action:@selector(actiondel:)   forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _btndel;
 }
 - (UILabel *)leaveStatusLable {
     
@@ -108,6 +123,7 @@
         [self.contentView  addSubview:self.leaveDateLable];
 
         [self.contentView  addSubview:self.btnAdd];
+        [self.contentView  addSubview:self.btndel];
     }
     return self;
 }
@@ -136,12 +152,12 @@
     NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
     
     NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
-    
+     NSString * obj2 = [multiParamButton.multiParamDicindex objectForKey:@"index"];
 
     
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.way_post_level =obj1;
-    
+    myDelegate.way_post_index = obj2;
     
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
     [[self viewController] presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
@@ -149,36 +165,72 @@
     
 }
 
+- (void)actiondel:(id)sender
+{
+    
+    DelButton* multiParamButton = (DelButton* )sender;
+    
+    
+    //NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
+    
+    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
+    NSString * obj2 = [multiParamButton.multiParamDicindex objectForKey:@"index"];
+    
+    
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.way_post_level =obj1;
+    myDelegate.way_post_index_delete = obj2;
+    myDelegate.way_post_delete = @"true";
+    [[self viewController] viewDidLoad];
+    
+    NSLog(@"%@",@"action1");
+}
 
+
+-(void)setIndex:(NSString *)index{
+    
+    NSLog(@"%@",@"setindex");
+    NSDictionary* paramDic = @{@"index":index};
+    self.btnAdd.multiParamDicindex= paramDic;
+    self.btndel.multiParamDicindex= paramDic;
+    
+    
+}
 
 -(void)setWaylist:(Way *)Waylist
 {
+     NSLog(@"%@",@"setway");
     
-    _Waylist =Waylist;
-    NSLog(@"%@",_Waylist.name);
-    if([ _Waylist.name isEqualToString:@"button"])
+    if([ Waylist.name isEqualToString:@"button"])
     {
        self.btnAdd.hidden = NO;
+        self.btndel.hidden = YES;
         self.textLabel.hidden = YES;
         self.leaveStatusLable.hidden = YES;
         self.leaveDateLable.hidden = YES;
         
         
-        NSDictionary* paramDic = @{@"levelname":_Waylist.levelname};
+        NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
         self.btnAdd.multiParamDic= paramDic;
+        self.btndel.multiParamDic= paramDic;
+        
     }
     else
     {
+       NSLog(@"%@",@"setwayelse");
         self.btnAdd.hidden = YES;
+        self.btndel.hidden = NO;
         self.textLabel.hidden = NO;
         self.leaveStatusLable.hidden = NO;
         self.leaveDateLable.hidden = NO;
-
+        NSLog(@"%@",@"setwayelsebutton");
+        NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
+        self.btnAdd.multiParamDic= paramDic;
+        self.btndel.multiParamDic= paramDic;
         
-        
-        self.textLabel.text = _Waylist.name;
-        self.leaveStatusLable.text = _Waylist.levelname;;
-        self.leaveDateLable.text = _Waylist.groupname;;
+        self.textLabel.text = Waylist.name;
+        self.leaveStatusLable.text = Waylist.levelname;;
+        self.leaveDateLable.text = Waylist.groupname;;
         
     }
     
@@ -218,6 +270,8 @@
     
     
     self.btnAdd.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
+    
+    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     

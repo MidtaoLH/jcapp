@@ -1,8 +1,8 @@
 //
-//  BusinessTripEditViewController.h
+//  VatcationMainView.h
 //  jcapp
 //
-//  Created by youkare on 2019/12/12.
+//  Created by zhaodan on 2019/12/17.
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
@@ -11,20 +11,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BusinessTripEditViewController  : SWFormBaseController
-{
+@interface VatcationMainView : SWFormBaseController{
     
     IBOutlet UITableView *tableViewPlace;
     UIDatePicker*datePicker;
     NSString *xmlString;
     //NSMutableArray *myData;
-//    NSInteger totalcount;
-//    NSInteger totalHeight;
+    //    NSInteger totalcount;
+    //    NSInteger totalHeight;
     
     NSString *groupid;
     NSString *empname;
     NSString *empID;
     NSString *userID; 
 }
+
 @end
+
 NS_ASSUME_NONNULL_END

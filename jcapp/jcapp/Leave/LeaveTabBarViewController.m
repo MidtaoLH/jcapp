@@ -10,6 +10,8 @@
 #import "LeaveViewController.h"
 #import "WaitApplyViewController.h"
 #import "../VatationPage/VatcationMainViewController.h"
+#import "../VatationPage/VatcationMainView.h"
+#import "AppDelegate.h"
 
 @interface LeaveTabBarViewController ()
 
@@ -60,6 +62,13 @@
     if (viewController == self.viewControllers[1]) {
         //点击中间tabbarItem，不切换，让当前页面跳转
         VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
+        
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.AppRoveType =@"qingjia";
+        
+        //VatcationMainView *order = [[VatcationMainView alloc] init];
+        
+        
         order.hidesBottomBarWhenPushed = YES;
         [(UINavigationController *)tabBarController.selectedViewController pushViewController:order animated:YES];
         return NO;

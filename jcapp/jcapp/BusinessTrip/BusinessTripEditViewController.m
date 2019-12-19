@@ -77,6 +77,7 @@ NSString * bflag = @"flase";
     processid=myDelegate.processid;
     pageType=myDelegate.pageType;
     if([pageType isEqualToString:@"2"]){
+        operateType=@"2";
         //修改画面 加载数据
         [self LoadData];
     }
@@ -244,88 +245,92 @@ NSString * bflag = @"flase";
 //        }
 //    }
 }
-- (void)addAction {
-    [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
-        if(self.image.images.count >0)
+-(void)uploadImg{
+    if(self.image.images.count >0)
+    {
+        for(int i = 0;i<self.image.images.count;i++)
         {
-            for(int i = 0;i<self.image.images.count;i++)
+            UIImage *image = self.image.images[i];
+            //字典里面装的是你要上传的内容
+            NSDictionary *parameters = @{};
+            
+            //上传的接口
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
+            //分界线的标识符
+            NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
+            //根据url初始化request
+            NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
+                                                                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                timeoutInterval:10];
+            //分界线 --AaB03x
+            NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
+            //结束符 AaB03x--
+            NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
+            //    //要上传的图片
+            //    UIImage *image=[params objectForKey:@"pic"];
+            //得到图片的data
+            NSData *data = UIImagePNGRepresentation(image);
+            //http body的字符串
+            NSMutableString *body=[[NSMutableString alloc]init];
+            //参数的集合的所有key的集合
+            NSArray *keys= [parameters allKeys];
+            
+            //遍历keys
+            for(int i=0;i<[keys count];i++)
             {
-                UIImage *image = self.image.images[0];
-                //字典里面装的是你要上传的内容
-                NSDictionary *parameters = @{};
-                
-                //上传的接口
-                NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
-                //分界线的标识符
-                NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
-                //根据url初始化request
-                NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
-                                                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                                    timeoutInterval:10];
-                //分界线 --AaB03x
-                NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
-                //结束符 AaB03x--
-                NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
-                //    //要上传的图片
-                //    UIImage *image=[params objectForKey:@"pic"];
-                //得到图片的data
-                NSData *data = UIImagePNGRepresentation(image);
-                //http body的字符串
-                NSMutableString *body=[[NSMutableString alloc]init];
-                //参数的集合的所有key的集合
-                NSArray *keys= [parameters allKeys];
-                
-                //遍历keys
-                for(int i=0;i<[keys count];i++)
+                //得到当前key
+                NSString *key=[keys objectAtIndex:i];
+                //如果key不是pic，说明value是字符类型，比如name：Boris
+                if(![key isEqualToString:@"pic"])
                 {
-                    //得到当前key
-                    NSString *key=[keys objectAtIndex:i];
-                    //如果key不是pic，说明value是字符类型，比如name：Boris
-                    if(![key isEqualToString:@"pic"])
-                    {
-                        //添加分界线，换行
-                        [body appendFormat:@"%@\r\n",MPboundary];
-                        //添加字段名称，换2行
-                        [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
-                        //添加字段的值
-                        [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
-                    }
-                }
-                ////添加分界线，换行
-                [body appendFormat:@"%@\r\n",MPboundary];
-                //声明pic字段，文件名为boris.png
-                NSString *imagename = [self CharacterStringMainString:@"test" AddDigit:30 AddString:@" "];
-                [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",imagename];
-                //声明上传文件的格式
-                [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
-                //声明结束符：--AaB03x--
-                NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
-                //声明myRequestData，用来放入http body
-                NSMutableData *myRequestData=[NSMutableData data];
-                //将body字符串转化为UTF8格式的二进制
-                [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
-                //将image的data加入
-                [myRequestData appendData:data];
-                //加入结束符--AaB03x--
-                [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
-                //设置HTTPHeader中Content-Type的值
-                NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
-                //设置HTTPHeader
-                [request setValue:content forHTTPHeaderField:@"Content-Type"];
-                //设置Content-Length
-                [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
-                //设置http body
-                [request setHTTPBody:myRequestData];
-                //http method
-                [request setHTTPMethod:@"POST"];
-                //建立连接，设置代理
-                NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-                //设置接受response的data
-                if (conn) {
-                    _mResponseData = [[NSMutableData alloc] init];
+                    //添加分界线，换行
+                    [body appendFormat:@"%@\r\n",MPboundary];
+                    //添加字段名称，换2行
+                    [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
+                    //添加字段的值
+                    [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
                 }
             }
+            ////添加分界线，换行
+            [body appendFormat:@"%@\r\n",MPboundary];
+            //声明pic字段，文件名为boris.png
+            NSString *imagename = [self CharacterStringMainString:[NSString stringWithFormat:@"%d",i+1] AddDigit:30 AddString:@" "];
+            NSString *name = [self CharacterStringMainString:applyCode AddDigit:20 AddString:@" "];
+            [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n",name,imagename];
+            //声明上传文件的格式
+            [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
+            //声明结束符：--AaB03x--
+            NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
+            //声明myRequestData，用来放入http body
+            NSMutableData *myRequestData=[NSMutableData data];
+            //将body字符串转化为UTF8格式的二进制
+            [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+            //将image的data加入
+            [myRequestData appendData:data];
+            //加入结束符--AaB03x--
+            [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+            //设置HTTPHeader中Content-Type的值
+            NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
+            //设置HTTPHeader
+            [request setValue:content forHTTPHeaderField:@"Content-Type"];
+            //设置Content-Length
+            [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
+            //设置http body
+            [request setHTTPBody:myRequestData];
+            //http method
+            [request setHTTPMethod:@"POST"];
+            //建立连接，设置代理
+            NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+            //设置接受response的data
+            if (conn) {
+                _mResponseData = [[NSMutableData alloc] init];
+            }
         }
+    }
+}
+- (void)addAction {
+    [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
+        operateType=@"0";
         
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
         //convert object to data
@@ -336,7 +341,7 @@ NSString * bflag = @"flase";
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         NSLog(@"text字典里面的内容为--》%@", text );
         
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", userID,processid,businessTripid,empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,pageType,self.image.images.count,text];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", userID,processid,businessTripid,empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -370,7 +375,7 @@ NSString * bflag = @"flase";
 }
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
-        
+        operateType=@"0";
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
@@ -485,34 +490,45 @@ NSString * bflag = @"flase";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    //将明细数据拆分，头表数据及出差地点数据
-    NSArray *array = [requestTmp componentsSeparatedByString:@"+"];
-    //解析头表数据
-    NSData *resData = [[NSData alloc] initWithData:[array[0] dataUsingEncoding:NSUTF8StringEncoding]];
-    NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
-    //NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    NSLog(@"resultDic0:%@",resultDic);
-//    self.businessTripStart.info=[resultDic objectForKey:@"BusinessTripStartTime"];
-//    self.businessTripEnd.info=[resultDic objectForKey:@"BusinessTripEndTime"];
-//    self.businessNum.info=[resultDic objectForKey:@"BusinessTripNum"];
-//    self.reason.info=[resultDic objectForKey:@"BusinessTripReason"];
-    
-    //解析出差地点数据
-    resData = [[NSData alloc] initWithData:[array[1] dataUsingEncoding:NSUTF8StringEncoding]];
-    resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
-    NSLog(@"resultDic1:%@",resultDic);
-    
-    [self.formTableView reloadData];
+    if(![operateType isEqual:@"3"] ){
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"xmlString:%@",xmlString);
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSLog(@"requestTmp:%@",requestTmp);
+        //上传图片
+        if([operateType isEqual:@"0"]){
+            //接收返回的起案番号
+            applyCode=requestTmp;
+            operateType=@"3";
+            [self uploadImg];
+        }
+        
+        if([operateType isEqual:@"2"]){
+            //将明细数据拆分，头表数据及出差地点数据
+            NSArray *array = [requestTmp componentsSeparatedByString:@"+"];
+            //解析头表数据
+            NSData *resData = [[NSData alloc] initWithData:[array[0] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
+            //NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            NSLog(@"resultDic0:%@",resultDic);
+        //    self.businessTripStart.info=[resultDic objectForKey:@"BusinessTripStartTime"];
+        //    self.businessTripEnd.info=[resultDic objectForKey:@"BusinessTripEndTime"];
+        //    self.businessNum.info=[resultDic objectForKey:@"BusinessTripNum"];
+        //    self.reason.info=[resultDic objectForKey:@"BusinessTripReason"];
+            
+            //解析出差地点数据
+            resData = [[NSData alloc] initWithData:[array[1] dataUsingEncoding:NSUTF8StringEncoding]];
+            resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"resultDic1:%@",resultDic);
+            
+            [self.formTableView reloadData];
+        }
+    }
 }
 ////弹出消息框
 //-(void) connection:(NSURLConnection *)connection

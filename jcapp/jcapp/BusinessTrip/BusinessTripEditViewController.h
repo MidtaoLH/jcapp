@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *businessTripid;
     NSString *processid;
     NSString *pageType;
+    NSString *operateType;
+    NSString *applyCode;
 }
 @end
 NS_ASSUME_NONNULL_END

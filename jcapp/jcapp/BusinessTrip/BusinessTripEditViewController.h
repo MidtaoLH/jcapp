@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
     IBOutlet UITableView *tableViewPlace;
     UIDatePicker*datePicker;
     NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
     //NSMutableArray *myData;
 //    NSInteger totalcount;
 //    NSInteger totalHeight;
@@ -24,7 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *groupid;
     NSString *empname;
     NSString *empID;
-    NSString *userID; 
+    NSString *userID;
+    NSString *businessTripid;
+    NSString *processid;
+    NSString *pageType;
 }
 @end
 NS_ASSUME_NONNULL_END

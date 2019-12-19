@@ -11,6 +11,7 @@
 #import "HomePage/ZDYTTabBarViewController.h"
 #import "VatationPage/VatationPageViewController.h"
 #import "VatationPage/VatcationMainViewController.h"
+#import "VatationPage/VatcationMainView.h"
 #import "MJExtension/MJExtension.h"
 #import "Model/UserLogin.h"
 
@@ -96,8 +97,11 @@
                  [self presentModalViewController:valueView animated:YES];
     */
     
+    
+
+    
    
-    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
+    VatcationMainView *nextVc = [[VatcationMainView alloc]init];//初始化下一个界面
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 

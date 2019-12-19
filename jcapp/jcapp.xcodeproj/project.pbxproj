@@ -96,6 +96,8 @@
 		8DA5572D238E1A3E005C7706 /* VatcationMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA5572B238E1A3E005C7706 /* VatcationMainViewController.m */; };
 		8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */; };
 		8DADCA3B23A8B40700BFDC9E /* DelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DADCA3A23A8B40700BFDC9E /* DelButton.m */; };
+		8DB09DEE23A9BAB000CCFDD8 /* VatcationMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB09DEC23A9BAB000CCFDD8 /* VatcationMainView.m */; };
+		8DB09DEF23A9BAB000CCFDD8 /* VatcationMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DB09DED23A9BAB000CCFDD8 /* VatcationMainView.xib */; };
 		AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */ = {isa = PBXBuildFile; fileRef = AF0ABC40238F5FCE00F46278 /* NoticeNews.m */; };
 		AF0ABE56238F85A900F46278 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0ABE55238F85A900F46278 /* MapKit.framework */; };
 		AF0ABE58238F85CC00F46278 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF0ABE57238F85CC00F46278 /* ImageIO.framework */; };
@@ -462,6 +464,9 @@
 		8DA5572C238E1A3E005C7706 /* VatcationMainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VatcationMainViewController.xib; sourceTree = "<group>"; };
 		8DADCA3923A8B40700BFDC9E /* DelButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DelButton.h; sourceTree = "<group>"; };
 		8DADCA3A23A8B40700BFDC9E /* DelButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DelButton.m; sourceTree = "<group>"; };
+		8DB09DEB23A9BAB000CCFDD8 /* VatcationMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VatcationMainView.h; sourceTree = "<group>"; };
+		8DB09DEC23A9BAB000CCFDD8 /* VatcationMainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VatcationMainView.m; sourceTree = "<group>"; };
+		8DB09DED23A9BAB000CCFDD8 /* VatcationMainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VatcationMainView.xib; sourceTree = "<group>"; };
 		AF0ABC40238F5FCE00F46278 /* NoticeNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeNews.m; sourceTree = "<group>"; };
 		AF0ABC41238F5FCE00F46278 /* NoticeNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNews.h; sourceTree = "<group>"; };
 		AF0ABE55238F85A900F46278 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -1060,6 +1065,9 @@
 				8D7C7DF223A098290076F644 /* SkyAssociationMenuView.m */,
 				8DADCA3923A8B40700BFDC9E /* DelButton.h */,
 				8DADCA3A23A8B40700BFDC9E /* DelButton.m */,
+				8DB09DEB23A9BAB000CCFDD8 /* VatcationMainView.h */,
+				8DB09DEC23A9BAB000CCFDD8 /* VatcationMainView.m */,
+				8DB09DED23A9BAB000CCFDD8 /* VatcationMainView.xib */,
 			);
 			path = VatationPage;
 			sourceTree = "<group>";
@@ -1894,6 +1902,7 @@
 				EB4315ED237FB414007D1213 /* LaunchScreen.storyboard in Resources */,
 				EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */,
 				AF3FFE5D239F890700834A73 /* BWaitApplyViewController.xib in Resources */,
+				8DB09DEF23A9BAB000CCFDD8 /* VatcationMainView.xib in Resources */,
 				7700056323A373F80079B49F /* ExamineEditLController.xib in Resources */,
 				8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */,
 				8D7C7DF023A095710076F644 /* AddWayView.xib in Resources */,
@@ -2005,6 +2014,7 @@
 				EBAD2E7C239A1257004FAE82 /* AttendanceCalendarViewController.m in Sources */,
 				EB30A49F2398CF1300EEAE1E /* MJRefreshBackStateFooter.m in Sources */,
 				77D83DFA23A353F800534120 /* UIView+WebCacheOperation.m in Sources */,
+				8DB09DEE23A9BAB000CCFDD8 /* VatcationMainView.m in Sources */,
 				770EAAA723A35A7300986A89 /* SDNavigationController.m in Sources */,
 				77D83DF623A353F800534120 /* UIImage+MultiFormat.m in Sources */,
 				EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */,

@@ -151,6 +151,7 @@ NSInteger currentPageCountwait_new;
     
     if ([myDelegate.way_refresh isEqualToString:@"true"]) {
         
+        myDelegate.way_refresh = @"false";
         NSLog(@"执行刷新了");
         
         [self viewDidLoad];

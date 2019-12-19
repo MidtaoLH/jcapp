@@ -12,6 +12,7 @@
 #import "SWFormTextViewInputCell.h"
 #import "SWFormSelectCell.h"
 #import "SWFormImageCell.h"
+#import "AppDelegate.h"
 
 static NSInteger rowHeight=50;
 @interface SWFormBaseController ()<UITableViewDelegate, UITableViewDataSource>
@@ -126,6 +127,7 @@ static NSInteger rowHeight=50;
         }
     }
     else{
+        
         static NSString *ID=@"cellID";
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];

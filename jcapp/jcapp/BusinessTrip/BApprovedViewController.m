@@ -67,7 +67,7 @@ NSInteger currentPageCountbapproved;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountbapproved];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"1"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"1"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

@@ -12,6 +12,8 @@
 //#import "../PendingPage/PendingListCell.h"
 #import "BusinessTripCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "../AppDelegate.h"
+#import "../BusinessTrip/BusinessTripEditViewController.h"
 
 
 static NSString * identifier = @"PendingListCell";
@@ -263,13 +265,15 @@ NSInteger currentPageCountbwait;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
-    }
-    else
-    {
-        //其它单元格的事件
-    }
+    Pending * pending = self.listOfMovies[indexPath.row];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.businessTripid=pending.AidFK;
+    myDelegate.processid=pending.PicID;
+    myDelegate.pageType=@"2";
+    BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
+    //order.hidesBottomBarWhenPushed = YES;
+    //    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
+    [self presentViewController:order animated:YES completion:nil];
 }
 
 @end

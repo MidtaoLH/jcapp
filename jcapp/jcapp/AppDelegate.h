@@ -16,6 +16,10 @@
 @property (nonatomic, strong) UIImageView *userPhotoimageView;
 
 
+//出差编号
+@property (nonatomic, strong) NSString *businessTripid;
+//出差画面 1:新增 2:修改
+@property (nonatomic, strong) NSString *pageType;
 @property (nonatomic, strong) NSString *leaveid;
 
 @property (nonatomic, strong) NSString *processid;

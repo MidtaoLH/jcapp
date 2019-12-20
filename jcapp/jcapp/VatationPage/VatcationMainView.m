@@ -47,13 +47,13 @@ static NSInteger rowHeight=50;
     UserHour = [defaults objectForKey:@"UserHour"];
 
     edittype = @"NEW";
-   // edittype = @"EDIT";
+    //edittype = @"EDIT";
     
     if([edittype isEqualToString:@"EDIT"])
     {
-        vatcationid = @"10661";
+        vatcationid = @"10688";
         urltype = @"getdata";
-        processid = @"22770";
+        processid = @"22798";
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@", userID,vatcationid,processid];
 
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -111,11 +111,14 @@ static NSInteger rowHeight=50;
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *vatcationname = [defaults objectForKey:@"vatcationname"];
         NSLog(@"%@",vatcationname);
-        
-        self.VatcationType.info = vatcationname;
-        //赋值完毕后清空
-        [defaults setObject:@"" forKey:@"vatcationname"];
-        [self.formTableView reloadData];
+        if(vatcationname.length > 0)
+        {
+            self.VatcationType.info = vatcationname;
+            //赋值完毕后清空
+            [defaults setObject:@"" forKey:@"vatcationname"];
+            [self.formTableView reloadData];
+        }
+       
     }
     
    
@@ -611,6 +614,11 @@ static NSInteger rowHeight=50;
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
+    if([xmlString isEqualToString:@"OK"])
+    {
+        return ;
+    }
+    
     // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -635,17 +643,26 @@ static NSInteger rowHeight=50;
             self.businessTripEnd.info = kl.timesend;
             self.businessNum.info = kl.timesum;
             self.reason.info = kl.vatcationreason;
-            NSArray *imagens = [[NSArray alloc] init];
+            
             NSMutableArray *imagepath = [[NSMutableArray alloc] init];
+           
+            
             for(NSInteger i = 0;i <listOfKeepLeave.count;i++)
             {
                  KeepLeave *kl2 = self.listOfKeepLeave[i];
-                 [imagepath addObject:kl2.imagepath];
-            
+                
+                NSString *imagepath_s =
+                [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
+
+                
+                UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
+                
+                [imagepath addObject:imagetest];
             }
-            self.image.images = imagepath;
+           
             
-            
+            self.image.images =imagepath;
+
             [self.formTableView reloadData];
         }
     }
@@ -665,97 +682,7 @@ static NSInteger rowHeight=50;
             if ([ m.Status isEqualToString:@"suess"])
             {
                 ApplyCode = m.ApplyCode;
-                
-                
-                ////////上传图片
-                if(self.image.images.count >0)
-                {
-                    for(int imagei = 0;imagei<self.image.images.count;imagei++)
-                    {
-                        UIImage *image = self.image.images[imagei];
-                        //字典里面装的是你要上传的内容
-                        NSDictionary *parameters = @{};
-                        
-                        //上传的接口
-                        NSString* urlstring = @"http://47.94.85.101:8095/UploadHandler.ashx";
-                        //分界线的标识符
-                        NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
-                        //根据url初始化request
-                        NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
-                                                                                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                                            timeoutInterval:10];
-                        //分界线 --AaB03x
-                        NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
-                        //结束符 AaB03x--
-                        NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
-                        //    //要上传的图片
-                        //    UIImage *image=[params objectForKey:@"pic"];
-                        //得到图片的data
-                        NSData *data = UIImagePNGRepresentation(image);
-                        //http body的字符串
-                        NSMutableString *body=[[NSMutableString alloc]init];
-                        //参数的集合的所有key的集合
-                        NSArray *keys= [parameters allKeys];
-                        
-                        //遍历keys
-                        for(int i=0;i<[keys count];i++)
-                        {
-                            //得到当前key
-                            NSString *key=[keys objectAtIndex:i];
-                            //如果key不是pic，说明value是字符类型，比如name：Boris
-                            if(![key isEqualToString:ApplyCode])
-                            {
-                                //添加分界线，换行
-                                [body appendFormat:@"%@\r\n",MPboundary];
-                                //添加字段名称，换2行
-                                [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
-                                //添加字段的值
-                                [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
-                            }
-                        }
-                        ////添加分界线，换行
-                        [body appendFormat:@"%@\r\n",MPboundary];
-                        //声明pic字段，文件名为boris.png
-                        NSString *imagename = [self CharacterStringMainString: [NSString stringWithFormat:@"%d",imagei] AddDigit:30 AddString:@" "];
-                        
-                        NSString *name = [self CharacterStringMainString:ApplyCode AddDigit:20 AddString:@" "];
-                        
-                        [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n",name,imagename];
-                        //声明上传文件的格式
-                        [body appendFormat:@"Content-Type: image/png\r\		n\r\n"];
-                        //声明结束符：--AaB03x--
-                        NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
-                        //声明myRequestData，用来放入http body
-                        NSMutableData *myRequestData=[NSMutableData data];
-                        //将body字符串转化为UTF8格式的二进制
-                        [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
-                        //将image的data加入
-                        [myRequestData appendData:data];
-                        //加入结束符--AaB03x--
-                        [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
-                        //设置HTTPHeader中Content-Type的值
-                        NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
-                        //设置HTTPHeader
-                        [request setValue:content forHTTPHeaderField:@"Content-Type"];
-                        //设置Content-Length
-                        [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
-                        //设置http body
-                        [request setHTTPBody:myRequestData];
-                        //http method
-                        [request setHTTPMethod:@"POST"];
-                        //建立连接，设置代理
-                        NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-                        //设置接受response的data
-                        if (conn) {
-                            _mResponseData = [[NSMutableData alloc] init];
-                        }
-                    }
-                }
-                
-                ///////
-                
-                
-                
+                    [self uploadImg];
             }
             
         }
@@ -764,6 +691,111 @@ static NSInteger rowHeight=50;
 
 }
 
+//将图片保存到本地并且从本地返回出来
+-(UIImage*)SaveImageToLocal:(NSString*)url Keys:(NSString*)key {
 
+    NSUserDefaults* preferences = [NSUserDefaults standardUserDefaults];
+    //NSString *urlString = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
+    UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
+    
+    //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
+    
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    
+    NSData* imageData = [preferences objectForKey:key];
+    UIImage* image;
+    if (imageData) {
+        image = [UIImage imageWithData:imageData];
+    }
+    return image;
+    
+}
+
+
+
+-(void)uploadImg{
+    if(self.image.images.count >0)
+    {
+        for(int i = 0;i<self.image.images.count;i++)
+        {
+            UIImage *image = self.image.images[i];
+            //字典里面装的是你要上传的内容
+            NSDictionary *parameters = @{};
+            
+            //上传的接口
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
+            //分界线的标识符
+            NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
+            //根据url初始化request
+            NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
+                                                                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                timeoutInterval:10];
+            //分界线 --AaB03x
+            NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
+            //结束符 AaB03x--
+            NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
+            //    //要上传的图片
+            //    UIImage *image=[params objectForKey:@"pic"];
+            //得到图片的data
+            NSData *data = UIImagePNGRepresentation(image);
+            //http body的字符串
+            NSMutableString *body=[[NSMutableString alloc]init];
+            //参数的集合的所有key的集合
+            NSArray *keys= [parameters allKeys];
+            
+            //遍历keys
+            for(int i=0;i<[keys count];i++)
+            {
+                //得到当前key
+                NSString *key=[keys objectAtIndex:i];
+                //如果key不是pic，说明value是字符类型，比如name：Boris
+                if(![key isEqualToString:@"pic"])
+                {
+                    //添加分界线，换行
+                    [body appendFormat:@"%@\r\n",MPboundary];
+                    //添加字段名称，换2行
+                    [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
+                    //添加字段的值
+                    [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
+                }
+            }
+            ////添加分界线，换行
+            [body appendFormat:@"%@\r\n",MPboundary];
+            //声明pic字段，文件名为boris.png
+            NSString *imagename = [self CharacterStringMainString:[NSString stringWithFormat:@"%d",i+1] AddDigit:30 AddString:@" "];
+            NSString *name = [self CharacterStringMainString:ApplyCode AddDigit:20 AddString:@" "];
+            [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n",name,imagename];
+            //声明上传文件的格式
+            [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
+            //声明结束符：--AaB03x--
+            NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
+            //声明myRequestData，用来放入http body
+            NSMutableData *myRequestData=[NSMutableData data];
+            //将body字符串转化为UTF8格式的二进制
+            [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+            //将image的data加入
+            [myRequestData appendData:data];
+            //加入结束符--AaB03x--
+            [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+            //设置HTTPHeader中Content-Type的值
+            NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
+            //设置HTTPHeader
+            [request setValue:content forHTTPHeaderField:@"Content-Type"];
+            //设置Content-Length
+            [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
+            //设置http body
+            [request setHTTPBody:myRequestData];
+            //http method
+            [request setHTTPMethod:@"POST"];
+            //建立连接，设置代理
+            NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+            //设置接受response的data
+            if (conn) {
+                _mResponseData = [[NSMutableData alloc] init];
+            }
+        }
+    }
+}
 
 @end

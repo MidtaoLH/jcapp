@@ -104,7 +104,7 @@
 
     
    
-    VatcationMainView *nextVc = [[VatcationMainView alloc]init];//初始化下一个界面
+    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 
@@ -230,6 +230,9 @@
             [defaults setObject:m.Groupid forKey:@"Groupid"];
             [defaults setObject:m.GroupName forKey:@"GroupName"];
             [defaults setObject:m.UserNO forKey:@"UserNO"];
+            [defaults setObject:m.UserHour forKey:@"UserHour"];
+            
+            
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页

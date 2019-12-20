@@ -128,81 +128,94 @@ static NSInteger rowHeight=50;
     }
     else{
         
-        static NSString *ID=@"cellID";
-        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
-        cell.centerX=0.0;
-        cell.textLabel.text=[NSString stringWithFormat:@"*"];
-        cell.textLabel.textColor=UIColor.redColor;
-        //cell.backgroundColor=UIColor.redColor;
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        //myDelegate.AppRoveType = @"qingjia";
         
-        UILabel *cell0=[[UILabel alloc]init];
-        cell0.text=[NSString stringWithFormat:@"出差地点"];
-        //cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-        //cell0.left=40;
-        cell0.frame = CGRectMake(20.0,0, 80, rowHeight);
-        //cell0.backgroundColor=UIColor.greenColor;
-        [cell.contentView addSubview:cell0];
+        if([myDelegate.AppRoveType isEqualToString:@"qingjia"])
+        {
+
+            return nil;
+        }
+        else
+        {
+            static NSString *ID=@"cellID";
+            UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+            cell.centerX=0.0;
+            cell.textLabel.text=[NSString stringWithFormat:@"*"];
+            cell.textLabel.textColor=UIColor.redColor;
+            //cell.backgroundColor=UIColor.redColor;
+            
+            UILabel *cell0=[[UILabel alloc]init];
+            cell0.text=[NSString stringWithFormat:@"出差地点"];
+            //cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+            //cell0.left=40;
+            cell0.frame = CGRectMake(20.0,0, 80, rowHeight);
+            //cell0.backgroundColor=UIColor.greenColor;
+            [cell.contentView addSubview:cell0];
+            
+            CGRect textFieldRect = CGRectMake(cell0.centerX+35,cell.top+10, 150, 30.0);
+            UITextField *theTextField = [[UITextField alloc] initWithFrame:textFieldRect];
+            theTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            //theTextField.frame = CGRectMake(cell0.centerX+33,0, 150, rowHeight);
+            //theTextField.returnKeyType = UIReturnKeyDefault;
+            theTextField.borderStyle = UITextBorderStyleLine;
+            theTextField.layer.borderColor = [UIColor grayColor].CGColor;
+            theTextField.layer.borderWidth = 1.0f;
+            
+            theTextField.tag = [indexPath row];
+            theTextField.delegate = self;
+            theTextField.text=myData[indexPath.row];
+            //此方法为关键方法
+            [theTextField addTarget:self action:@selector(textFieldWithText:)forControlEvents:UIControlEventEditingChanged];
+            [cell.contentView addSubview:theTextField];
+            //        UITextField *cell1=[[UITextField alloc]init];
+            //        //cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+            //        //cell0.left=40;
+            //        cell1.text=myData[indexPath.row];
+            //        cell1.frame = CGRectMake(cell0.centerX+33,0, 150, rowHeight);
+            //        cell1.layer.borderColor = [[UIColor orangeColor]CGColor];
+            //
+            //        //cell0.backgroundColor=UIColor.greenColor;
+            //        [cell.contentView addSubview:cell1];
+            
+            
+            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
+            btnAdd.frame = CGRectMake(cell.frame.size.width-50,cell.top+10, 30, 30);
+            [btnAdd setTitle:@"➕" forState:UIControlStateNormal];
+            [btnAdd setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
+            //关键语句
+            btnAdd.layer.cornerRadius = btnAdd.frame.size.width/2;
+            btnAdd.clipsToBounds = YES;
+            btnAdd.backgroundColor =[UIColor greenColor];
+            [btnAdd addTarget:self action:@selector(cellAddBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
+            //btnAdd.backgroundColor=UIColor.blueColor;
+            [btnAdd setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [cell.contentView addSubview:btnAdd];
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            btn.frame = CGRectMake(cell.frame.size.width-10,cell.top+10, 30, 30);
+            [btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+            [btn setTitle:@"✖️" forState:UIControlStateNormal];
+            //关键语句
+            btn.layer.cornerRadius = btnAdd.frame.size.width/2;
+            btn.clipsToBounds = YES;
+            btn.backgroundColor =[UIColor redColor];
+            
+            [btn addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //[btn3 addTarget:self action:@selector(onClick3:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //btn3.tag=indexPath.row;
+            //btn.backgroundColor=UIColor.greenColor;
+            [cell.contentView addSubview:btn];
+            
+            return cell;
+        }
         
-        CGRect textFieldRect = CGRectMake(cell0.centerX+35,cell.top+10, 150, 30.0);
-        UITextField *theTextField = [[UITextField alloc] initWithFrame:textFieldRect];
-        theTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        //theTextField.frame = CGRectMake(cell0.centerX+33,0, 150, rowHeight);
-        //theTextField.returnKeyType = UIReturnKeyDefault;
-        theTextField.borderStyle = UITextBorderStyleLine;
-        theTextField.layer.borderColor = [UIColor grayColor].CGColor;
-        theTextField.layer.borderWidth = 1.0f;
-        
-        theTextField.tag = [indexPath row];
-        theTextField.delegate = self;
-        theTextField.text=myData[indexPath.row];
-        //此方法为关键方法
-        [theTextField addTarget:self action:@selector(textFieldWithText:)forControlEvents:UIControlEventEditingChanged];
-        [cell.contentView addSubview:theTextField];
-//        UITextField *cell1=[[UITextField alloc]init];
-//        //cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-//        //cell0.left=40;
-//        cell1.text=myData[indexPath.row];
-//        cell1.frame = CGRectMake(cell0.centerX+33,0, 150, rowHeight);
-//        cell1.layer.borderColor = [[UIColor orangeColor]CGColor];
-//
-//        //cell0.backgroundColor=UIColor.greenColor;
-//        [cell.contentView addSubview:cell1];
-        
-        
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnAdd.frame = CGRectMake(cell.frame.size.width-50,cell.top+10, 30, 30);
-        [btnAdd setTitle:@"➕" forState:UIControlStateNormal];
-        [btnAdd setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
-        //关键语句
-        btnAdd.layer.cornerRadius = btnAdd.frame.size.width/2;
-        btnAdd.clipsToBounds = YES;
-        btnAdd.backgroundColor =[UIColor greenColor];
-        [btnAdd addTarget:self action:@selector(cellAddBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
-        //btnAdd.backgroundColor=UIColor.blueColor;
-        [btnAdd setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [cell.contentView addSubview:btnAdd];
-        
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        btn.frame = CGRectMake(cell.frame.size.width-10,cell.top+10, 30, 30);
-        [btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-        [btn setTitle:@"✖️" forState:UIControlStateNormal];
-        //关键语句
-        btn.layer.cornerRadius = btnAdd.frame.size.width/2;
-        btn.clipsToBounds = YES;
-        btn.backgroundColor =[UIColor redColor];
-        
-        [btn addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
-        
-        //[btn3 addTarget:self action:@selector(onClick3:) forControlEvents:UIControlEventTouchUpInside];
-        
-        //btn3.tag=indexPath.row;
-        //btn.backgroundColor=UIColor.greenColor;
-        [cell.contentView addSubview:btn];
-        
-        return cell;
+       
     }
 }
 

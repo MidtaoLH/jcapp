@@ -12,10 +12,16 @@
 #import "../VatationPage/CalendaViewController.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "../MJExtension/MJExtension.h"
+#import "AppDelegate.h"
+#import "VatationPageViewController.h"
+#import "KeepLeave.h"
+#import "LeaveStatusModel.h"
+
 
 static NSInteger rowHeight=50;
 @interface VatcationMainView ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
+@property (nonatomic, strong) SWFormItem *VatcationType;
 @property (nonatomic, strong) SWFormItem *businessTripStart;
 @property (nonatomic, strong) SWFormItem *businessTripEnd;
 @property (nonatomic, strong) SWFormItem *businessNum;
@@ -28,6 +34,9 @@ static NSInteger rowHeight=50;
 
 @implementation VatcationMainView
 
+@synthesize listOfKeepLeave;
+@synthesize listOfLeave;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -35,23 +44,39 @@ static NSInteger rowHeight=50;
     empID = [defaults objectForKey:@"EmpID"];
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
+    UserHour = [defaults objectForKey:@"UserHour"];
+
+    edittype = @"NEW";
+    //edittype = @"EDIT";
     
-    datePicker = [[UIDatePicker alloc] init]; datePicker.datePickerMode = UIDatePickerModeDate;
-    [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
-    
-    
-    //totalcount=1;
+    if([edittype isEqualToString:@"EDIT"])
+    {
+        vatcationid = @"10688";
+        urltype = @"getdata";
+        processid = @"22798";
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@", userID,vatcationid,processid];
+
+        NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", strURL);
+        NSURL *url = [NSURL URLWithString:urlStringUTF8];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
+
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.AppRoveType = @"qingjia";
+
     totalHeight=150;
-    //tableViewPlace.backgroundColor=UIColor.blueColor;
-    tableViewPlace.frame = CGRectMake(0,-40, self.view.frame.size.width, totalHeight);
-    tableViewPlace.rowHeight=rowHeight;
-    myData = [[NSMutableArray alloc]initWithObjects:@"",nil];
-    //[myData insertObject:@"f" atIndex:0];
-    
-    self.genders = @[@"男",@"女"];
+
     [self datas];
     self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -70,13 +95,67 @@ static NSInteger rowHeight=50;
     [toolBar setItems:toolbarItems animated:NO];
     
 }
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    
+    if(animated)
+    {
+       
+        
+       
+    }
+    else
+    {
+        //跳转的时候走的方法
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString *vatcationname = [defaults objectForKey:@"vatcationname"];
+        NSLog(@"%@",vatcationname);
+        if(vatcationname.length > 0)
+        {
+            self.VatcationType.info = vatcationname;
+            //赋值完毕后清空
+            [defaults setObject:@"" forKey:@"vatcationname"];
+            [self.formTableView reloadData];
+        }
+       
+    }
+    
+   
+}
+
 /**
  数据源处理
  */
 - (void)datas {
     SWWeakSelf
     NSMutableArray *items = [NSMutableArray array];
+
+    self.VatcationType = SWFormItem_Add(@"请假类型", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
+    //self.name.showLength = YES;
+    self.VatcationType.maxInputLength = 30;
+    self.VatcationType.itemSelectCompletion = ^(SWFormItem *item) {
+        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+        
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        
+        
+        [defaults setObject:@"tableviewtype" forKey:@"type"];
+        
+        
+        [defaults synchronize];//保存到磁盘
+        
+        VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
+        [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+        
+    };
+    [items addObject:_VatcationType];
     
+    
+    SWFormItem *timecount = SWFormItem_Info(@"假期余额", UserHour, SWFormItemTypeInput);
+    timecount.keyboardType = UIReturnKeyDefault;
+    [items addObject:timecount];
+
     self.businessTripStart = SWFormItem_Add(@"开始时间", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
@@ -228,41 +307,150 @@ static NSInteger rowHeight=50;
     NSString *timesp = [formatter stringFromDate:datePicker.date];
     self.businessTripStart.info =timesp;
     [self.formTableView reloadData];
-    //[actionSheet release];
-    
-    //    if (actionSheet.tag == 10) {
-    //        if (buttonIndex != 0) {
-    //            //self.gender.info = self.genders[buttonIndex-1];
-    //            [self.formTableView reloadData];
-    //        }
-    //    }
+   
 }
 - (void)addAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
-        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
-        //convert object to data
-        NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
-        //print out the data contents
-        NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"json字典里面的内容为--》%@", text );
-        text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSLog(@"text字典里面的内容为--》%@", text );
-        
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&strdetail=%@",
-                          userID,@"0",@"0",empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,@"1",text];
-        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
-        NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/BusinessTripSave?"];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:postData];
-        NSURLConnection *connection = [[NSURLConnection alloc]
-                                       initWithRequest:request delegate:self];
-        if (!connection) {
-            NSLog(@"Failed to submit request");
-        } else {
-            NSLog(@"Request submitted");
+     //n保存
+      /////
+        if(self.VatcationType.info.length > 0)
+        {
+            
         }
+        else
+        {
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"请假类型不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.businessTripStart.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"开始时间不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.businessTripEnd.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"结束时间不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.businessNum.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"时长不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.reason.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"请假事由不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        urltype = @"keepsave";
+        
+        //string edittype, string userid, string groupid, string empid, string vtype, string starttime, string endtime, string vatcationtime, string reason, string name, string leavleid, string processid, string imagecount, string applycode
+        NSString *type = self.VatcationType.info;
+        NSString *timestart = self.businessTripStart.info;
+        NSString *timeend = self.businessTripEnd.info;
+        NSString *vatcationtime = self.businessNum.info;
+        NSString *reason = self.reason.info;
+        NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
+        
+        if(vatcationid.length >0)
+        {
+            
+        }
+        else
+        {
+            vatcationid = @"";
+        }
+        
+        if(processid.length >0)
+        {
+            
+        }
+        else
+        {
+            processid = @"";
+        }
+        
+        if(ApplyCode.length >0)
+        {
+            
+        }
+        else
+        {
+            ApplyCode = @"";
+        }
+        
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,vatcationid,processid,imagecount,ApplyCode];
+        
+        
+        NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", strURL);
+        NSURL *url = [NSURL URLWithString:urlStringUTF8];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+        ////
+        
         
         
     } failure:^(NSString *error) {
@@ -272,91 +460,116 @@ static NSInteger rowHeight=50;
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
-        NSLog(@"selectImages === %@", self.image.selectImages);
-        //NSLog(@"images === %@", image.images);
-        NSLog(@"businessTripEnd === %@", self.businessTripEnd.info);
-        NSLog(@"businessTripStart === %@", self.businessTripStart.info);
-        
-        if(self.image.images.count >0)
+        //提交
+        if(self.VatcationType.info.length > 0)
         {
-            for(int i = 0;i<self.image.images.count;i++)
-            {
-                UIImage *image = self.image.images[0];
-                //字典里面装的是你要上传的内容
-                NSDictionary *parameters = @{};
-                
-                //上传的接口
-                NSString* urlstring = @"http://47.94.85.101:8095/UploadHandler.ashx";
-                //分界线的标识符
-                NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
-                //根据url初始化request
-                NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
-                                                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                                                    timeoutInterval:10];
-                //分界线 --AaB03x
-                NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
-                //结束符 AaB03x--
-                NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
-                //    //要上传的图片
-                //    UIImage *image=[params objectForKey:@"pic"];
-                //得到图片的data
-                NSData *data = UIImagePNGRepresentation(image);
-                //http body的字符串
-                NSMutableString *body=[[NSMutableString alloc]init];
-                //参数的集合的所有key的集合
-                NSArray *keys= [parameters allKeys];
-                
-                //遍历keys
-                for(int i=0;i<[keys count];i++)
-                {
-                    //得到当前key
-                    NSString *key=[keys objectAtIndex:i];
-                    //如果key不是pic，说明value是字符类型，比如name：Boris
-                    if(![key isEqualToString:@"pic"])
-                    {
-                        //添加分界线，换行
-                        [body appendFormat:@"%@\r\n",MPboundary];
-                        //添加字段名称，换2行
-                        [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
-                        //添加字段的值
-                        [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
-                    }
-                }
-                ////添加分界线，换行
-                [body appendFormat:@"%@\r\n",MPboundary];
-                //声明pic字段，文件名为boris.png
-                NSString *imagename = [self CharacterStringMainString:@"test" AddDigit:30 AddString:@" "];
-                [body appendFormat:@"Content-Disposition: form-data; name=\"pic\"; filename=\"%@.png\"\r\n",imagename];
-                //声明上传文件的格式
-                [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
-                //声明结束符：--AaB03x--
-                NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
-                //声明myRequestData，用来放入http body
-                NSMutableData *myRequestData=[NSMutableData data];
-                //将body字符串转化为UTF8格式的二进制
-                [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
-                //将image的data加入
-                [myRequestData appendData:data];
-                //加入结束符--AaB03x--
-                [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
-                //设置HTTPHeader中Content-Type的值
-                NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
-                //设置HTTPHeader
-                [request setValue:content forHTTPHeaderField:@"Content-Type"];
-                //设置Content-Length
-                [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
-                //设置http body
-                [request setHTTPBody:myRequestData];
-                //http method
-                [request setHTTPMethod:@"POST"];
-                //建立连接，设置代理
-                NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-                //设置接受response的data
-                if (conn) {
-                    _mResponseData = [[NSMutableData alloc] init];
-                }
-            }
+            
         }
+        else
+        {
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"请假类型不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.businessTripStart.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"开始时间不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.businessTripEnd.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"结束时间不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.businessNum.info.length > 0)
+        {
+            
+        }
+        else
+        {
+            
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"时长不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        if(self.reason.info.length > 0)
+        {
+            
+        }
+        else
+        {
+           
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"请假事由不能为空！"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        urltype = @"keepsave";
+
+        //string edittype, string userid, string groupid, string empid, string vtype, string starttime, string endtime, string vatcationtime, string reason, string name, string leavleid, string processid, string imagecount, string applycode
+        NSString *type = self.VatcationType.info;
+        NSString *timestart = self.businessTripStart.info;
+        NSString *timeend = self.businessTripEnd.info;
+        NSString *vatcationtime = self.businessNum.info;
+        NSString *reason = self.reason.info;
+        NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
+        
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnapply?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,vatcationid,processid,imagecount,ApplyCode];
+        
+       
+        
+        NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", strURL);
+        NSURL *url = [NSURL URLWithString:urlStringUTF8];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
     
     
     } failure:^(NSString *error) {
@@ -386,68 +599,25 @@ static NSInteger rowHeight=50;
 
 -(void)LoadTableLocation
 {
-    tableViewPlace.height=totalHeight;
-    [tableViewPlace reloadData];
+  
     self.formTableView.frame=CGRectMake(0,totalHeight-20, self.view.frame.size.width, 500);
 }
 - (void)textFieldWithText:(UITextField *)textField
 {
     [myData replaceObjectAtIndex:textField.tag withObject:textField.text];
 }
-- (void)cellAddBtnClicked:(id)sender event:(id)event
-{
-    
-    NSSet *touches =[event allTouches];
-    
-    UITouch *touch =[touches anyObject];
-    
-    CGPoint currentTouchPosition = [touch locationInView:tableViewPlace];
-    
-    NSIndexPath *indexPath= [tableViewPlace indexPathForRowAtPoint:currentTouchPosition];
-    
-    if (indexPath!= nil) {
-        
-        // do something
-        //totalcount++;
-        [myData addObject:@""];
-        totalHeight=totalHeight+rowHeight;
-        [self LoadTableLocation];
-        //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
-        
-    }
-    
-}
-- (void)cellBtnClicked:(id)sender event:(id)event
-{
-    
-    NSSet *touches =[event allTouches];
-    
-    UITouch *touch =[touches anyObject];
-    
-    CGPoint currentTouchPosition = [touch locationInView:tableViewPlace];
-    
-    NSIndexPath *indexPath= [tableViewPlace indexPathForRowAtPoint:currentTouchPosition];
-    
-    if (indexPath!= nil) {
-        
-        // do something
-        //totalcount--;
-        [myData removeObjectAtIndex:indexPath.row];
-        totalHeight=totalHeight-rowHeight;
-        [self LoadTableLocation];
-        //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
-    }
-    
-}
+
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"%@",@"connection1-begin");
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"34443333kaishidayin");
-    NSLog(@"%@", xmlString);
+
+    if([xmlString isEqualToString:@"OK"])
+    {
+        return ;
+    }
     
     // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
@@ -457,97 +627,175 @@ static NSInteger rowHeight=50;
     
     NSLog(@"%@", resultString);
     
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    
-    NSLog(@"%@",@"connection1-end");
+    if([urltype isEqualToString:@"getdata"])
+    {
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfKeepLeave = [KeepLeave mj_objectArrayWithKeyValuesArray:resultDic];
+        
+        if(listOfKeepLeave.count > 0)
+        {
+            KeepLeave *kl = self.listOfKeepLeave[0];
+            self.VatcationType.info = kl.vatcationtrpe;
+            self.businessTripStart.info = kl.timestart;
+            self.businessTripEnd.info = kl.timesend;
+            self.businessNum.info = kl.timesum;
+            self.reason.info = kl.vatcationreason;
+            
+            NSMutableArray *imagepath = [[NSMutableArray alloc] init];
+           
+            
+            for(NSInteger i = 0;i <listOfKeepLeave.count;i++)
+            {
+                 KeepLeave *kl2 = self.listOfKeepLeave[i];
+                
+                NSString *imagepath_s =
+                [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
+
+                
+                UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
+                
+                [imagepath addObject:imagetest];
+            }
+           
+            
+            self.image.images =imagepath;
+
+            [self.formTableView reloadData];
+        }
+    }
+    else if([urltype isEqualToString:@"keepsave"] )
+    {
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
+        
+        if(listOfLeave.count > 0)
+        {
+            LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
+
+            if ([ m.Status isEqualToString:@"suess"])
+            {
+                ApplyCode = m.ApplyCode;
+                    [self uploadImg];
+            }
+            
+        }
+        
+    }
+
 }
 
-//如果不设置section 默认就1组
-//每组多少行
-//- (NSInteger)tableView:(UITableView *)name numberOfRowsInSection:(NSInteger)section
-//{
-//    if(name==tableViewPlace){
-//        return totalcount;
-//    }
-//    return 1;
-//}
+//将图片保存到本地并且从本地返回出来
+-(UIImage*)SaveImageToLocal:(NSString*)url Keys:(NSString*)key {
 
-//- (UITableViewCell *)tableView:(UITableView *)name cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if(name==tableViewPlace){
-//        static NSString *ID=@"cellID";
-//        UITableViewCell *cell=[tableViewPlace dequeueReusableCellWithIdentifier:ID];
-//        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
-//        cell.textLabel.text=[NSString stringWithFormat:@"*"];
-//        cell.textLabel.textColor=UIColor.redColor;
-//        //cell.backgroundColor=UIColor.redColor;
-//
-//        UILabel *cell0=[[UILabel alloc]init];
-//        cell0.text=[NSString stringWithFormat:@"出差地点"];
-//        cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-//        //cell0.left=40;
-//        cell0.frame = CGRectMake(30,0, 80, rowHeight);
-//        //cell0.backgroundColor=UIColor.greenColor;
-//        [cell.contentView addSubview:cell0];
-//
-//            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
-//        btnAdd.frame = CGRectMake(cell.frame.size.width-50,cell.top, 50.0f, rowHeight);
-//
-//        [btnAdd setTitle:@"➕" forState:UIControlStateNormal];
-//
-//        [btnAdd addTarget:self action:@selector(cellAddBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
-//        //btnAdd.backgroundColor=UIColor.blueColor;
-//        [cell.contentView addSubview:btnAdd];
-//
-//        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//
-//        btn.frame = CGRectMake(cell.frame.size.width-20,cell.top, 50.0f, rowHeight);
-//
-//        [btn setTitle:@"✖️" forState:UIControlStateNormal];
-//
-//        //btn.backgroundColor =[UIColor redColor];
-//
-//        [btn addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
-//
-//        //[btn3 addTarget:self action:@selector(onClick3:) forControlEvents:UIControlEventTouchUpInside];
-//
-//        //btn3.tag=indexPath.row;
-//        //btn.backgroundColor=UIColor.greenColor;
-//        [cell.contentView addSubview:btn];
-//
-//        return cell;
-//    }
-//    return nil;
-//}
-//-(IBAction)delRows:(id)sender{
-//    NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
-//    [datas removeObjectAtIndex:0];
-//    [indexPaths addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-//    [self.tableView beginUpdates];
-//    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-//    [self.tableView endUpdates];
-//}
+    NSUserDefaults* preferences = [NSUserDefaults standardUserDefaults];
+    //NSString *urlString = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
+    UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
+    
+    //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
+    
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    
+    NSData* imageData = [preferences objectForKey:key];
+    UIImage* image;
+    if (imageData) {
+        image = [UIImage imageWithData:imageData];
+    }
+    return image;
+    
+}
 
 
-//-(void)onClick3:(UIButton *) sender{
 
-//    NSLog(@"%ld",sender.tag);
-
-//}
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell= [tableView cellForRowAtIndexPath:indexPath];
-//    // 获取cell 对象
-//    UILabel *name = (UILabel *)[cell.contentView viewWithTag:111];
-//    // 获取昵称
-//    //_inputView.inputText.text = [NSString stringWithFormat:@"回复 %@ :", name.text];
-//    // 加上对应的回复昵称
-//}
+-(void)uploadImg{
+    if(self.image.images.count >0)
+    {
+        for(int i = 0;i<self.image.images.count;i++)
+        {
+            UIImage *image = self.image.images[i];
+            //字典里面装的是你要上传的内容
+            NSDictionary *parameters = @{};
+            
+            //上传的接口
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
+            //分界线的标识符
+            NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
+            //根据url初始化request
+            NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlstring]
+                                                                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                                timeoutInterval:10];
+            //分界线 --AaB03x
+            NSString *MPboundary=[[NSString alloc]initWithFormat:@"--%@",TWITTERFON_FORM_BOUNDARY];
+            //结束符 AaB03x--
+            NSString *endMPboundary=[[NSString alloc]initWithFormat:@"%@--",MPboundary];
+            //    //要上传的图片
+            //    UIImage *image=[params objectForKey:@"pic"];
+            //得到图片的data
+            NSData *data = UIImagePNGRepresentation(image);
+            //http body的字符串
+            NSMutableString *body=[[NSMutableString alloc]init];
+            //参数的集合的所有key的集合
+            NSArray *keys= [parameters allKeys];
+            
+            //遍历keys
+            for(int i=0;i<[keys count];i++)
+            {
+                //得到当前key
+                NSString *key=[keys objectAtIndex:i];
+                //如果key不是pic，说明value是字符类型，比如name：Boris
+                if(![key isEqualToString:@"pic"])
+                {
+                    //添加分界线，换行
+                    [body appendFormat:@"%@\r\n",MPboundary];
+                    //添加字段名称，换2行
+                    [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",key];
+                    //添加字段的值
+                    [body appendFormat:@"%@\r\n",[parameters objectForKey:key]];
+                }
+            }
+            ////添加分界线，换行
+            [body appendFormat:@"%@\r\n",MPboundary];
+            //声明pic字段，文件名为boris.png
+            NSString *imagename = [self CharacterStringMainString:[NSString stringWithFormat:@"%d",i+1] AddDigit:30 AddString:@" "];
+            NSString *name = [self CharacterStringMainString:ApplyCode AddDigit:20 AddString:@" "];
+            [body appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@.png\"\r\n",name,imagename];
+            //声明上传文件的格式
+            [body appendFormat:@"Content-Type: image/png\r\n\r\n"];
+            //声明结束符：--AaB03x--
+            NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
+            //声明myRequestData，用来放入http body
+            NSMutableData *myRequestData=[NSMutableData data];
+            //将body字符串转化为UTF8格式的二进制
+            [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
+            //将image的data加入
+            [myRequestData appendData:data];
+            //加入结束符--AaB03x--
+            [myRequestData appendData:[end dataUsingEncoding:NSUTF8StringEncoding]];
+            //设置HTTPHeader中Content-Type的值
+            NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
+            //设置HTTPHeader
+            [request setValue:content forHTTPHeaderField:@"Content-Type"];
+            //设置Content-Length
+            [request setValue:[NSString stringWithFormat:@"%d", (int)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
+            //设置http body
+            [request setHTTPBody:myRequestData];
+            //http method
+            [request setHTTPMethod:@"POST"];
+            //建立连接，设置代理
+            NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+            //设置接受response的data
+            if (conn) {
+                _mResponseData = [[NSMutableData alloc] init];
+            }
+        }
+    }
+}
 
 @end

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * Status;
 @property (nonatomic,copy) NSString * LeaveID;
 @property (nonatomic,copy) NSString * ProcessID;
-
+@property (nonatomic,copy) NSString * ApplyCode;
 
 
 @end

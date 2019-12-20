@@ -14,6 +14,7 @@
 #import "../MJExtension/MJExtension.h"
 #import "../AppDelegate.h"
 #import "../VatationPage/WayViewController.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 static NSInteger rowHeight=50;
 NSString * bflag = @"flase";
@@ -514,21 +515,63 @@ NSString * bflag = @"flase";
             //解析头表数据
             NSData *resData = [[NSData alloc] initWithData:[array[0] dataUsingEncoding:NSUTF8StringEncoding]];
             NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
-            //NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            NSDictionary *resultDic0;
             NSLog(@"resultDic0:%@",resultDic);
-        //    self.businessTripStart.info=[resultDic objectForKey:@"BusinessTripStartTime"];
-        //    self.businessTripEnd.info=[resultDic objectForKey:@"BusinessTripEndTime"];
-        //    self.businessNum.info=[resultDic objectForKey:@"BusinessTripNum"];
-        //    self.reason.info=[resultDic objectForKey:@"BusinessTripReason"];
+            //NSEnumerator *enumeratorkey=[mutableDictionary resultDic];
+            for (NSDictionary *obj in resultDic) {
+                resultDic0=obj;
+            }
+            
+            self.businessTripStart.info=[resultDic0 objectForKey:@"BeignDate"];
+            self.businessTripEnd.info=[resultDic0 objectForKey:@"EndDate"];
+            self.businessNum.info=[resultDic0 objectForKey:@"BusinessNum"];
+            self.reason.info=[resultDic0 objectForKey:@"BusinessTripReason"];
             
             //解析出差地点数据
             resData = [[NSData alloc] initWithData:[array[1] dataUsingEncoding:NSUTF8StringEncoding]];
             resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"resultDic1:%@",resultDic);
+            myData = [[NSMutableArray alloc]init];
+            for (NSDictionary *obj in resultDic) {
+                [myData addObject:[obj objectForKey:@"BusinessTripPlace"]];
+            }
+            
+            //解析图片数据
+            resData = [[NSData alloc] initWithData:[array[2] dataUsingEncoding:NSUTF8StringEncoding]];
+            resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"resultDic1:%@",resultDic);
+            for (NSDictionary *obj in resultDic) {
+                [myData addObject:[obj objectForKey:@"AnnexPath"]];
+                UIImageView *imageView = [[UIImageView alloc] init];
+                NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,[obj objectForKey:@"AnnexPath"]];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+                self.image.images=@[imageView];
+            }
             
             [self.formTableView reloadData];
+            [tableViewPlace reloadData];
         }
     }
+}
+//将图片保存到本地并且从本地返回出来
+-(UIImage*)SaveImageToLocal:(NSString*)url Keys:(NSString*)key {
+    
+    NSUserDefaults* preferences = [NSUserDefaults standardUserDefaults];
+    //NSString *urlString = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
+    UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
+    
+    //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
+    
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    
+    NSData* imageData = [preferences objectForKey:key];
+    UIImage* image;
+    if (imageData) {
+        image = [UIImage imageWithData:imageData];
+    }
+    return image;
+    
 }
 ////弹出消息框
 //-(void) connection:(NSURLConnection *)connection

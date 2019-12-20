@@ -342,7 +342,7 @@ NSString * bflag = @"flase";
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         NSLog(@"text字典里面的内容为--》%@", text );
         
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", userID,processid,businessTripid,empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -376,17 +376,19 @@ NSString * bflag = @"flase";
 }
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
-        operateType=@"0";
-        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
+        self->operateType=@"0";
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"json字典里面的内容为--》%@", text );
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSLog(@"text字典里面的内容为--》%@", text );
-        
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", userID,processid,businessTripid,empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,@"4",self.image.images.count,text];
+        if([self->pageType isEqual:@"2"]){
+            self->pageType=@"5";
+        }else{
+            self->pageType=@"4";
+        }
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -501,6 +503,17 @@ NSString * bflag = @"flase";
         NSString *resultString = [xmlString substringWithRange:reusltRagne];
         NSString *requestTmp = [NSString stringWithString:resultString];
         NSLog(@"requestTmp:%@",requestTmp);
+        if([requestTmp isEqual:@"-1"]){
+            NSString *message = [[NSString alloc] initWithFormat:@"%@", @"出差日期已存在！"];
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: message
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
         //上传图片
         if([operateType isEqual:@"0"]){
             //接收返回的起案番号
@@ -540,13 +553,17 @@ NSString * bflag = @"flase";
             resData = [[NSData alloc] initWithData:[array[2] dataUsingEncoding:NSUTF8StringEncoding]];
             resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"resultDic1:%@",resultDic);
+            NSMutableArray *imagepath = [[NSMutableArray alloc] init];
             for (NSDictionary *obj in resultDic) {
                 [myData addObject:[obj objectForKey:@"AnnexPath"]];
-                UIImageView *imageView = [[UIImageView alloc] init];
-                NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,[obj objectForKey:@"AnnexPath"]];
-                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-                self.image.images=@[imageView];
+                
+                NSString *userurlString =[NSString stringWithFormat:Common_WSUrl,[obj objectForKey:@"AnnexPath"]];
+                
+                UIImage *imagetest = [self SaveImageToLocal:userurlString Keys: [NSString stringWithFormat:@"%@",[obj objectForKey:@"AnnexName"]]];
+                
+                [imagepath addObject:imagetest];
             }
+            self.image.images =imagepath;
             
             [self.formTableView reloadData];
             [tableViewPlace reloadData];
@@ -557,11 +574,8 @@ NSString * bflag = @"flase";
 -(UIImage*)SaveImageToLocal:(NSString*)url Keys:(NSString*)key {
     
     NSUserDefaults* preferences = [NSUserDefaults standardUserDefaults];
-    //NSString *urlString = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
     UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
-    
-    //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     
     [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     

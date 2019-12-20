@@ -11,6 +11,7 @@
 #import "../Model/Pending.h"
 #import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "TaskBackInfoViewController.h"
 static NSString * identifier = @"PendingListCell";
 @interface ToBeReviewViewController ()
 
@@ -198,13 +199,12 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
-    }
-    else
-    {
-        //其它单元格的事件
-    }
+    PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.pendinglistitem.PicID;
+    
+    TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+    VCCollect.code=code;
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
  
 @end

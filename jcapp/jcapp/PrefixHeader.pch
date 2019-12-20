@@ -36,10 +36,31 @@
 /*列表下拉叠加行数*/
 #define Common_PageSizeAdd @"10"
 
+/*行间距*/
+#define Common_RowSize @"30"
+/*列间距*/
+#define Common_ColSize @"20"
+/*头像大小*/
+#define Common_UserImageSize @"80"
+#define Common_TableUserImageSize @"60"
+/*状态图片*/
+#define Common_StatusImageSize @"80"
+/*文本高度*/
+#define Common_TxTHeight @"30"
+#define Common_TxTWidth @"170"
+/*明细列表高度*/
+#define Common_TableHeight @"320"
+#define Common_TableRowHeight @"80"
+/*图片列表高度*/
+#define Common_ImageTableHeight @"120"
+#define Common_ImageTableRowHeight @"80"
+
+
 #define hexColor(hex) [UIColor colorWithHex:hex]
 #define kColor_Gray   [UIColor grayColor]
 #define kColor_Black  [UIColor blackColor]
 #define kColor_White  [UIColor whiteColor]
+#define kColor_Cyan  [UIColor cyanColor]
 #define kColor_Red    [UIColor redColor]
 #define kColor_Blue   [UIColor blueColor]
 #define kColor_Green  [UIColor greenColor]

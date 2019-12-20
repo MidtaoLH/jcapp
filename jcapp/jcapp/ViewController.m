@@ -209,10 +209,9 @@
             //将当前用户的头像存到全局变量
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
             AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
             myDelegate.userPhotoimageView=imageView;
-            
             //保存用户名密码
             NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
             

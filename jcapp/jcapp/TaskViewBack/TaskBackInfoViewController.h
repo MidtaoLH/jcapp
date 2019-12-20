@@ -11,7 +11,43 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TaskBackInfoViewController : UIViewController
+{
+    NSString *xmlString;
+    NSMutableDictionary *info;
+    NSString *currentTagName;
+    NSString *currentValue;
+    NSString *resultString;
+    NSString *userid;
+}
+@property (nonatomic,copy) NSString *code;
+@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
+@property (weak, nonatomic) IBOutlet UITableView *ImageTableView;
+
+@property (weak, nonatomic) IBOutlet UILabel *emplbl;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblempgroup;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblapplydate;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgvemp;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblproctype;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblprocdate;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblproccounts;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblprocremark;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgvprocstatus;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblprocstatus;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblcr;
+
+@property (strong,nonatomic) NSMutableArray *listdetail;
+@property (strong,nonatomic) NSMutableArray *listtask;
 @end
 
 NS_ASSUME_NONNULL_END

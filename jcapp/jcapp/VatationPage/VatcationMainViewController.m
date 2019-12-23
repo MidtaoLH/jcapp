@@ -414,7 +414,7 @@ NSString * flag = @"flase";
     NSString *Groupid = [defaults objectForKey:@"Groupid"];
     NSString *type = [defaults objectForKey:@"vatcationname"];
 
-    NSUInteger *imagecount = 3;
+    NSString *imagecount = @"3";
     NSString *applycode = @"";
     
     if(vatcationname.length > 0)

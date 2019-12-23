@@ -9,7 +9,7 @@
 #import "AlreadyEndViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
-#import "../PendingPage/PendingsListCell.h"
+#import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
 static NSString * identifier = @"PendingsListCell";
@@ -31,7 +31,7 @@ static NSString * identifier = @"PendingsListCell";
     self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
     
     //e注册自定义 cell
-    [_NewTableView registerClass:[PendingsListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     currentPageCount=[Common_PageSize intValue];
     [self LoadData];
@@ -190,15 +190,15 @@ static NSString * identifier = @"PendingsListCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PendingsListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    cell.pendingslistitem =self.listOfMovies[indexPath.row];//取出数据元素
+    PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PendingsListCell *cell = (PendingsListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    NSString *code= cell.pendingslistitem.PicID;
+    PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.pendinglistitem.PicID;
     
     self.tabBarController.tabBar.hidden = YES;
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];

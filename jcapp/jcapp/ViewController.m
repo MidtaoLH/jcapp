@@ -26,6 +26,7 @@
 #import "GoOut/GoOutViewController.h"
 #import "GoOut/GoOutWaitController.h"
 #import "GoOut/GoOutDeatileController.h"
+#import "TaskViewBack/TaskBackInfoViewController.h"
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
@@ -117,7 +118,7 @@
 }
 -(IBAction)onClickButtonLeave:(id)sender {
 
-     LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
+     TaskBackInfoViewController * valueView = [[TaskBackInfoViewController alloc] initWithNibName:@"TaskBackInfoViewController"bundle:[NSBundle mainBundle]];
      //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转

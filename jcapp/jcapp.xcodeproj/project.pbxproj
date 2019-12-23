@@ -279,6 +279,7 @@
 		EB5A26CB23A7351F0077F2A5 /* TaskBackInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26C923A7351F0077F2A5 /* TaskBackInfoViewController.xib */; };
 		EB5A26CF23A7355D0077F2A5 /* TaskViewTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */; };
 		EB5A26D023A7355D0077F2A5 /* TaskViewTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */; };
+		EB5AED7123AC791400466AA9 /* PendingsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5AED7023AC791400466AA9 /* PendingsListCell.m */; };
 		EBAD2E7C239A1257004FAE82 /* AttendanceCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */; };
 		EBAD2E7D239A1257004FAE82 /* AttendanceCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */; };
 		EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */; };
@@ -842,6 +843,8 @@
 		EB5A26CC23A7355D0077F2A5 /* TaskViewTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskViewTabBarViewController.h; sourceTree = "<group>"; };
 		EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskViewTabBarViewController.m; sourceTree = "<group>"; };
 		EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewTabBarViewController.xib; sourceTree = "<group>"; };
+		EB5AED7023AC791400466AA9 /* PendingsListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingsListCell.m; sourceTree = "<group>"; };
+		EB5AED7223AC792A00466AA9 /* PendingsListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingsListCell.h; sourceTree = "<group>"; };
 		EBAD2E79239A1257004FAE82 /* AttendanceCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceCalendarViewController.h; sourceTree = "<group>"; };
 		EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceCalendarViewController.m; sourceTree = "<group>"; };
 		EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceCalendarViewController.xib; sourceTree = "<group>"; };
@@ -1887,6 +1890,8 @@
 				EBCF6C0023974DE300893A02 /* PendingViewController.h */,
 				EBCF6BFE23974DE300893A02 /* PendingViewController.m */,
 				EBCF6BFF23974DE300893A02 /* PendingViewController.xib */,
+				EB5AED7023AC791400466AA9 /* PendingsListCell.m */,
+				EB5AED7223AC792A00466AA9 /* PendingsListCell.h */,
 			);
 			path = PendingPage;
 			sourceTree = "<group>";
@@ -2216,6 +2221,7 @@
 				77AA03132391159F00881B0F /* WaitApplyViewController.m in Sources */,
 				AF9B0F5923A36555008138EB /* TZPhotoPreviewController.m in Sources */,
 				8D936BDE2396302A000473ED /* UserLogin.m in Sources */,
+				EB5AED7123AC791400466AA9 /* PendingsListCell.m in Sources */,
 				772B6C7F23A21183003CE53D /* WaitTaskCell.m in Sources */,
 				AF9B0F9223A3678D008138EB /* UIImageView+FormImage.m in Sources */,
 				AF9B0F5623A36555008138EB /* TZImagePickerController.m in Sources */,

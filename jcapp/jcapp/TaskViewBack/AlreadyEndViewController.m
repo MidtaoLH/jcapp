@@ -9,9 +9,10 @@
 #import "AlreadyEndViewController.h"
 #import "MJExtension.h"
 #import "../Model/Pending.h"
-#import "../PendingPage/PendingListCell.h"
+#import "../PendingPage/PendingsListCell.h"
 #import "../MJRefresh/MJRefresh.h"
-static NSString * identifier = @"PendingListCell";
+#import "TaskBackInfoViewController.h"
+static NSString * identifier = @"PendingsListCell";
 @interface AlreadyEndViewController ()
 
 @end
@@ -20,9 +21,7 @@ static NSString * identifier = @"PendingListCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"已回览记录";
-    //设置子视图的f导航栏的返回按钮
+    [super viewDidLoad]; 
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
@@ -32,7 +31,7 @@ static NSString * identifier = @"PendingListCell";
     self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
     
     //e注册自定义 cell
-    [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
+    [_NewTableView registerClass:[PendingsListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     currentPageCount=[Common_PageSize intValue];
     [self LoadData];
@@ -191,14 +190,40 @@ static NSString * identifier = @"PendingListCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PendingListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    cell.pendinglistitem =self.listOfMovies[indexPath.row];//取出数据元素
+    PendingsListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    cell.pendingslistitem =self.listOfMovies[indexPath.row];//取出数据元素
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PendingsListCell *cell = (PendingsListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.pendingslistitem.PicID;
+    
+    self.tabBarController.tabBar.hidden = YES;
+    TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+    VCCollect.code=code;
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
-
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 @end
 

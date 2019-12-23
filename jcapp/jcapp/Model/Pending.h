@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * AidFK;
 @property (nonatomic,copy) NSString * DocumentID_FK;
 @property (nonatomic,copy) NSString * DocumentName;
+@property (nonatomic,copy) NSString * TaskViewBackID;
 @end
 
 NS_ASSUME_NONNULL_END

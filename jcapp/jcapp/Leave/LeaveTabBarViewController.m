@@ -61,12 +61,12 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController == self.viewControllers[1]) {
         //点击中间tabbarItem，不切换，让当前页面跳转
-        VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
+        //VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
         
         AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
         myDelegate.AppRoveType =@"qingjia";
         
-        //VatcationMainView *order = [[VatcationMainView alloc] init];
+        VatcationMainView *order = [[VatcationMainView alloc] init];
         
         
         order.hidesBottomBarWhenPushed = YES;

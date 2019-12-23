@@ -17,11 +17,12 @@
                 <outlet property="imgvemp" destination="era-dv-Ioj" id="zMG-O8-maV"/>
                 <outlet property="imgvprocstatus" destination="9jw-Uf-7hb" id="Ww5-tc-bcH"/>
                 <outlet property="lblapplydate" destination="tEm-nH-shE" id="X5v-av-Kxf"/>
+                <outlet property="lblcr" destination="aeZ-Ke-U3C" id="CPe-c4-E2k"/>
                 <outlet property="lblempgroup" destination="4EY-46-nAs" id="vvA-iN-Pxj"/>
                 <outlet property="lblproccounts" destination="viX-0B-h3l" id="xJp-U3-KSb"/>
                 <outlet property="lblprocdate" destination="ghw-gB-zq5" id="cyu-Y2-Dfh"/>
                 <outlet property="lblprocremark" destination="rX1-6i-VAF" id="wFd-WT-85h"/>
-                <outlet property="lblprocstatus" destination="m7s-HU-F8Q" id="BPF-CL-ahd"/>
+                <outlet property="lblprocstatus" destination="m7s-HU-F8Q" id="hxR-Rt-x2z"/>
                 <outlet property="lblproctype" destination="4Bk-Dh-7O0" id="qfX-eS-tI5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -38,7 +39,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="员工" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0li-Pz-5Jy">
                     <rect key="frame" x="111" y="80" width="172" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>

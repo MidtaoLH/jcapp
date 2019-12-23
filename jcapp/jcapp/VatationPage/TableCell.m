@@ -217,20 +217,41 @@
     }
     else
     {
-       NSLog(@"%@",@"setwayelse");
-        self.btnAdd.hidden = YES;
-        self.btndel.hidden = NO;
-        self.textLabel.hidden = NO;
-        self.leaveStatusLable.hidden = NO;
-        self.leaveDateLable.hidden = NO;
-        NSLog(@"%@",@"setwayelsebutton");
-        NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
-        self.btnAdd.multiParamDic= paramDic;
-        self.btndel.multiParamDic= paramDic;
+        if([Waylist.editflag isEqualToString:@"0"])
+        {
+            NSLog(@"%@",@"setwayelse");
+            self.btnAdd.hidden = YES;
+            self.btndel.hidden = YES;
+            self.textLabel.hidden = NO;
+            self.leaveStatusLable.hidden = NO;
+            self.leaveDateLable.hidden = NO;
+            NSLog(@"%@",@"setwayelsebutton");
+            NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
+            self.btnAdd.multiParamDic= paramDic;
+            self.btndel.multiParamDic= paramDic;
+            
+            self.textLabel.text = Waylist.name;
+            self.leaveStatusLable.text = Waylist.levelname;;
+            self.leaveDateLable.text = Waylist.groupname;;
+        }
+        else
+        {
+            NSLog(@"%@",@"setwayelse");
+            self.btnAdd.hidden = YES;
+            self.btndel.hidden = NO;
+            self.textLabel.hidden = NO;
+            self.leaveStatusLable.hidden = NO;
+            self.leaveDateLable.hidden = NO;
+            NSLog(@"%@",@"setwayelsebutton");
+            NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
+            self.btnAdd.multiParamDic= paramDic;
+            self.btndel.multiParamDic= paramDic;
+            
+            self.textLabel.text = Waylist.name;
+            self.leaveStatusLable.text = Waylist.levelname;;
+            self.leaveDateLable.text = Waylist.groupname;;
+        }
         
-        self.textLabel.text = Waylist.name;
-        self.leaveStatusLable.text = Waylist.levelname;;
-        self.leaveDateLable.text = Waylist.groupname;;
         
     }
     

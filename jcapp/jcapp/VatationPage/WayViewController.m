@@ -35,7 +35,7 @@ NSInteger currentPageCountwait_new;
     
     //e注册自定义 cell
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight = 100;
     currentPageCountwait_new=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -381,7 +381,12 @@ NSInteger currentPageCountwait_new;
     
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
     NSLog(@"%@",@"测试setindex");
-   
+    
+    Way *w =self.listOfWay[indexPath.row];
+    if([ w.name isEqualToString:@"button"])
+    {
+         cell.height = 50;
+    }
     cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
     return cell;
 }
@@ -428,46 +433,7 @@ NSInteger currentPageCountwait_new;
     } else {
         NSLog(@"Request submitted");
     }
-    
-    
-    
-    
-    /////////////////////////////////////////
 
-    
-    
-    /*
-     NSData *data = [NSJSONSerialization dataWithJSONObject:listOfWay options:NSJSONWritingPrettyPrinted error:nil];
-     
-     NSString *tempStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-     
-     NSLog(@"－－－－－－－－%@",tempStr);
-     
-     
-     
-     NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:
-     listOfWay, @"json",
-     nil];
-     
-     
-     convert object to data
-     NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3
-     options:NSJSONWritingPrettyPrinted error:nil];
-     
-     //print out the data contents
-     NSString* text =[[NSString alloc] initWithData:jsonData
-     encoding:NSUTF8StringEncoding];
-     
-     
-     //NSData *jsonData = [NSJSONSerialization dataWithJSONObject:listOfWay options:0 error:nil];
-     
-     //NSLog(@"%@",@"测试josn发宋转data");
-     
-     //NSString *strJson = [[NSString alloc] initWithData:listOfWay encoding:NSUTF8StringEncoding];
-     
-     //NSLog(@"%@",@"测试josn发宋转json");
-     */
-    
     
    
 }

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VatcationMainView : SWFormBaseController{
     
-    IBOutlet UITableView *tableViewPlace;
+    
     UIDatePicker*datePicker;
     NSString *xmlString;
     //NSMutableArray *myData;
@@ -23,8 +23,22 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *groupid;
     NSString *empname;
     NSString *empID;
-    NSString *userID; 
+    NSString *userID;
+    NSString *UserHour;
+    
+    NSString *edittype;
+    NSString *vatcationid;
+    NSString *processid;
+    NSString *urltype;
+    NSString *ApplyCode;
+    
 }
+
+
+// 添加数据源
+@property (strong,nonatomic) NSMutableArray *listOfKeepLeave;
+@property (strong,nonatomic) NSMutableArray *listOfLeave;
+
 
 @end
 

@@ -33,6 +33,7 @@
 
 @property (nonatomic, retain)IBOutlet UILabel *lbgroupid;
 @property (nonatomic, retain)IBOutlet UILabel *lbempid;
+@property (nonatomic, retain)IBOutlet UILabel *lbempenglistname;
 
 -(IBAction)onClickButtonchose:(id)sender;
 -(IBAction)onClickButtonsave:(id)sender;

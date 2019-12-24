@@ -67,6 +67,7 @@ NSInteger currentPageCountwait_new;
             m.nameid= myDelegate.way_empid;
             m.groupname = myDelegate.way_groupname;
             m.groupid =myDelegate.way_groupid;
+            m.englishname =myDelegate.way_empenglishname;
             if([m.levelname isEqualToString:@"一级审批人"])
             {
                 m.level =@"1";

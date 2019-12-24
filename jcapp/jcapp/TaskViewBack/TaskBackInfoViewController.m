@@ -42,14 +42,18 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 @synthesize  listdetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _srcStringArray = @[@"http://47.94.85.101:8095/img/01.jpg",
-                        @"http://ww2.sinaimg.cn/thumbnail/98719e4agw1e5j49zmf21j20c80c8mxi.jpg",
-                        ];
+    //设置子视图的f导航栏的返回按钮
+  
     [self loadstyle];
     [self loadInfo];
     [self loadTaskInfo];
-    //[self loadImageInfo];
+  
+    if( self.taskcode.length!=0)
+    {
+        [self updateStatus];
+    }
 }
+
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];
@@ -146,7 +150,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
         make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*3);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(TxTWidth*2,TxTHeight));
     }];
     [_lblproccounts mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -172,18 +176,44 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(self.view.width, ImageTableHeight));
     }];
+    [_lblcr mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(ColSize);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+ImageTableHeight+RowSize*6);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(self.view.width, TxTHeight));
+    }];
     // 审批列表view添加约束
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(self.view.width, TableHeight));
-        // 添加左 下
-        make.left.and.bottom.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加上
+        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+ImageTableHeight+RowSize*7);
     }];
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = self.imgvemp.width * 0.5;
     
     _imgvprocstatus.layer.masksToBounds = YES;
     _imgvprocstatus.layer.cornerRadius = self.imgvprocstatus.width * 0.5;
+}
+-(void)updateStatus
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userid= [defaults objectForKey:@"userid"];
+    //设置需要访问的ws和传入参数
+    // code, string userID, string menuID
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/UpdateTaskViewStatus?userID=%@&processInstanceID=%@",userid,self.taskcode];
+    
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
 }
 -(void)loadInfo
 {
@@ -251,6 +281,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         ViewBackInfo *viewBackInfo = [ViewBackInfo mj_objectWithKeyValues:resultDic];
+        self.navigationItem.title=viewBackInfo.DocumentName;
         self.emplbl.text=viewBackInfo.ApplyManName;
         self.lblempgroup.text=viewBackInfo.ApplyGroupName;
         self.lblapplydate.text=[NSString stringWithFormat:@"申请时间:%@",viewBackInfo.ApplyDate];
@@ -265,10 +296,28 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,viewBackInfo.ApplyMan];
         [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
         self.imgvemp.image=imageView.image;
+        [self loadImageInfo];
+        _srcStringArray = @[@"http://47.94.85.101:8095/img/01.jpg",
+                            @"http://ww2.sinaimg.cn/thumbnail/98719e4agw1e5j49zmf21j20c80c8mxi.jpg",
+                            ];
         [self.ImageTableView reloadData];
         [self.ImageTableView layoutIfNeeded];
     }
-    else
+    else  if([xmlString containsString:@"AttachFilePath"])
+    {
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        _srcStringArray = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
+        [self.ImageTableView reloadData];
+        [self.ImageTableView layoutIfNeeded];
+    }
+    else if([xmlString containsString:@"TaskNodeLevel"])
     {
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -397,11 +446,17 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 //解决tableview线不对的问题
 - (void)viewDidLayoutSubviews
 {
-    if ([_ImageTableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [_ImageTableView setSeparatorInset:UIEdgeInsetsZero];
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
     }
     if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_ImageTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_ImageTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 @end

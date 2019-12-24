@@ -11,7 +11,8 @@
 #import "../Model/Pending.h"
 #import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
-static NSString * identifier = @"PendingListCell";
+#import "TaskBackInfoViewController.h"
+static NSString * identifier = @"PendingsListCell";
 @interface AlreadyEndViewController ()
 
 @end
@@ -20,9 +21,7 @@ static NSString * identifier = @"PendingListCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.title = @"已回览记录";
-    //设置子视图的f导航栏的返回按钮
+    [super viewDidLoad]; 
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
@@ -198,7 +197,33 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.pendinglistitem.PicID;
+    
+    self.tabBarController.tabBar.hidden = YES;
+    TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+    VCCollect.code=code;
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
-
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 @end
 

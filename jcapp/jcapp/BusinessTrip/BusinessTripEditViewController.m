@@ -14,6 +14,7 @@
 #import "../MJExtension/MJExtension.h"
 #import "../AppDelegate.h"
 #import "../VatationPage/WayViewController.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 static NSInteger rowHeight=50;
 NSString * bflag = @"flase";
@@ -184,7 +185,6 @@ NSString * bflag = @"flase";
     [items addObject:_reason];
     
     self.image = SWFormItem_Add(@"图片", nil, SWFormItemTypeImage, YES, NO, UIKeyboardTypeDefault);
-    self.image.images = @[@"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=f04093d6da00baa1ae214ffb2e68dc7e/34fae6cd7b899e5160ce642e49a7d933c8950d43.jpg", @"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=b360ab28790e0cf3b4fa46bb633e9773/e850352ac65c10387071c8f8b9119313b07e89f8.jpg"];
     [items addObject:_image];
     
     SWFormSectionItem *sectionItem = SWSectionItem(items);
@@ -341,7 +341,7 @@ NSString * bflag = @"flase";
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         NSLog(@"text字典里面的内容为--》%@", text );
         
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", userID,processid,businessTripid,empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -375,17 +375,19 @@ NSString * bflag = @"flase";
 }
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
-        operateType=@"0";
-        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
+        self->operateType=@"0";
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"json字典里面的内容为--》%@", text );
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSLog(@"text字典里面的内容为--》%@", text );
-        
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", userID,processid,businessTripid,empID,groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,@"4",self.image.images.count,text];
+        if([self->pageType isEqual:@"2"]){
+            self->pageType=@"5";
+        }else{
+            self->pageType=@"4";
+        }
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -500,6 +502,17 @@ NSString * bflag = @"flase";
         NSString *resultString = [xmlString substringWithRange:reusltRagne];
         NSString *requestTmp = [NSString stringWithString:resultString];
         NSLog(@"requestTmp:%@",requestTmp);
+        if([requestTmp isEqual:@"-1"]){
+            NSString *message = [[NSString alloc] initWithFormat:@"%@", @"出差日期已存在！"];
+            //显示信息。正式环境时改为跳转
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: message
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
         //上传图片
         if([operateType isEqual:@"0"]){
             //接收返回的起案番号
@@ -514,21 +527,64 @@ NSString * bflag = @"flase";
             //解析头表数据
             NSData *resData = [[NSData alloc] initWithData:[array[0] dataUsingEncoding:NSUTF8StringEncoding]];
             NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
-            //NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            NSDictionary *resultDic0;
             NSLog(@"resultDic0:%@",resultDic);
-        //    self.businessTripStart.info=[resultDic objectForKey:@"BusinessTripStartTime"];
-        //    self.businessTripEnd.info=[resultDic objectForKey:@"BusinessTripEndTime"];
-        //    self.businessNum.info=[resultDic objectForKey:@"BusinessTripNum"];
-        //    self.reason.info=[resultDic objectForKey:@"BusinessTripReason"];
+            //NSEnumerator *enumeratorkey=[mutableDictionary resultDic];
+            for (NSDictionary *obj in resultDic) {
+                resultDic0=obj;
+            }
+            
+            self.businessTripStart.info=[resultDic0 objectForKey:@"BeignDate"];
+            self.businessTripEnd.info=[resultDic0 objectForKey:@"EndDate"];
+            self.businessNum.info=[resultDic0 objectForKey:@"BusinessNum"];
+            self.reason.info=[resultDic0 objectForKey:@"BusinessTripReason"];
             
             //解析出差地点数据
             resData = [[NSData alloc] initWithData:[array[1] dataUsingEncoding:NSUTF8StringEncoding]];
             resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"resultDic1:%@",resultDic);
+            myData = [[NSMutableArray alloc]init];
+            for (NSDictionary *obj in resultDic) {
+                [myData addObject:[obj objectForKey:@"BusinessTripPlace"]];
+            }
+            
+            //解析图片数据
+            resData = [[NSData alloc] initWithData:[array[2] dataUsingEncoding:NSUTF8StringEncoding]];
+            resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"resultDic1:%@",resultDic);
+            NSMutableArray *imagepath = [[NSMutableArray alloc] init];
+            for (NSDictionary *obj in resultDic) {
+                [myData addObject:[obj objectForKey:@"AnnexPath"]];
+                
+                NSString *userurlString =[NSString stringWithFormat:Common_WSUrl,[obj objectForKey:@"AnnexPath"]];
+                
+                UIImage *imagetest = [self SaveImageToLocal:userurlString Keys: [NSString stringWithFormat:@"%@",[obj objectForKey:@"AnnexName"]]];
+                
+                [imagepath addObject:imagetest];
+            }
+            self.image.images =imagepath;
             
             [self.formTableView reloadData];
+            [tableViewPlace reloadData];
         }
     }
+}
+//将图片保存到本地并且从本地返回出来
+-(UIImage*)SaveImageToLocal:(NSString*)url Keys:(NSString*)key {
+    
+    NSUserDefaults* preferences = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
+    UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
+    
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    
+    NSData* imageData = [preferences objectForKey:key];
+    UIImage* image;
+    if (imageData) {
+        image = [UIImage imageWithData:imageData];
+    }
+    return image;
+    
 }
 ////弹出消息框
 //-(void) connection:(NSURLConnection *)connection

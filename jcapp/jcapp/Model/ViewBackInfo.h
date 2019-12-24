@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * ProcDescribe;
 @property (nonatomic,copy) NSString * ProcStatus;
 @property (nonatomic,copy) NSString * DocumentName;
+@property (nonatomic,copy) NSString * TaskViewBackID;
 @end
 
 NS_ASSUME_NONNULL_END

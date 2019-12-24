@@ -60,8 +60,10 @@
     self.navigationItem.title=@"待回览";
 }
 
-- (void)goBack {
+- (void)goBack  {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        
+        
     }];
 }
 

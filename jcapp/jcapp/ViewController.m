@@ -30,7 +30,7 @@
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
 #import "SDWebImage/UIImageView+WebCache.h"
-
+#import "AgentSet/AgentInfoViewController.h"
 
 
 @interface ViewController ()
@@ -127,7 +127,7 @@
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {
-    PendingViewController * valueView = [[PendingViewController alloc] initWithNibName:@"PendingViewController"bundle:[NSBundle mainBundle]];
+    AgentInfoViewController * valueView = [[AgentInfoViewController alloc] initWithNibName:@"AgentInfoViewController"bundle:[NSBundle mainBundle]];
     //从底部划入
     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转

@@ -97,4 +97,5 @@
 #define kFont_Medium_16 [UIFont fontWithName:@"STHeitiSC-Medium" size:16.0f]
 #define kFont_Medium_18 [UIFont fontWithName:@"STHeitiSC-Medium" size:18.0f]
 #define kFont_Medium_22 [UIFont fontWithName:@"STHeitiSC-Medium" size:22.0f]
+#define kFont_LableBold_18 [UIFont fontWithName:@"Helvetica-Bold"  size:18]
 #endif /* PrefixHeader_pch */

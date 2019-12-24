@@ -228,6 +228,22 @@
 		EB2D814E23A0DAE30007DD02 /* AttendanceCalendarDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D814D23A0DAE30007DD02 /* AttendanceCalendarDetail.m */; };
 		EB2D815523A1EAE40007DD02 /* YUFoldingSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D815223A1EAE40007DD02 /* YUFoldingSectionHeader.m */; };
 		EB2D815623A1EAE40007DD02 /* YUFoldingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D815423A1EAE40007DD02 /* YUFoldingTableView.m */; };
+		EB2E8BA323B05B5A00E5D784 /* SetAgentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BA123B05B5A00E5D784 /* SetAgentViewController.m */; };
+		EB2E8BA423B05B5A00E5D784 /* SetAgentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB2E8BA223B05B5A00E5D784 /* SetAgentViewController.xib */; };
+		EB2E8BA823B05CF000E5D784 /* AgentInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BA623B05CF000E5D784 /* AgentInfoViewController.m */; };
+		EB2E8BA923B05CF000E5D784 /* AgentInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB2E8BA723B05CF000E5D784 /* AgentInfoViewController.xib */; };
+		EB2E8BC423B0607800E5D784 /* BRAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BAD23B0607800E5D784 /* BRAddressModel.m */; };
+		EB2E8BC523B0607800E5D784 /* BRAddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BAF23B0607800E5D784 /* BRAddressPickerView.m */; };
+		EB2E8BC623B0607800E5D784 /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BB223B0607800E5D784 /* BRBaseView.m */; };
+		EB2E8BC723B0607800E5D784 /* BRPickerStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BB423B0607800E5D784 /* BRPickerStyle.m */; };
+		EB2E8BC823B0607800E5D784 /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EB2E8BB523B0607800E5D784 /* BRPickerView.bundle */; };
+		EB2E8BC923B0607800E5D784 /* NSBundle+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BB823B0607800E5D784 /* NSBundle+BRPickerView.m */; };
+		EB2E8BCA23B0607800E5D784 /* BRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BBC23B0607800E5D784 /* BRDatePickerView.m */; };
+		EB2E8BCB23B0607800E5D784 /* NSDate+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BBE23B0607800E5D784 /* NSDate+BRPickerView.m */; };
+		EB2E8BCC23B0607800E5D784 /* BRResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BC123B0607800E5D784 /* BRResultModel.m */; };
+		EB2E8BCD23B0607800E5D784 /* BRStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BC323B0607800E5D784 /* BRStringPickerView.m */; };
+		EB2E8BD023B0648600E5D784 /* BRInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BCE23B0648500E5D784 /* BRInfoModel.m */; };
+		EB2E8BD323B066CA00E5D784 /* BRInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2E8BD123B066C900E5D784 /* BRInfoCell.m */; };
 		EB30A4812398CECE00EEAE1E /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4532398CECE00EEAE1E /* MJRefreshAutoFooter.m */; };
 		EB30A4822398CECE00EEAE1E /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4552398CECE00EEAE1E /* MJRefreshBackFooter.m */; };
 		EB30A4832398CECE00EEAE1E /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EB30A4572398CECE00EEAE1E /* MJRefreshComponent.m */; };
@@ -280,6 +296,11 @@
 		EB5A26CB23A7351F0077F2A5 /* TaskBackInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26C923A7351F0077F2A5 /* TaskBackInfoViewController.xib */; };
 		EB5A26CF23A7355D0077F2A5 /* TaskViewTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */; };
 		EB5A26D023A7355D0077F2A5 /* TaskViewTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */; };
+		EB7A33C323B1AFED00F34F46 /* SelectUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A33C123B1AFED00F34F46 /* SelectUserViewController.m */; };
+		EB7A33C423B1AFED00F34F46 /* SelectUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB7A33C223B1AFED00F34F46 /* SelectUserViewController.xib */; };
+		EB7A33C623B1DE6700F34F46 /* MessageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A33C523B1DE6700F34F46 /* MessageInfo.m */; };
+		EB7A33CA23B1FCE700F34F46 /* AgentInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A33C923B1FCE700F34F46 /* AgentInfoCell.m */; };
+		EB7A33CC23B2373100F34F46 /* AgentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A33CB23B2373100F34F46 /* AgentInfo.m */; };
 		EBAD2E7C239A1257004FAE82 /* AttendanceCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */; };
 		EBAD2E7D239A1257004FAE82 /* AttendanceCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */; };
 		EBAD2EA1239A1424004FAE82 /* AttendanceSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAD2E9F239A1424004FAE82 /* AttendanceSummaryViewController.m */; };
@@ -746,6 +767,37 @@
 		EB2D815223A1EAE40007DD02 /* YUFoldingSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUFoldingSectionHeader.m; sourceTree = "<group>"; };
 		EB2D815323A1EAE40007DD02 /* YUFoldingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUFoldingTableView.h; sourceTree = "<group>"; };
 		EB2D815423A1EAE40007DD02 /* YUFoldingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUFoldingTableView.m; sourceTree = "<group>"; };
+		EB2E8BA023B05B5A00E5D784 /* SetAgentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetAgentViewController.h; sourceTree = "<group>"; };
+		EB2E8BA123B05B5A00E5D784 /* SetAgentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetAgentViewController.m; sourceTree = "<group>"; };
+		EB2E8BA223B05B5A00E5D784 /* SetAgentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SetAgentViewController.xib; sourceTree = "<group>"; };
+		EB2E8BA523B05CF000E5D784 /* AgentInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentInfoViewController.h; sourceTree = "<group>"; };
+		EB2E8BA623B05CF000E5D784 /* AgentInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgentInfoViewController.m; sourceTree = "<group>"; };
+		EB2E8BA723B05CF000E5D784 /* AgentInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AgentInfoViewController.xib; sourceTree = "<group>"; };
+		EB2E8BAC23B0607800E5D784 /* BRAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAddressModel.h; sourceTree = "<group>"; };
+		EB2E8BAD23B0607800E5D784 /* BRAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAddressModel.m; sourceTree = "<group>"; };
+		EB2E8BAE23B0607800E5D784 /* BRAddressPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAddressPickerView.h; sourceTree = "<group>"; };
+		EB2E8BAF23B0607800E5D784 /* BRAddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAddressPickerView.m; sourceTree = "<group>"; };
+		EB2E8BB123B0607800E5D784 /* BRBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
+		EB2E8BB223B0607800E5D784 /* BRBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
+		EB2E8BB323B0607800E5D784 /* BRPickerStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerStyle.h; sourceTree = "<group>"; };
+		EB2E8BB423B0607800E5D784 /* BRPickerStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPickerStyle.m; sourceTree = "<group>"; };
+		EB2E8BB523B0607800E5D784 /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
+		EB2E8BB623B0607800E5D784 /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
+		EB2E8BB723B0607800E5D784 /* NSBundle+BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+BRPickerView.h"; sourceTree = "<group>"; };
+		EB2E8BB823B0607800E5D784 /* NSBundle+BRPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+BRPickerView.m"; sourceTree = "<group>"; };
+		EB2E8BB923B0607800E5D784 /* BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
+		EB2E8BBB23B0607800E5D784 /* BRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRDatePickerView.h; sourceTree = "<group>"; };
+		EB2E8BBC23B0607800E5D784 /* BRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDatePickerView.m; sourceTree = "<group>"; };
+		EB2E8BBD23B0607800E5D784 /* NSDate+BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRPickerView.h"; sourceTree = "<group>"; };
+		EB2E8BBE23B0607800E5D784 /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
+		EB2E8BC023B0607800E5D784 /* BRResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRResultModel.h; sourceTree = "<group>"; };
+		EB2E8BC123B0607800E5D784 /* BRResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRResultModel.m; sourceTree = "<group>"; };
+		EB2E8BC223B0607800E5D784 /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
+		EB2E8BC323B0607800E5D784 /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
+		EB2E8BCE23B0648500E5D784 /* BRInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoModel.m; sourceTree = "<group>"; };
+		EB2E8BCF23B0648500E5D784 /* BRInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoModel.h; sourceTree = "<group>"; };
+		EB2E8BD123B066C900E5D784 /* BRInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRInfoCell.m; sourceTree = "<group>"; };
+		EB2E8BD223B066C900E5D784 /* BRInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRInfoCell.h; sourceTree = "<group>"; };
 		EB30A4522398CECE00EEAE1E /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		EB30A4532398CECE00EEAE1E /* MJRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshAutoFooter.m; sourceTree = "<group>"; };
 		EB30A4542398CECE00EEAE1E /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
@@ -845,6 +897,15 @@
 		EB5A26CC23A7355D0077F2A5 /* TaskViewTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskViewTabBarViewController.h; sourceTree = "<group>"; };
 		EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskViewTabBarViewController.m; sourceTree = "<group>"; };
 		EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewTabBarViewController.xib; sourceTree = "<group>"; };
+		EB7A33C023B1AFED00F34F46 /* SelectUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectUserViewController.h; sourceTree = "<group>"; };
+		EB7A33C123B1AFED00F34F46 /* SelectUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectUserViewController.m; sourceTree = "<group>"; };
+		EB7A33C223B1AFED00F34F46 /* SelectUserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectUserViewController.xib; sourceTree = "<group>"; };
+		EB7A33C523B1DE6700F34F46 /* MessageInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageInfo.m; sourceTree = "<group>"; };
+		EB7A33C723B1DE7800F34F46 /* MessageInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageInfo.h; sourceTree = "<group>"; };
+		EB7A33C823B1FCD900F34F46 /* AgentInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentInfoCell.h; sourceTree = "<group>"; };
+		EB7A33C923B1FCE700F34F46 /* AgentInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgentInfoCell.m; sourceTree = "<group>"; };
+		EB7A33CB23B2373100F34F46 /* AgentInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgentInfo.m; sourceTree = "<group>"; };
+		EB7A33CD23B2373E00F34F46 /* AgentInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentInfo.h; sourceTree = "<group>"; };
 		EBAD2E79239A1257004FAE82 /* AttendanceCalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceCalendarViewController.h; sourceTree = "<group>"; };
 		EBAD2E7A239A1257004FAE82 /* AttendanceCalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttendanceCalendarViewController.m; sourceTree = "<group>"; };
 		EBAD2E7B239A1257004FAE82 /* AttendanceCalendarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceCalendarViewController.xib; sourceTree = "<group>"; };
@@ -1185,6 +1246,8 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EB2E8BCF23B0648500E5D784 /* BRInfoModel.h */,
+				EB2E8BCE23B0648500E5D784 /* BRInfoModel.m */,
 				EBD9A81223AB0DBD00EC78CD /* ViewBackDetail.h */,
 				EBD9A81323AB0DBD00EC78CD /* ViewBackDetail.m */,
 				EBD9A81023AB0DBD00EC78CD /* ViewBackInfo.h */,
@@ -1235,6 +1298,10 @@
 				7706233F23AA257900030735 /* MdlEvectionDetail.m */,
 				8D83AAEE23AB4C5300406AAA /* KeepLeave.h */,
 				8D83AAEF23AB4C5300406AAA /* KeepLeave.m */,
+				EB7A33C523B1DE6700F34F46 /* MessageInfo.m */,
+				EB7A33C723B1DE7800F34F46 /* MessageInfo.h */,
+				EB7A33CB23B2373100F34F46 /* AgentInfo.m */,
+				EB7A33CD23B2373E00F34F46 /* AgentInfo.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1610,6 +1677,86 @@
 			path = GGFoldingTab;
 			sourceTree = "<group>";
 		};
+		EB2E8B9F23B05B2C00E5D784 /* AgentSet */ = {
+			isa = PBXGroup;
+			children = (
+				EB2E8BD223B066C900E5D784 /* BRInfoCell.h */,
+				EB2E8BD123B066C900E5D784 /* BRInfoCell.m */,
+				EB2E8BA023B05B5A00E5D784 /* SetAgentViewController.h */,
+				EB2E8BA123B05B5A00E5D784 /* SetAgentViewController.m */,
+				EB2E8BA223B05B5A00E5D784 /* SetAgentViewController.xib */,
+				EB2E8BA523B05CF000E5D784 /* AgentInfoViewController.h */,
+				EB2E8BA623B05CF000E5D784 /* AgentInfoViewController.m */,
+				EB2E8BA723B05CF000E5D784 /* AgentInfoViewController.xib */,
+				EB7A33C023B1AFED00F34F46 /* SelectUserViewController.h */,
+				EB7A33C123B1AFED00F34F46 /* SelectUserViewController.m */,
+				EB7A33C223B1AFED00F34F46 /* SelectUserViewController.xib */,
+				EB7A33C823B1FCD900F34F46 /* AgentInfoCell.h */,
+				EB7A33C923B1FCE700F34F46 /* AgentInfoCell.m */,
+			);
+			path = AgentSet;
+			sourceTree = "<group>";
+		};
+		EB2E8BAA23B0607800E5D784 /* BRPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				EB2E8BAB23B0607800E5D784 /* AddressPickerView */,
+				EB2E8BB023B0607800E5D784 /* Base */,
+				EB2E8BB923B0607800E5D784 /* BRPickerView.h */,
+				EB2E8BBA23B0607800E5D784 /* DatePickerView */,
+				EB2E8BBF23B0607800E5D784 /* StringPickerView */,
+			);
+			path = BRPickerView;
+			sourceTree = "<group>";
+		};
+		EB2E8BAB23B0607800E5D784 /* AddressPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				EB2E8BAC23B0607800E5D784 /* BRAddressModel.h */,
+				EB2E8BAD23B0607800E5D784 /* BRAddressModel.m */,
+				EB2E8BAE23B0607800E5D784 /* BRAddressPickerView.h */,
+				EB2E8BAF23B0607800E5D784 /* BRAddressPickerView.m */,
+			);
+			path = AddressPickerView;
+			sourceTree = "<group>";
+		};
+		EB2E8BB023B0607800E5D784 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				EB2E8BB123B0607800E5D784 /* BRBaseView.h */,
+				EB2E8BB223B0607800E5D784 /* BRBaseView.m */,
+				EB2E8BB323B0607800E5D784 /* BRPickerStyle.h */,
+				EB2E8BB423B0607800E5D784 /* BRPickerStyle.m */,
+				EB2E8BB523B0607800E5D784 /* BRPickerView.bundle */,
+				EB2E8BB623B0607800E5D784 /* BRPickerViewMacro.h */,
+				EB2E8BB723B0607800E5D784 /* NSBundle+BRPickerView.h */,
+				EB2E8BB823B0607800E5D784 /* NSBundle+BRPickerView.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		EB2E8BBA23B0607800E5D784 /* DatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				EB2E8BBB23B0607800E5D784 /* BRDatePickerView.h */,
+				EB2E8BBC23B0607800E5D784 /* BRDatePickerView.m */,
+				EB2E8BBD23B0607800E5D784 /* NSDate+BRPickerView.h */,
+				EB2E8BBE23B0607800E5D784 /* NSDate+BRPickerView.m */,
+			);
+			path = DatePickerView;
+			sourceTree = "<group>";
+		};
+		EB2E8BBF23B0607800E5D784 /* StringPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				EB2E8BC023B0607800E5D784 /* BRResultModel.h */,
+				EB2E8BC123B0607800E5D784 /* BRResultModel.m */,
+				EB2E8BC223B0607800E5D784 /* BRStringPickerView.h */,
+				EB2E8BC323B0607800E5D784 /* BRStringPickerView.m */,
+			);
+			path = StringPickerView;
+			sourceTree = "<group>";
+		};
 		EB30A4502398CECE00EEAE1E /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -1767,6 +1914,8 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				EB2E8BAA23B0607800E5D784 /* BRPickerView */,
+				EB2E8B9F23B05B2C00E5D784 /* AgentSet */,
 				EBFB8F5723AB3AE90015C72E /* Masonry */,
 				77D133DC23A89C9400017574 /* GoOut */,
 				7700054723A36E550079B49F /* ExamineProj */,
@@ -2036,12 +2185,15 @@
 				7702DB3223A094CC00483CF1 /* NoticeDetailController.xib in Resources */,
 				AF3FFE5E239F890700834A73 /* BApprovedViewController.xib in Resources */,
 				AF7EC2FA2396151100257CF1 /* WaitingApplyViewController.xib in Resources */,
+				EB2E8BA923B05CF000E5D784 /* AgentInfoViewController.xib in Resources */,
 				EB30A4B02398CF7F00EEAE1E /* ReviewApprovalDetailsViewController.xib in Resources */,
 				EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */,
+				EB2E8BC823B0607800E5D784 /* BRPickerView.bundle in Resources */,
 				EBAD2EA2239A1424004FAE82 /* AttendanceSummaryViewController.xib in Resources */,
 				EB30A48F2398CECE00EEAE1E /* MJRefresh.bundle in Resources */,
 				7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */,
 				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
+				EB2E8BA423B05B5A00E5D784 /* SetAgentViewController.xib in Resources */,
 				7702DE3123A127D300483CF1 /* LookImageController.xib in Resources */,
 				AF7EC2EC2396140B00257CF1 /* ApprovingViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
@@ -2071,6 +2223,7 @@
 				8D7C7DF023A095710076F644 /* AddWayView.xib in Resources */,
 				EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */,
 				AFF2375323838BBF002AEAFB /* ViewController.xib in Resources */,
+				EB7A33C423B1AFED00F34F46 /* SelectUserViewController.xib in Resources */,
 				AF7EC2F62396148D00257CF1 /* WaitHandleViewController.xib in Resources */,
 				EB30A4B42398CF7F00EEAE1E /* PendingApprovedViewController.xib in Resources */,
 				772B6C7C23A20B58003CE53D /* WaitTaskController.xib in Resources */,
@@ -2111,6 +2264,7 @@
 				AF9B0F3E23A36555008138EB /* UIImage+EMGIF.m in Sources */,
 				EB30A48D2398CECE00EEAE1E /* MJRefreshNormalHeader.m in Sources */,
 				EBFB8F7323AB3AEA0015C72E /* MASCompositeConstraint.m in Sources */,
+				EB2E8BCB23B0607800E5D784 /* NSDate+BRPickerView.m in Sources */,
 				8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */,
 				77AA030E23910D8C00881B0F /* LeaveViewController.m in Sources */,
 				EB00A227239E6CA700378B0B /* WHUCalDrawView.m in Sources */,
@@ -2124,6 +2278,7 @@
 				AF9B0F4F23A36555008138EB /* PSTGridLayoutRow.m in Sources */,
 				EB41A3F9239E40FE00DA623A /* WHUCalendarItem.m in Sources */,
 				EB30A4862398CECE00EEAE1E /* MJRefreshAutoGifFooter.m in Sources */,
+				EB2E8BD023B0648600E5D784 /* BRInfoModel.m in Sources */,
 				8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */,
 				77D83DF123A353F800534120 /* SDWebImageDownloaderOperation.m in Sources */,
 				775B61A4238BBE8D00985FF3 /* MJExtensionConst.m in Sources */,
@@ -2136,11 +2291,13 @@
 				AF0ABF0C238FC9B000F46278 /* AutoLableView.m in Sources */,
 				772B6C7B23A20B58003CE53D /* WaitTaskController.m in Sources */,
 				AF9B0F4523A36555008138EB /* PSTCollectionView.m in Sources */,
+				EB7A33CC23B2373100F34F46 /* AgentInfo.m in Sources */,
 				AF9B0F3223A36555008138EB /* MWZoomingScrollView.m in Sources */,
 				AF7EC2F02396147B00257CF1 /* ApprovedViewController.m in Sources */,
 				AF0ABF0D238FC9B000F46278 /* DXLAutoButtonView.m in Sources */,
 				EBD9A81623AB0DBE00EC78CD /* ViewBackDetail.m in Sources */,
 				AF3FFE60239F890700834A73 /* BWaitApplyViewController.m in Sources */,
+				EB2E8BCC23B0607800E5D784 /* BRResultModel.m in Sources */,
 				7756E87F2397FD0D00BF6944 /* LeaveWaitCell.m in Sources */,
 				7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */,
 				77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */,
@@ -2188,8 +2345,10 @@
 				EBAD2E7C239A1257004FAE82 /* AttendanceCalendarViewController.m in Sources */,
 				EB30A49F2398CF1300EEAE1E /* MJRefreshBackStateFooter.m in Sources */,
 				EBFB8F7C23AB3AEA0015C72E /* ViewController+MASAdditions.m in Sources */,
+				EB2E8BD323B066CA00E5D784 /* BRInfoCell.m in Sources */,
 				77D83DFA23A353F800534120 /* UIView+WebCacheOperation.m in Sources */,
 				8DB09DEE23A9BAB000CCFDD8 /* VatcationMainView.m in Sources */,
+				EB2E8BCD23B0607800E5D784 /* BRStringPickerView.m in Sources */,
 				770EAAA723A35A7300986A89 /* SDNavigationController.m in Sources */,
 				77D83DF623A353F800534120 /* UIImage+MultiFormat.m in Sources */,
 				EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */,
@@ -2208,6 +2367,7 @@
 				EBFB8F7523AB3AEA0015C72E /* MASConstraintMaker.m in Sources */,
 				AF9B0F2823A36555008138EB /* Factory.m in Sources */,
 				7706233D23AA23F900030735 /* MdlEvection.m in Sources */,
+				EB2E8BC623B0607800E5D784 /* BRBaseView.m in Sources */,
 				EB5A26CA23A7351F0077F2A5 /* TaskBackInfoViewController.m in Sources */,
 				AF9B0F5023A36555008138EB /* PSTGridLayoutSection.m in Sources */,
 				EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */,
@@ -2223,6 +2383,7 @@
 				AF9B0F5923A36555008138EB /* TZPhotoPreviewController.m in Sources */,
 				8D936BDE2396302A000473ED /* UserLogin.m in Sources */,
 				772B6C7F23A21183003CE53D /* WaitTaskCell.m in Sources */,
+				EB2E8BC523B0607800E5D784 /* BRAddressPickerView.m in Sources */,
 				AF9B0F9223A3678D008138EB /* UIImageView+FormImage.m in Sources */,
 				AF9B0F5623A36555008138EB /* TZImagePickerController.m in Sources */,
 				EBCF6C0123974DE300893A02 /* PendingListCell.m in Sources */,
@@ -2231,15 +2392,18 @@
 				EB30A4912398CECE00EEAE1E /* MJRefreshConst.m in Sources */,
 				AF9B0F4623A36555008138EB /* PSTCollectionViewCell.m in Sources */,
 				AF9B0F3423A36555008138EB /* EMSDImageCache.m in Sources */,
+				EB2E8BC723B0607800E5D784 /* BRPickerStyle.m in Sources */,
 				7708A4CF23A8D3530098A450 /* GoOutViewCell.m in Sources */,
 				AF9B0F8423A3678D008138EB /* SWFormBaseCell.m in Sources */,
 				EBCDCDFD23A270CA00FDF02E /* MCDatePickerView.m in Sources */,
+				EB7A33C623B1DE6700F34F46 /* MessageInfo.m in Sources */,
 				AF9B0F2C23A36555008138EB /* MWGridCell.m in Sources */,
 				EB4A3590238E35DE006573A9 /* UserInfo.m in Sources */,
 				8D8954BB239662A600F1E109 /* WayViewController.m in Sources */,
 				EBFB8F7723AB3AEA0015C72E /* MASViewAttribute.m in Sources */,
 				AF9B0F4B23A36555008138EB /* PSTCollectionViewLayout.m in Sources */,
 				AF3D92A123A22DEC00001C73 /* BusinessTripEditViewController.m in Sources */,
+				EB7A33CA23B1FCE700F34F46 /* AgentInfoCell.m in Sources */,
 				AF9B0F3F23A36555008138EB /* UIImage+EMMultiFormat.m in Sources */,
 				AF9B0F3523A36555008138EB /* EMSDWebImageCompat.m in Sources */,
 				EB30A4892398CECE00EEAE1E /* MJRefreshBackGifFooter.m in Sources */,
@@ -2258,11 +2422,14 @@
 				EBCF6BF923974D4300893A02 /* Pending.m in Sources */,
 				77D83DEC23A353F800534120 /* NSData+ImageContentType.m in Sources */,
 				AF9B0F8523A3678D008138EB /* SWFormImageCell.m in Sources */,
+				EB2E8BC423B0607800E5D784 /* BRAddressModel.m in Sources */,
+				EB2E8BA823B05CF000E5D784 /* AgentInfoViewController.m in Sources */,
 				AF9B0F3C23A36555008138EB /* NSData+EMImageContentType.m in Sources */,
 				AF9B0F5A23A36555008138EB /* TZVideoPlayerController.m in Sources */,
 				8D7C7DF323A098290076F644 /* SkyAssociationMenuView.m in Sources */,
 				AF9B0F4E23A36555008138EB /* PSTGridLayoutItem.m in Sources */,
 				EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */,
+				EB2E8BA323B05B5A00E5D784 /* SetAgentViewController.m in Sources */,
 				776D632C239A98F50030C96A /* MultiParamButton.m in Sources */,
 				77D83DF923A353F800534120 /* UIImageView+WebCache.m in Sources */,
 				EB30A4832398CECE00EEAE1E /* MJRefreshComponent.m in Sources */,
@@ -2278,6 +2445,7 @@
 				77D83DF823A353F800534120 /* UIImageView+HighlightedWebCache.m in Sources */,
 				EB029E97238B7BC100358E21 /* AlterPWDController.m in Sources */,
 				77D83DED23A353F800534120 /* SDImageCache.m in Sources */,
+				EB2E8BCA23B0607800E5D784 /* BRDatePickerView.m in Sources */,
 				EB2D814C23A0D9E50007DD02 /* AttendanceCalendar.m in Sources */,
 				AF9B0F4023A36555008138EB /* UIImage+EMWebP.m in Sources */,
 				EBD9A81723AB0DBE00EC78CD /* ViewBackInfo.m in Sources */,
@@ -2318,6 +2486,7 @@
 				7702DB2D23A08A6000483CF1 /* NoticeCell.m in Sources */,
 				EB5A26CF23A7355D0077F2A5 /* TaskViewTabBarViewController.m in Sources */,
 				AF9B0F3823A36555008138EB /* EMSDWebImageDownloaderOperation.m in Sources */,
+				EB2E8BC923B0607800E5D784 /* NSBundle+BRPickerView.m in Sources */,
 				EB30A4842398CECE00EEAE1E /* MJRefreshFooter.m in Sources */,
 				77D83DE823A353F800534120 /* SDBrowserImageView.m in Sources */,
 				AF9B0F8D23A3678D008138EB /* SWFormSectionItem.m in Sources */,
@@ -2334,6 +2503,7 @@
 				77D83DF023A353F800534120 /* SDWebImageDownloader.m in Sources */,
 				EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */,
 				77D83DF723A353F800534120 /* UIImage+WebP.m in Sources */,
+				EB7A33C323B1AFED00F34F46 /* SelectUserViewController.m in Sources */,
 				77D83DF223A353F800534120 /* SDWebImageManager.m in Sources */,
 				8D7C7DE523A07F850076F644 /* AddButton.m in Sources */,
 				EB41A3F6239E40FE00DA623A /* WHUCalendarCal.m in Sources */,

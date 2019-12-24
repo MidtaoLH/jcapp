@@ -48,13 +48,13 @@
 @synthesize lbgroupname;
 @synthesize lbempid;
 @synthesize lbgroupid;
-
+@synthesize lbempenglistname;
 
 - (void)viewDidLoad {
     
     lbempid.hidden = YES;
     lbgroupid.hidden = YES;
-    
+    lbempenglistname.hidden =YES;
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor  whiteColor];
@@ -121,6 +121,7 @@
     
     myDelegate.way_empid =lbempid.text;
     myDelegate.way_empname =lbempname.text;
+    myDelegate.way_empenglishname =lbempenglistname.text;
     myDelegate.way_refresh = @"true";
     
      [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
@@ -253,6 +254,7 @@
             
             NSMutableArray *imageData = [[NSMutableArray alloc] init];
             NSMutableArray *imageData2 = [[NSMutableArray alloc] init];
+            NSMutableArray *imageData3 = [[NSMutableArray alloc] init];
             
             NSLog(@"%@", Gcode);
             for (NSInteger i = 0; i < listOfEmp.count; i++)
@@ -262,13 +264,16 @@
                 {
                     [imageData addObject:m.Name];
                     [imageData2 addObject:m.Code];
+                     [imageData3 addObject:m.ENGLISHNAME];
                 }
             }
             
             NSString *empname =imageData[idx_2] ;
             NSString *empid =imageData2[idx_2] ;
+            NSString *empenglish =imageData3[idx_2] ;
             lbempname.text =   empname ;
             lbempid.text = empid;
+            lbempenglistname.text =empenglish;
             return NO;
         }
        return NO;

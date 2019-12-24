@@ -14,7 +14,7 @@
 #import "VatationPage/VatcationMainView.h"
 #import "MJExtension/MJExtension.h"
 #import "Model/UserLogin.h"
-
+#import "Agent_list/AgentViewController.h"
 #import "ExamineProj/ExamineEditLController.h"
 
 #import "Leave/LeaveViewController.h"
@@ -100,12 +100,16 @@
                  [self presentModalViewController:valueView animated:YES];
     */
     
-    
+    AgentViewController * valueView = [[AgentViewController alloc] initWithNibName:@"AgentViewController"bundle:[NSBundle mainBundle]];
+    //从底部划入
+    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    //跳转
+    [self presentModalViewController:valueView animated:YES];
 
     
    
-    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    //VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
+    //[self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 
 }

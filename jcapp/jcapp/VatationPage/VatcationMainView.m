@@ -47,13 +47,13 @@ static NSInteger rowHeight=50;
     UserHour = [defaults objectForKey:@"UserHour"];
 
     edittype = @"NEW";
-    //edittype = @"EDIT";
+    edittype = @"EDIT";
     
     if([edittype isEqualToString:@"EDIT"])
     {
-        vatcationid = @"10688";
+        vatcationid = @"10673";
         urltype = @"getdata";
-        processid = @"22798";
+        processid = @"22783";
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@", userID,vatcationid,processid];
 
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

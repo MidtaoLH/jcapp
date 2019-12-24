@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy, nonatomic) NSString *ENO;
 
+@property (copy, nonatomic) NSString *ENGLISHNAME;
+
 @end
 
 NS_ASSUME_NONNULL_END

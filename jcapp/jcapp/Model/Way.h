@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 /** id */
 @property (copy, nonatomic) NSString *groupid;
 
+@property (copy, nonatomic) NSString *englishname;
+
 /** yonghuming */
 @property (copy, nonatomic) NSString *level;
 

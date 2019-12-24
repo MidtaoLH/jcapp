@@ -34,6 +34,8 @@
 
 @property (nonatomic, strong) NSString *way_empname;
 
+@property (nonatomic, strong) NSString *way_empenglishname;
+
 @property (nonatomic, strong) NSString *way_refresh;
 
 @property (nonatomic, strong) NSString *way_post_level;

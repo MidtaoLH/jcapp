@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 #import "DelButton.h"
 #import "WayViewController.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
+
 
 #define kMargin 10
 
@@ -37,10 +39,13 @@
     
     if (!_btnAdd) {
         _btnAdd = [[AddButton alloc] init];
-        [_btnAdd setTitle:@"+" forState:UIControlStateNormal];
+       
         _btnAdd.backgroundColor = [UIColor orangeColor];
-        // 一行代码给按钮添加事件
-        //[_btnAdd addTarget:self action:@selector(btnclick:)   forControlEvents:UIControlEventTouchUpInside];
+     
+        [_btnAdd setTitle:@"➕" forState:UIControlStateNormal];
+        [_btnAdd setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
+        
+        
         [_btnAdd addTarget:self action:@selector(action:)   forControlEvents:UIControlEventTouchUpInside];
     }
     return _btnAdd;
@@ -52,8 +57,7 @@
         _btndel = [[DelButton alloc] init];
         [_btndel setTitle:@"删除" forState:UIControlStateNormal];
         _btndel.backgroundColor = [UIColor orangeColor];
-        // 一行代码给按钮添加事件
-        //[_btnAdd addTarget:self action:@selector(btnclick:)   forControlEvents:UIControlEventTouchUpInside];
+
         [_btndel addTarget:self action:@selector(actiondel:)   forControlEvents:UIControlEventTouchUpInside];
     }
     return _btndel;
@@ -115,10 +119,7 @@
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
-        [self.contentView addSubview:self.endDateLable];
-        [self.contentView  addSubview:self.leaveTypeLable];
-        [self.contentView  addSubview:self.beignDateLable];
+    
         [self.contentView  addSubview:self.leaveStatusLable];
         [self.contentView  addSubview:self.leaveDateLable];
 
@@ -201,6 +202,9 @@
 {
      NSLog(@"%@",@"setway");
     
+    self.textLabel.textColor  = [UIColor blueColor];
+    self.textLabel.font  =  [UIFont systemFontOfSize:20];
+    
     if([ Waylist.name isEqualToString:@"button"])
     {
        self.btnAdd.hidden = NO;
@@ -233,6 +237,10 @@
             self.textLabel.text = Waylist.name;
             self.leaveStatusLable.text = Waylist.levelname;;
             self.leaveDateLable.text = Waylist.groupname;;
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            self.imageView.image=imageView.image;
         }
         else
         {
@@ -250,24 +258,16 @@
             self.textLabel.text = Waylist.name;
             self.leaveStatusLable.text = Waylist.levelname;;
             self.leaveDateLable.text = Waylist.groupname;;
+            
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            self.imageView.image=imageView.image;
         }
         
         
     }
-    
-    
-    
-    //self.leaveadd.titleLabel.text=@"123";
-    //self.textLabel.hidden = YES;
-    //self.leaveadd.hidden = YES;
-    /*UIImageView *imageView = [[UIImageView alloc] init];
-    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-    self.imageView.image=imageView.image;*/
-    
-    
-    
-    
+
     
 }
 
@@ -280,19 +280,19 @@
     CGFloat leaveDateWidth = 80;
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
-    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
-    self.leaveDateLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+  
+    
+     self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH );
+    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,2*txtH+2*kMargin, leaveDateWidth, txtH);
+    self.leaveDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+ 
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
     //self.leaveadd.frame=CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
     
-    self.btnAdd.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
+    self.btnAdd.frame = CGRectMake(50,40, 80, 8);
     
-    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
+    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin,6*kMargin, leaveDateWidth, txtH);
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     

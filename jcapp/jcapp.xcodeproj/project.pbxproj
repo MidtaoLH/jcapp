@@ -283,7 +283,6 @@
 		EB5A26CA23A7351F0077F2A5 /* TaskBackInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A26C823A7351F0077F2A5 /* TaskBackInfoViewController.m */; };
 		EB5A26CB23A7351F0077F2A5 /* TaskBackInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26C923A7351F0077F2A5 /* TaskBackInfoViewController.xib */; };
 		EB5A26CF23A7355D0077F2A5 /* TaskViewTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */; };
-		EB5A26D023A7355D0077F2A5 /* TaskViewTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */; };
 		EB7A33DC23B23FC100F34F46 /* AgentInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A33D023B23FC000F34F46 /* AgentInfoCell.m */; };
 		EB7A33DD23B23FC100F34F46 /* AgentInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A33D223B23FC000F34F46 /* AgentInfoViewController.m */; };
 		EB7A33DE23B23FC100F34F46 /* AgentInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB7A33D323B23FC000F34F46 /* AgentInfoViewController.xib */; };
@@ -333,6 +332,9 @@
 		EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDBCC423A369F70019B752 /* AttendanceListCell.m */; };
 		EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFE6E8723AB0D5100A64AE5 /* TaskBackListCell.m */; };
 		EBFF5F6123B32FC400EB7F6B /* AgentTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F6023B32FC400EB7F6B /* AgentTabBarViewController.m */; };
+		EBFF5F7A23B3895700EB7F6B /* TLTabBarAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7523B3895700EB7F6B /* TLTabBarAnimation.m */; };
+		EBFF5F7B23B3895700EB7F6B /* UITabBar+TLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7723B3895700EB7F6B /* UITabBar+TLAnimation.m */; };
+		EBFF5F7C23B3895700EB7F6B /* UITabBarItem+TLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7923B3895700EB7F6B /* UITabBarItem+TLAnimation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -877,7 +879,6 @@
 		EB5A26C923A7351F0077F2A5 /* TaskBackInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskBackInfoViewController.xib; sourceTree = "<group>"; };
 		EB5A26CC23A7355D0077F2A5 /* TaskViewTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskViewTabBarViewController.h; sourceTree = "<group>"; };
 		EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskViewTabBarViewController.m; sourceTree = "<group>"; };
-		EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskViewTabBarViewController.xib; sourceTree = "<group>"; };
 		EB7A33CF23B23FC000F34F46 /* AgentInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentInfoCell.h; sourceTree = "<group>"; };
 		EB7A33D023B23FC000F34F46 /* AgentInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgentInfoCell.m; sourceTree = "<group>"; };
 		EB7A33D123B23FC000F34F46 /* AgentInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentInfoViewController.h; sourceTree = "<group>"; };
@@ -975,6 +976,14 @@
 		EBFF5F6023B32FC400EB7F6B /* AgentTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgentTabBarViewController.m; sourceTree = "<group>"; };
 		EBFF5F6223B32FF400EB7F6B /* AgentTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentTabBarViewController.h; sourceTree = "<group>"; };
 		EBFF5F6323B3382300EB7F6B /* AgentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentInfo.h; sourceTree = "<group>"; };
+		EBFF5F7223B3895700EB7F6B /* TLAnimationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAnimationProtocol.h; sourceTree = "<group>"; };
+		EBFF5F7323B3895700EB7F6B /* TLAnimationTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAnimationTabBar.h; sourceTree = "<group>"; };
+		EBFF5F7423B3895700EB7F6B /* TLTabBarAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTabBarAnimation.h; sourceTree = "<group>"; };
+		EBFF5F7523B3895700EB7F6B /* TLTabBarAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTabBarAnimation.m; sourceTree = "<group>"; };
+		EBFF5F7623B3895700EB7F6B /* UITabBar+TLAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+TLAnimation.h"; sourceTree = "<group>"; };
+		EBFF5F7723B3895700EB7F6B /* UITabBar+TLAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+TLAnimation.m"; sourceTree = "<group>"; };
+		EBFF5F7823B3895700EB7F6B /* UITabBarItem+TLAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+TLAnimation.h"; sourceTree = "<group>"; };
+		EBFF5F7923B3895700EB7F6B /* UITabBarItem+TLAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+TLAnimation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1864,6 +1873,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				EBFF5F7123B3895700EB7F6B /* TLAnimationTabBar */,
 				EB7A33E423B23FDB00F34F46 /* BRPickerView */,
 				EB7A33CE23B23FC000F34F46 /* AgentSet */,
 				8D96D49423B0976800D48414 /* Agent_list */,
@@ -1938,7 +1948,6 @@
 				EB5A26C923A7351F0077F2A5 /* TaskBackInfoViewController.xib */,
 				EB5A26CC23A7355D0077F2A5 /* TaskViewTabBarViewController.h */,
 				EB5A26CD23A7355D0077F2A5 /* TaskViewTabBarViewController.m */,
-				EB5A26CE23A7355D0077F2A5 /* TaskViewTabBarViewController.xib */,
 			);
 			path = TaskViewBack;
 			sourceTree = "<group>";
@@ -2108,6 +2117,21 @@
 			path = Masonry;
 			sourceTree = "<group>";
 		};
+		EBFF5F7123B3895700EB7F6B /* TLAnimationTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				EBFF5F7223B3895700EB7F6B /* TLAnimationProtocol.h */,
+				EBFF5F7323B3895700EB7F6B /* TLAnimationTabBar.h */,
+				EBFF5F7423B3895700EB7F6B /* TLTabBarAnimation.h */,
+				EBFF5F7523B3895700EB7F6B /* TLTabBarAnimation.m */,
+				EBFF5F7623B3895700EB7F6B /* UITabBar+TLAnimation.h */,
+				EBFF5F7723B3895700EB7F6B /* UITabBar+TLAnimation.m */,
+				EBFF5F7823B3895700EB7F6B /* UITabBarItem+TLAnimation.h */,
+				EBFF5F7923B3895700EB7F6B /* UITabBarItem+TLAnimation.m */,
+			);
+			path = TLAnimationTabBar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2235,7 +2259,6 @@
 				AF269C48238D5F010058F3E0 /* WebViewController.xib in Resources */,
 				AF9B0F8223A3678D008138EB /* SWForm.bundle in Resources */,
 				AF7EC2F12396147B00257CF1 /* ApprovedViewController.xib in Resources */,
-				EB5A26D023A7355D0077F2A5 /* TaskViewTabBarViewController.xib in Resources */,
 				AF9B0F5523A36555008138EB /* TZImagePickerController.bundle in Resources */,
 				AF9B0F5123A36555008138EB /* MWPhotoBrowser.bundle in Resources */,
 				8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */,
@@ -2285,6 +2308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBFF5F7B23B3895700EB7F6B /* UITabBar+TLAnimation.m in Sources */,
 				AF7EC2EB2396140B00257CF1 /* ApprovingViewController.m in Sources */,
 				EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */,
 				EBD9A81523AB0DBE00EC78CD /* ViewBackTask.m in Sources */,
@@ -2503,6 +2527,7 @@
 				AF9B0F9123A3678D008138EB /* UITextView+TextLimit.m in Sources */,
 				EBFB8F7A23AB3AEA0015C72E /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				AF9B0F3923A36555008138EB /* EMSDWebImageManager.m in Sources */,
+				EBFF5F7A23B3895700EB7F6B /* TLTabBarAnimation.m in Sources */,
 				EB7A340F23B2402400F34F46 /* AgentInfo.m in Sources */,
 				AF9B0F4123A36555008138EB /* UIImageView+EMHighlightedWebCache.m in Sources */,
 				AF9B0F4723A36555008138EB /* PSTCollectionViewController.m in Sources */,
@@ -2548,6 +2573,7 @@
 				EB7A33FF23B23FDB00F34F46 /* BRAddressPickerView.m in Sources */,
 				AF9B0F3D23A36555008138EB /* UIButton+EMWebCache.m in Sources */,
 				AF3FFE56239F88BE00834A73 /* BusinessTripTabBarViewController.m in Sources */,
+				EBFF5F7C23B3895700EB7F6B /* UITabBarItem+TLAnimation.m in Sources */,
 				AF9B0F3323A36555008138EB /* DACircularProgressView.m in Sources */,
 				EB30A48B2398CECE00EEAE1E /* MJRefreshBackStateFooter.m in Sources */,
 				AF9B0F4823A36555008138EB /* PSTCollectionViewData.m in Sources */,

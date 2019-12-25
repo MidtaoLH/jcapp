@@ -12,24 +12,17 @@
 #import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
+#import "TLAnimationTabBar.h"
 static NSString * identifier = @"PendingListCell";
 @interface ToBeReviewViewController ()
-
+@property(nonatomic, strong) UILabel *titleLabel;
 @end
 
 @implementation ToBeReviewViewController
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
-    [super viewDidLoad]; 
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    CGFloat headimageW = self.view.frame.size.width;
-    CGFloat headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
+    [super viewDidLoad];
     
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
@@ -227,4 +220,10 @@ static NSString * identifier = @"PendingListCell";
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+   
+}
+
 @end

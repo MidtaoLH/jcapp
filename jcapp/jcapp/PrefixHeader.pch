@@ -74,6 +74,8 @@
 #define kColor_border   hexColor(0xcccccc)
 #define kColor_redTitle hexColor(0xff6666)
 #define kColor_lineGray RGB(242,242,242)
+#define kColor_tintColor [UIColor colorWithRed:234/255.0 green:111/255.0 blue:90/255.0 alpha:1];
+#define kColor_unselectedItemTintColor [UIColor colorWithRed:124/255.0 green:99/255.0 blue:86/255.0 alpha:1];
 
 #define kFont_Lable_20 [UIFont systemFontOfSize:20]
 #define kFont_Lable_19 [UIFont systemFontOfSize:19]

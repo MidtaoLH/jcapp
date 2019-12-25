@@ -11,6 +11,7 @@
 #import "../Model/Agent.h"
 #import "AgentListCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "../AgentSet/AgentInfoViewController.h"
 static NSString * identifier = @"PendingListCell";
 
 @interface AgentViewController ()
@@ -199,13 +200,16 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
-    }
-    else
-    {
-        //其它单元格的事件
-    }
+    AgentListCell *cell = (AgentListCell *)[tableView cellForRowAtIndexPath:indexPath];
+   
+    NSString *code= cell.pendinglistitem.AgentSetID;
+    NSString *status= cell.pendinglistitem.AgentStatus;
+    
+    
+    self.tabBarController.tabBar.hidden = YES;
+    AgentInfoViewController * VCCollect = [[AgentInfoViewController alloc] init];
+    VCCollect.infoModel.agentID=code;
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
 
 

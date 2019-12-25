@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * DocumentTypeNM;
 @property (nonatomic,copy) NSString * AgentStatusNM;
 @property (nonatomic,copy) NSString * ApplyManPhoto;
-
-
+@property (nonatomic,copy) NSString * AgentSetID;
+@property (nonatomic,copy) NSString * AgentStatus;
 @end
 
 NS_ASSUME_NONNULL_END

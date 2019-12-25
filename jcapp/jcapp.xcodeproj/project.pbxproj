@@ -332,6 +332,7 @@
 		EBFB8F7C23AB3AEA0015C72E /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFB8F7123AB3AE90015C72E /* ViewController+MASAdditions.m */; };
 		EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDBCC423A369F70019B752 /* AttendanceListCell.m */; };
 		EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFE6E8723AB0D5100A64AE5 /* TaskBackListCell.m */; };
+		EBFF5F6123B32FC400EB7F6B /* AgentTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F6023B32FC400EB7F6B /* AgentTabBarViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -971,6 +972,9 @@
 		EBFDBCC623A36A010019B752 /* AttendanceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttendanceListCell.h; sourceTree = "<group>"; };
 		EBFE6E8623AB0D5100A64AE5 /* TaskBackListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskBackListCell.h; sourceTree = "<group>"; };
 		EBFE6E8723AB0D5100A64AE5 /* TaskBackListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskBackListCell.m; sourceTree = "<group>"; };
+		EBFF5F6023B32FC400EB7F6B /* AgentTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgentTabBarViewController.m; sourceTree = "<group>"; };
+		EBFF5F6223B32FF400EB7F6B /* AgentTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentTabBarViewController.h; sourceTree = "<group>"; };
+		EBFF5F6323B3382300EB7F6B /* AgentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1256,6 +1260,7 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EBFF5F6323B3382300EB7F6B /* AgentInfo.h */,
 				EB7A340B23B2402300F34F46 /* AgentInfo.m */,
 				EB7A340C23B2402300F34F46 /* BRInfoModel.h */,
 				EB7A340823B2402200F34F46 /* BRInfoModel.m */,
@@ -1325,6 +1330,8 @@
 				8D96D49823B09A0A00D48414 /* AgentViewController.h */,
 				8D96D49923B09A0A00D48414 /* AgentViewController.m */,
 				8D96D49A23B09A0A00D48414 /* AgentViewController.xib */,
+				EBFF5F6023B32FC400EB7F6B /* AgentTabBarViewController.m */,
+				EBFF5F6223B32FF400EB7F6B /* AgentTabBarViewController.h */,
 			);
 			path = Agent_list;
 			sourceTree = "<group>";
@@ -2433,6 +2440,7 @@
 				EB7A340623B23FDB00F34F46 /* BRResultModel.m in Sources */,
 				77D83DEE23A353F800534120 /* SDWebImageCompat.m in Sources */,
 				EB30A4B12398CF7F00EEAE1E /* EditApprovalDetailsViewController.m in Sources */,
+				EBFF5F6123B32FC400EB7F6B /* AgentTabBarViewController.m in Sources */,
 				8D7C7DEF23A095710076F644 /* AddWayView.m in Sources */,
 				EB30A4AE2398CF7F00EEAE1E /* ReviewApprovalDetailsViewController.m in Sources */,
 				EBFB8F7623AB3AEA0015C72E /* MASLayoutConstraint.m in Sources */,

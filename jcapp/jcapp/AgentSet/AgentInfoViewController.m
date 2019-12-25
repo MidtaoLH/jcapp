@@ -47,7 +47,7 @@
     NSString *userID = [defaults objectForKey:@"userid"];
     NSString *empID = [defaults objectForKey:@"EmpID"];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    self.infoModel.agentID=@"42";
+   
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSet?userID=%@&agentID=%@",userID,self.infoModel.agentID];
     NSURL *url = [NSURL URLWithString:strURL];

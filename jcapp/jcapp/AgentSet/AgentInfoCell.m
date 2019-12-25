@@ -55,14 +55,7 @@
             // 添加大小约束
             make.size.mas_equalTo(CGSizeMake(TxTWidth*2, TxTHeight));
         }];
-        [_statusDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            // 添加左
-            make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
-            // 添加上
-            make.top.mas_equalTo(10);
-            // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(StatusImageSize, StatusImageSize));
-        }];
+       
         [_image mas_makeConstraints:^(MASConstraintMaker *make) {
             // 添加左
             make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
@@ -71,8 +64,16 @@
             // 添加大小约束
             make.size.mas_equalTo(CGSizeMake(StatusImageSize, StatusImageSize));
         }];
-        _image.layer.masksToBounds = YES;
         _image.layer.cornerRadius = _image.width * 0.5;
+        _image.alpha =0.5;
+        [_statusDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
+            // 添加上
+            make.top.mas_equalTo(10);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(StatusImageSize, StatusImageSize));
+        }];
     }
     else{
         [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,8 +167,6 @@
     if (!_image) {
         _image = [[UIImageView alloc]init];
         _image.backgroundColor =kColor_Cyan;
-        _image.layer.masksToBounds = YES;
-        _image.layer.cornerRadius = _image.width * 0.5;
     }
     return _image;
 }

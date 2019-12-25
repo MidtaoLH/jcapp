@@ -16,4 +16,7 @@
 @property (nonatomic, strong) NSString * AgentDate;
 @property (nonatomic, strong) NSString * CreateDate;
 @property (nonatomic, strong) NSString * AppDate;
+@property (nonatomic, strong) NSString * EmpID;
+@property (nonatomic, strong) NSString * AgentStartDate;
+@property (nonatomic, strong) NSString * AgentEndDate;
 @end

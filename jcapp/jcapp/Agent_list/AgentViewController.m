@@ -12,6 +12,8 @@
 #import "AgentListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "../AgentSet/AgentInfoViewController.h"
+#import "../AgentSet/SetAgentViewController.h"
+#import "AppDelegate.h"
 static NSString * identifier = @"PendingListCell";
 
 @interface AgentViewController ()
@@ -204,12 +206,22 @@ static NSString * identifier = @"PendingListCell";
    
     NSString *code= cell.pendinglistitem.AgentSetID;
     NSString *status= cell.pendinglistitem.AgentStatus;
-    
-    
-    self.tabBarController.tabBar.hidden = YES;
-    AgentInfoViewController * VCCollect = [[AgentInfoViewController alloc] init];
-    VCCollect.infoModel.agentID=code;
-    [self.navigationController pushViewController:VCCollect animated:YES];
+    if([status containsString:@"1"])
+    {
+        self.tabBarController.tabBar.hidden = YES;
+        SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
+        VCCollect.infoModel.agentID=code;
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.agentType=@"info";
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        self.tabBarController.tabBar.hidden = YES;
+        AgentInfoViewController * VCCollect = [[AgentInfoViewController alloc] init];
+        VCCollect.infoModel.agentID=code;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
 }
 
 

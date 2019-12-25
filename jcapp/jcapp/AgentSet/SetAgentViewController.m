@@ -12,6 +12,7 @@
 #import "Masonry.h"
 #import "../Model/BRInfoModel.h"
 #import "../Model/MessageInfo.h"
+#import "../Model/AgentInfo.h"
 #import "../ViewController.h"
 #import "../VatationPage/AddWayView.h"
 #import "SelectUserViewController.h"
@@ -43,7 +44,24 @@
 }
 - (void)loadData {
       AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    if ([myDelegate.agentType isEqualToString:@"true"]) {
+    if ([myDelegate.agentType isEqualToString:@"info"]) {
+        self.tableView.hidden=YES;
+        myDelegate.agentType=@"";
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString *userID = [defaults objectForKey:@"userid"];
+        NSString *empID = [defaults objectForKey:@"EmpID"];
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        //设置需要访问的ws和传入参数
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@",userID,self.infoModel.agentID];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
+    else if ([myDelegate.agentType isEqualToString:@"true"]) {
         self.infoModel.codeStr = myDelegate.way_empid;
         self.infoModel.nameStr = myDelegate.way_empname;
         self.infoModel.deptStr = myDelegate.way_groupname;
@@ -52,12 +70,14 @@
         self.infoModel.agentID=myDelegate.agentid;
     }
     else{
+        myDelegate.agentid=@"0";
+        self.infoModel.agentID= @"0";
         self.infoModel.codeStr = @"";
         self.infoModel.nameStr = @"";
         self.infoModel.deptStr = @"";
         self.infoModel.startdayStr = @"";
         self.infoModel.enddayStr = @"";
-        self.infoModel.agentID= @"";
+        self.infoModel.agentID= @"0";
     }
 }
 - (void)initUI {
@@ -346,19 +366,35 @@
 }
 
 -(IBAction)btnsaveClick:(id)sender {
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [defaults objectForKey:@"userid"];
     NSString *empID = [defaults objectForKey:@"EmpID"];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetADD?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@",userID,empID,self.infoModel.codeStr,self.infoModel.startdayStr,self.infoModel.enddayStr];
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    if([self.infoModel.agentID containsString:@"0"])
+    {
+        //设置需要访问的ws和传入参数
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetADD?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@",userID,empID,self.infoModel.codeStr,self.infoModel.startdayStr,self.infoModel.enddayStr];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
+    else{
+         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetUpdate?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&agentSetID=%@",userID,empID,self.infoModel.codeStr,self.infoModel.startdayStr,self.infoModel.enddayStr,self.infoModel.agentID];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
     
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+    
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -376,14 +412,29 @@
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle: @"提示信息！"
-                          message: messageInfo.msg
-                          delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    [alert show];
+    if([xmlString containsString:@"msg"])
+    {
+        MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息！"
+                              message: messageInfo.msg
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else
+    {
+        AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+        self.infoModel.codeStr = agentInfo.EmpID;
+        self.infoModel.nameStr = agentInfo.EmpName;
+        self.infoModel.deptStr = agentInfo.DeptName;
+        self.infoModel.startdayStr = agentInfo.AgentStartDate;
+        self.infoModel.enddayStr = agentInfo.AgentEndDate;
+        [self.tableView reloadData];
+        [self.tableView layoutIfNeeded];
+        self.tableView.hidden = NO;
+    }
 }
 -(IBAction)btnappClick:(id)sender {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -391,7 +442,7 @@
     NSString *empID = [defaults objectForKey:@"EmpID"];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&AgentSetAPP=%@",userID,self.infoModel.agentID];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&agentSetID=%@",userID,self.infoModel.agentID];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];

@@ -12,9 +12,10 @@
 #import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
+#import "TLAnimationTabBar.h"
 static NSString * identifier = @"PendingListCell";
 @interface ToBeReviewViewController ()
-
+@property(nonatomic, strong) UILabel *titleLabel;
 @end
 
 @implementation ToBeReviewViewController
@@ -22,15 +23,6 @@ static NSString * identifier = @"PendingListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"待审批记录";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    CGFloat headimageW = self.view.frame.size.width;
-    CGFloat headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
     
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
@@ -59,7 +51,7 @@ static NSString * identifier = @"PendingListCell";
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userid,@"7"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetViewBackList?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userid,@"7"];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -201,10 +193,37 @@ static NSString * identifier = @"PendingListCell";
 {
     PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.pendinglistitem.PicID;
-    
+    NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
+    self.tabBarController.tabBar.hidden = YES;
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
     VCCollect.code=code;
+    VCCollect.taskcode=taskcode;
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
- 
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+   
+}
+
 @end

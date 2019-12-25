@@ -26,7 +26,7 @@
     
     if (!_taskBackEmpNameLable) {
         _taskBackEmpNameLable = [[UILabel alloc] init];
-        _taskBackEmpNameLable.font = kFont_Lable_16;
+        _taskBackEmpNameLable.font = kFont_Lable_14;
         _taskBackEmpNameLable.textColor = kColor_Blue;
     }
     return _taskBackEmpNameLable;
@@ -102,15 +102,13 @@
     CGFloat imageWH=  width/6;
     CGFloat leaveDateWidth = 80;
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/3;
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH );
+    CGFloat txtH = (height - 3*kMargin)/4;
     self.taskBackEmpNameLable.frame = CGRectMake(2*kMargin+imageWH, kMargin, leaveDateWidth, txtH);
     self.taskBackTypeLable.frame = CGRectMake(3*kMargin+imageWH+self.taskBackEmpNameLable.width, kMargin, leaveDateWidth, txtH);
     self.taskBackDateLable.frame =CGRectMake(4*kMargin+imageWH+self.taskBackEmpNameLable.width+self.taskBackTypeLable.width, kMargin, leaveDateWidth, txtH);
-    
     self.taskBackGroupNameLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-   
     self.taskBackRemarkLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
 }

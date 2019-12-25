@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *userid;
 }
 @property (nonatomic,copy) NSString *code;
+@property (nonatomic,copy) NSString *taskcode;
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
 @property (weak, nonatomic) IBOutlet UITableView *ImageTableView;

@@ -23,7 +23,6 @@ static NSString * identifier = @"PendingListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
@@ -194,7 +193,6 @@ static NSString * identifier = @"PendingListCell";
     PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.pendinglistitem.PicID;
     NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
-    self.tabBarController.tabBar.hidden = YES;
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
     VCCollect.code=code;
     VCCollect.taskcode=taskcode;
@@ -223,7 +221,7 @@ static NSString * identifier = @"PendingListCell";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-   
+    [self LoadData];
 }
 
 @end

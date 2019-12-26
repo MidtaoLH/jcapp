@@ -25,6 +25,10 @@
     [self addChildViewController:childViewController2(@"已回览", @"drop", 1)];
     
     self.tabBar.tintColor = kColor_tintColor;
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"待我回览";
+    
     if (@available(iOS 10.0, *)) {
         self.tabBar.unselectedItemTintColor = kColor_unselectedItemTintColor;
     } else {
@@ -32,7 +36,6 @@
     }
     
 }
-
 // MARK: - UITabBarItem创建函数
 /// 自定义样式UITabBarItem
 UIViewController *childViewController (NSString *title, NSString *imgName, NSUInteger tag) {
@@ -43,7 +46,10 @@ UIViewController *childViewController (NSString *title, NSString *imgName, NSUIn
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
-
+- (void)goBack {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
 /// 系统样式UITabBarItem
 UIViewController *childViewController2 (NSString *title, NSString *imgName, NSUInteger tag) {
     AlreadyEndViewController *vc = [[AlreadyEndViewController alloc] init];
@@ -106,7 +112,6 @@ NSArray *imgs (){
 
 // MARK: - UITabBarItemDelegate 监听TabBarItem点击事件
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    // TabBarItem被点击时会被调用
-    NSLog(@"%s",__func__);
+    
 }
 @end

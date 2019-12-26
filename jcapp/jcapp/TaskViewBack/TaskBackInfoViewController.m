@@ -166,7 +166,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
         make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(TxTWidth*2,TxTHeight));
     }];
     [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -334,59 +334,29 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
-    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    ipParser.delegate = self;
-    [ipParser parse];
-    [self.NewTableView reloadData];
 }
-
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-    info = [[NSMutableDictionary alloc] initWithCapacity: 1];
 }
-
-
 //解析返回xml的节点elementName
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    NSLog(@"value2: %@\n", elementName);
-    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
-    currentTagName = elementName;
-    
-    NSLog(@"%@",@"parser2-end");
 }
-
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    
-    NSLog(@"%@",@"parser3-begin");
-    
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
-    
 }
-
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    
-    NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
-    for (id key in info) {
-        [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
-    }
-    
 }
-
 //有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%@",@"numberOfSectionsInTableView-begin");
-    // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
-    // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
-    
     return 1;
 }
 
@@ -396,18 +366,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 {
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
-    NSLog(@"%@",@"tableView-begin");
-    //  return self.listdetail.count;
-    
     if ([tableView isEqual:self.NewTableView]) {
-        
-        NSLog(@"%@",@"tableView-begin");
         return self.listdetail.count;
-        
     } else if ([tableView isEqual:self.ImageTableView]) {
-        
         return 1;
-        
     }
     return 0;
 }

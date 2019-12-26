@@ -22,14 +22,6 @@ static NSString * identifier = @"PendingsListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad]; 
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    CGFloat headimageW = self.view.frame.size.width;
-    CGFloat headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
-    
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
@@ -108,6 +100,8 @@ static NSString * identifier = @"PendingsListCell";
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
     //[self.listOfMovies addObjectsFromArray:self.listMovies];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //弹出消息框
@@ -124,16 +118,11 @@ static NSString * identifier = @"PendingsListCell";
 
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
-    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    ipParser.delegate = self;
-    [ipParser parse];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+
 }
 
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-    info = [[NSMutableDictionary alloc] initWithCapacity: 1];
 }
 
 //回调方法出错弹框
@@ -152,7 +141,7 @@ static NSString * identifier = @"PendingsListCell";
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    currentTagName = elementName;
+  
 }
 
 //取得我们需要的节点的数据
@@ -167,10 +156,7 @@ static NSString * identifier = @"PendingsListCell";
 
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
-    for (id key in info) {
-        [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
-    }
+   
 }
 //有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -199,8 +185,6 @@ static NSString * identifier = @"PendingsListCell";
 {
     PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.pendinglistitem.PicID;
-    
-    self.tabBarController.tabBar.hidden = YES;
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
     VCCollect.code=code;
     [self.navigationController pushViewController:VCCollect animated:YES];
@@ -225,5 +209,10 @@ static NSString * identifier = @"PendingsListCell";
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self LoadData];
+}
+
 @end
 

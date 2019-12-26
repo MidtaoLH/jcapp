@@ -53,5 +53,7 @@
 @property (nonatomic, strong) NSString *TimeEnd;
 
 @property (nonatomic, strong) NSString *agentType;
+
+@property (nonatomic, strong) NSString *tabbarType;
 @end
 

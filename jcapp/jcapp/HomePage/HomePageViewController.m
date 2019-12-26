@@ -14,36 +14,18 @@
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "DXLAutoButtonView.h"
 #import "../Leave/LeaveViewController.h"
-#import "../Leave/LeaveTabBarViewController.h"
-
 #import "../GoOut/GoOutViewController.h"
-#import "../GoOut/GoOutTabBarViewController.h"
-
 #import "../PendingPage/PendingViewController.h"
-#import "../MyApply/MyApplyTabBarViewController.h"
-#import "../PendingPage/PendingTabBarViewController.h"
-#import "../AttendanceCalendar/AttendanceTabBarViewController.h"
 #import "../AttendanceCalendar/AttendanceCalendarViewController.h"
-#import "../BusinessTrip/BusinessTripTabBarViewController.h"
+#import "../TabBar/TabBarViewController.h"
+#import "AppDelegate.h"
 
-#import "../TaskViewBack/TaskViewTabBarViewController.h"
-#import "../Agent_list/AgentTabBarViewController.h"
-/**屏幕尺寸-宽度*/
-#define kWidth ([UIScreen mainScreen].bounds.size.width)
-/**屏幕尺寸-高度*/
-#define kHeight ([UIScreen mainScreen].bounds.size.height)
 
 @interface HomePageViewController ()
 {
     int *index;
 }
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (nonatomic, strong) NSTimer *timer;
 - (IBAction)test:(id)sender;
-@property (weak, nonatomic) IBOutlet UIWebView *webview;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @end
 
 @implementation HomePageViewController
@@ -65,17 +47,6 @@ static NSString *identifier =@"TableViewCell";
                                    delegate:self];
     
     [super viewDidLoad];
-    CGFloat navigationBarAndStatusBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
-    
-    self.scrollview.frame=CGRectMake(0, navigationBarAndStatusBarHeight, self.view.frame.size.width, 200);
-    self.scrollview.backgroundColor= UIColor.orangeColor;
-    
-    //设置顶部导航栏的显示名称
-    self.navigationItem.title=@"北京中道益通软件技术有限公司";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     
     [self setView1];
     [self setView2];
@@ -367,36 +338,34 @@ static NSString *identifier =@"TableViewCell";
 
 - (void)setView1
 {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"我的申请",@"待我审批",@"待我回览"];
     NSArray *image = @[@"1",@"2",@"3"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:image autolabelItem:title withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, self.view.width, 80) autoWidthFlowItems:image autolabelItem:title withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     //DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setLabelClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
             {
-                //[self presentViewController:navigationController animated:YES completion:^{}];
-
-                //[self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
-                UITabBarController *tabBarCtrl = [[MyApplyTabBarViewController alloc]init];
+                myDelegate.tabbarType=@"2";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 1:
             {
-//                UITabBarController *tabBarCtrl = [[PendingTabBarViewController alloc]init];
-//
-//                [self presentViewController:tabBarCtrl animated:YES completion:nil];
-                UITabBarController *tabBarCtrl = [[PendingTabBarViewController alloc]init];
+                myDelegate.tabbarType=@"3";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 2:
             {
-                UITabBarController *tabBarCtrl = [[TaskViewTabBarViewController alloc]init];
+                myDelegate.tabbarType=@"4";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
@@ -415,40 +384,34 @@ static NSString *identifier =@"TableViewCell";
 }
 - (void)setView2
 {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"请假",@"出差",@"外出"];
     NSArray *image = @[@"app05.png",@"app06.png",@"app07.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 410, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 410, self.view.width, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
             {
-//                NSLog(@"点击第1个按键");
-//                UITabBarController *tabBarCtrl = [[LeaveTabBarViewController alloc]init];
-//
-//                [self presentViewController:tabBarCtrl animated:YES completion:nil];
-//
-                UITabBarController *tabBarCtrl = [[LeaveTabBarViewController alloc]init];
+                myDelegate.tabbarType=@"5";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];
-                
-//                LeaveViewController * valueView = [[LeaveViewController alloc] initWithNibName:@"LeaveViewController"bundle:[NSBundle mainBundle]];
-//                //从底部划入
-//                [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-//                //跳转
-//                [self presentModalViewController:valueView animated:YES];
             }
                 break;
             case 1:
             {
-                UITabBarController *tabBarCtrl = [[BusinessTripTabBarViewController alloc]init];
+                
+                myDelegate.tabbarType=@"6";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-                [self presentViewController:navigationController animated:YES completion:nil];
+                [self presentViewController:navigationController animated:YES completion:nil];               
             }
                 break;
             case 2:
             {
-                UITabBarController *tabBarCtrl = [[GoOutTabBarViewController alloc]init];
+                myDelegate.tabbarType=@"7";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
@@ -467,29 +430,35 @@ static NSString *identifier =@"TableViewCell";
 }
 - (void)setView3
 {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"考勤日历",@"代理人设置",@"公告"];
     NSArray *image = @[@"app08.png",@"app09.png",@"app10.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 520, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 520, self.view.width, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
             {
-                UITabBarController *tabBarCtrl = [[AttendanceTabBarViewController alloc]init];
-                [self presentViewController:tabBarCtrl animated:YES completion:nil];
+                myDelegate.tabbarType=@"8";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 1:
             {
-                UITabBarController *tabBarCtrl = [[AgentTabBarViewController alloc]init];
+                myDelegate.tabbarType=@"9";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 2:
             {
-                NewViewController * VCCollect = [[NewViewController alloc] init];
-                [self.navigationController pushViewController:VCCollect animated:YES];
+                myDelegate.tabbarType=@"10";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
                 

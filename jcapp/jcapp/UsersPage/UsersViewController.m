@@ -7,8 +7,7 @@
 //
 #import "ViewController.h"
 #import "UsersViewController.h"
-#import "AlterPWDController.h"
-#import "ZDYTTabBarViewController.h"
+#import "AlterPWDController.h" 
 #import "UserInfo.h"
 #import "MJExtension.h"
 #import "AppDelegate.h"

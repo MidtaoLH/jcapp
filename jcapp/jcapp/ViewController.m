@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "HomePage/HomePageViewController.h"
-#import "HomePage/ZDYTTabBarViewController.h"
 #import "VatationPage/VatationPageViewController.h"
 #import "VatationPage/VatcationMainViewController.h"
 #import "VatationPage/VatcationMainView.h"
@@ -35,6 +34,7 @@
 #import "AgentSet/AgentInfoViewController.h"
 
 
+#import "TabBar/TabBarViewController.h"
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
@@ -242,10 +242,10 @@
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页
-            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
-            
-            [self presentViewController:tabBarCtrl animated:YES completion:nil];
-            
+            myDelegate.tabbarType=@"1";
+            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+            [self presentViewController:navigationController animated:YES completion:nil];
         }
         
     }

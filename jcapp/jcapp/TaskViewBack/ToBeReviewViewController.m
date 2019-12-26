@@ -193,6 +193,7 @@ static NSString * identifier = @"PendingListCell";
     PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.pendinglistitem.PicID;
     NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
+    
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
     VCCollect.code=code;
     VCCollect.taskcode=taskcode;

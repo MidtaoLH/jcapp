@@ -72,7 +72,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/TaskViewBack/TaskBackInfoViewController.m"
-            timestampString = "599026692.138978"
+            timestampString = "599047328.9708411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "308"
@@ -87,13 +87,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/TaskViewBack/ToBeReviewViewController.m"
-            timestampString = "599026692.139051"
+            filePath = "jcapp/Notice/NewViewController.m"
+            timestampString = "599047328.970938"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "jcapp/Notice/NewViewController.m"
+            timestampString = "599047328.9709949"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "-connection:didReceiveData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

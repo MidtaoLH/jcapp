@@ -15,6 +15,10 @@
 #import "DXLAutoButtonView.h"
 #import "../Leave/LeaveViewController.h"
 #import "../Leave/LeaveTabBarViewController.h"
+
+#import "../GoOut/GoOutViewController.h"
+#import "../GoOut/GoOutTabBarViewController.h"
+
 #import "../PendingPage/PendingViewController.h"
 #import "../MyApply/MyApplyTabBarViewController.h"
 #import "../PendingPage/PendingTabBarViewController.h"
@@ -444,7 +448,9 @@ static NSString *identifier =@"TableViewCell";
                 break;
             case 2:
             {
-                NSLog(@"点击第三个按键");
+                UITabBarController *tabBarCtrl = [[GoOutTabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
             case 3:

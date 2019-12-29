@@ -36,24 +36,7 @@
 /*列表下拉叠加行数*/
 #define Common_PageSizeAdd @"10"
 
-/*行间距*/
-#define Common_RowSize @"30"
-/*列间距*/
-#define Common_ColSize @"20"
-/*头像大小*/
-#define Common_UserImageSize @"80"
-#define Common_TableUserImageSize @"60"
-/*状态图片*/
-#define Common_StatusImageSize @"80"
-/*文本高度*/
-#define Common_TxTHeight @"30"
-#define Common_TxTWidth @"170"
-/*明细列表高度*/
-#define Common_TableHeight @"320"
-#define Common_TableRowHeight @"80"
-/*图片列表高度*/
-#define Common_ImageTableHeight @"120"
-#define Common_ImageTableRowHeight @"100"
+
 
 
 #define hexColor(hex) [UIColor colorWithHex:hex]
@@ -100,4 +83,51 @@
 #define kFont_Medium_18 [UIFont fontWithName:@"STHeitiSC-Medium" size:18.0f]
 #define kFont_Medium_22 [UIFont fontWithName:@"STHeitiSC-Medium" size:22.0f]
 #define kFont_LableBold_18 [UIFont fontWithName:@"Helvetica-Bold"  size:18]
+//获得屏幕的宽高
+#define kScreenWidth ([UIScreen mainScreen].bounds.size.width)
+#define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
+//iPhoneX / iPhoneXS
+#define  isIphoneX_XS     (kScreenWidth == 375.f && kScreenHeight == 812.f ? YES : NO)
+//iPhoneXR / iPhoneXSMax
+#define  isIphoneXR_XSMax    (kScreenWidth == 414.f && kScreenHeight == 896.f ? YES : NO)
+//异性全面屏
+#define   isFullScreen    (isIphoneX_XS || isIphoneXR_XSMax)
+// Status bar height.
+#define  StatusBarHeight     (isFullScreen ? 44.f : 20.f)
+// Navigation bar height.
+#define  NavigationBarHeight  44.f
+// Tabbar height.
+#define  TabbarHeight         (isFullScreen ? (49.f+34.f) : 49.f)
+// Tabbar safe bottom margin.
+#define  TabbarSafeBottomMargin         (isFullScreen ? 34.f : 0.f)
+// Status bar & navigation bar height.
+#define  StatusBarAndNavigationBarHeight  (isFullScreen ? 88.f : 64.f)
+/*行间距*/
+#define Common_RowSize 30.f
+/*列间距*/
+#define Common_ColSize 20.f
+/*头像大小*/
+#define Common_UserImageSize 80.f
+#define Common_TableUserImageSize 60.f
+/*状态图片*/
+#define Common_StatusImageSize 80.f
+/*文本高度*/
+#define Common_TxTHeight 30.f
+#define Common_BtnHeight 40.f
+#define Common_TxTWidth 170.f
+/*明细列表高度*/
+#define Common_TableHeight 320.f
+#define Common_TableRowHeight 80.f
+#define Common_AttendanceTableHeight 200.f
+#define Common_AttendanceHeight 440.f
+/*图片列表高度*/
+#define Common_ImageTableHeight 120.f
+#define Common_ImageTableRowHeight 100.f
+/*图片列表高度*/
+#define Common_UserTableHeight 150.f
+#define Common_UserTableRowHeight 50.f
 #endif /* PrefixHeader_pch */
+/*轮播图大小*/
+#define Common_ScrollSize 280.f
+#define Common_HomeCellSize 80.f
+#define Common_HomeRowSize 10.f

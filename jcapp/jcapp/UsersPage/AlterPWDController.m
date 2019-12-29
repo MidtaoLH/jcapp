@@ -8,70 +8,216 @@
 
 #import "AlterPWDController.h"
 #import "UsersViewController.h"
-@interface AlterPWDController ()
-@property (weak, nonatomic) IBOutlet UITextField *txtpassword;
-@property (weak, nonatomic) IBOutlet UITextField *txtenterpwd;
-@property (weak, nonatomic) IBOutlet UITextField *txtoldpassword;
-@property (weak, nonatomic) IBOutlet UIButton *btnupdate;
-@property (weak, nonatomic) IBOutlet UILabel *lbloldpassword;
-@property (weak, nonatomic) IBOutlet UILabel *lblenterpwd;
-@property (weak, nonatomic) IBOutlet UILabel *lblpassword;
+#import "../Model/pwdInfo.h"
+#import "PwdInfoCell.h"
+#import "Masonry.h"
+@interface AlterPWDController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @end
-NSString *xmlString;
-NSMutableDictionary *info;
-NSString *currentTagName;
-NSString *currentValue;
-NSString *resultString;
+
 @implementation AlterPWDController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout=0;
-    self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
-    
-    CGFloat headimageX = self.view.frame.size.width * 0.5;
-    CGFloat headimageY = self.view.frame.size.height * 0.2;
-    CGFloat headimageW = self.view.frame.size.width * 0.45;
-    CGFloat headimageH = self.view.frame.size.height*0.05;
-    self.txtoldpassword.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    headimageY = self.view.frame.size.height * 0.26;
-    self.txtpassword.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    headimageY = self.view.frame.size.height * 0.32;
-    self.txtenterpwd.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    
-    headimageX = self.view.frame.size.width * 0.1;
-    headimageY = self.view.frame.size.height * 0.2;
-    self.lbloldpassword.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    headimageY = self.view.frame.size.height * 0.26;
-    self.lblpassword.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    headimageY = self.view.frame.size.height * 0.32;
-    self.lblenterpwd.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    
-    headimageX = 0;
-    headimageY = self.view.frame.size.height * 0.8;
-    headimageW = self.view.frame.size.width*1.104;
-    headimageH = self.view.frame.size.height*0.05;
-    self.btnupdate.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    // Do any additional setup after loading the view from its nib.
+    [self loadData];
+    [self initUI];
+    [self loadstyle];
+    [self.tableView reloadData];
+    [self.tableView layoutIfNeeded];
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+    [self.tableView layoutIfNeeded];
+}
+- (void)loadData {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *user = [defaults objectForKey:@"username"];
+    self.infoModel.userid = user;
+    self.infoModel.oldpwd = @"";
+    self.infoModel.newpwd = @"";
+    self.infoModel.enterpwd = @"";
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initUI {
+    self.tableView.hidden = NO;
 }
-*/
+- (void)loadstyle {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_UserTableHeight*2));
+    }];
+    [self.btnUpdate mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserTableHeight*2);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_BtnHeight));
+    }];
 
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.estimatedRowHeight = 0;
+    _tableView.estimatedSectionHeaderHeight = 0;
+    _tableView.estimatedSectionFooterHeight = 0;
+    
+    _btnUpdate.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _btnUpdate.font = kFont_Lable_16;
+    _btnUpdate.titleLabel.textAlignment= NSTextAlignmentCenter;
+    _btnUpdate.titleLabel.text  = @"修改";
+}
+- (NSArray *)titleArr {
+    if (!_titleArr) {
+        _titleArr = @[@"用户编号", @"* 旧密码", @"* 新密码", @"* 确认密码"];
+        return _titleArr;
+    }
+    return _titleArr;
+}
+- (pwdInfo *)infoModel {
+    if (!_infoModel) {
+        _infoModel = [[pwdInfo alloc]init];
+    }
+    return _infoModel;
+}
+#pragma mark - UITableViewDataSource, UITableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.titleArr.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"pwdCell";
+    PwdInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[PwdInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    NSString *arr= self.titleArr[indexPath.row];
+    NSMutableAttributedString *strAtt = [[NSMutableAttributedString alloc] initWithString:arr];
+    cell.textField.delegate = self;
+    cell.textField.tag = indexPath.row;
+    cell.isNext = NO;
+    switch (indexPath.row) {
+        case 0:
+        {
+            
+            cell.titleLabel.text = arr;
+            cell.textField.placeholder = @"用户名";
+            cell.textField.returnKeyType = UIReturnKeyDone;
+            cell.textField.text = self.infoModel.userid;
+        }
+            break;
+        case 1:
+        {
+            [strAtt addAttribute:NSForegroundColorAttributeName value:kColor_Red range:NSMakeRange(0, 1)];
+            cell.titleLabel.attributedText = strAtt;
+            cell.textField.placeholder = @"请输入旧密码";
+            cell.textField.returnKeyType = UIReturnKeyDone;
+            cell.textField.text = self.infoModel.oldpwd;
+            cell.textField.secureTextEntry = YES;
+        }
+            break;
+        case 2:
+        {
+            [strAtt addAttribute:NSForegroundColorAttributeName value:kColor_Red range:NSMakeRange(0, 1)];
+            cell.titleLabel.attributedText = strAtt;
+            cell.textField.placeholder = @"请输入新密码";
+            cell.textField.returnKeyType = UIReturnKeyDone;
+            cell.textField.text = self.infoModel.newpwd;
+            cell.textField.secureTextEntry = YES;
+        }
+            break;
+        case 3:
+        {
+            [strAtt addAttribute:NSForegroundColorAttributeName value:kColor_Red range:NSMakeRange(0, 1)];
+            cell.titleLabel.attributedText = strAtt;
+            cell.textField.placeholder = @"请确认密码";
+            cell.textField.returnKeyType = UIReturnKeyDone;
+            cell.textField.text = self.infoModel.enterpwd;
+            cell.textField.secureTextEntry = YES;
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.0001f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.0001f;
+}
+
+
+#pragma mark - 处理点击事件
+- (void)handlerTextFieldSelect:(UITextField *)textField {
+    switch (textField.tag) {
+       
+        default:
+            break;
+    }
+}
+#pragma mark - UITextFieldDelegate 返回键
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.tag == 1|| textField.tag == 2|| textField.tag == 3) {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+#pragma mark - UITextFieldDelegate
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField.tag == 1|| textField.tag == 2|| textField.tag == 3) {
+        [textField addTarget:self action:@selector(handlerTextFieldEndEdit:) forControlEvents:UIControlEventEditingDidEnd];
+        return YES; // 当前 textField 可以编辑
+    } else {
+        [self.view endEditing:YES];
+        [self handlerTextFieldSelect:textField];
+        return NO; // 当前 textField 不可编辑，可以响应点击事件
+    }
+}
+#pragma mark - 处理编辑事件
+- (void)handlerTextFieldEndEdit:(UITextField *)textField {
+    switch (textField.tag) {
+        case 1:
+        {
+            self.infoModel.oldpwd = textField.text;
+        }
+            break;
+        case 2:
+        {
+            self.infoModel.newpwd = textField.text;
+        }
+            break;
+        case 3:
+        {
+            self.infoModel.enterpwd = textField.text;
+        }
+            break;
+        default:
+            break;
+    }
+}
 
 -(IBAction)btnupdateClick:(id)sender {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
-    NSString *oldpassword = self.txtoldpassword.text;
-    NSString *password = self.txtpassword.text;
-    NSString *enterpassword = self.txtenterpwd.text;
+    NSString *oldpassword = self.infoModel.oldpwd;
+    NSString *password = self.infoModel.newpwd;
+    NSString *enterpassword = self.infoModel.enterpwd;
     NSString *version = [UIDevice currentDevice].systemVersion;
     if(oldpassword.length==0)
     {
@@ -246,15 +392,17 @@ NSString *resultString;
     if ([currentTagName isEqualToString:@"string"]) {
         if ([string isEqualToString:@"1"]) {
             message = [[NSString alloc] initWithFormat:@"%@", @"修改成功！"];
-            self.txtenterpwd.text=@"";
-            self.txtpassword.text=@"";
-            self.txtoldpassword.text=@"";
+            [self loadData];
+            [self initUI];
+            [self loadstyle];
+            [self.tableView reloadData];
+            [self.tableView layoutIfNeeded];
         }
         else if ([string isEqualToString:@"2"]) {
-             message = [[NSString alloc] initWithFormat:@"%@", @"旧密码无效，请重新输入！"];
+            message = [[NSString alloc] initWithFormat:@"%@", @"旧密码无效，请重新输入！"];
         }
         else{
-             message = [[NSString alloc] initWithFormat:@"%@", @"修改失败！"];
+            message = [[NSString alloc] initWithFormat:@"%@", @"修改失败！"];
         }
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
@@ -278,15 +426,24 @@ NSString *resultString;
         [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
     }
 }
-
-//输入完成键盘退出
--(IBAction)textFieldDoneEditing:(id)sender {
-    [sender resignFirstResponder];
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
 }
-//点击背景键盘退出
--(IBAction)backgroundTap:(id)sender {
-    [self.txtpassword resignFirstResponder];
-    [self.txtoldpassword resignFirstResponder];
-    [self.txtenterpwd resignFirstResponder];
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 @end

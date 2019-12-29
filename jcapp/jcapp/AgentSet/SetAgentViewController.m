@@ -28,19 +28,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"代理人设置";
-    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(clickGoto)];
     [self loadstyle];
     [self loadData];
     [self initUI];
 }
 -(IBAction)savebtnClick:(id)sender {
-    NSLog(@"-----保存数据-----");
-    NSLog(@"编号：%@", self.infoModel.codeStr);
-    NSLog(@"姓名：%@", self.infoModel.nameStr);
-    NSLog(@"开始日期：%@", self.infoModel.startdayStr);
-    NSLog(@"结束时间：%@", self.infoModel.enddayStr);
-    NSLog(@"部门：%@", self.infoModel.deptStr);
+    
 }
 - (void)loadData {
       AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
@@ -88,22 +81,6 @@
     [self.navigationController pushViewController:returnVC animated:YES];
 }
 - (void)loadstyle {
-        CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
-    
-        CGFloat width=self.view.size.width;
-        CGFloat height=self.view.size.height;
-        NSInteger TxTHeight=[Common_TxTHeight intValue];//文本高度
-        NSInteger TableHeight=[Common_TableHeight intValue];//列表高度
-        NSInteger RowSize=[Common_RowSize intValue];//行高
-       NSInteger ColSize=[Common_ColSize intValue];//列宽
-        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            // 添加左
-            make.left.mas_equalTo(0);
-            // 添加上
-            make.top.mas_equalTo(tabBarHeight+RowSize);
-            // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(width,TableHeight));
-        }];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _tableView.dataSource = self;
@@ -111,26 +88,12 @@
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
-        [_savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            // 添加左
-            make.left.mas_equalTo(ColSize);
-            // 添加上
-            make.top.mas_equalTo(tabBarHeight+TableHeight+RowSize*2);
-            // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(width/2-ColSize*2,TxTHeight));
-        }];
+    
         _savebtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _savebtn.font = kFont_Lable_16;
         _savebtn.titleLabel.textAlignment= NSTextAlignmentCenter;
         _savebtn.titleLabel.text  = @"保存";
-        [_applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            // 添加左
-            make.left.mas_equalTo(width/2+ColSize);
-            // 添加上
-            make.top.mas_equalTo(tabBarHeight+TableHeight+RowSize*2);
-            // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(width/2-ColSize*2,TxTHeight));
-        }];
+    
         _applicationbtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _applicationbtn.font =kFont_Lable_16;
         _applicationbtn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -221,16 +184,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.0001f;
-}
-
-#pragma mark - 获取地区数据源
-- (NSArray *)getAddressDataSource {
-    // 加载地区数据源（实际开发中这里可以写网络请求，从服务端请求数据。可以把 BRCity.json 文件的数据放到服务端去维护，通过接口获取这个数据源数组）
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    return dataSource;
 }
 
 #pragma mark - UITextFieldDelegate

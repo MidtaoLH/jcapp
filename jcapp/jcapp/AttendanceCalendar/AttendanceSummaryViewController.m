@@ -14,13 +14,7 @@
 #import "../Model/AttendanceCalendarMonth.h"
 #import "../Model/AttendanceCalendarMonthDetail.h"
 @interface AttendanceSummaryViewController ()<MCDatePickerViewDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *lblname;
-@property (weak, nonatomic) IBOutlet UILabel *lbldept;
-@property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
-@property (weak, nonatomic) IBOutlet UIButton *btndate;
-@property (strong, nonatomic) NSDate *startDate;
-@property (nonatomic, weak) YUFoldingTableView *foldingTableView;
-@property (nonatomic, assign ,getter=isYearShow) BOOL yearShow;
+
 - (IBAction)startDateButtonOnClicked:(id)sender;
 @end
 
@@ -29,32 +23,9 @@
 @synthesize listOfMoviesDetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    
-    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
-    CGFloat headimageW = self.view.frame.size.width * 0.25;
-    CGFloat headimageH = headimageW;
-    self.myHeadPortrait.frame = CGRectMake(20, tabBarHeight*0.9, headimageW, headimageH);
-    //这句必须写
-    self.myHeadPortrait.layer.masksToBounds = YES;
-    self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
-    self.myHeadPortrait.image = [UIImage imageNamed:@"1"];
  
-    headimageW = self.view.frame.size.width * 0.25;
-    headimageH =  headimageW;
-    self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/6, headimageW, headimageH);
-    self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
     [self loadinfo];
    
-    
-    headimageH =  headimageW;
-    headimageW = self.view.frame.size.width * 0.35;
-    self.btndate.frame=CGRectMake(self.myHeadPortrait.width+ self.lblname.width+20, tabBarHeight, headimageW, headimageH);
-    
     NSDate *newDate = [NSDate date];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"yyyy年MM月"];
@@ -171,7 +142,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     CGFloat topHeight = [[UIApplication sharedApplication] statusBarFrame].size.height + 44;
-    YUFoldingTableView *foldingTableView = [[YUFoldingTableView alloc] initWithFrame:CGRectMake(0, topHeight+self.myHeadPortrait.height+20, self.view.bounds.size.width, self.view.bounds.size.height - topHeight)];
+    YUFoldingTableView *foldingTableView = [[YUFoldingTableView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2, kScreenWidth,kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2))];
     _foldingTableView = foldingTableView;
     
     [self.view addSubview:foldingTableView];

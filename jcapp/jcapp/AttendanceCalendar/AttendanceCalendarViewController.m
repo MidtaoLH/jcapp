@@ -23,31 +23,10 @@ NSString * identifierac= @"AttendanceListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
     [self loadinfo];
-    
-    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height+20;
-    CGFloat headimageW = self.view.frame.size.width * 0.25;
-    CGFloat headimageH = headimageW;
-    self.myHeadPortrait.frame = CGRectMake(20, tabBarHeight*0.9, headimageW, headimageH);
-    //这句必须写
-    self.myHeadPortrait.layer.masksToBounds = YES;
-    self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
-    
-    
-    self.lblname.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight-self.myHeadPortrait.height/6, headimageW, headimageH);
-    self.lbldept.frame=CGRectMake(self.myHeadPortrait.width+40, tabBarHeight+self.myHeadPortrait.height/5, headimageW, headimageH);
-   
-    headimageW = self.view.frame.size.width;
-    headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, self.myHeadPortrait.height+tabBarHeight+self.calview.height, headimageW, 300);
-    
+  
     //e注册自定义 cell
     [_NewTableView registerClass:[AttendanceListCell class] forCellReuseIdentifier:identifierac];
-    _NewTableView.rowHeight = 100;
     self.calview.onDateSelectBlk=^(NSDate* date){
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd"];
@@ -186,5 +165,25 @@ NSString * identifierac= @"AttendanceListCell";
     AttendanceListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifierac forIndexPath:indexPath];
     cell.attendancelistitem =self.listOfMoviesDetail[indexPath.row];//取出数据元素
     return cell;
+}
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 @end

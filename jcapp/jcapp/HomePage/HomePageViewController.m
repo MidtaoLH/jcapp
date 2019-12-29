@@ -7,19 +7,13 @@
 //
 
 #import "HomePageViewController.h"
-#import "../Notice/NewViewController.h"
-#import "WebViewController.h"
 #import "../MJExtension/MJExtension.h"
-#import "../Model/ScrollView.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
-#import "DXLAutoButtonView.h"
-#import "../Leave/LeaveViewController.h"
-#import "../GoOut/GoOutViewController.h"
-#import "../PendingPage/PendingViewController.h"
-#import "../AttendanceCalendar/AttendanceCalendarViewController.h"
+#import "../Model/ScrollView.h"
 #import "../TabBar/TabBarViewController.h"
 #import "AppDelegate.h"
-
+#import "DXLAutoButtonView.h"
+#import "WebViewController.h"
 
 @interface HomePageViewController ()
 {
@@ -29,25 +23,20 @@
 @end
 
 @implementation HomePageViewController
-static NSString *identifier =@"TableViewCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
     //调用webservice
-    
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,@"AppWebService.asmx/GetScrollviewList"];
     //[NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetScrollviewList"];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    
     [super viewDidLoad];
-    
     [self setView1];
     [self setView2];
     [self setView3];
@@ -62,10 +51,9 @@ static NSString *identifier =@"TableViewCell";
     {
         page++;
     }
-    
     //  滚动scrollview
     CGFloat x = page * self.scrollview.frame.size.width;
-    self.scrollview.contentOffset = CGPointMake(x, 0);
+    self.scrollview.contentOffset = CGPointMake(x, StatusBarAndNavigationBarHeight);
 }
 
 // scrollview滚动的时候调用
@@ -93,12 +81,10 @@ static NSString *identifier =@"TableViewCell";
     //    开启定时器
     [self addTimer];
 }
-
 /**
  *  开启定时器
  */
 - (void)addTimer{
-    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
 }
 /**
@@ -109,9 +95,6 @@ static NSString *identifier =@"TableViewCell";
     [self.timer invalidate];
 }
 - (IBAction)test:(id)sender {
-    //NoticeViewController * VCCollect = [[NoticeViewController alloc] init];
-    //[self.navigationController pushViewController:VCCollect animated:YES];
-    
     //发送请求
     NSURL *url=[NSURL URLWithString:@"http://www.baidu.com"];
     //请求
@@ -119,69 +102,34 @@ static NSString *identifier =@"TableViewCell";
     //发送异步请求
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         if(!connectionError){
-            //把二进制数据转化成NSString
-            //NSString *html=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-            
-            //
             WebViewController *web=[[WebViewController alloc] init];
-            //[web.webview loadRequest:request];
-            //[self.webview loadHTMLString:html baseURL:nil];
             [self.navigationController pushViewController:web animated:YES];
             web.request=request;
-            
-            //NSLog(@"%@",html);
         }else{
             NSLog(@"连接出错%@",connectionError);
         }
     }];
-    
 }
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    //NSLog(@"%@",@"connection1-begin");
-    
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    //NSLog(@"%@", @"kaishidayin");
-    //NSLog(@"%@", xmlString);
-    
     // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    //NSLog(@"%@", resultString);
-    
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
-    
-    //
-    //    图片的宽
-    CGFloat imageW = self.scrollview.frame.size.width;
-    //    CGFloat imageW = 300;
-    //    图片高
-    CGFloat imageH = self.scrollview.frame.size.height;
-    //    图片的Y
-    CGFloat imageY = 0;
     //    图片中数
     NSInteger totalCount = listOfMovies.count;
     self.pageControl.numberOfPages=totalCount;
-    
     for (int i = 0; i < totalCount; i++) {
         index=i;
         UIImageView *imageView = [[UIImageView alloc] init];
         //        图片X
-        CGFloat imageX = i * imageW;
-        
-        //        设置图片
-        //NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
-        //imageView.image = [UIImage imageNamed:name];
+        CGFloat imageX = i * kScreenWidth;
         
         ScrollView *m =self.listOfMovies[i];
         //NSLog(@"img%@",m.ScrollImage);
@@ -195,23 +143,19 @@ static NSString *identifier =@"TableViewCell";
         //        隐藏指示条
         self.scrollview.showsHorizontalScrollIndicator = NO;
         //        设置frame
-        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
+        imageView.frame = CGRectMake(imageX, StatusBarAndNavigationBarHeight, kScreenWidth, Common_ScrollSize);
         [self.scrollview addSubview:imageView];
-        
     }
     
     // 2.设置scrollview的滚动范围-----
-    CGFloat contentW = totalCount *imageW;
+    CGFloat contentW = totalCount *kScreenWidth;
     //不允许在垂直方向上进行滚动
     self.scrollview.contentSize = CGSizeMake(contentW, 0);
     // 3.设置分页
     self.scrollview.pagingEnabled = YES;
-    
     //4.监听scrollview的滚动
     self.scrollview.delegate = self;
-    
     [self addTimer];
-    
     
     //    for (ScrollView *user in listOfMovies) {
     //        NSLog(@"img=%@, imgUrl=%@", user.ScrollImage, user.ScrollURL);
@@ -221,9 +165,9 @@ static NSString *identifier =@"TableViewCell";
 
 -(void)doTapAction:(UITapGestureRecognizer*)sender{
     //跳转
-    //NSLog(@"6666666666666");
+    
     ScrollView *m =self.listOfMovies[self.pageControl.currentPage];
-    //NSLog(@"666666666img=%@, imgUrl=%@", [NSString stringWithFormat:@"%ld", (long)self.pageControl.currentPage], m.ScrollURL);
+  
     //发送请求
     NSURL *url=[NSURL URLWithString:m.ScrollURL];
     //请求
@@ -266,22 +210,12 @@ static NSString *identifier =@"TableViewCell";
 
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
-    
-    //NSLog(@"%@", @"kaishijiex");    //开始解析XML
-    
-    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    ipParser.delegate = self;
-    [ipParser parse];
-    //NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
-    [self.NewTableView reloadData];
+   
 }
 
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
     info = [[NSMutableDictionary alloc] initWithCapacity: 1];
-    
-    //NSLog(@"%@",@"parserDidStartDocument-end");
 }
 
 //回调方法出错弹框
@@ -293,7 +227,6 @@ static NSString *identifier =@"TableViewCell";
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    //NSLog(@"%@",@"parser-end");
 }
 
 //解析返回xml的节点elementName
@@ -301,17 +234,11 @@ static NSString *identifier =@"TableViewCell";
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    //NSLog(@"value2: %@\n", elementName);
-    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
     currentTagName = elementName;
-    
-    //NSLog(@"%@",@"parser2-end");
 }
 
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    
-    //NSLog(@"%@",@"parser3-begin");
     
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
@@ -322,28 +249,18 @@ static NSString *identifier =@"TableViewCell";
 
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    
-    //NSLog(@"%@",@"parserDidEndDocument-begin");
-    
     NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
     for (id key in info) {
         [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
     }
-    
-    //[outstring release];
-    //[xmlString release];
 }
-
-
-
 - (void)setView1
 {
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"我的申请",@"待我审批",@"待我回览"];
     NSArray *image = @[@"1",@"2",@"3"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, self.view.width, 80) autoWidthFlowItems:image autolabelItem:title withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
-    //DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 300, kWidth, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:image autolabelItem:title withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setLabelClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -370,12 +287,6 @@ static NSString *identifier =@"TableViewCell";
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
-            case 3:
-            {
-                NSLog(@"点击第四个按键");
-            }
-                break;
-                
             default:
                 break;
         }
@@ -388,7 +299,7 @@ static NSString *identifier =@"TableViewCell";
     //上面图片下面文字
     NSArray *title = @[@"请假",@"出差",@"外出"];
     NSArray *image = @[@"app05.png",@"app06.png",@"app07.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 410, self.view.width, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_HomeCellSize+Common_HomeRowSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -416,12 +327,6 @@ static NSString *identifier =@"TableViewCell";
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
-            case 3:
-            {
-                NSLog(@"点击第四个按键");
-            }
-                break;
-                
             default:
                 break;
         }
@@ -434,7 +339,7 @@ static NSString *identifier =@"TableViewCell";
     //上面图片下面文字
     NSArray *title = @[@"考勤日历",@"代理人设置",@"公告"];
     NSArray *image = @[@"app08.png",@"app09.png",@"app10.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, 520, self.view.width, 80) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_HomeCellSize*2+Common_HomeRowSize*2, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -461,12 +366,10 @@ static NSString *identifier =@"TableViewCell";
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
-                
             default:
                 break;
         }
     }];
     [self.view addSubview:btn];
 }
-
 @end

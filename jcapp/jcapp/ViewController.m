@@ -35,6 +35,8 @@
 
 
 #import "TabBar/TabBarViewController.h"
+#import "UsersPage/AlterPWDController.h"
+
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
@@ -133,7 +135,7 @@
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {
-    AgentInfoViewController * valueView = [[AgentInfoViewController alloc] initWithNibName:@"AgentInfoViewController"bundle:[NSBundle mainBundle]];
+    AlterPWDController * valueView = [[AlterPWDController alloc] initWithNibName:@"AlterPWDController"bundle:[NSBundle mainBundle]];
     //从底部划入
     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转

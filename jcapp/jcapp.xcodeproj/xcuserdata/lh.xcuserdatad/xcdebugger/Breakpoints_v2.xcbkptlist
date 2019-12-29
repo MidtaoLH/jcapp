@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/UsersPage/AlterPWDController.m"
-            timestampString = "598859914.220372"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "-btnupdateClick:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "jcapp/Calendar/WHUCalendarView.m"
             timestampString = "597932089.947521"
             startingColumnNumber = "9223372036854775807"
@@ -56,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/AttendanceCalendar/AttendanceSummaryViewController.m"
-            timestampString = "598329695.189898"
+            timestampString = "599133417.7753969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "-loadinfo"
             landmarkType = "7">
          </BreakpointContent>
@@ -72,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/TaskViewBack/TaskBackInfoViewController.m"
-            timestampString = "599047328.9708411"
+            timestampString = "599133417.775461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
             landmarkName = "-connection:didReceiveData:"
             landmarkType = "7">
          </BreakpointContent>
@@ -87,29 +71,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/Notice/NewViewController.m"
-            timestampString = "599047328.970938"
+            filePath = "jcapp/UsersPage/AlterPWDController.m"
+            timestampString = "599316092.226324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "jcapp/Notice/NewViewController.m"
-            timestampString = "599047328.9709949"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "-connection:didReceiveData:"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
+            landmarkName = "-handlerTextFieldEndEdit:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

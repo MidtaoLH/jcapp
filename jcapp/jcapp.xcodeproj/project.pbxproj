@@ -327,6 +327,8 @@
 		EBFDBCC523A369F70019B752 /* AttendanceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDBCC423A369F70019B752 /* AttendanceListCell.m */; };
 		EBFE6ACD23B481E0007169B9 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFE6ACB23B481E0007169B9 /* TabBarViewController.m */; };
 		EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFE6E8723AB0D5100A64AE5 /* TaskBackListCell.m */; };
+		EBFF30CA23B6020E007A7B2C /* pwdinfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF30C923B6020E007A7B2C /* pwdinfo.m */; };
+		EBFF30CD23B60342007A7B2C /* PwdInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF30CC23B60341007A7B2C /* PwdInfoCell.m */; };
 		EBFF5F7A23B3895700EB7F6B /* TLTabBarAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7523B3895700EB7F6B /* TLTabBarAnimation.m */; };
 		EBFF5F7B23B3895700EB7F6B /* UITabBar+TLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7723B3895700EB7F6B /* UITabBar+TLAnimation.m */; };
 		EBFF5F7C23B3895700EB7F6B /* UITabBarItem+TLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7923B3895700EB7F6B /* UITabBarItem+TLAnimation.m */; };
@@ -959,6 +961,10 @@
 		EBFE6ACC23B481E0007169B9 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		EBFE6E8623AB0D5100A64AE5 /* TaskBackListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskBackListCell.h; sourceTree = "<group>"; };
 		EBFE6E8723AB0D5100A64AE5 /* TaskBackListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskBackListCell.m; sourceTree = "<group>"; };
+		EBFF30C823B601FB007A7B2C /* pwdInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pwdInfo.h; sourceTree = "<group>"; };
+		EBFF30C923B6020E007A7B2C /* pwdinfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pwdinfo.m; sourceTree = "<group>"; };
+		EBFF30CB23B60341007A7B2C /* PwdInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PwdInfoCell.h; sourceTree = "<group>"; };
+		EBFF30CC23B60341007A7B2C /* PwdInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PwdInfoCell.m; sourceTree = "<group>"; };
 		EBFF5F6323B3382300EB7F6B /* AgentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentInfo.h; sourceTree = "<group>"; };
 		EBFF5F7223B3895700EB7F6B /* TLAnimationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAnimationProtocol.h; sourceTree = "<group>"; };
 		EBFF5F7323B3895700EB7F6B /* TLAnimationTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLAnimationTabBar.h; sourceTree = "<group>"; };
@@ -1312,6 +1318,8 @@
 				8D83AAEF23AB4C5300406AAA /* KeepLeave.m */,
 				8D96D49D23B0A1BC00D48414 /* Agent.h */,
 				8D96D49E23B0A1BC00D48414 /* Agent.m */,
+				EBFF30C823B601FB007A7B2C /* pwdInfo.h */,
+				EBFF30C923B6020E007A7B2C /* pwdinfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2026,6 +2034,8 @@
 		EBB5CDE02385458700FCA5B5 /* UsersPage */ = {
 			isa = PBXGroup;
 			children = (
+				EBFF30CB23B60341007A7B2C /* PwdInfoCell.h */,
+				EBFF30CC23B60341007A7B2C /* PwdInfoCell.m */,
 				EBB5CDE1238545B700FCA5B5 /* UsersViewController.h */,
 				EBB5CDE2238545B700FCA5B5 /* UsersViewController.m */,
 				EBB5CDE3238545B700FCA5B5 /* UsersViewController.xib */,
@@ -2384,6 +2394,7 @@
 				77D83DF623A353F800534120 /* UIImage+MultiFormat.m in Sources */,
 				EBCF6C0223974DE300893A02 /* PendingViewController.m in Sources */,
 				AF9B0F5223A36555008138EB /* TZAssetCell.m in Sources */,
+				EBFF30CA23B6020E007A7B2C /* pwdinfo.m in Sources */,
 				7706233A23AA220E00030735 /* ImageCell.m in Sources */,
 				EB30A48E2398CECE00EEAE1E /* MJRefreshStateHeader.m in Sources */,
 				775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */,
@@ -2464,6 +2475,7 @@
 				EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */,
 				776D632C239A98F50030C96A /* MultiParamButton.m in Sources */,
 				77D83DF923A353F800534120 /* UIImageView+WebCache.m in Sources */,
+				EBFF30CD23B60342007A7B2C /* PwdInfoCell.m in Sources */,
 				EB30A4832398CECE00EEAE1E /* MJRefreshComponent.m in Sources */,
 				EB30A4952398CECE00EEAE1E /* UIView+MJExtension.m in Sources */,
 				77D83E0723A3540600534120 /* SDPhotoGroup.m in Sources */,

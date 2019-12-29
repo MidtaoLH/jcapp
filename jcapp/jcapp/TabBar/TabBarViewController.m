@@ -6,7 +6,6 @@
 //  Copyright © 2019 midtao. All rights reserved.
 //
 
-
 #import "TabBarViewController.h"
 #import "ToBeReviewViewController.h"
 #import "AlreadyEndViewController.h"
@@ -33,12 +32,12 @@
 #import "NewViewController.h"
 #import "Masonry.h"
 #import "AppDelegate.h"
-@interface TabBarViewController ()
 
+@interface TabBarViewController ()
 @end
 
 @implementation TabBarViewController
-
+NSInteger barheight;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -124,18 +123,21 @@
     {
        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"首页" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     }
+    else{
+   
+    }
 }
 UIViewController *childViewControllerHomePage (NSString *title, NSString *imgName, NSUInteger tag) {
     HomePageViewController *vc = [[HomePageViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     [vc.scrollview mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
         // 添加左
         make.left.mas_equalTo(0);
-        // 添加上
-        make.top.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(vc.view.width,200));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_ScrollSize));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -146,6 +148,48 @@ UIViewController *childViewControllerUsers (NSString *title, NSString *imgName, 
     UsersViewController *vc = [[UsersViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    [vc.myHeadPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+    }];
+    [vc.lblname mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.lblcode mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.lbldept mas_makeConstraints:^(MASConstraintMaker *make) {    make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*3);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+       make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.userslist mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_UserTableHeight));
+    }];
+    [vc.btnloginout mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_UserTableHeight+Common_RowSize*4);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_BtnHeight));
+    }];
+    
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -155,7 +199,14 @@ UIViewController *childViewControllerToBeReview (NSString *title, NSString *imgN
     ToBeReviewViewController *vc = [[ToBeReviewViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -165,7 +216,14 @@ UIViewController *childViewControllerAlreadyEnd (NSString *title, NSString *imgN
     AlreadyEndViewController *vc = [[AlreadyEndViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -174,7 +232,14 @@ UIViewController *childViewControllerPending (NSString *title, NSString *imgName
     PendingViewController *vc = [[PendingViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -183,7 +248,14 @@ UIViewController *childViewControllerPendingApproved (NSString *title, NSString 
     PendingApprovedViewController *vc = [[PendingApprovedViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -192,7 +264,14 @@ UIViewController *childViewControllerWaitingApply(NSString *title, NSString *img
     WaitingApplyViewController *vc = [[WaitingApplyViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -201,7 +280,14 @@ UIViewController *childViewControllerApproving(NSString *title, NSString *imgNam
     ApprovingViewController *vc = [[ApprovingViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -210,7 +296,14 @@ UIViewController *childViewControllerApproved (NSString *title, NSString *imgNam
     ApprovedViewController *vc = [[ApprovedViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -219,7 +312,14 @@ UIViewController *childViewControllerWaitHandle (NSString *title, NSString *imgN
     WaitHandleViewController *vc = [[WaitHandleViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -228,7 +328,14 @@ UIViewController *childViewControllerWaitApply (NSString *title, NSString *imgNa
     WaitApplyViewController *vc = [[WaitApplyViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -238,6 +345,14 @@ UIViewController *childViewControllerVatcationMain (NSString *title, NSString *i
     vc.view.backgroundColor = [UIColor whiteColor];
        //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    [vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -246,7 +361,14 @@ UIViewController *childViewControllerLeave (NSString *title, NSString *imgName, 
     LeaveViewController *vc = [[LeaveViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -255,7 +377,14 @@ UIViewController *childViewControllerBWaitApply (NSString *title, NSString *imgN
     BWaitApplyViewController *vc = [[BWaitApplyViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -266,6 +395,14 @@ UIViewController *childViewControllerSWFormCommon (NSString *title, NSString *im
     //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     setAnimation(vc.tabBarItem, tag);
+    [vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     return vc;
 }
 /// 自定义样式UITabBarItem
@@ -273,7 +410,14 @@ UIViewController *childViewControllerBApproved (NSString *title, NSString *imgNa
     BApprovedViewController *vc = [[BApprovedViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -282,7 +426,14 @@ UIViewController *childViewControllerGoOutWait (NSString *title, NSString *imgNa
     GoOutWaitController *vc = [[GoOutWaitController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -291,7 +442,14 @@ UIViewController *childViewControllerGoOut (NSString *title, NSString *imgName, 
     GoOutViewController *vc = [[GoOutViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -301,6 +459,45 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
     AttendanceCalendarViewController *vc = [[AttendanceCalendarViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    [vc.myHeadPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+    }];
+    [vc.lblname mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.lbldept mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.calview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_AttendanceHeight));
+    }];
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_AttendanceHeight+Common_RowSize*3);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_AttendanceTableHeight));
+    }];
+    //这句必须写
+    vc.NewTableView.rowHeight=Common_AttendanceTableHeight/2;
+    vc.myHeadPortrait.layer.masksToBounds = YES;
+    vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -309,6 +506,43 @@ UIViewController *childViewControllerAttendanceSummary (NSString *title, NSStrin
     AttendanceSummaryViewController *vc = [[AttendanceSummaryViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    [vc.myHeadPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+    }];
+    [vc.lblname mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.lbldept mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        
+        make.left.mas_equalTo(Common_ColSize*2+Common_UserImageSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [vc.btndate mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        
+        make.left.mas_equalTo(kScreenWidth*0.5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_BtnHeight));
+    }];
+    [vc.foldingTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2)));
+    }];
+    vc.myHeadPortrait.layer.masksToBounds = YES;
+    vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -319,7 +553,14 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
     AgentViewController *vc = [[AgentViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -328,6 +569,30 @@ UIViewController *childViewControllerSetAgent (NSString *title, NSString *imgNam
     SetAgentViewController *vc = [[SetAgentViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_TableHeight));
+    }];
+    [vc.savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+    }];
+    [vc.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -336,13 +601,23 @@ UIViewController *childViewControllerNewView (NSString *title, NSString *imgName
     NewViewController *vc = [[NewViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    vc.NewTableView.frame = CGRectMake(0, 0, vc.view.width, vc.view.height);
+    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
 - (void)goBack {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-    }];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.tabbarType=@"1";
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 // MARK: - 给UITabBarItem绑定动画
 /// 给UITabBarItem绑定动画

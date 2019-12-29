@@ -28,19 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"代理人设置";
-    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(clickGoto)];
     [self loadstyle];
     [self loadData];
     [self initUI];
 }
 -(IBAction)savebtnClick:(id)sender {
-    NSLog(@"-----保存数据-----");
-    NSLog(@"编号：%@", self.infoModel.codeStr);
-    NSLog(@"姓名：%@", self.infoModel.nameStr);
-    NSLog(@"开始日期：%@", self.infoModel.startdayStr);
-    NSLog(@"结束时间：%@", self.infoModel.enddayStr);
-    NSLog(@"部门：%@", self.infoModel.deptStr);
 }
 - (void)loadData {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -70,17 +62,14 @@
     
     CGFloat width=self.view.size.width;
     CGFloat height=self.view.size.height;
-    NSInteger TxTHeight=[Common_TxTHeight intValue];//文本高度
-    NSInteger TableHeight=[Common_TableHeight intValue];//列表高度
-    NSInteger RowSize=[Common_RowSize intValue];//行高
-    NSInteger ColSize=[Common_ColSize intValue];//列宽
+    
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(0);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
+        make.top.mas_equalTo(tabBarHeight+Common_RowSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(width,TableHeight));
+        make.size.mas_equalTo(CGSizeMake(width,Common_TableHeight));
     }];
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -91,11 +80,11 @@
     _tableView.estimatedSectionFooterHeight = 0;
     [_stopbtn mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+TableHeight+RowSize*2);
+        make.top.mas_equalTo(tabBarHeight+Common_TableHeight+Common_RowSize*2);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(width-ColSize*2,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(width-Common_ColSize*2,Common_TxTHeight));
     }];
     _stopbtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _stopbtn.font = kFont_Lable_16;
@@ -281,7 +270,5 @@
         [self.tableView layoutIfNeeded];        
         self.tableView.hidden = NO;
     }
-    
-    
 }
 @end

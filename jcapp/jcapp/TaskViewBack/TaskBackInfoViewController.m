@@ -21,11 +21,7 @@
 
 static long step = 0; //记录时钟动画调用次数
 @interface TaskBackInfoViewController ()
-{
-    CGFloat scaleMini;
-    CGFloat scaleMax;
-    
-}
+
 @property (nonatomic, strong) NSArray *srcStringArray;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
@@ -71,128 +67,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
     
     _imgvprocstatus.backgroundColor = kColor_Cyan;
-    NSInteger ColSize=[Common_ColSize intValue];//列宽
-    NSInteger RowSize=[Common_RowSize intValue];//行高
-    NSInteger UserIamgeSize=[Common_UserImageSize intValue];//头像图片大小
-    NSInteger StatusImageSize=[Common_StatusImageSize intValue];//状态图片
-    NSInteger TxTHeight=[Common_TxTHeight intValue];//文本高度
-    NSInteger TxTWidth=[Common_TxTWidth intValue];//文本宽度
-    NSInteger TableHeight=[Common_TableHeight intValue];//列表高度
-    NSInteger ImageTableHeight=[Common_ImageTableHeight intValue];//图片列表高度
-    NSInteger TableRowHeight=[Common_TableRowHeight intValue];
-    NSInteger ImageTableRowHeight=[Common_ImageTableRowHeight intValue];
+ 
     
     //注册自定义 cell
     [_NewTableView registerClass:[TaskBackListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = TableRowHeight;
+    _NewTableView.rowHeight = Common_TableRowHeight;
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
-    _ImageTableView.rowHeight = ImageTableRowHeight;
-    [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(UserIamgeSize,UserIamgeSize));
-    }];
-    [_imgvprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加右
-        make.right.mas_equalTo(-ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(StatusImageSize,StatusImageSize));
-    }];
-    [_lblprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加右
-        make.right.mas_equalTo(-ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(StatusImageSize,StatusImageSize));
-    }];
-    [_emplbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
-    }];
-    [_lblempgroup mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize*2);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
-    }];
-    [_lblapplydate mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize*3);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
-    }];
-    [_lblproctype mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*2);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
-    }];
-    [_lblprocdate mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*3);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth*2,TxTHeight));
-    }];
-    [_lblproccounts mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*4);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
-    }];
-    [_lblprocremark mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*5);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth*2,TxTHeight));
-    }];
-    [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*6);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(self.view.width, ImageTableHeight));
-    }];
-    [_lblcr mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加左
-        make.left.mas_equalTo(ColSize);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+ImageTableHeight+RowSize*6);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(self.view.width, TxTHeight));
-    }];
-    // 审批列表view添加约束
-    [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(self.view.width, TableHeight));
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+ImageTableHeight+RowSize*7);
-    }];
+    _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+   
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = self.imgvemp.width * 0.5;
     

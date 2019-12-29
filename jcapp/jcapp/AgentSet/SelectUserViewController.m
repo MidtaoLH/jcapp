@@ -5,7 +5,7 @@
 #import "../Model/Emp.h"
 #import "AppDelegate.h"
 #import "SetAgentViewController.h"
-
+#import "../TabBar/TabBarViewController.h"
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 // 414
@@ -74,8 +74,13 @@
     myDelegate.TimeStart=self.startTime;
     myDelegate.TimeEnd=self.endTime;
     myDelegate.agentid=self.agentID;
-    SetAgentViewController *VC=[[SetAgentViewController alloc]init];
-    [self presentViewController:VC animated:YES completion:nil];
+  
+    myDelegate.tabbarType=@"9";
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    tabBarCtrl.selectedIndex=1;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+
 }
 -(void)selectFindex:(NSInteger)f Tindex:(NSInteger)t {
     //这个方法 z暂时不管

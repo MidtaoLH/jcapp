@@ -208,7 +208,6 @@ static NSString * identifier = @"PendingListCell";
     NSString *status= cell.pendinglistitem.AgentStatus;
     if([status containsString:@"1"])
     {
-        self.tabBarController.tabBar.hidden = YES;
         SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
         VCCollect.infoModel.agentID=code;
         AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
@@ -217,7 +216,6 @@ static NSString * identifier = @"PendingListCell";
     }
     else
     {
-        self.tabBarController.tabBar.hidden = YES;
         AgentInfoViewController * VCCollect = [[AgentInfoViewController alloc] init];
         VCCollect.infoModel.agentID=code;
         [self.navigationController pushViewController:VCCollect animated:YES];

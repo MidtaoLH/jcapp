@@ -6,17 +6,11 @@
 //  Copyright © 2019 midtao. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-#import "../Model/AttendanceCalendarDetail.h"
-
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface AttendanceListCell : UITableViewCell
-
-@property (nonatomic,strong) AttendanceCalendarDetail * attendancelistitem;
-
-
+@property (nonatomic, strong) UILabel *attendanceCaseNameLable;
+@property (nonatomic, strong) UILabel *attendanceDateLable;
+@property (nonatomic, strong) UILabel *attendanceDurationLable;
+@property (nonatomic, strong) UILabel *attendanceDescribeLable;
 
 @end
-
-NS_ASSUME_NONNULL_END

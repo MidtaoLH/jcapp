@@ -55,5 +55,7 @@
 @property (nonatomic, strong) NSString *agentType;
 
 @property (nonatomic, strong) NSString *tabbarType;
+
+@property (strong,nonatomic) NSMutableArray *aclistOfMovies;
 @end
 

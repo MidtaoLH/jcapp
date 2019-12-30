@@ -71,13 +71,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/UsersPage/AlterPWDController.m"
-            timestampString = "599316092.226324"
+            filePath = "jcapp/VatationPage/VatcationMainView.m"
+            timestampString = "599403064.771794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "-handlerTextFieldEndEdit:"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "-datas"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

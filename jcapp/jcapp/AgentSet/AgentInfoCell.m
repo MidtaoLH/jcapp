@@ -28,12 +28,78 @@
     [super layoutSubviews];
    
     if (self.isTitle) {
+        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(Common_ColSize);
+            // 添加上
+            make.top.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth, Common_TxTHeight));
+        }];
+        [_infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(Common_ColSize);
+            // 添加上
+            make.top.mas_equalTo(Common_TxTHeight);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth, Common_TxTHeight));
+        }];
+        [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(Common_ColSize);
+            // 添加上
+            make.top.mas_equalTo(Common_TxTHeight*2);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_TxTHeight));
+        }];
+        
+        [_image mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
+            // 添加上
+            make.top.mas_equalTo(10);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize, Common_StatusImageSize));
+        }];
         _image.layer.cornerRadius = _image.width * 0.5;
         _image.alpha =0.5;
+        [_statusDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
+            // 添加上
+            make.top.mas_equalTo(10);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize, Common_StatusImageSize));
+        }];
     }
     else{
-      
+        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
+        [_infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(Common_ColSize);
+            // 添加上
+            make.top.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth, Common_TxTHeight));
+        }];
+        [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加左
+            make.left.mas_equalTo(Common_ColSize);
+            // 添加上
+            make.top.mas_equalTo(Common_TxTHeight);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth, Common_TxTHeight));
+        }];
+        [_image mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
+        [_statusDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
     }
+    
     
    
 }

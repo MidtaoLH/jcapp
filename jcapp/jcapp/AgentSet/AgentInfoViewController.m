@@ -156,16 +156,6 @@
     return 0.0001f;
 }
 
-#pragma mark - 获取地区数据源
-- (NSArray *)getAddressDataSource {
-    // 加载地区数据源（实际开发中这里可以写网络请求，从服务端请求数据。可以把 BRCity.json 文件的数据放到服务端去维护，通过接口获取这个数据源数组）
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BRCity.json" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    NSArray *dataSource = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    return dataSource;
-}
-
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     [self.view endEditing:YES];
@@ -254,6 +244,7 @@
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     if([xmlString containsString:@"msg"])
     {
+        [self loadData];
         MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"提示信息！"

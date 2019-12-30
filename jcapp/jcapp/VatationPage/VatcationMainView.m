@@ -117,6 +117,7 @@ static NSInteger rowHeight=50;
             //赋值完毕后清空
             [defaults setObject:@"" forKey:@"vatcationname"];
             [self.formTableView reloadData];
+            [self.formTableView layoutIfNeeded];
         }
        
     }
@@ -187,7 +188,19 @@ static NSInteger rowHeight=50;
             NSLog(@"%@",dateString);
             
             self.businessTripStart.info =dateString;
-            [self.formTableView reloadData];
+            //[self.formTableView reloadData];
+            
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
+            
+            [UIView setAnimationsEnabled:NO];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+            [UIView setAnimationsEnabled:YES];
+            
+            [UIView performWithoutAnimation:^{
+                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+            }];
         }];
 
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

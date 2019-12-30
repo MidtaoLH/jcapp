@@ -7,24 +7,72 @@
 //
 
 #import "AttendanceListCell.h"
-#import "../SDWebImage/UIImageView+WebCache.h"
+#import "Masonry.h"
 #define kMargin 10
 
 @interface AttendanceListCell()
-@property (nonatomic, strong) UILabel *attendanceCaseNameLable;
-@property (nonatomic, strong) UILabel *attendanceDateLable;
-@property (nonatomic, strong) UILabel *attendanceDurationLable;
-@property (nonatomic, strong) UILabel *attendanceDescribeLable;
+
 
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
 @implementation AttendanceListCell
 
+//自定义cell 需要重写的方法
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    if ([super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self.contentView addSubview:self.attendanceCaseNameLable];
+        [self.contentView addSubview:self.attendanceDateLable];
+        [self.contentView addSubview:self.attendanceDurationLable];
+        [self.contentView addSubview:self.attendanceDescribeLable];
+    }
+    return self;
+}
+
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    [_attendanceCaseNameLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_AttendanceTxTHeight));
+    }];
+    [_attendanceDateLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(Common_AttendanceTxTHeight);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_AttendanceTxTHeight));
+    }];
+    [_attendanceDurationLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(Common_AttendanceTxTHeight*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_AttendanceTxTHeight));
+    }];
+    [_attendanceDescribeLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(Common_AttendanceTxTHeight*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_AttendanceTxTHeight));
+    }];
+}
 - (UILabel *)attendanceCaseNameLable {
     
     if (!_attendanceCaseNameLable) {
         _attendanceCaseNameLable = [[UILabel alloc] init];
+        _attendanceCaseNameLable.backgroundColor = [UIColor clearColor];        
         _attendanceCaseNameLable.font = kFont_Lable_14;
         _attendanceCaseNameLable.textColor = kColor_Blue;
     }
@@ -34,6 +82,7 @@
     
     if (!_attendanceDateLable) {
         _attendanceDateLable= [[UILabel alloc] init];
+        _attendanceDateLable.backgroundColor = [UIColor clearColor];
         _attendanceDateLable.font = kFont_Lable_13;
         _attendanceDateLable.textColor = kColor_Gray;
     }
@@ -43,6 +92,7 @@
     
     if (!_attendanceDurationLable) {
         _attendanceDurationLable = [[UILabel alloc] init];
+        _attendanceDurationLable.backgroundColor = [UIColor clearColor];
         _attendanceDurationLable.font = kFont_Lable_13;
         _attendanceDurationLable.textColor = kColor_Gray;
     }
@@ -52,52 +102,10 @@
     
     if (!_attendanceDescribeLable) {
         _attendanceDescribeLable = [[UILabel alloc] init];
+        _attendanceDescribeLable.backgroundColor = [UIColor clearColor];
         _attendanceDescribeLable.font = kFont_Lable_13;
         _attendanceDescribeLable.textColor =kColor_Gray;
     }
     return _attendanceDescribeLable;
-}
-//自定义cell 需要重写的方法
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self.contentView addSubview:self.attendanceCaseNameLable];
-        [self.contentView addSubview:self.attendanceDateLable];
-        [self.contentView addSubview:self.attendanceDurationLable];
-        [self.contentView addSubview:self.attendanceDescribeLable];
-    }
-    return self;
-}
-
--(void)setAttendancelistitem:(AttendanceCalendarDetail *)attendancelistitem
-{
-    _attendancelistitem =attendancelistitem;
-    self.attendanceCaseNameLable.text = _attendancelistitem.PlanType;
-    self.attendanceDateLable.text = [NSString stringWithFormat:@"请假时间：%@  ~  %@",_attendancelistitem.PlanStartTime,_attendancelistitem.PlanEndTime];
-    self.attendanceDurationLable.text =[NSString stringWithFormat:@"请假时长（h）:%@",_attendancelistitem.PlanNum];
-    self.attendanceDescribeLable.text = [NSString stringWithFormat:@"请假事由：%@",_attendancelistitem.Describe];
-}
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    CGFloat width = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
-    CGFloat leaveDateWidth = 80;
-    //每行的文本的高度
-    CGFloat txtH = (height - 4*kMargin)/4;
-    self.attendanceCaseNameLable.frame = CGRectMake(2*kMargin,kMargin,width, txtH);
-    self.attendanceDateLable.frame = CGRectMake(2*kMargin,1*txtH+2*kMargin,width, txtH);
-    self.attendanceDurationLable.frame = CGRectMake(2*kMargin,2*txtH+2*kMargin,width, txtH);
-    self.attendanceDescribeLable.frame = CGRectMake(2*kMargin,3*txtH+2*kMargin,width, txtH);
-}
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
 }
 @end

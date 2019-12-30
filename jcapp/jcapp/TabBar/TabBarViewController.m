@@ -46,7 +46,7 @@ NSInteger barheight;
     {
         [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_friendTrends_icon", 1)];
-        self.navigationItem.title=@"北京中道益通软件技术有限公司";
+        self.navigationItem.title=@"首页";
     }
     else if([myDelegate.tabbarType isEqualToString:@"2"])
     {
@@ -54,19 +54,19 @@ NSInteger barheight;
         [self addChildViewController:childViewControllerApproving(@"审批中", @"drop", 1)];
         [self addChildViewController:childViewControllerApproved(@"已决裁", @"drop", 2)];
         [self addChildViewController:childViewControllerWaitHandle(@"待处理", @"drop", 3)];
-        self.navigationItem.title=@"我的申请";
+        self.navigationItem.title=@"待申请";
     }
     else if([myDelegate.tabbarType isEqualToString:@"3"])
     {
         [self addChildViewController:childViewControllerPending(@"待审批", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerPendingApproved(@"待审批", @"drop", 1)];
-        self.navigationItem.title=@"待我审批";
+        self.navigationItem.title=@"待审批";
     }
     else if([myDelegate.tabbarType isEqualToString:@"4"])
     {
         [self addChildViewController:childViewControllerToBeReview(@"待回览", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerAlreadyEnd(@"已回览", @"drop", 1)];
-        self.navigationItem.title=@"待我回览";
+        self.navigationItem.title=@"待回览";
     }
     else if([myDelegate.tabbarType isEqualToString:@"5"])
     {
@@ -74,7 +74,7 @@ NSInteger barheight;
         [self addChildViewController:childViewControllerWaitApply(@"待申请", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerVatcationMain(@"", @"publish-text", 1)];
         [self addChildViewController:childViewControllerLeave(@"请假记录", @"drop", 2)];
-        self.navigationItem.title=@"请假";
+        self.navigationItem.title=@"待申请";
     }
     else if([myDelegate.tabbarType isEqualToString:@"6"])
     {
@@ -84,7 +84,7 @@ NSInteger barheight;
         [self addChildViewController:childViewControllerBWaitApply(@"待申请", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerSWFormCommon(@"", @"publish-text", 1)];
         [self addChildViewController:childViewControllerBApproved(@"出差记录", @"drop", 2)];
-        self.navigationItem.title=@"出差";
+        self.navigationItem.title=@"待申请";
     }
     else if([myDelegate.tabbarType isEqualToString:@"7"])
     {
@@ -92,7 +92,7 @@ NSInteger barheight;
         [self addChildViewController:childViewControllerGoOutWait(@"待申请", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerVatcationMain(@"", @"publish-text", 1)];
         [self addChildViewController:childViewControllerGoOut(@"外出记录", @"drop", 2)];
-        self.navigationItem.title=@"外出";
+        self.navigationItem.title=@"待申请";
     }
     else if([myDelegate.tabbarType isEqualToString:@"8"])
     {
@@ -103,10 +103,10 @@ NSInteger barheight;
     else if([myDelegate.tabbarType isEqualToString:@"9"])
     {
         myDelegate.AppRoveType =@"agent";
-        [self addChildViewController:childViewControllerAgent(@"待申请", @"tabBar_essence_icon", 0)];
+        [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerSetAgent(@"", @"publish-text", 1)];
         [self addChildViewController:childViewControllerAgent(@"", @"", 2)];
-        self.navigationItem.title=@"代理人设置";
+        self.navigationItem.title=@"代理人列表";
     }
     else if([myDelegate.tabbarType isEqualToString:@"10"])
     {
@@ -487,15 +487,13 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_AttendanceHeight));
     }];
-    [vc.NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_AttendanceHeight+Common_RowSize*3);
         
         make.left.mas_equalTo(0);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_AttendanceTableHeight));
-    }];
-    //这句必须写
-    vc.NewTableView.rowHeight=Common_AttendanceTableHeight/2;
+    }]; 
     vc.myHeadPortrait.layer.masksToBounds = YES;
     vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
     setAnimation(vc.tabBarItem, tag);
@@ -673,5 +671,6 @@ NSArray *imgs (){
 // MARK: - UITabBarItemDelegate 监听TabBarItem点击事件
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     
+    self.navigationItem.title=item.title;
 }
 @end

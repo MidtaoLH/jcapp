@@ -26,8 +26,6 @@
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.tableView reloadData];
-    [self.tableView layoutIfNeeded];
 }
 - (void)loadData {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -215,11 +213,8 @@
 -(IBAction)btnupdateClick:(id)sender {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
-    NSString *oldpassword = self.infoModel.oldpwd;
-    NSString *password = self.infoModel.newpwd;
-    NSString *enterpassword = self.infoModel.enterpwd;
     NSString *version = [UIDevice currentDevice].systemVersion;
-    if(oldpassword.length==0)
+    if(self.infoModel.oldpwd.length==0)
     {
         if (version.doubleValue >= 9.0) {
             // 针对 9.0 以上的iOS系统进行处理
@@ -242,7 +237,7 @@
             [alert show];
         }
     }
-    else if(password.length==0)
+    else if(self.infoModel.newpwd.length==0)
     {
         if (version.doubleValue >= 9.0) {
             // 针对 9.0 以上的iOS系统进行处理
@@ -265,7 +260,7 @@
             [alert show];
         }
     }
-    else if(enterpassword.length==0)
+    else if(self.infoModel.enterpwd.length==0)
     {
         if (version.doubleValue >= 9.0) {
             // 针对 9.0 以上的iOS系统进行处理
@@ -288,7 +283,7 @@
             [alert show];
         }
     }
-    else if(password!=enterpassword)
+    else if(self.infoModel.newpwd!=self.infoModel.enterpwd)
     {
         if (version.doubleValue >= 9.0) {
             // 针对 9.0 以上的iOS系统进行处理
@@ -314,7 +309,7 @@
     else
     {
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/UpdatePassWord?id=%@&password=%@&oldPassword=%@",user,password,oldpassword];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/UpdatePassWord?id=%@&password=%@&oldPassword=%@",user,self.infoModel.enterpwd,self.infoModel.oldpwd];
         //id,password,oldPassword
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
@@ -393,7 +388,6 @@
         if ([string isEqualToString:@"1"]) {
             message = [[NSString alloc] initWithFormat:@"%@", @"修改成功！"];
             [self loadData];
-            [self initUI];
             [self loadstyle];
             [self.tableView reloadData];
             [self.tableView layoutIfNeeded];

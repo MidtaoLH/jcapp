@@ -11,6 +11,7 @@
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "../Model/ScrollView.h"
 #import "../TabBar/TabBarViewController.h"
+#import "../Model/AttendanceCalendar.h"
 #import "AppDelegate.h"
 #import "DXLAutoButtonView.h"
 #import "WebViewController.h"
@@ -121,42 +122,53 @@
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
-    //    图片中数
-    NSInteger totalCount = listOfMovies.count;
-    self.pageControl.numberOfPages=totalCount;
-    for (int i = 0; i < totalCount; i++) {
-        index=i;
-        UIImageView *imageView = [[UIImageView alloc] init];
-        //        图片X
-        CGFloat imageX = i * kScreenWidth;
+    if([xmlString containsString:@"AttendanceCalendarTime"])
+    {
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.aclistOfMovies = [AttendanceCalendar mj_objectArrayWithKeyValuesArray:resultDic];
+        //[self.calview reloadInputViews];
+        myDelegate.tabbarType=@"8";
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }else
+    {
+        listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
+        //    图片中数
+        NSInteger totalCount = listOfMovies.count;
+        self.pageControl.numberOfPages=totalCount;
+        for (int i = 0; i < totalCount; i++) {
+            index=i;
+            UIImageView *imageView = [[UIImageView alloc] init];
+            //        图片X
+            CGFloat imageX = i * kScreenWidth;
+            
+            ScrollView *m =self.listOfMovies[i];
+            //NSLog(@"img%@",m.ScrollImage);
+            //加载网络图片
+            [imageView sd_setImageWithURL:[NSURL URLWithString:m.ScrollImage]];
+            
+            imageView.userInteractionEnabled = YES;
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
+            [imageView addGestureRecognizer:tap];
+            //        隐藏指示条
+            self.scrollview.showsHorizontalScrollIndicator = NO;
+            //        设置frame
+            imageView.frame = CGRectMake(imageX, StatusBarAndNavigationBarHeight, kScreenWidth, Common_ScrollSize);
+            [self.scrollview addSubview:imageView];
+        }
         
-        ScrollView *m =self.listOfMovies[i];
-        //NSLog(@"img%@",m.ScrollImage);
-        //加载网络图片
-        [imageView sd_setImageWithURL:[NSURL URLWithString:m.ScrollImage]];
-        
-        imageView.userInteractionEnabled = YES;
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
-        [imageView addGestureRecognizer:tap];
-        //        隐藏指示条
-        self.scrollview.showsHorizontalScrollIndicator = NO;
-        //        设置frame
-        imageView.frame = CGRectMake(imageX, StatusBarAndNavigationBarHeight, kScreenWidth, Common_ScrollSize);
-        [self.scrollview addSubview:imageView];
-    }
-    
-    // 2.设置scrollview的滚动范围-----
-    CGFloat contentW = totalCount *kScreenWidth;
-    //不允许在垂直方向上进行滚动
-    self.scrollview.contentSize = CGSizeMake(contentW, 0);
-    // 3.设置分页
-    self.scrollview.pagingEnabled = YES;
-    //4.监听scrollview的滚动
-    self.scrollview.delegate = self;
-    [self addTimer];
-    
+        // 2.设置scrollview的滚动范围-----
+        CGFloat contentW = totalCount *kScreenWidth;
+        //不允许在垂直方向上进行滚动
+        self.scrollview.contentSize = CGSizeMake(contentW, 0);
+        // 3.设置分页
+        self.scrollview.pagingEnabled = YES;
+        //4.监听scrollview的滚动
+        self.scrollview.delegate = self;
+        [self addTimer];
+     }
     //    for (ScrollView *user in listOfMovies) {
     //        NSLog(@"img=%@, imgUrl=%@", user.ScrollImage, user.ScrollURL);
     //    }
@@ -344,10 +356,8 @@
         switch (index) {
             case 0:
             {
-                myDelegate.tabbarType=@"8";
-                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-                [self presentViewController:navigationController animated:YES completion:nil];
+                [self loadacinfo];
+               
             }
                 break;
             case 1:
@@ -371,5 +381,18 @@
         }
     }];
     [self.view addSubview:btn];
+}
+-(void)loadacinfo{
+    //设置需要访问的ws和传入参数
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *empID = [defaults objectForKey:@"EmpID"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendance?empid=%@",empID];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
 }
 @end

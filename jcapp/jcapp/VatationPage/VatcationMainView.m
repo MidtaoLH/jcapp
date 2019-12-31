@@ -189,18 +189,11 @@ static NSInteger rowHeight=50;
             
             self.businessTripStart.info =dateString;
             //[self.formTableView reloadData];
-            
             [self.formTableView beginUpdates];
-            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
             [self.formTableView endUpdates];
             
-            [UIView setAnimationsEnabled:NO];
-            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-            [UIView setAnimationsEnabled:YES];
-            
-            [UIView performWithoutAnimation:^{
-                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-            }];
+      
         }];
 
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -247,7 +240,9 @@ static NSInteger rowHeight=50;
             NSLog(@"%@",dateString);
             
             self.businessTripEnd.info =dateString;
-            [self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
         
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

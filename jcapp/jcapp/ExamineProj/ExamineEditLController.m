@@ -16,10 +16,8 @@
 #import "SDDemoCell.h"
 #import "SDPhotoItem.h"
 
-#define kCount 6  //图片总张数
-
-static long step = 0; //记录时钟动画调用次数
-
+#define kCount 4  //图片总张数
+ 
 @interface ExamineEditLController ()
 {
     CGFloat scaleMini;

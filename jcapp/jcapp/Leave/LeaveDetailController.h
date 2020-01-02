@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
 }
+@property (nonatomic,copy) NSString *awardID_FK;
+@property (nonatomic,copy) NSString *processInstanceID;
 
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 

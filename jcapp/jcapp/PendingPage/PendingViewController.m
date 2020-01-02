@@ -30,7 +30,7 @@ static NSString * identifier = @"PendingListCell";
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-
+    
     CGFloat headimageW = self.view.frame.size.width;
     CGFloat headimageH =  self.view.frame.size.height;
     self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
@@ -90,7 +90,7 @@ static NSString * identifier = @"PendingListCell";
 - (void)footerClick {
     // 可在此处实现上拉加载时要执行的代码
     // ......
-    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]	;
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];
@@ -206,10 +206,9 @@ static NSString * identifier = @"PendingListCell";
     if([cell.pendinglistitem.TaskNodeOperateType isEqualToString:@"1"])
     {
         NSString *code= cell.pendinglistitem.PicID;
-        NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
         TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+        VCCollect.pagetype=@"1";
         VCCollect.code=code;
-        VCCollect.taskcode=taskcode;
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else

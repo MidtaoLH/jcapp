@@ -238,7 +238,7 @@ NSString * bflag = @"flase";
 }
 -(void)processAction{
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
-    //nextVc.pro
+    nextVc.processid=processid;
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
     if([ bflag isEqualToString:@"flase"])
     {

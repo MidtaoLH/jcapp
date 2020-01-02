@@ -30,7 +30,7 @@ static NSString * identifier = @"PendingListCell";
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
     temporaryBarButtonItem.title =@"返回";
     self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-
+    
     CGFloat headimageW = self.view.frame.size.width;
     CGFloat headimageH =  self.view.frame.size.height;
     self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
@@ -206,10 +206,8 @@ static NSString * identifier = @"PendingListCell";
     if([cell.pendinglistitem.TaskNodeOperateType isEqualToString:@"1"])
     {
         NSString *code= cell.pendinglistitem.PicID;
-        NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
         TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
         VCCollect.code=code;
-        VCCollect.taskcode=taskcode;
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else
@@ -240,22 +238,6 @@ static NSString * identifier = @"PendingListCell";
     }
     if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
-    Pending * pending = self.listOfMovies[indexPath.row];
-    NSLog(@"pending.PicID:%@",pending.DocumentName);
-    //根据不同类型的单据跳转到不同的画面
-    if([pending.DocumentName isEqualToString:@"请假"]){
-        
-        ExamineEditLController *order = [[ExamineEditLController alloc] init];
-        [self.navigationController pushViewController:order animated:YES];
-    }
-    else if([pending.DocumentName isEqualToString:@"出差"]){
-        
-        ExamineEditLController *order = [[ExamineEditLController alloc] init];
-        [self.navigationController pushViewController:order animated:YES];
-    }
-    else if([pending.DocumentName isEqualToString:@"外出"]){
-        ExamineEditLController *order = [[ExamineEditLController alloc] init];
-        [self.navigationController pushViewController:order animated:YES];
     }
 }
 @end

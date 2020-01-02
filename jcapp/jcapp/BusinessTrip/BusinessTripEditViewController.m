@@ -44,31 +44,32 @@ NSString * bflag = @"flase";
     
     
     //totalcount=1;
-    totalHeight=Common_CCTotalHeight;
+    totalHeight=Common_CCRowHeight;
     //tableViewPlace.backgroundColor=UIColor.blueColor;
-    tableViewPlace.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+Common_RowSize, kScreenWidth, totalHeight);
+    tableViewPlace.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, totalHeight);
     
-    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
-        
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
-    }];
+//    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
+//    }];
     tableViewPlace.rowHeight=Common_CCRowHeight;
     myData = [[NSMutableArray alloc]initWithObjects:@"",nil];
     //[myData insertObject:@"f" atIndex:0];
 
     self.genders = @[@"男",@"女"];
     [self datas];
-   
-    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+tableViewPlace.height);
-        
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
-    }];
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+    
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -450,8 +451,21 @@ NSString * bflag = @"flase";
 -(void)LoadTableLocation
 {
     tableViewPlace.height=totalHeight;
+//    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
+//    }];
     [tableViewPlace reloadData];
-    self.formTableView.frame=CGRectMake(0,totalHeight-20, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//    }];
 }
 - (void)textFieldWithText:(UITextField *)textField
 {

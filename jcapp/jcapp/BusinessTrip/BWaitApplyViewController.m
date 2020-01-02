@@ -273,7 +273,7 @@ NSInteger currentPageCountbwait;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
     order.hidesBottomBarWhenPushed = YES;
-    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
+    [self.navigationController pushViewController:order animated:YES];
 }
 
 @end

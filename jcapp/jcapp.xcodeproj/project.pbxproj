@@ -36,6 +36,7 @@
 		772B6C7C23A20B58003CE53D /* WaitTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C7A23A20B58003CE53D /* WaitTaskController.xib */; };
 		772B6C7F23A21183003CE53D /* WaitTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C7E23A21182003CE53D /* WaitTaskCell.m */; };
 		772B6C8223A21286003CE53D /* WaitTaskImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C8123A21285003CE53D /* WaitTaskImageCell.m */; };
+		774DFE1B23BDEB39002C3602 /* ExamineHead.m in Sources */ = {isa = PBXBuildFile; fileRef = 774DFE1A23BDEB39002C3602 /* ExamineHead.m */; };
 		7756E87A2397FC1300BF6944 /* LeaveDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E8752397FC1100BF6944 /* LeaveDetailController.m */; };
 		7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7756E8772397FC1200BF6944 /* LeaveDetailController.xib */; };
 		7756E87C2397FC1300BF6944 /* LeaveDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7756E8792397FC1200BF6944 /* LeaveDetailCell.m */; };
@@ -404,6 +405,8 @@
 		772B6C7E23A21182003CE53D /* WaitTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitTaskCell.m; sourceTree = "<group>"; };
 		772B6C8023A21285003CE53D /* WaitTaskImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitTaskImageCell.h; sourceTree = "<group>"; };
 		772B6C8123A21285003CE53D /* WaitTaskImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitTaskImageCell.m; sourceTree = "<group>"; };
+		774DFE1923BDEB39002C3602 /* ExamineHead.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExamineHead.h; sourceTree = "<group>"; };
+		774DFE1A23BDEB39002C3602 /* ExamineHead.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExamineHead.m; sourceTree = "<group>"; };
 		7756E8752397FC1100BF6944 /* LeaveDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveDetailController.m; sourceTree = "<group>"; };
 		7756E8762397FC1100BF6944 /* LeaveDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveDetailController.h; sourceTree = "<group>"; };
 		7756E8772397FC1200BF6944 /* LeaveDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeaveDetailController.xib; sourceTree = "<group>"; };
@@ -1325,6 +1328,8 @@
 				8D96D49E23B0A1BC00D48414 /* Agent.m */,
 				EBFF30C823B601FB007A7B2C /* pwdInfo.h */,
 				EBFF30C923B6020E007A7B2C /* pwdinfo.m */,
+				774DFE1923BDEB39002C3602 /* ExamineHead.h */,
+				774DFE1A23BDEB39002C3602 /* ExamineHead.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2306,6 +2311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBFF5F7B23B3895700EB7F6B /* UITabBar+TLAnimation.m in Sources */,
+				774DFE1B23BDEB39002C3602 /* ExamineHead.m in Sources */,
 				AF7EC2EB2396140B00257CF1 /* ApprovingViewController.m in Sources */,
 				EBFE6E8823AB0D5200A64AE5 /* TaskBackListCell.m in Sources */,
 				EBD9A81523AB0DBE00EC78CD /* ViewBackTask.m in Sources */,

@@ -19,6 +19,8 @@
 
 @implementation ImageCell
 
+@synthesize listAnnex;
+
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -51,7 +53,7 @@
     
     int i = 0;
     
-    for (NSString * imgItem in array) {
+    for (NSString * imgItem in listAnnex) {
         
         // 图片X
         CGFloat imageX = i * imageW + i * 10;
@@ -60,7 +62,8 @@
         
         imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
         
-        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
+        NSString *name = [NSString stringWithFormat:Common_WSUrl,imgItem];
+      //  NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
         imageView.image = [UIImage imageNamed:name];
         
         NSDictionary* paramDic = @{@"taskid": @"3" };

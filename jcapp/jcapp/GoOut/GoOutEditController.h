@@ -20,19 +20,29 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *empID;
     NSString *userID;
     NSString *UserHour;
-    
-    NSString *edittype;
+     
     NSString *vatcationid;
-    NSString *processid;
-    NSString *urltype;
+    NSString *processid; 
     NSString *ApplyCode;
     
-}
+} 
+@property (nonatomic,copy) NSString *processInstanceID;
+@property (nonatomic,copy) NSString *evectionID;
+@property (nonatomic,copy) NSString *ProcessApplyCode;
+@property (nonatomic,copy) NSString *edittype;
+@property (nonatomic,copy) NSString *urltype;
+
+
 
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfKeepLeave;
 @property (strong,nonatomic) NSMutableArray *listOfLeave;
 
+@property (strong,nonatomic) NSMutableArray *listdetail;
+@property (strong,nonatomic) NSMutableArray *listhead;
+@property (strong,nonatomic) NSMutableArray *listtask;
+
+@property (strong,nonatomic) NSMutableArray *listAnnex;
 
 @end
 

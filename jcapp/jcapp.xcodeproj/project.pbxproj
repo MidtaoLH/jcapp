@@ -11,6 +11,7 @@
 		7700055E23A36ED20079B49F /* ExamineEditImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700055A23A36ED20079B49F /* ExamineEditImageCell.m */; };
 		7700056223A373F80079B49F /* ExamineEditLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700056023A373F80079B49F /* ExamineEditLController.m */; };
 		7700056323A373F80079B49F /* ExamineEditLController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7700056123A373F80079B49F /* ExamineEditLController.xib */; };
+		7700F19623BD8A0400AD84C5 /* MdlAnnex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7700F19423BD8A0300AD84C5 /* MdlAnnex.m */; };
 		7702DB2D23A08A6000483CF1 /* NoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7702DB2C23A08A6000483CF1 /* NoticeCell.m */; };
 		7702DB3223A094CC00483CF1 /* NoticeDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7702DB3023A094CC00483CF1 /* NoticeDetailController.xib */; };
 		7702DB3523A096F000483CF1 /* NoticeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7702DB3323A096F000483CF1 /* NoticeDetailController.m */; };
@@ -359,6 +360,8 @@
 		7700055F23A373F80079B49F /* ExamineEditLController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExamineEditLController.h; sourceTree = "<group>"; };
 		7700056023A373F80079B49F /* ExamineEditLController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExamineEditLController.m; sourceTree = "<group>"; };
 		7700056123A373F80079B49F /* ExamineEditLController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamineEditLController.xib; sourceTree = "<group>"; };
+		7700F19423BD8A0300AD84C5 /* MdlAnnex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MdlAnnex.m; sourceTree = "<group>"; };
+		7700F19523BD8A0400AD84C5 /* MdlAnnex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MdlAnnex.h; sourceTree = "<group>"; };
 		7702DB2B23A08A6000483CF1 /* NoticeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoticeCell.h; sourceTree = "<group>"; };
 		7702DB2C23A08A6000483CF1 /* NoticeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoticeCell.m; sourceTree = "<group>"; };
 		7702DB3023A094CC00483CF1 /* NoticeDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeDetailController.xib; sourceTree = "<group>"; };
@@ -1260,6 +1263,8 @@
 		8D92093A238CEAFA006E43CC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7700F19523BD8A0400AD84C5 /* MdlAnnex.h */,
+				7700F19423BD8A0300AD84C5 /* MdlAnnex.m */,
 				EBFF5F6323B3382300EB7F6B /* AgentInfo.h */,
 				EB7A340B23B2402300F34F46 /* AgentInfo.m */,
 				EB7A340C23B2402300F34F46 /* BRInfoModel.h */,
@@ -2449,6 +2454,7 @@
 				AF3D92A123A22DEC00001C73 /* BusinessTripEditViewController.m in Sources */,
 				AF9B0F3F23A36555008138EB /* UIImage+EMMultiFormat.m in Sources */,
 				AF9B0F3523A36555008138EB /* EMSDWebImageCompat.m in Sources */,
+				7700F19623BD8A0400AD84C5 /* MdlAnnex.m in Sources */,
 				EB30A4892398CECE00EEAE1E /* MJRefreshBackGifFooter.m in Sources */,
 				775B61A8238BBE8D00985FF3 /* MJPropertyType.m in Sources */,
 				EB7A340623B23FDB00F34F46 /* BRResultModel.m in Sources */,

@@ -283,16 +283,20 @@
   
     
      self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH );
-    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,2*txtH+2*kMargin, leaveDateWidth, txtH);
+    
+    //leavelname
+    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,txtH+2*kMargin, leaveDateWidth, txtH);
+    
+    //bumen
     self.leaveDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
  
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
     //self.leaveadd.frame=CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
     
-    self.btnAdd.frame = CGRectMake(50,40, 80, 8);
+    self.btnAdd.frame = CGRectMake(180,40, 30,30);
     
-    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin,6*kMargin, leaveDateWidth, txtH);
+    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin+20,6*kMargin, 50, 40);
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     

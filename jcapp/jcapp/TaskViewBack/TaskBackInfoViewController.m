@@ -64,18 +64,118 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     _lblprocremark.font=kFont_Lable_14;
     _lblprocstatus.font=kFont_Lable_18;
     _lblproctype.font=kFont_Lable_16;
-    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
-    
     _imgvprocstatus.backgroundColor = kColor_Cyan;
- 
-    
     //注册自定义 cell
     [_NewTableView registerClass:[TaskBackListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = Common_TableRowHeight;
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
-   
+    [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+    }];
+    [_imgvprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加右
+        make.right.mas_equalTo(-Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize,Common_StatusImageSize));
+    }];
+    [_lblprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加右
+        make.right.mas_equalTo(-Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize,Common_StatusImageSize));
+    }];
+    [_emplbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblempgroup mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblapplydate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblproctype mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+      make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblprocdate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+       make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2,Common_TxTHeight));
+    }];
+    [_lblproccounts mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+       make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*4);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblprocremark mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*6);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_ImageTableHeight));
+    }];
+    [_lblcr mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_ImageTableHeight+Common_RowSize*6);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,  Common_TxTHeight));
+    }];
+    // 审批列表view添加约束
+    [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_TableHeight));
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_ImageTableHeight+Common_RowSize*7);
+    }];
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = self.imgvemp.width * 0.5;
     

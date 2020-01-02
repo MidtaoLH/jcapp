@@ -206,10 +206,9 @@ static NSString * identifier = @"PendingListCell";
     if([cell.pendinglistitem.TaskNodeOperateType isEqualToString:@"1"])
     {
         NSString *code= cell.pendinglistitem.PicID;
-        NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
         TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+        VCCollect.pagetype=@"1";
         VCCollect.code=code;
-        VCCollect.taskcode=taskcode;
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else

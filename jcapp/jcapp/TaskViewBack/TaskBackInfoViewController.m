@@ -44,7 +44,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [self loadInfo];
     [self loadTaskInfo];
   
-    if( self.taskcode.length!=0)
+    if([self.pagetype isEqualToString:@"0"] && self.taskcode.length!=0)
     {
         [self updateStatus];
     }
@@ -203,7 +203,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetViewBackInfo?userID=%@&processInstanceID=%@",userid,self.code];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetProcInfo?userID=%@&processInstanceID=%@&pageType=%@",userid,self.code,self.pagetype];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -219,7 +219,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetViewBackFile?userID=%@&processInstanceID=%@",userid,self.code];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetProcFile?userID=%@&processInstanceID=%@&pageType=%@",userid,self.code,self.pagetype];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -234,7 +234,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetViewBackTaskInstance?userID=%@&processInstanceID=%@",userid,self.code];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetProcTaskInstance?userID=%@&processInstanceID=%@&pageType=%@",userid,self.code,self.pagetype];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求

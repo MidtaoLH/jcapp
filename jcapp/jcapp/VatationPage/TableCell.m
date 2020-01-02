@@ -213,7 +213,7 @@
         self.leaveStatusLable.hidden = YES;
         self.leaveDateLable.hidden = YES;
         
-        
+        self.imageView.hidden =YES;
         NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
         self.btnAdd.multiParamDic= paramDic;
         self.btndel.multiParamDic= paramDic;
@@ -259,10 +259,21 @@
             self.leaveStatusLable.text = Waylist.levelname;;
             self.leaveDateLable.text = Waylist.groupname;;
             
-            UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-            self.imageView.image=imageView.image;
+            if([Waylist.englishname isEqualToString:@"button"])
+            {
+                UIImageView *imageView = [[UIImageView alloc] init];
+             
+                self.imageView.image=nil;
+            }
+            else
+            {
+                UIImageView *imageView = [[UIImageView alloc] init];
+                NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+                self.imageView.image=imageView.image;
+            }
+            
+          
         }
         
         

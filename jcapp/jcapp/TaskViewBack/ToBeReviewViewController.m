@@ -195,6 +195,7 @@ static NSString * identifier = @"PendingListCell";
     NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
     
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+      VCCollect.pagetype=@"0";
     VCCollect.code=code;
     VCCollect.taskcode=taskcode;
     [self.navigationController pushViewController:VCCollect animated:YES];

@@ -185,6 +185,7 @@ static NSString * identifier = @"PendingsListCell";
     PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.pendinglistitem.PicID;
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+    VCCollect.pagetype=@"0";
     VCCollect.code=code;
     [self.navigationController pushViewController:VCCollect animated:YES];
 }

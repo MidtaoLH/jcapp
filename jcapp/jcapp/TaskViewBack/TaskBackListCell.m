@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UILabel *taskBackTypeLable;
 @property (nonatomic, strong) UILabel *taskBackDateLable;
 @property (nonatomic, strong) UILabel *taskBackRemarkLable;
-
+@property (nonatomic, strong) UIImageView *taskStatus;
 // (nonatomic, strong)   (nonatomic,weak)
 @end
 
@@ -65,6 +65,14 @@
     }
     return _taskBackRemarkLable;
 }
+
+- (UIImageView *)taskStatus {
+    if (!_taskStatus) {
+        _taskStatus = [[UIImageView alloc]init];
+    }
+    return _taskStatus;
+}
+
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -75,6 +83,7 @@
         [self.contentView addSubview:self.taskBackTypeLable];
         [self.contentView addSubview:self.taskBackDateLable];
         [self.contentView addSubview:self.taskBackRemarkLable];
+        [self.contentView addSubview:self.taskStatus];
     }
     return self;
 }
@@ -92,6 +101,16 @@
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_taskBacklistitem.UserCode];
     [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
     self.imageView.image=imageView.image;
+    
+    if([_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"待承认"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"tabBar_icon_customer_default.png"];
+        self.taskStatus.image=imageView;
+    }
+    else {
+        UIImage *imageView = [UIImage imageNamed:@"tabBar_icon_customer"];
+        self.taskStatus.image=imageView;
+    }
    
 }
 -(void)layoutSubviews
@@ -111,6 +130,10 @@
     self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
+    self.imageView.layer.zPosition = 1;
+    self.taskStatus.frame = CGRectMake(self.imageView.width-kMargin,self.imageView.height-kMargin*2, imageWH/3, imageWH/3);
+    self.taskStatus.layer.masksToBounds = YES;
+    self.taskStatus.layer.zPosition = 2;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

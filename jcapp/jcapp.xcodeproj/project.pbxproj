@@ -98,6 +98,10 @@
 		8D7C7DEF23A095710076F644 /* AddWayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7C7DED23A095710076F644 /* AddWayView.m */; };
 		8D7C7DF023A095710076F644 /* AddWayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D7C7DEE23A095710076F644 /* AddWayView.xib */; };
 		8D7C7DF323A098290076F644 /* SkyAssociationMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7C7DF223A098290076F644 /* SkyAssociationMenuView.m */; };
+		8D82E5C523B1A77D002631F6 /* BusinessTripDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D82E5C323B1A77D002631F6 /* BusinessTripDetailViewController.m */; };
+		8D82E5C623B1A77D002631F6 /* BusinessTripDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D82E5C423B1A77D002631F6 /* BusinessTripDetailViewController.xib */; };
+		8D82E5C923B1A993002631F6 /* BusinessTripDetailImagecell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D82E5C823B1A993002631F6 /* BusinessTripDetailImagecell.m */; };
+		8D82E5CC23B1B2F8002631F6 /* BusinessTripDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D82E5CB23B1B2F8002631F6 /* BusinessTripDetailCell.m */; };
 		8D83AAF023AB4C5400406AAA /* KeepLeave.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D83AAEF23AB4C5300406AAA /* KeepLeave.m */; };
 		8D8409F7238FA3A300A58623 /* CalendaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8409F5238FA3A300A58623 /* CalendaViewController.m */; };
 		8D8409F8238FA3A300A58623 /* CalendaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D8409F6238FA3A300A58623 /* CalendaViewController.xib */; };
@@ -111,6 +115,7 @@
 		8D920939238CDC59006E43CC /* VatationPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D920937238CDC59006E43CC /* VatationPageViewController.xib */; };
 		8D92093D238CEBC8006E43CC /* Vatcation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D92093C238CEBC8006E43CC /* Vatcation.m */; };
 		8D936BDE2396302A000473ED /* UserLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936BDD2396302A000473ED /* UserLogin.m */; };
+		8D94176223B1F00700A97283 /* MdlBusinessTrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D94176123B1F00700A97283 /* MdlBusinessTrip.m */; };
 		8D96D49723B099D600D48414 /* AgentListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D96D49523B099D600D48414 /* AgentListCell.m */; };
 		8D96D49B23B09A0A00D48414 /* AgentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D96D49923B09A0A00D48414 /* AgentViewController.m */; };
 		8D96D49C23B09A0A00D48414 /* AgentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D96D49A23B09A0A00D48414 /* AgentViewController.xib */; };
@@ -523,6 +528,13 @@
 		8D7C7DEE23A095710076F644 /* AddWayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWayView.xib; sourceTree = "<group>"; };
 		8D7C7DF123A098290076F644 /* SkyAssociationMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkyAssociationMenuView.h; sourceTree = "<group>"; };
 		8D7C7DF223A098290076F644 /* SkyAssociationMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SkyAssociationMenuView.m; sourceTree = "<group>"; };
+		8D82E5C223B1A77D002631F6 /* BusinessTripDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusinessTripDetailViewController.h; sourceTree = "<group>"; };
+		8D82E5C323B1A77D002631F6 /* BusinessTripDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusinessTripDetailViewController.m; sourceTree = "<group>"; };
+		8D82E5C423B1A77D002631F6 /* BusinessTripDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessTripDetailViewController.xib; sourceTree = "<group>"; };
+		8D82E5C723B1A993002631F6 /* BusinessTripDetailImagecell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusinessTripDetailImagecell.h; sourceTree = "<group>"; };
+		8D82E5C823B1A993002631F6 /* BusinessTripDetailImagecell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusinessTripDetailImagecell.m; sourceTree = "<group>"; };
+		8D82E5CA23B1B2F8002631F6 /* BusinessTripDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusinessTripDetailCell.h; sourceTree = "<group>"; };
+		8D82E5CB23B1B2F8002631F6 /* BusinessTripDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusinessTripDetailCell.m; sourceTree = "<group>"; };
 		8D83AAEE23AB4C5300406AAA /* KeepLeave.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeepLeave.h; sourceTree = "<group>"; };
 		8D83AAEF23AB4C5300406AAA /* KeepLeave.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeepLeave.m; sourceTree = "<group>"; };
 		8D8409F4238FA3A300A58623 /* CalendaViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendaViewController.h; sourceTree = "<group>"; };
@@ -546,6 +558,8 @@
 		8D92093C238CEBC8006E43CC /* Vatcation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vatcation.m; sourceTree = "<group>"; };
 		8D936BDC2396302A000473ED /* UserLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserLogin.h; sourceTree = "<group>"; };
 		8D936BDD2396302A000473ED /* UserLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserLogin.m; sourceTree = "<group>"; };
+		8D94176023B1F00700A97283 /* MdlBusinessTrip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MdlBusinessTrip.h; sourceTree = "<group>"; };
+		8D94176123B1F00700A97283 /* MdlBusinessTrip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MdlBusinessTrip.m; sourceTree = "<group>"; };
 		8D96D49523B099D600D48414 /* AgentListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgentListCell.m; sourceTree = "<group>"; };
 		8D96D49623B099D600D48414 /* AgentListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentListCell.h; sourceTree = "<group>"; };
 		8D96D49823B09A0A00D48414 /* AgentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentViewController.h; sourceTree = "<group>"; };
@@ -1326,6 +1340,8 @@
 				8D83AAEF23AB4C5300406AAA /* KeepLeave.m */,
 				8D96D49D23B0A1BC00D48414 /* Agent.h */,
 				8D96D49E23B0A1BC00D48414 /* Agent.m */,
+				8D94176023B1F00700A97283 /* MdlBusinessTrip.h */,
+				8D94176123B1F00700A97283 /* MdlBusinessTrip.m */,
 				EBFF30C823B601FB007A7B2C /* pwdInfo.h */,
 				EBFF30C923B6020E007A7B2C /* pwdinfo.m */,
 				774DFE1923BDEB39002C3602 /* ExamineHead.h */,
@@ -1404,6 +1420,13 @@
 				AF3D929E23A22DEC00001C73 /* BusinessTripEditViewController.h */,
 				AF3D929F23A22DEC00001C73 /* BusinessTripEditViewController.m */,
 				AF3D92A023A22DEC00001C73 /* BusinessTripEditViewController.xib */,
+				8D82E5C223B1A77D002631F6 /* BusinessTripDetailViewController.h */,
+				8D82E5C323B1A77D002631F6 /* BusinessTripDetailViewController.m */,
+				8D82E5C423B1A77D002631F6 /* BusinessTripDetailViewController.xib */,
+				8D82E5C723B1A993002631F6 /* BusinessTripDetailImagecell.h */,
+				8D82E5C823B1A993002631F6 /* BusinessTripDetailImagecell.m */,
+				8D82E5CA23B1B2F8002631F6 /* BusinessTripDetailCell.h */,
+				8D82E5CB23B1B2F8002631F6 /* BusinessTripDetailCell.m */,
 			);
 			path = BusinessTrip;
 			sourceTree = "<group>";
@@ -2276,6 +2299,7 @@
 				7708A4D423A8D6E90098A450 /* GoOutWaitController.xib in Resources */,
 				EB7A33E323B23FC100F34F46 /* SetAgentViewController.xib in Resources */,
 				7700056323A373F80079B49F /* ExamineEditLController.xib in Resources */,
+				8D82E5C623B1A77D002631F6 /* BusinessTripDetailViewController.xib in Resources */,
 				8D8954BC239662A600F1E109 /* WayViewController.xib in Resources */,
 				8D7C7DF023A095710076F644 /* AddWayView.xib in Resources */,
 				EB029E98238B7BC100358E21 /* AlterPWDController.xib in Resources */,
@@ -2379,6 +2403,7 @@
 				7706234023AA257900030735 /* MdlEvectionDetail.m in Sources */,
 				8D8B0CFA239796DB009CFEA0 /* Way.m in Sources */,
 				EB2D814623A0D81A0007DD02 /* AttendanceCalendarMonthDetail.m in Sources */,
+				8D82E5C523B1A77D002631F6 /* BusinessTripDetailViewController.m in Sources */,
 				775B61A5238BBE8D00985FF3 /* MJFoundation.m in Sources */,
 				AF9B0F8823A3678D008138EB /* SWFormTextViewInputCell.m in Sources */,
 				EB2D815523A1EAE40007DD02 /* YUFoldingSectionHeader.m in Sources */,
@@ -2414,6 +2439,7 @@
 				AF0ABC42238F5FCE00F46278 /* NoticeNews.m in Sources */,
 				77D83E0623A3540600534120 /* SDDemoCell.m in Sources */,
 				EB30A48A2398CECE00EEAE1E /* MJRefreshBackNormalFooter.m in Sources */,
+				8D82E5CC23B1B2F8002631F6 /* BusinessTripDetailCell.m in Sources */,
 				AF9B0F4423A36555008138EB /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				EB30A4B52398CF7F00EEAE1E /* PendingApprovedViewController.m in Sources */,
 				AF0ABF15238FC9CF00F46278 /* UIView+SDAutoLayout.m in Sources */,
@@ -2482,6 +2508,7 @@
 				AF9B0F8523A3678D008138EB /* SWFormImageCell.m in Sources */,
 				AF9B0F3C23A36555008138EB /* NSData+EMImageContentType.m in Sources */,
 				AF9B0F5A23A36555008138EB /* TZVideoPlayerController.m in Sources */,
+				8D94176223B1F00700A97283 /* MdlBusinessTrip.m in Sources */,
 				8D7C7DF323A098290076F644 /* SkyAssociationMenuView.m in Sources */,
 				AF9B0F4E23A36555008138EB /* PSTGridLayoutItem.m in Sources */,
 				EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */,
@@ -2493,6 +2520,7 @@
 				77D83E0723A3540600534120 /* SDPhotoGroup.m in Sources */,
 				772B6C8223A21286003CE53D /* WaitTaskImageCell.m in Sources */,
 				EB2D814E23A0DAE30007DD02 /* AttendanceCalendarDetail.m in Sources */,
+				8D82E5C923B1A993002631F6 /* BusinessTripDetailImagecell.m in Sources */,
 				EB41A3FA239E40FE00DA623A /* WHUCalendarPopView.m in Sources */,
 				EB7A340323B23FDB00F34F46 /* NSBundle+BRPickerView.m in Sources */,
 				77D83DEB23A353F800534120 /* MKAnnotationView+WebCache.m in Sources */,

@@ -25,6 +25,7 @@ UITableViewDelegate>{
     NSMutableArray *array2;
     NSInteger _page;
     NSInteger _pageSize;
+    NSString *processid;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
@@ -34,6 +35,7 @@ UITableViewDelegate>{
 
 @property (nonatomic, retain)IBOutlet UIButton *savebutton;
 
+@property (nonatomic, copy) NSString *processid;
 
 -(IBAction)onClickButtonsave:(id)sender;
 @end

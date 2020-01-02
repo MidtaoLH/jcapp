@@ -213,7 +213,7 @@
         self.leaveStatusLable.hidden = YES;
         self.leaveDateLable.hidden = YES;
         
-        
+        self.imageView.hidden =YES;
         NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
         self.btnAdd.multiParamDic= paramDic;
         self.btndel.multiParamDic= paramDic;
@@ -259,10 +259,21 @@
             self.leaveStatusLable.text = Waylist.levelname;;
             self.leaveDateLable.text = Waylist.groupname;;
             
-            UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-            self.imageView.image=imageView.image;
+            if([Waylist.englishname isEqualToString:@"button"])
+            {
+                UIImageView *imageView = [[UIImageView alloc] init];
+             
+                self.imageView.image=nil;
+            }
+            else
+            {
+                UIImageView *imageView = [[UIImageView alloc] init];
+                NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+                self.imageView.image=imageView.image;
+            }
+            
+          
         }
         
         
@@ -283,16 +294,20 @@
   
     
      self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH );
-    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,2*txtH+2*kMargin, leaveDateWidth, txtH);
+    
+    //leavelname
+    self.leaveStatusLable.frame = CGRectMake(width-leaveDateWidth-kMargin,txtH+2*kMargin, leaveDateWidth, txtH);
+    
+    //bumen
     self.leaveDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
  
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
     //self.leaveadd.frame=CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
     
-    self.btnAdd.frame = CGRectMake(50,40, 80, 8);
+    self.btnAdd.frame = CGRectMake(180,40, 30,30);
     
-    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin,6*kMargin, leaveDateWidth, txtH);
+    self.btndel.frame = CGRectMake(width-leaveDateWidth-kMargin+20,6*kMargin, 50, 40);
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     

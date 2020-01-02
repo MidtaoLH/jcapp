@@ -21,7 +21,7 @@
 #import "VatcationMainView.h"
 #import "LeaveViewController.h"
 #import "BWaitApplyViewController.h"
-#import "SWFormCommonController.h"
+#import "BusinessTripEditViewController.h"
 #import "BApprovedViewController.h"
 #import "GoOutWaitController.h"
 #import "GoOutViewController.h"
@@ -45,7 +45,7 @@ NSInteger barheight;
     if([myDelegate.tabbarType isEqualToString:@"1"])
     {
         [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_friendTrends_icon", 1)];
+        [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_icon_mine_default", 1)];
         self.navigationItem.title=@"首页";
     }
     else if([myDelegate.tabbarType isEqualToString:@"2"])
@@ -72,17 +72,18 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"qingjia";
         [self addChildViewController:childViewControllerWaitApply(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerVatcationMain(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerVatcationMain(@"", @"publishtext", 1)];
         [self addChildViewController:childViewControllerLeave(@"请假记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
     else if([myDelegate.tabbarType isEqualToString:@"6"])
     {
+        myDelegate.AppRoveType =@"chuchai";
         myDelegate.businessTripid=@"0";
         myDelegate.processid=@"0";
         myDelegate.pageType=@"1";
         [self addChildViewController:childViewControllerBWaitApply(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerSWFormCommon(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerSWFormCommon(@"", @"publishtext", 1)];
         [self addChildViewController:childViewControllerBApproved(@"出差记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -90,7 +91,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"waichu";
         [self addChildViewController:childViewControllerGoOutWait(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerVatcationMain(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerVatcationMain(@"", @"publishtext", 1)];
         [self addChildViewController:childViewControllerGoOut(@"外出记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -104,7 +105,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"agent";
         [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerSetAgent(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerSetAgent(@"", @"tabBar_publish_iconnew", 1)];
         [self addChildViewController:childViewControllerAgent(@"", @"", 2)];
         self.navigationItem.title=@"代理人列表";
     }
@@ -113,12 +114,12 @@ NSInteger barheight;
         [self addChildViewController:childViewControllerNewView(@"公告", @"tabBar_essence_icon", 0)];
         self.navigationItem.title=@"公告";
     }
-    self.tabBar.tintColor = kColor_tintColor;
     if (@available(iOS 10.0, *)) {
         self.tabBar.unselectedItemTintColor = kColor_unselectedItemTintColor;
     } else {
         // Fallback on earlier versions
     }
+    self.tabBar.tintColor = kColor_tintColor;
     if(![myDelegate.tabbarType isEqualToString:@"1"])
     {
        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"首页" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
@@ -390,7 +391,7 @@ UIViewController *childViewControllerBWaitApply (NSString *title, NSString *imgN
 }
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerSWFormCommon (NSString *title, NSString *imgName, NSUInteger tag) {
-    SWFormCommonController *vc = [[SWFormCommonController alloc] init];
+   BusinessTripEditViewController *vc = [[BusinessTripEditViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
@@ -567,6 +568,7 @@ UIViewController *childViewControllerSetAgent (NSString *title, NSString *imgNam
     SetAgentViewController *vc = [[SetAgentViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    
     [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
@@ -591,6 +593,9 @@ UIViewController *childViewControllerSetAgent (NSString *title, NSString *imgNam
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
     }];
+    vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, 5);
+    vc.tabBarItem.imageInsets=UIEdgeInsetsMake(-1,0,1,0);
+    
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }

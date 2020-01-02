@@ -74,6 +74,30 @@
     }
 }
 - (void)initUI {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_TableHeight));
+    }];
+    [self.savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+    }];
+    [self.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+    }];
     self.tableView.hidden = NO;
 }
 - (void)clickGoto {

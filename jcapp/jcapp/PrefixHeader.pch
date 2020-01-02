@@ -132,3 +132,10 @@
 #define Common_ScrollSize 280.f
 #define Common_HomeCellSize 80.f
 #define Common_HomeRowSize 10.f
+// 随机色
+#define BXRandomColor BXColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+// 设置颜色
+#define BXColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+
+/*tabbar大小*/
+#define Common_TabbarSize 200.f

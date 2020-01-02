@@ -1,10 +1,4 @@
-//
-//  UITabBarItem+TLAnimation.m
-//  TabBar
-//
-//  Created by 故乡的云 on 2019/7/19.
-//  Copyright © 2019 故乡的云. All rights reserved.
-//
+
 
 #import "UITabBarItem+TLAnimation.h"
 #import "TLAnimationProtocol.h"

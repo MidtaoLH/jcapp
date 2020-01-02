@@ -1,10 +1,3 @@
-//
-//  TLTabBarAnimation.h
-//  TabBar
-//
-//  Copyright © 2019 故乡的云. All rights reserved.
-//
-//  动画是从https://github.com/Ramotion/animated-tab-bar项目转换而来
 
 
 #import "TLAnimationProtocol.h"

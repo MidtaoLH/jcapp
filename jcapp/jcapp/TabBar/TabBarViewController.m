@@ -31,6 +31,7 @@
 #import "AgentViewController.h"
 #import "SetAgentViewController.h"
 #import "NewViewController.h"
+
 #import "Masonry.h"
 #import "AppDelegate.h"
 
@@ -692,7 +693,7 @@ NSArray *imgs (){
     }
     if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
     {
-        VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+        GoOutEditController  * VCCollect = [[GoOutEditController alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
 }

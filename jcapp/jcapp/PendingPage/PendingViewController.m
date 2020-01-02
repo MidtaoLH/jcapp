@@ -12,6 +12,8 @@
 #import "PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
+#import "ExamineEditLController.h"
+
 static NSString * identifier = @"PendingListCell";
 
 @interface PendingViewController ()
@@ -201,14 +203,24 @@ static NSString * identifier = @"PendingListCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
-    NSString *code= cell.pendinglistitem.PicID;
-    NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
-    
-    //if()
-    TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
-    VCCollect.code=code;
-    VCCollect.taskcode=taskcode;
-    [self.navigationController pushViewController:VCCollect animated:YES];
+    if([cell.pendinglistitem.TaskNodeOperateType isEqualToString:@"1"])
+    {
+        NSString *code= cell.pendinglistitem.PicID;
+        NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
+        TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+        VCCollect.code=code;
+        VCCollect.taskcode=taskcode;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        NSString *code= cell.pendinglistitem.DocumentID_FK;
+        NSString *taskcode= cell.pendinglistitem.TaskInstanceID;
+        ExamineEditLController * VCCollect = [[ExamineEditLController alloc] init];
+        VCCollect.taskType=code;
+        VCCollect.strTaskid=taskcode;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
 }
 //解决tableview线不对的问题
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

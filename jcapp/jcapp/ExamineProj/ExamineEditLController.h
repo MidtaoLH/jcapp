@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 任务类型。0 请假 1 外出 2 出差
  @property (nonatomic, copy) NSString *taskType;
 
+@property (strong,nonatomic) NSMutableArray *listAnnex;
+
 @end
 
 NS_ASSUME_NONNULL_END

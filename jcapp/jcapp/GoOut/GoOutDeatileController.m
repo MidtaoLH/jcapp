@@ -25,8 +25,6 @@
     
     //0 初始化 1 承认 2 驳回
     long edittype;
-    
-
 }
 @property (nonatomic, strong) NSMutableArray *srcStringArray;
 @property (strong,nonatomic) MdlEvection *leavehead;

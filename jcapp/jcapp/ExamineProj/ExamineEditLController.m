@@ -12,9 +12,13 @@
 #import "../Model/LeaveDeatil.h"
 #import "ExamineEditImageCell.h"
 #import "../Model/LeaveTask.h"
+#import "../Model/MdlAnnex.h"
 #import "ExamineEditCell.h"
 #import "SDDemoCell.h"
 #import "SDPhotoItem.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
+#import "TabBarViewController.h"
+#import "AppDelegate.h"
 
 #define kCount 4  //图片总张数
  
@@ -23,6 +27,10 @@
     CGFloat scaleMini;
     CGFloat scaleMax;
     
+    NSString *strlblleavedate;
+    NSString *strlblleavecounts;
+    NSString *strlblleaveremark;
+ 
      //0 初始化 1 承认 2 驳回
     long edittype;
 
@@ -43,15 +51,25 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 @synthesize listdetail;
 @synthesize listhead;
 @synthesize  listtask;
+@synthesize listAnnex;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+ 
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    
     edittype = 0;
-    self.strTaskid = @"23180";
+ 
+    //当前登陆者
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"userid"];
+ 
+  //  self.strTaskid = @"23184";
+ //   self.taskType =@"13";
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@",@"1",self.strTaskid,@"2"];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@",userid,self.strTaskid,self.taskType];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -75,23 +93,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     _imgvleavestatus.layer.cornerRadius = _imgvleavestatus.frame.size.width / 2;
     
     _imgvleavestatus.backgroundColor = [UIColor greenColor];
+    
     [self setlblcolor];
     
-    _srcStringArray = @[@"http://47.94.85.101:8095/img/01.jpg",
-                        @"http://ww2.sinaimg.cn/thumbnail/98719e4agw1e5j49zmf21j20c80c8mxi.jpg",
-             	           //  @"http://ww2.sinaimg.cn/thumbnail/67307b53jw1epqq3bmwr6j20c80axmy5.jpg",
-                        //    @"http://ww2.sinaimg.cn/thumbnail/9ecab84ejw1emgd5nd6eaj20c80c8q4a.jpg",
-                     //   @"http://ww2.sinaimg.cn/thumbnail/642beb18gw1ep3629gfm0g206o050b2a.gif",
-                     //   @"http://ww1.sinaimg.cn/thumbnail/9be2329dgw1etlyb1yu49j20c82p6qc1.jpg"
-                        ];
-    
+    //d根据不同单据类型 设置文字
+    [self settsaktype];
     
      [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
      [_buttaskyes addTarget:self action:@selector(actionyes:)   forControlEvents:UIControlEventTouchUpInside];
     
-    //当前登陆者
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid = [defaults objectForKey:@"userid"];
     /*
      self.scrollview.frame=CGRectMake(0, 236, self.view.frame.size.width, 200);
      self.scrollview.backgroundColor= UIColor.orangeColor;
@@ -136,9 +146,38 @@ static NSString *identifierImage =@"WaitTaskImageCell";
      
      */
 }
+-(void)setlblcolor
+{
+    _lblempgroup.textColor = [UIColor grayColor];
+    _lblleavedate.textColor = [UIColor grayColor];
+    _lblapplydate.textColor = [UIColor grayColor];
+    _lblleavecounts.textColor = [UIColor grayColor];
+    _lblleaveremark.textColor = [UIColor grayColor];
+    
+    _txtvexamineremark.layer.backgroundColor = [[UIColor clearColor] CGColor];
+    _txtvexamineremark.layer.borderColor = [[UIColor redColor]CGColor];
+    _txtvexamineremark.layer.borderWidth = 1.0;
+    [_txtvexamineremark.layer setMasksToBounds:YES];
+}
+-(void)settsaktype
+{
+    //出差
+    if([self.taskType isEqualToString:@"13"])
+    {
+        strlblleavedate = @"出差时间：";
+        strlblleavecounts = @"出差时长：";
+        strlblleaveremark = @"出差事由：";
+    }
+}
+
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate]; 
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 -(void)taskedittoservice:(NSMutableDictionary *)mutableDic0
 {
-    
     id objtasktype = mutableDic0[@"tasktype"];
     id objremark = mutableDic0[@"remark"];
     
@@ -183,21 +222,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     // 弹出对话框
     [self presentViewController:alert animated:true completion:nil];
 }
-
--(void)setlblcolor
-{
-    _lblempgroup.textColor = [UIColor grayColor];
-    _lblleavedate.textColor = [UIColor grayColor];
-    _lblapplydate.textColor = [UIColor grayColor];
-    _lblleavecounts.textColor = [UIColor grayColor];
-    _lblleaveremark.textColor = [UIColor grayColor];
-    
-    _txtvexamineremark.layer.backgroundColor = [[UIColor clearColor] CGColor];
-    _txtvexamineremark.layer.borderColor = [[UIColor redColor]CGColor];
-    _txtvexamineremark.layer.borderWidth = 1.0;
-    [_txtvexamineremark.layer setMasksToBounds:YES];
-}
-
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -264,6 +288,19 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
         NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
         
+        NSString *requestTmp2 = [NSString stringWithString:resultString2];
+        NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
+        listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic2];
+        
+        //补充附件图片路径
+        NSMutableArray *array1 = [[NSMutableArray alloc] init];
+        for (MdlAnnex *mdla in listAnnex) {
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
+            [array1 addObject:urlstring];
+        }
+        _srcStringArray =array1;
+        
         //获取承认数据
         NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
         NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
@@ -286,7 +323,11 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         
         listhead = [ExamineHead mj_objectArrayWithKeyValuesArray:resultDic];
         for (ExamineHead *p1 in listhead) {
-            _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+            
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,p1.U_LoginName];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            _imgvemp.image =imageView.image;
             
             _lblleavestatus.text = p1.StatusTxt;
             _emplbl.text = p1.EmpCName;
@@ -296,23 +337,23 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             
             _lblapplydate.text = strapplydate;
             
-            NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"请假时间：",p1.BeignDate,p1.EndDate];
+            NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",strlblleavedate,p1.BeignDate,p1.EndDate];
             
             _lblleavedate.text = strleavedate;
             
             _lblleavetype.text = p1.TypeTxt;
             
-            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.numcount];
+            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",strlblleavecounts,p1.numcount];
             
             _lblleavecounts.text =strleavecounts;
             
-            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.Describe];
+            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",strlblleaveremark,p1.Describe];
             
             _lblleaveremark.text = strleaveremark;
         }
-        
     }
- 
+    [self.ImageTableView reloadData];
+    [self.ImageTableView layoutIfNeeded];
     NSLog(@"%@",@"connection1-end");
 }
 
@@ -394,7 +435,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     for (id key in info) {
         [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
     }
- 
 }
 
 //有多少组
@@ -439,23 +479,16 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         return wcell;
     } else if ([tableView isEqual:self.ImageTableView]) {
         
-        
         SDDemoCell *sdcell =[self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
-        //[tableView dequeueReusableCellWithIdentifier:identifierImage];
         sdcell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
         NSMutableArray *temp = [NSMutableArray array];
         [_srcStringArray enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
             SDPhotoItem *item = [[SDPhotoItem alloc] init];
             item.thumbnail_pic = src;
             [temp addObject:item];
         }];
-        
         sdcell.photosGroup.photoItemArray = [temp copy];
-        
         return sdcell;
- 
 /*
  * cell = [self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
  

@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ExamineEditLController : UIViewController
 {
-    NSString *strTaskid;
     NSString *xmlString;
     NSMutableDictionary *info;
     NSString *currentTagName;
@@ -53,6 +52,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray *listdetail;
 @property (strong,nonatomic) NSMutableArray *listhead;
 @property (strong,nonatomic) NSMutableArray *listtask;
+
+ @property (nonatomic, copy) NSString *strTaskid;
+
+ @property (nonatomic, copy) NSString *taskType;
 
 @end
 

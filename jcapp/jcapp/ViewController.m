@@ -125,7 +125,7 @@
 }
 -(IBAction)onClickButtonLeave:(id)sender {
 
-     GoOutEditController * valueView = [[GoOutEditController alloc] initWithNibName:@"GoOutEditController"bundle:[NSBundle mainBundle]];
+     ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
      //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转

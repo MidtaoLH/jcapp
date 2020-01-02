@@ -11,6 +11,8 @@
 #import "../Model/Pending.h"
 #import "PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "../ExamineProj/ExamineEditLController.h"
+
 static NSString * identifier = @"PendingListCell";
 
 @interface PendingViewController ()
@@ -199,13 +201,22 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
+    Pending * pending = self.listOfMovies[indexPath.row];
+    NSLog(@"pending.PicID:%@",pending.DocumentName);
+    //根据不同类型的单据跳转到不同的画面
+    if([pending.DocumentName isEqualToString:@"请假"]){
+        
+        ExamineEditLController *order = [[ExamineEditLController alloc] init];
+        [self.navigationController pushViewController:order animated:YES];
     }
-    else
-    {
-        //其它单元格的事件
+    else if([pending.DocumentName isEqualToString:@"出差"]){
+        
+        ExamineEditLController *order = [[ExamineEditLController alloc] init];
+        [self.navigationController pushViewController:order animated:YES];
+    }
+    else if([pending.DocumentName isEqualToString:@"外出"]){
+        ExamineEditLController *order = [[ExamineEditLController alloc] init];
+        [self.navigationController pushViewController:order animated:YES];
     }
 }
-
 @end

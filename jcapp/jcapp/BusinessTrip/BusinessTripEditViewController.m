@@ -16,6 +16,8 @@
 #import "../VatationPage/WayViewController.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "Masonry.h"
+#import "TabBarViewController.h"
+
 NSString * bflag = @"flase";
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -33,6 +35,7 @@ NSString * bflag = @"flase";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -612,6 +615,13 @@ NSString * bflag = @"flase";
     }
     return image;
     
+}
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.tabbarType=@"6";
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 ////弹出消息框
 //-(void) connection:(NSURLConnection *)connection

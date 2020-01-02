@@ -35,7 +35,7 @@
 
 
 #import "TabBar/TabBarViewController.h"
-#import "UsersPage/AlterPWDController.h"
+#import "BusinessTrip/BusinessTripEditViewController.h"
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -135,7 +135,7 @@
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {
-    AlterPWDController * valueView = [[AlterPWDController alloc] initWithNibName:@"AlterPWDController"bundle:[NSBundle mainBundle]];
+    BusinessTripEditViewController * valueView = [[BusinessTripEditViewController alloc] initWithNibName:@"BusinessTripEditViewController"bundle:[NSBundle mainBundle]];
     //从底部划入
     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转

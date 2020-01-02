@@ -139,3 +139,6 @@
 
 /*tabbar大小*/
 #define Common_TabbarSize 200.f
+/*出差地点*/
+#define Common_CCRowHeight 50.f
+#define Common_CCTotalHeight 150.f

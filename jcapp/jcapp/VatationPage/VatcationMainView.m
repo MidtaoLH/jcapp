@@ -39,6 +39,7 @@ static NSInteger rowHeight=50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tabBarController.tabBar.hidden = YES;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -73,7 +74,7 @@ static NSInteger rowHeight=50;
     totalHeight=150;
 
     [self datas];
-    self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+   
 }
 
 

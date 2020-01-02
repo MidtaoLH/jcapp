@@ -92,7 +92,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"waichu";
         [self addChildViewController:childViewControllerGoOutWait(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerGoOueEdit(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerGoOutEdit(@"", @"publish-text", 1)];
         [self addChildViewController:childViewControllerGoOut(@"外出记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -359,7 +359,7 @@ UIViewController *childViewControllerVatcationMain (NSString *title, NSString *i
     return vc;
 }
 /// 自定义样式UITabBarItem
-UIViewController *childViewControllerGoOueEdit (NSString *title, NSString *imgName, NSUInteger tag) {
+UIViewController *childViewControllerGoOutEdit (NSString *title, NSString *imgName, NSUInteger tag) {
     GoOutEditController *vc = [[GoOutEditController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
        //vc.tabBarController.tabBar.hidden = YES;

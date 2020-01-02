@@ -10,6 +10,7 @@
 #import "MJExtension.h"
 #import "../Model/MdlGoOutList.h"
 #import "GoOutWaitCell.h"
+#import "GoOutEditController.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "GoOutDeatileController.h"
 
@@ -236,4 +237,20 @@ static NSString *identifier =@"GoOutWaitCell";
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GoOutWaitCell *cell = (GoOutWaitCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.MdlGoOutListItem.AwardID_FK;
+    NSString *taskcode= cell.MdlGoOutListItem.ProcessInstanceID;
+    self.tabBarController.tabBar.hidden = YES;
+ 
+    //待申请任务 进入明细编辑画面为修改操作
+    GoOutEditController * VCCollect = [[GoOutEditController alloc] init];
+    VCCollect.evectionID=code;
+    VCCollect.processInstanceID=taskcode;
+    VCCollect.ProcessApplyCode=cell.MdlGoOutListItem.ProcessApplyCode;
+    VCCollect.edittype = @"2"; //编辑
+    VCCollect.urltype = @"getdata";
+    [self.navigationController pushViewController:VCCollect animated:YES];
+}
 @end

@@ -24,6 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy, nonatomic) NSString *ProcessApplyCode;
 
+@property (copy, nonatomic) NSString *BeginDate;
+
+@property (copy, nonatomic) NSString *EndDate;
+
+@property (copy, nonatomic) NSString *U_LoginName;
+
 @end
 
 NS_ASSUME_NONNULL_END

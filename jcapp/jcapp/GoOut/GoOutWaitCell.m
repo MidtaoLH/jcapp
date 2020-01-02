@@ -7,6 +7,7 @@
 //
 
 #import "GoOutWaitCell.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 #define kMargin 10
 
 @interface GoOutWaitCell()
@@ -97,13 +98,16 @@
     NSString *strleaveDateLable = [_MdlGoOutListItem.ApplyFileName substringFromIndex:_MdlGoOutListItem.ApplyFileName.length - 8];
     self.leaveDateLable.text = strleaveDateLable;
     
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
-    
-    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_MdlGoOutListItem.EvectionPlanTime];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_MdlGoOutListItem.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
+ 
+    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_MdlGoOutListItem.BeginDate];
     
     self.beignDateLable.text = strbegindate;
     
-    NSString * strendate =[[NSString alloc]initWithFormat:@"%@%@",@"结束时间：",_MdlGoOutListItem.EvectionPlanTime];
+    NSString * strendate =[[NSString alloc]initWithFormat:@"%@%@",@"结束时间：",_MdlGoOutListItem.EndDate];
     
     self.endDateLable.text = strendate;
  

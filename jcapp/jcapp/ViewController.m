@@ -15,6 +15,8 @@
 #import "Model/UserLogin.h"
 #import "Agent_list/AgentViewController.h"
 #import "ExamineProj/ExamineEditLController.h"
+#import "BusinessTrip/BusinessTripDetailViewController.h"
+
 
 #import "Leave/LeaveViewController.h"
 #import "Leave/LeaveTabBar.h"
@@ -104,16 +106,19 @@
                  [self presentModalViewController:valueView animated:YES];
     */
     
-    AgentViewController * valueView = [[AgentViewController alloc] initWithNibName:@"AgentViewController"bundle:[NSBundle mainBundle]];
+    //AgentViewController * valueView = [[AgentViewController alloc] initWithNibName:@"AgentViewController"bundle:[NSBundle mainBundle]];
     //从底部划入
-    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    //[valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转
-    [self presentModalViewController:valueView animated:YES];
+    //[self presentModalViewController:valueView animated:YES];
 
+    //BusinessTripDetailViewController *nextVc = [[BusinessTripDetailViewController alloc]init];//初始化下一个界面
+    //[self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    
     
    
-    //VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
-    //[self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 
 }
@@ -125,7 +130,7 @@
 }
 -(IBAction)onClickButtonLeave:(id)sender {
 
-     GoOutEditController * valueView = [[GoOutEditController alloc] initWithNibName:@"GoOutEditController"bundle:[NSBundle mainBundle]];
+     ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
      //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转

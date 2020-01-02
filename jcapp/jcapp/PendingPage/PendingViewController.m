@@ -11,7 +11,8 @@
 #import "../Model/Pending.h"
 #import "PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
-#import "../ExamineProj/ExamineEditLController.h"
+#import "TaskBackInfoViewController.h"
+#import "ExamineEditLController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -89,7 +90,7 @@ static NSString * identifier = @"PendingListCell";
 - (void)footerClick {
     // 可在此处实现上拉加载时要执行的代码
     // ......
-    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]	;
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];
@@ -201,6 +202,44 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if([cell.pendinglistitem.TaskNodeOperateType isEqualToString:@"1"])
+    {
+        NSString *code= cell.pendinglistitem.PicID;
+        NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
+        TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+        VCCollect.code=code;
+        VCCollect.taskcode=taskcode;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        NSString *code= cell.pendinglistitem.DocumentID_FK;
+        NSString *taskcode= cell.pendinglistitem.TaskInstanceID;
+        ExamineEditLController * VCCollect = [[ExamineEditLController alloc] init];
+        VCCollect.taskType=code;
+        VCCollect.strTaskid=taskcode;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+}
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     Pending * pending = self.listOfMovies[indexPath.row];
     NSLog(@"pending.PicID:%@",pending.DocumentName);
     //根据不同类型的单据跳转到不同的画面

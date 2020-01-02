@@ -22,7 +22,7 @@
 static long step = 0; //记录时钟动画调用次数
 @interface TaskBackInfoViewController ()
 
-@property (nonatomic, strong) NSArray *srcStringArray;
+@property (nonatomic, strong) NSMutableArray *srcStringArray;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 
@@ -280,11 +280,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
         self.imgvemp.image=imageView.image;
         [self loadImageInfo];
-        _srcStringArray = @[@"http://47.94.85.101:8095/img/01.jpg",
-                            @"http://ww2.sinaimg.cn/thumbnail/98719e4agw1e5j49zmf21j20c80c8mxi.jpg",
-                            ];
-        [self.ImageTableView reloadData];
-        [self.ImageTableView layoutIfNeeded];
+
     }
     else  if([xmlString containsString:@"AttachFilePath"])
     {
@@ -296,7 +292,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        _srcStringArray = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
+        listtask = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
+        
+        self.srcStringArray = [NSMutableArray arrayWithCapacity:listtask.count];
+        for(int i=0;i<[listtask count];i++)
+        {
+            ViewBackDetail *detail=listtask[i];
+            NSString *obj = [NSString stringWithFormat:Common_WSUrl,detail.AttachFilePath];
+            [_srcStringArray addObject:obj];
+        }
         [self.ImageTableView reloadData];
         [self.ImageTableView layoutIfNeeded];
     }

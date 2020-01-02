@@ -61,7 +61,7 @@ NSInteger barheight;
     else if([myDelegate.tabbarType isEqualToString:@"3"])
     {
         [self addChildViewController:childViewControllerPending(@"待审批", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerPendingApproved(@"待审批", @"drop", 1)];
+        [self addChildViewController:childViewControllerPendingApproved(@"已审批", @"drop", 1)];
         self.navigationItem.title=@"待审批";
     }
     else if([myDelegate.tabbarType isEqualToString:@"4"])
@@ -694,6 +694,7 @@ NSArray *imgs (){
     if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
     {
         GoOutEditController  * VCCollect = [[GoOutEditController alloc] init];
+        VCCollect.edittype = @"1";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
 }

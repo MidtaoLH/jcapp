@@ -694,6 +694,7 @@ NSArray *imgs (){
     if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
     {
         GoOutEditController  * VCCollect = [[GoOutEditController alloc] init];
+        VCCollect.edittype = @"1";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
 }

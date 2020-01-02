@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 @interface ExamineEditLController : UIViewController
 {
     NSString *xmlString;
@@ -18,36 +17,21 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
 }
-
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
-
 @property (weak, nonatomic) IBOutlet UITableView *ImageTableView;
-
 @property (weak, nonatomic) IBOutlet UILabel *emplbl;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblempgroup;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblapplydate;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imgvemp;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblleavetype;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblleavedate;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblleavecounts;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblleaveremark;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imgvleavestatus;
-
 @property (weak, nonatomic) IBOutlet UILabel *lblleavestatus;
-
 @property (weak, nonatomic) IBOutlet UITextView *txtvexamineremark;
-
 @property (weak, nonatomic) IBOutlet UIButton *btntaskno;
 @property (weak, nonatomic) IBOutlet UIButton *buttaskyes;
-
 
 @property (strong,nonatomic) NSMutableArray *listdetail;
 @property (strong,nonatomic) NSMutableArray *listhead;
@@ -55,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @property (nonatomic, copy) NSString *strTaskid;
 
+// 任务类型。0 请假 1 外出 2 出差
  @property (nonatomic, copy) NSString *taskType;
 
 @end

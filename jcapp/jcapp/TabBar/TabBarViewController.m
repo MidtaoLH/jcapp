@@ -344,7 +344,7 @@ UIViewController *childViewControllerWaitApply (NSString *title, NSString *imgNa
 UIViewController *childViewControllerVatcationMain (NSString *title, NSString *imgName, NSUInteger tag) {
     VatcationMainView *vc = [[VatcationMainView alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
-       //vc.tabBarController.tabBar.hidden = YES;
+    //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     [vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加上
@@ -395,15 +395,15 @@ UIViewController *childViewControllerSWFormCommon (NSString *title, NSString *im
     vc.view.backgroundColor = [UIColor whiteColor];
     //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    setAnimation(vc.tabBarItem, tag);
-    [vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //[vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加上
-        make.top.mas_equalTo(0);
+     //   make.top.mas_equalTo(0);
         // 添加左
-        make.left.mas_equalTo(0);
+      //  make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
-    }];
+    //    make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    //}];
+    setAnimation(vc.tabBarItem, tag);
     return vc;
 }
 /// 自定义样式UITabBarItem

@@ -15,8 +15,7 @@
 #import "../AppDelegate.h"
 #import "../VatationPage/WayViewController.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
-
-static NSInteger rowHeight=50;
+#import "Masonry.h"
 NSString * bflag = @"flase";
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -45,17 +44,31 @@ NSString * bflag = @"flase";
     
     
     //totalcount=1;
-    totalHeight=150;
+    totalHeight=Common_CCTotalHeight;
     //tableViewPlace.backgroundColor=UIColor.blueColor;
-    tableViewPlace.frame = CGRectMake(0,-40, self.view.frame.size.width, totalHeight);
-    tableViewPlace.rowHeight=rowHeight;
+    tableViewPlace.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+Common_RowSize, kScreenWidth, totalHeight);
+    
+    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
+    }];
+    tableViewPlace.rowHeight=Common_CCRowHeight;
     myData = [[NSMutableArray alloc]initWithObjects:@"",nil];
     //[myData insertObject:@"f" atIndex:0];
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
-    
+   
+    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+tableViewPlace.height);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -460,7 +473,7 @@ NSString * bflag = @"flase";
         // do something
         //totalcount++;
         [myData addObject:@""];
-        totalHeight=totalHeight+rowHeight;
+        totalHeight=totalHeight+Common_CCRowHeight;
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
         
@@ -483,7 +496,7 @@ NSString * bflag = @"flase";
         // do something
         //totalcount--;
         [myData removeObjectAtIndex:indexPath.row];
-        totalHeight=totalHeight-rowHeight;
+        totalHeight=totalHeight-Common_CCRowHeight;
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
     }

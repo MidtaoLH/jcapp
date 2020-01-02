@@ -16,7 +16,7 @@
 #import "VatationPageViewController.h"
 #import "KeepLeave.h"
 #import "LeaveStatusModel.h"
-
+#import "TabBarViewController.h"
 
 static NSInteger rowHeight=50;
 @interface VatcationMainView ()<UIActionSheetDelegate>
@@ -39,7 +39,7 @@ static NSInteger rowHeight=50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tabBarController.tabBar.hidden = YES;
+     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -77,7 +77,13 @@ static NSInteger rowHeight=50;
    
 }
 
-
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.tabbarType=@"5";
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

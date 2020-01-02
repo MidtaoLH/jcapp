@@ -50,6 +50,11 @@
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
+    datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
+    [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
+    
+    datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
+    [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
  
     if([self.edittype isEqualToString:@"2"])
     {
@@ -129,95 +134,57 @@
     SWWeakSelf
     NSMutableArray *items = [NSMutableArray array];
  
-    self.businessTripStart = SWFormItem_Add(@"出发时间", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
+    self.businessTripStart = SWFormItem_Add(@"出发日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
-        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert.view addSubview:datePickers];
         
-        /////
-        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-        datePicker.datePickerMode = UIDatePickerModeTime;
-        datePicker.frame = CGRectMake(0, 40,272,60);
-        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-        fmt.dateFormat = @"yyyy-MM-dd";
-        NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
-        NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
-            datePicker.minimumDate = minDate; // 设置最小时间
-            datePicker.maximumDate = maxDate; // 设置最大时间
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
-        datePicker.locale = locale;
-            datePicker.datePickerMode = UIDatePickerModeDate;
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置\n\n" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alert.view addSubview:datePicker];
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
-            //设置时间格式
-            dateFormat.dateFormat = @"yyyy-MM-dd";
-            
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
-            
+            //实例化一个NSDateFormatter对象
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+            NSString *dateString = [dateFormat stringFromDate:datePickers.date];
+            //求出当天的时间字符串
             NSLog(@"%@",dateString);
-            
-            self.businessTripStart.info =dateString;
-            [self.formTableView reloadData];
+            self.businessTripStart.info=dateString;
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
-        
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-        }];
-        
-        [alert addAction:ok];//添加按钮
-        [alert addAction:cancel];//添加按钮
+            　 }];
+        [alert addAction:ok];
+        [alert addAction:cancel];
         [self presentViewController:alert animated:YES completion:^{ }];
-        ////////
-        
     };
     [items addObject:_businessTripStart];
     
-    self.businessTripEnd = SWFormItem_Add(@"返回时间", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
+    self.businessTripEnd = SWFormItem_Add(@"返回日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     self.businessTripEnd.maxInputLength = 30;
     //self.age.info=@"2019-12-15";
     self.businessTripEnd.itemSelectCompletion = ^(SWFormItem *item) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert.view addSubview:datePickere];
         
-        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
-        
-        /////
-        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-        datePicker.datePickerMode = UIDatePickerModeTime;
-        datePicker.frame = CGRectMake(0, 40,272,60);
-        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-        fmt.dateFormat = @"yyyy-MM-dd";
-        NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
-        NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
-            datePicker.minimumDate = minDate; // 设置最小时间
-            datePicker.maximumDate = maxDate; // 设置最大时间
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
-        datePicker.locale = locale;
-            datePicker.datePickerMode = UIDatePickerModeDate;
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置\n\n" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alert.view addSubview:datePicker];
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
-            //设置时间格式
-            dateFormat.dateFormat = @"yyyy-MM-dd";
-            
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
-            
+            //实例化一个NSDateFormatter对象
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+            NSString *dateString = [dateFormat stringFromDate:datePickere.date];
+            //求出当天的时间字符串
             NSLog(@"%@",dateString);
-            
-            self.businessTripEnd.info =dateString;
-            [self.formTableView reloadData];
+            self.businessTripEnd.info=dateString;
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
-        
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-        }];
-        
-        [alert addAction:ok];//添加按钮
-        [alert addAction:cancel];//添加按钮
+            　 }];
+        [alert addAction:ok];
+        [alert addAction:cancel];
         [self presentViewController:alert animated:YES completion:^{ }];
-        ////////
     };
     [items addObject:_businessTripEnd];
     

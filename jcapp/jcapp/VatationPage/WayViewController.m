@@ -32,7 +32,7 @@ NSInteger currentPageCountwait_new;
     
     [super viewDidLoad];
     
-    
+    processid = @"22772";
     //e注册自定义 cell
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 100;
@@ -175,7 +175,7 @@ NSInteger currentPageCountwait_new;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@&processid=%@", userid,@"22755"];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@&processid=%@", userid,processid];
     //myDelegate.processid
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -421,7 +421,7 @@ NSInteger currentPageCountwait_new;
     
     //////////////////////////////////
     NSString *post = [NSString stringWithFormat:@"strjson=%@&userid=%@&processid=%@",
-                      jsonString,userid,@"22755"];
+                      jsonString,userid,processid];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
     NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/InsertProcessChange?"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];

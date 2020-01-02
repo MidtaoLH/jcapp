@@ -340,23 +340,7 @@ UIViewController *childViewControllerWaitApply (NSString *title, NSString *imgNa
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
-/// 自定义样式UITabBarItem
-UIViewController *childViewControllerVatcationMain (NSString *title, NSString *imgName, NSUInteger tag) {
-    VatcationMainView *vc = [[VatcationMainView alloc] init];
-    vc.view.backgroundColor = [UIColor whiteColor];
-    //vc.tabBarController.tabBar.hidden = YES;
-    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    [vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(0);
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
-    }];
-    setAnimation(vc.tabBarItem, tag);
-    return vc;
-}
+
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerLeave (NSString *title, NSString *imgName, NSUInteger tag) {
     LeaveViewController *vc = [[LeaveViewController alloc] init];
@@ -391,18 +375,19 @@ UIViewController *childViewControllerBWaitApply (NSString *title, NSString *imgN
 }
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerSWFormCommon (NSString *title, NSString *imgName, NSUInteger tag) {
-   BusinessTripEditViewController *vc = [[BusinessTripEditViewController alloc] init];
+   UIViewController *vc = [[UIViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    //[vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-     //   make.top.mas_equalTo(0);
-        // 添加左
-      //  make.left.mas_equalTo(0);
-        // 添加大小约束
-    //    make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
-    //}];
+    setAnimation(vc.tabBarItem, tag);
+    return vc;
+}
+/// 自定义样式UITabBarItem
+UIViewController *childViewControllerVatcationMain (NSString *title, NSString *imgName, NSUInteger tag) {
+    UIViewController *vc = [[UIViewController alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    //vc.tabBarController.tabBar.hidden = YES;
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -675,7 +660,22 @@ NSArray *imgs (){
 
 // MARK: - UITabBarItemDelegate 监听TabBarItem点击事件
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     self.navigationItem.title=item.title;
+    if([myDelegate.tabbarType isEqualToString:@"6"]&&tabBar.selectedIndex==1)
+    {
+        BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
+    {
+        VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
+    {
+        VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
 }
 @end

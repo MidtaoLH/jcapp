@@ -11,6 +11,7 @@
 #import "../Model/Pending.h"
 #import "PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "TaskBackInfoViewController.h"
 static NSString * identifier = @"PendingListCell";
 
 @interface PendingViewController ()
@@ -199,13 +200,34 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
+    PendingListCell *cell = (PendingListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.pendinglistitem.PicID;
+    NSString *taskcode= cell.pendinglistitem.TaskViewBackID;
+    
+    //if()
+    TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
+    VCCollect.code=code;
+    VCCollect.taskcode=taskcode;
+    [self.navigationController pushViewController:VCCollect animated:YES];
+}
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
     }
-    else
-    {
-        //其它单元格的事件
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
     }
 }
-
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 @end

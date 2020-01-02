@@ -55,22 +55,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/TaskViewBack/TaskBackInfoViewController.m"
-            timestampString = "599634363.098027"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
-            landmarkName = "-connection:didReceiveData:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "jcapp/VatationPage/VatationPageViewController.m"
             timestampString = "599462708.782588"
             startingColumnNumber = "9223372036854775807"
@@ -88,23 +72,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/TLAnimationTabBar/TLTabBarAnimation.m"
-            timestampString = "599634363.0981359"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
-            landmarkName = "-playDeselectAnimationWhitTabBarButton:buttonImageView:buttonTextLabel:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "jcapp/TLAnimationTabBar/TLTabBarAnimation.m"
-            timestampString = "599634363.098193"
+            timestampString = "599646636.370916"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "241"
@@ -120,7 +88,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/TLAnimationTabBar/TLTabBarAnimation.m"
-            timestampString = "599634363.098243"
+            timestampString = "599646636.370998"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "255"
@@ -135,14 +103,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/TLAnimationTabBar/TLTabBarAnimation.m"
-            timestampString = "599634363.098291"
+            filePath = "jcapp/TLAnimationTabBar/UITabBar+TLAnimation.m"
+            timestampString = "599646636.371053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "-playSelectAnimationWhitTabBarButton:buttonImageView:buttonTextLabel:"
-            landmarkType = "7">
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "imageView"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -151,14 +119,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "jcapp/TLAnimationTabBar/UITabBar+TLAnimation.m"
-            timestampString = "599634363.09834"
+            filePath = "jcapp/BusinessTrip/BusinessTripEditViewController.m"
+            timestampString = "599640003.9407721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "imageView"
-            landmarkType = "9">
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "-datas"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

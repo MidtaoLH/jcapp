@@ -99,6 +99,7 @@ NSString * bflag = @"flase";
         operateType=@"2";
         //修改画面 加载数据
         [self LoadData];
+        
     }
     
 }
@@ -131,7 +132,6 @@ NSString * bflag = @"flase";
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
-        [datePickers setDate:[NSDate date] animated:YES];
         [alert.view addSubview:datePickers];
         
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -238,6 +238,7 @@ NSString * bflag = @"flase";
 }
 -(void)processAction{
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
+    //nextVc.pro
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
     if([ bflag isEqualToString:@"flase"])
     {
@@ -590,6 +591,20 @@ NSString * bflag = @"flase";
             self.businessTripEnd.info=[resultDic0 objectForKey:@"EndDate"];
             self.businessNum.info=[resultDic0 objectForKey:@"BusinessNum"];
             self.reason.info=[resultDic0 objectForKey:@"BusinessTripReason"];
+            // 日期格式化类
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            // 设置日期格式 为了转换成功
+            format.dateFormat = @"yyyy-MM-dd";
+            // 时间字符串
+            NSString *string = self.businessTripStart.info;
+            // NSString * -> NSDate *
+            NSDate *data = [format dateFromString:string];
+            [datePickers setDate:data animated:YES];
+            // 时间字符串
+            string = self.businessTripEnd.info;
+            // NSString * -> NSDate *
+            data = [format dateFromString:string];
+            [datePickere setDate:data animated:YES];
             
             //解析出差地点数据
             resData = [[NSData alloc] initWithData:[array[1] dataUsingEncoding:NSUTF8StringEncoding]];

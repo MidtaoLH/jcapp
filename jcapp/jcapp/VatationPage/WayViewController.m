@@ -32,7 +32,7 @@ NSInteger currentPageCountwait_new;
     
     [super viewDidLoad];
     
-    processid = @"22772";
+    //processid = @"22772";
     //e注册自定义 cell
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 100;

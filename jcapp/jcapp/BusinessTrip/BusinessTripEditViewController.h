@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
     
     IBOutlet UITableView *tableViewPlace;
-    UIDatePicker*datePicker;
+    UIDatePicker*datePickers;
+    UIDatePicker*datePickere;
     NSString *xmlString;
     NSMutableDictionary *info;
     NSString *currentTagName;

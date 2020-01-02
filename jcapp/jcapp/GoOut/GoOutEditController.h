@@ -24,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *vatcationid;
     NSString *processid; 
     NSString *ApplyCode;
-    
+    UIDatePicker*datePickers;
+    UIDatePicker*datePickere;
 } 
 @property (nonatomic,copy) NSString *processInstanceID;
 @property (nonatomic,copy) NSString *evectionID;

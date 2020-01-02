@@ -270,7 +270,6 @@ NSInteger currentPageCountbwait;
     myDelegate.businessTripid=pending.AidFK;
     myDelegate.processid=pending.PicID;
     myDelegate.pageType=@"2";
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
     BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
     order.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:order animated:YES];

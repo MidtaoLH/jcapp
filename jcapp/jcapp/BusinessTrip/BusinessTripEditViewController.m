@@ -42,10 +42,11 @@ NSString * bflag = @"flase";
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     
-    datePicker = [[UIDatePicker alloc] init]; datePicker.datePickerMode = UIDatePickerModeDate;
-    [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
+    datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
+    [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     
-    
+    datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
+    [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     //totalcount=1;
     totalHeight=Common_CCRowHeight;
     //tableViewPlace.backgroundColor=UIColor.blueColor;
@@ -130,17 +131,19 @@ NSString * bflag = @"flase";
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert.view addSubview:datePicker];
+        [alert.view addSubview:datePickers];
         
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
             //实例化一个NSDateFormatter对象
             [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+            NSString *dateString = [dateFormat stringFromDate:datePickers.date];
             //求出当天的时间字符串
             NSLog(@"%@",dateString);
             self.businessTripStart.info=dateString;
-            [self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             　 }];
@@ -155,17 +158,19 @@ NSString * bflag = @"flase";
     //self.age.info=@"2019-12-15";
     self.businessTripEnd.itemSelectCompletion = ^(SWFormItem *item) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert.view addSubview:datePicker];
+        [alert.view addSubview:datePickere];
         
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
             //实例化一个NSDateFormatter对象
             [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+            NSString *dateString = [dateFormat stringFromDate:datePickere.date];
             //求出当天的时间字符串
             NSLog(@"%@",dateString);
             self.businessTripEnd.info=dateString;
-            [self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             　 }];
@@ -617,7 +622,7 @@ NSString * bflag = @"flase";
     
 }
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.tabbarType=@"6";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];

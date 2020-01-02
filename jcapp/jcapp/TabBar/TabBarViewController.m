@@ -25,6 +25,7 @@
 #import "BApprovedViewController.h"
 #import "GoOutWaitController.h"
 #import "GoOutViewController.h"
+#import "GoOutEditController.h"
 #import "AttendanceCalendarViewController.h"
 #import "AttendanceSummaryViewController.h"
 #import "AgentViewController.h"
@@ -91,7 +92,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"waichu";
         [self addChildViewController:childViewControllerGoOutWait(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerVatcationMain(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerGoOueEdit(@"", @"publish-text", 1)];
         [self addChildViewController:childViewControllerGoOut(@"外出记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -343,6 +344,23 @@ UIViewController *childViewControllerWaitApply (NSString *title, NSString *imgNa
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerVatcationMain (NSString *title, NSString *imgName, NSUInteger tag) {
     VatcationMainView *vc = [[VatcationMainView alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    //vc.tabBarController.tabBar.hidden = YES;
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    [vc.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(0);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
+    setAnimation(vc.tabBarItem, tag);
+    return vc;
+}
+/// 自定义样式UITabBarItem
+UIViewController *childViewControllerGoOueEdit (NSString *title, NSString *imgName, NSUInteger tag) {
+    GoOutEditController *vc = [[GoOutEditController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
        //vc.tabBarController.tabBar.hidden = YES;
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];

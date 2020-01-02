@@ -25,6 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *code;
     NSString *username;
 }
+@property (weak, nonatomic) IBOutlet UILabel *lblname;
+@property (weak, nonatomic) IBOutlet UILabel *lblcode;
+@property (weak, nonatomic) IBOutlet UILabel *lbldept;
+@property (weak, nonatomic) IBOutlet UITableView *userslist;
+@property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
+@property (weak, nonatomic) IBOutlet UIButton *btnloginout;
+@property (nonatomic, strong) NSMutableData *mResponseData;
 @end
 
 NS_ASSUME_NONNULL_END

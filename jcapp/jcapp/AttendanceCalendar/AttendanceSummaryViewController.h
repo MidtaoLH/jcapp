@@ -28,7 +28,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray *listOfMovies;
 @property (strong,nonatomic) NSMutableArray *listOfMoviesDetail;
 @property (nonatomic, assign) YUFoldingSectionHeaderArrowPosition arrowPosition;
-
 @property (nonatomic, assign) NSInteger index;
+@property (weak, nonatomic) IBOutlet UILabel *lblname;
+@property (weak, nonatomic) IBOutlet UILabel *lbldept;
+@property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
+@property (weak, nonatomic) IBOutlet UIButton *btndate;
+@property (strong, nonatomic) NSDate *startDate;
+@property (nonatomic, weak) YUFoldingTableView *foldingTableView;
+@property (nonatomic, assign ,getter=isYearShow) BOOL yearShow;
 @end
 NS_ASSUME_NONNULL_END

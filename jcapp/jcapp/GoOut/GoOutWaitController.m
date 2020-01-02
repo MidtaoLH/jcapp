@@ -10,6 +10,8 @@
 #import "MJExtension.h"
 #import "../Model/MdlGoOutList.h"
 #import "GoOutWaitCell.h"
+#import "../MJRefresh/MJRefresh.h"
+#import "GoOutDeatileController.h"
 
 @interface GoOutWaitController ()
 
@@ -23,11 +25,71 @@ static NSString *identifier =@"GoOutWaitCell";
 
 - (void)viewDidLoad {
     
-    self.title = @"待申请外出";
+    [super viewDidLoad];
+
+    CGFloat headimageW = self.view.frame.size.width;
+    CGFloat headimageH =  self.view.frame.size.height;
+    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
     
+    //e注册自定义 cell
+    [_NewTableView registerClass:[GoOutWaitCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 150;
+    currentPageCount=[Common_PageSize intValue]; 
+    [self LoadData];
+    
+    // 添加头部的下拉刷新
+    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+    self.NewTableView.mj_header = header;
+    
+    // 添加底部的上拉加载
+    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+    self.NewTableView.mj_footer = footer;
+    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    
+    NSLog(@"%@",@"viewDidLoad-end");
+}
+
+// 2.实现下拉刷新和上拉加载的事件。
+// 头部的下拉刷新触发事件
+- (void)headerClick {
+    // 可在此处实现下拉刷新时要执行的代码
+    // ......
+    //if(currentPageCount>1)
+    //currentPageCount--;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_header endRefreshing];
+}
+// 底部的上拉加载触发事件
+- (void)footerClick {
+    // 可在此处实现上拉加载时要执行的代码
+    // ......
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_footer endRefreshing];
+}
+-(void)LoadData
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    empname = [defaults objectForKey:@"empname"];
+    groupid = [defaults objectForKey:@"Groupid"];
+    UserHour = [defaults objectForKey:@"UserHour"];
+ 
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGoOutListData?userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"80",@"2",@"",@"2",@"",@"1"];
+    // code, string userID, string menuID
+    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",@"2",@"",@"0"];
     
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -35,15 +97,7 @@ static NSString *identifier =@"GoOutWaitCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    
-    //e注册自定义 cell
-    [_NewTableView registerClass:[GoOutWaitCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
-    
-    [super viewDidLoad];
-    NSLog(@"%@",@"viewDidLoad-end");
 }
-
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -54,8 +108,8 @@ static NSString *identifier =@"GoOutWaitCell";
     NSLog(@"%@", xmlString);
     
     // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
-                          NSRange endRagne = [xmlString rangeOfString:@"}</string>"];
+    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+                          NSRange endRagne = [xmlString rangeOfString:@"</string>"];
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
     

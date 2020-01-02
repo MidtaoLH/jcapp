@@ -13,6 +13,10 @@
 #import "GoOutDetailCell.h"
 #import "../Model/LeaveTask.h"
 #import "ImageCell.h"
+#import "GoOutEditController.h"
+#import "../Model/MdlAnnex.h"
+#import "SDDemoCell.h"
+#import "SDPhotoItem.h"
 
 @interface GoOutDeatileController ()
 {
@@ -21,28 +25,32 @@
     
     //0 初始化 1 承认 2 驳回
     long edittype;
+    
+
 }
-
+@property (nonatomic, strong) NSMutableArray *srcStringArray;
 @property (strong,nonatomic) MdlEvection *leavehead;
-
 @end
 
 @implementation GoOutDeatileController
-
+ 
 static NSString *identifier =@"DetailCell";
 static NSString *identifierImage =@"ImageCell.h";
 
 @synthesize listdetail;
 @synthesize listhead;
-@synthesize  listtask;
+@synthesize listtask;
+@synthesize listAnnex;
 
 - (void)viewDidLoad {
- 
+
     [super viewDidLoad];
-     edittype = 0;
+ 
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGoOutDataByID?userID=%@&EvectionID=%@&ProcessInstanceID=%@", @"80",@"10438",@"1" ];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGoOutDataByID?userID=%@&EvectionID=%@&ProcessInstanceID=%@", userID,self.awardID_FK,self.processInstanceID ];
   
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -51,12 +59,12 @@ static NSString *identifierImage =@"ImageCell.h";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    
+ 
     //e注册自定义 cell
     [_NewTableView registerClass:[GoOutDetailCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     
-    [_ImageTableView registerClass:[ImageCell class] forCellReuseIdentifier:identifierImage];
+    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = 150;
     
     NSLog(@"%@",@"viewDidLoad-end");
@@ -72,11 +80,12 @@ static NSString *identifierImage =@"ImageCell.h";
      [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
  
 }
+
 -(void)TaskCancle:(id)sender{
  
        edittype = 1;
     
-     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", @"80", @"1", @"22770", @"80" ];
+     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, userID ];
  
      NSLog(@"%@", strURL);
      NSURL *url = [NSURL URLWithString:strURL];
@@ -88,17 +97,30 @@ static NSString *identifierImage =@"ImageCell.h";
                                    delegate:self];
 }
 -(void)TaskUpdate:(id)sender{
-       edittype = 2;
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskUpdate?UserID=%@&ProcessInstanceID=%@&CelReson=%@&Updator=%@", @"80", @"22770", @"80" , @"80"];
-    NSLog(@"%@", strURL);
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
- 
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+    GoOutEditController * VCCollect = [[GoOutEditController alloc] init];
+    VCCollect.evectionID=self.awardID_FK;
+    VCCollect.processInstanceID=self.processInstanceID;
+    VCCollect.ProcessApplyCode=self.ProcessApplyCode;
+    VCCollect.edittype = @"2";
+    VCCollect.urltype = @"getdata";
+    [self.navigationController pushViewController:VCCollect animated:YES];
+    
+    /*
+     edittype = 2;
+     
+     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskUpdate?UserID=%@&ProcessInstanceID=%@&CelReson=%@&Updator=%@", userID, self.processInstanceID, userID , userID];
+     
+     NSLog(@"%@", strURL);
+     NSURL *url = [NSURL URLWithString:strURL];
+     //进行请求
+     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+     
+     NSURLConnection *connection = [[NSURLConnection alloc]
+     initWithRequest:request
+     delegate:self];
+     */
+
  }
 
 -(void)setlblcolor
@@ -120,6 +142,7 @@ static NSString *identifierImage =@"ImageCell.h";
     NSLog(@"%@", @"kaishidayin");
     NSLog(@"%@", xmlString);
     
+    //此页面为详细 查看画面 0为查看
     if(edittype == 0)
     {
         // 字符串截取
@@ -127,9 +150,28 @@ static NSString *identifierImage =@"ImageCell.h";
         NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
         
         NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
-        NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
+        NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
         
+        NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
+        NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
         
+        //获取附件数据
+        NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
+        NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
+        
+        NSString *requestTmp3 = [NSString stringWithString:resultString3];
+        NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
+        listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
+ 
+        //补充附件图片路径
+        NSMutableArray *array1 = [[NSMutableArray alloc] init];
+        for (MdlAnnex *mdla in listAnnex) {
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
+            [array1 addObject:urlstring];
+        }
+        _srcStringArray =array1;
+ 
         //获取回览明细表数据
         NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
         NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
@@ -216,6 +258,8 @@ static NSString *identifierImage =@"ImageCell.h";
             [self showError:@"操作成功！"];
         }
     }
+    [self.ImageTableView reloadData];
+    [self.ImageTableView layoutIfNeeded];
     NSLog(@"%@",@"connection1-end");
 }
 // 提示错误信息
@@ -338,14 +382,12 @@ static NSString *identifierImage =@"ImageCell.h";
     } else if ([tableView isEqual:self.ImageTableView]) {
         
         return 1;
-        
     }
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if ([tableView isEqual:self.NewTableView]) {
         GoOutDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
         
@@ -354,15 +396,18 @@ static NSString *identifierImage =@"ImageCell.h";
         return cell;
     } else if ([tableView isEqual:self.ImageTableView]) {
         
-        ImageCell * cell = [self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
-        
-        cell.str  = @"Rem【ar【k【k2";
-        
-        return cell;
-        
+        SDDemoCell *sdcell =[self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
+        sdcell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSMutableArray *temp = [NSMutableArray array];
+        [_srcStringArray enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+            SDPhotoItem *item = [[SDPhotoItem alloc] init];
+            item.thumbnail_pic = src;
+            [temp addObject:item];
+        }];
+        sdcell.photosGroup.photoItemArray = [temp copy];
+        return sdcell;
     }
     return 0;
-    
 }
 
 @end

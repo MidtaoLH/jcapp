@@ -14,7 +14,8 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "../VatationPage/VatcationMainViewController.h"
 #import "../VatationPage/VatcationMainView.h"
-
+#import "../BusinessTrip/BusinessTripEditViewController.h"
+#import "../GoOut/GoOutEditController.h"
 #import "../AppDelegate.h"
 
 
@@ -262,11 +263,23 @@ NSInteger currentPageCountwait;
         AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
         //app.leaveid
         VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
-        
-        
         //order.hidesBottomBarWhenPushed = YES;
     //    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
-        [self presentViewController:order animated:YES completion:nil];
+        [self.navigationController pushViewController:order animated:YES];
+    }
+    else if([pending.DocumentName isEqualToString:@"出差"]){
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.businessTripid=pending.AidFK;
+        myDelegate.processid=pending.PicID;
+        myDelegate.pageType=@"2";
+        BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
+        [self.navigationController pushViewController:order animated:YES];
+    }
+    else if([pending.DocumentName isEqualToString:@"外出"]){
+        GoOutEditController *order = [[GoOutEditController alloc] init];
+        order.evectionID=pending.AidFK;
+        order.processInstanceID=pending.PicID;
+        [self.navigationController pushViewController:order animated:YES];
     }
 }
 

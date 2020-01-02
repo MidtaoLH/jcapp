@@ -21,7 +21,7 @@
 //出差画面 1:新增 2:修改
 @property (nonatomic, strong) NSString *pageType;
 @property (nonatomic, strong) NSString *leaveid;
-
+@property (nonatomic, strong) NSString *agentid;
 @property (nonatomic, strong) NSString *processid;
 
 @property (nonatomic, strong) NSString *Vatcation_refresh;
@@ -52,5 +52,10 @@
 
 @property (nonatomic, strong) NSString *TimeEnd;
 
+@property (nonatomic, strong) NSString *agentType;
+
+@property (nonatomic, strong) NSString *tabbarType;
+
+@property (strong,nonatomic) NSMutableArray *aclistOfMovies;
 @end
 

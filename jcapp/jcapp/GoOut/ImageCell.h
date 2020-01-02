@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageCell : UITableViewCell
    @property (nonatomic, copy) NSString *str;
+   @property (strong,nonatomic) NSMutableArray *listAnnex;
 @end
 
 NS_ASSUME_NONNULL_END

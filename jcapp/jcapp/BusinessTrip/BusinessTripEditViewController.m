@@ -15,8 +15,9 @@
 #import "../AppDelegate.h"
 #import "../VatationPage/WayViewController.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
+#import "Masonry.h"
+#import "TabBarViewController.h"
 
-static NSInteger rowHeight=50;
 NSString * bflag = @"flase";
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -34,28 +35,45 @@ NSString * bflag = @"flase";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     
-    datePicker = [[UIDatePicker alloc] init]; datePicker.datePickerMode = UIDatePickerModeDate;
-    [datePicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
+    datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
+    [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     
-    
+    datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
+    [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     //totalcount=1;
-    totalHeight=150;
+    totalHeight=Common_CCRowHeight;
     //tableViewPlace.backgroundColor=UIColor.blueColor;
-    tableViewPlace.frame = CGRectMake(0,-40, self.view.frame.size.width, totalHeight);
-    tableViewPlace.rowHeight=rowHeight;
+    tableViewPlace.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, totalHeight);
+    
+//    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
+//    }];
+    tableViewPlace.rowHeight=Common_CCRowHeight;
     myData = [[NSMutableArray alloc]initWithObjects:@"",nil];
     //[myData insertObject:@"f" atIndex:0];
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
     
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -113,17 +131,19 @@ NSString * bflag = @"flase";
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert.view addSubview:datePicker];
+        [alert.view addSubview:datePickers];
         
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
             //实例化一个NSDateFormatter对象
             [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+            NSString *dateString = [dateFormat stringFromDate:datePickers.date];
             //求出当天的时间字符串
             NSLog(@"%@",dateString);
             self.businessTripStart.info=dateString;
-            [self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             　 }];
@@ -138,17 +158,19 @@ NSString * bflag = @"flase";
     //self.age.info=@"2019-12-15";
     self.businessTripEnd.itemSelectCompletion = ^(SWFormItem *item) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert.view addSubview:datePicker];
+        [alert.view addSubview:datePickere];
         
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
             //实例化一个NSDateFormatter对象
             [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+            NSString *dateString = [dateFormat stringFromDate:datePickere.date];
             //求出当天的时间字符串
             NSLog(@"%@",dateString);
             self.businessTripEnd.info=dateString;
-            [self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             　 }];
@@ -437,8 +459,21 @@ NSString * bflag = @"flase";
 -(void)LoadTableLocation
 {
     tableViewPlace.height=totalHeight;
+//    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
+//    }];
     [tableViewPlace reloadData];
-    self.formTableView.frame=CGRectMake(0,totalHeight-20, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//    }];
 }
 - (void)textFieldWithText:(UITextField *)textField
 {
@@ -460,7 +495,7 @@ NSString * bflag = @"flase";
         // do something
         //totalcount++;
         [myData addObject:@""];
-        totalHeight=totalHeight+rowHeight;
+        totalHeight=totalHeight+Common_CCRowHeight;
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
         
@@ -483,7 +518,7 @@ NSString * bflag = @"flase";
         // do something
         //totalcount--;
         [myData removeObjectAtIndex:indexPath.row];
-        totalHeight=totalHeight-rowHeight;
+        totalHeight=totalHeight-Common_CCRowHeight;
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
     }
@@ -585,6 +620,13 @@ NSString * bflag = @"flase";
     }
     return image;
     
+}
+- (void)goBack {
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    myDelegate.tabbarType=@"6";
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 ////弹出消息框
 //-(void) connection:(NSURLConnection *)connection

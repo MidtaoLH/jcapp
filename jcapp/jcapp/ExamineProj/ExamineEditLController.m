@@ -8,7 +8,7 @@
 
 #import "ExamineEditLController.h"
 #import "MJExtension.h"
-#import "../Model/LeaveHead.h"
+#import "../Model/ExamineHead.h"
 #import "../Model/LeaveDeatil.h"
 #import "ExamineEditImageCell.h"
 #import "../Model/LeaveTask.h"
@@ -16,10 +16,8 @@
 #import "SDDemoCell.h"
 #import "SDPhotoItem.h"
 
-#define kCount 6  //图片总张数
-
-static long step = 0; //记录时钟动画调用次数
-
+#define kCount 4  //图片总张数
+ 
 @interface ExamineEditLController ()
 {
     CGFloat scaleMini;
@@ -31,7 +29,7 @@ static long step = 0; //记录时钟动画调用次数
 }
 @property (nonatomic, strong) NSArray *srcStringArray;
 
-@property (strong,nonatomic) LeaveHead *leavehead;
+@property (strong,nonatomic) ExamineHead *exahead;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 
@@ -50,10 +48,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     [super viewDidLoad];
     edittype = 0;
-    strTaskid = @"23149";
+    self.strTaskid = @"23180";
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@",@"1",strTaskid];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@",@"1",self.strTaskid,@"2"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -145,7 +143,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     id objremark = mutableDic0[@"remark"];
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@",@"1",strTaskid,objremark,objtasktype,@"1"];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@",@"1",self.strTaskid,objremark,objtasktype,@"1"];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -286,15 +284,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         
-        listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
-        for (LeaveHead *p1 in listhead) {
+        listhead = [ExamineHead mj_objectArrayWithKeyValuesArray:resultDic];
+        for (ExamineHead *p1 in listhead) {
             _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
             
-            _lblleavestatus.text = p1.LeaveStatusTxt;
+            _lblleavestatus.text = p1.StatusTxt;
             _emplbl.text = p1.EmpCName;
             _lblempgroup.text = p1.groupname;
             
-            NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.LeaveDate];
+            NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ExamineDate];
             
             _lblapplydate.text = strapplydate;
             
@@ -302,13 +300,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             
             _lblleavedate.text = strleavedate;
             
-            _lblleavetype.text = p1.LeaveTypeTxt;
+            _lblleavetype.text = p1.TypeTxt;
             
-            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.LeavePlanNum];
+            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.numcount];
             
             _lblleavecounts.text =strleavecounts;
             
-            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.LeaveDescribe];
+            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.Describe];
             
             _lblleaveremark.text = strleaveremark;
         }

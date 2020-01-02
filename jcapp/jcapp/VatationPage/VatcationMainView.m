@@ -16,7 +16,7 @@
 #import "VatationPageViewController.h"
 #import "KeepLeave.h"
 #import "LeaveStatusModel.h"
-
+#import "TabBarViewController.h"
 
 static NSInteger rowHeight=50;
 @interface VatcationMainView ()<UIActionSheetDelegate>
@@ -39,6 +39,7 @@ static NSInteger rowHeight=50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -73,10 +74,16 @@ static NSInteger rowHeight=50;
     totalHeight=150;
 
     [self datas];
-    self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+   
 }
 
-
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.tabbarType=@"5";
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -117,6 +124,7 @@ static NSInteger rowHeight=50;
             //赋值完毕后清空
             [defaults setObject:@"" forKey:@"vatcationname"];
             [self.formTableView reloadData];
+            [self.formTableView layoutIfNeeded];
         }
        
     }
@@ -187,7 +195,12 @@ static NSInteger rowHeight=50;
             NSLog(@"%@",dateString);
             
             self.businessTripStart.info =dateString;
-            [self.formTableView reloadData];
+            //[self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
+            
+      
         }];
 
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -234,7 +247,9 @@ static NSInteger rowHeight=50;
             NSLog(@"%@",dateString);
             
             self.businessTripEnd.info =dateString;
-            [self.formTableView reloadData];
+            [self.formTableView beginUpdates];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.formTableView endUpdates];
         }];
         
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

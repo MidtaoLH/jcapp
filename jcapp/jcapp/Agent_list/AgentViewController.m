@@ -11,6 +11,9 @@
 #import "../Model/Agent.h"
 #import "AgentListCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "../AgentSet/AgentInfoViewController.h"
+#import "../AgentSet/SetAgentViewController.h"
+#import "AppDelegate.h"
 static NSString * identifier = @"PendingListCell";
 
 @interface AgentViewController ()
@@ -22,15 +25,7 @@ static NSString * identifier = @"PendingListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"代理人设置";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    CGFloat headimageW = self.view.frame.size.width;
-    CGFloat headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
+  
     
     //e注册自定义 cell
     [_NewTableView registerClass:[AgentListCell class] forCellReuseIdentifier:identifier];
@@ -109,6 +104,8 @@ static NSString * identifier = @"PendingListCell";
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [Agent mj_objectArrayWithKeyValuesArray:resultDic];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
     //[self.listOfMovies addObjectsFromArray:self.listMovies];
 }
 
@@ -129,8 +126,7 @@ static NSString * identifier = @"PendingListCell";
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+
 }
 
 //解析xml回调方法
@@ -199,15 +195,30 @@ static NSString * identifier = @"PendingListCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
+    AgentListCell *cell = (AgentListCell *)[tableView cellForRowAtIndexPath:indexPath];
+   
+    NSString *code= cell.pendinglistitem.AgentSetID;
+    NSString *status= cell.pendinglistitem.AgentStatus;
+    if([status containsString:@"1"])
     {
+        SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
+        VCCollect.infoModel.agentID=code;
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.agentType=@"info";
+        [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else
     {
-        //其它单元格的事件
+        AgentInfoViewController * VCCollect = [[AgentInfoViewController alloc] init];
+        VCCollect.infoModel.agentID=code;
+        [self.navigationController pushViewController:VCCollect animated:YES];
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self LoadData];
+}
 
 
 

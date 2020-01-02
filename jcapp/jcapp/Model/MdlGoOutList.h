@@ -16,8 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy, nonatomic) NSString *EvectionPlanTime;
 
-@property (copy, nonatomic) NSString *ProcessStutasName; 
+@property (copy, nonatomic) NSString *ProcessStutasName;
+
+@property (copy, nonatomic) NSString *AwardID_FK;
+
+@property (copy, nonatomic) NSString *ProcessInstanceID;
+
+@property (copy, nonatomic) NSString *ProcessApplyCode;
 
 @end
 
 NS_ASSUME_NONNULL_END
+

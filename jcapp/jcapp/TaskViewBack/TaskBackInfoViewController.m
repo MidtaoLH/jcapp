@@ -21,12 +21,8 @@
 
 static long step = 0; //记录时钟动画调用次数
 @interface TaskBackInfoViewController ()
-{
-    CGFloat scaleMini;
-    CGFloat scaleMax;
-    
-}
-@property (nonatomic, strong) NSArray *srcStringArray;
+
+@property (nonatomic, strong) NSMutableArray *srcStringArray;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 
@@ -68,130 +64,117 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     _lblprocremark.font=kFont_Lable_14;
     _lblprocstatus.font=kFont_Lable_18;
     _lblproctype.font=kFont_Lable_16;
-    CGFloat tabBarHeight = self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
-    
     _imgvprocstatus.backgroundColor = kColor_Cyan;
-    NSInteger ColSize=[Common_ColSize intValue];//列宽
-    NSInteger RowSize=[Common_RowSize intValue];//行高
-    NSInteger UserIamgeSize=[Common_UserImageSize intValue];//头像图片大小
-    NSInteger StatusImageSize=[Common_StatusImageSize intValue];//状态图片
-    NSInteger TxTHeight=[Common_TxTHeight intValue];//文本高度
-    NSInteger TxTWidth=[Common_TxTWidth intValue];//文本宽度
-    NSInteger TableHeight=[Common_TableHeight intValue];//列表高度
-    NSInteger ImageTableHeight=[Common_ImageTableHeight intValue];//图片列表高度
-    NSInteger TableRowHeight=[Common_TableRowHeight intValue];
-    NSInteger ImageTableRowHeight=[Common_ImageTableRowHeight intValue];
-    
     //注册自定义 cell
     [_NewTableView registerClass:[TaskBackListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = TableRowHeight;
+    _NewTableView.rowHeight = Common_TableRowHeight;
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
-    _ImageTableView.rowHeight = ImageTableRowHeight;
+    _ImageTableView.rowHeight = Common_ImageTableRowHeight;
     [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(UserIamgeSize,UserIamgeSize));
+        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
     }];
     [_imgvprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加右
-        make.right.mas_equalTo(-ColSize);
+        make.right.mas_equalTo(-Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(StatusImageSize,StatusImageSize));
+        make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize,Common_StatusImageSize));
     }];
     [_lblprocstatus mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加右
-        make.right.mas_equalTo(-ColSize);
+        make.right.mas_equalTo(-Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(StatusImageSize,StatusImageSize));
+        make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize,Common_StatusImageSize));
     }];
     [_emplbl mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [_lblempgroup mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize*2);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [_lblapplydate mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(UserIamgeSize+ColSize*2);
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+RowSize*3);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*3);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [_lblproctype mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*2);
+      make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [_lblprocdate mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*3);
+       make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*3);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth*2,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2,Common_TxTHeight));
     }];
     [_lblproccounts mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*4);
+       make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*4);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [_lblprocremark mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*5);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(TxTWidth,TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(0);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+RowSize*6);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*6);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(self.view.width, ImageTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_ImageTableHeight));
     }];
     [_lblcr mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
-        make.left.mas_equalTo(ColSize);
+        make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+ImageTableHeight+RowSize*6);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_ImageTableHeight+Common_RowSize*6);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(self.view.width, TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,  Common_TxTHeight));
     }];
     // 审批列表view添加约束
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(self.view.width, TableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_TableHeight));
         // 添加左
         make.left.mas_equalTo(0);
         // 添加上
-        make.top.mas_equalTo(tabBarHeight+UserIamgeSize+ImageTableHeight+RowSize*7);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_ImageTableHeight+Common_RowSize*7);
     }];
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = self.imgvemp.width * 0.5;
@@ -297,11 +280,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
         self.imgvemp.image=imageView.image;
         [self loadImageInfo];
-        _srcStringArray = @[@"http://47.94.85.101:8095/img/01.jpg",
-                            @"http://ww2.sinaimg.cn/thumbnail/98719e4agw1e5j49zmf21j20c80c8mxi.jpg",
-                            ];
-        [self.ImageTableView reloadData];
-        [self.ImageTableView layoutIfNeeded];
+
     }
     else  if([xmlString containsString:@"AttachFilePath"])
     {
@@ -313,7 +292,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        _srcStringArray = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
+        listtask = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
+        
+        self.srcStringArray = [NSMutableArray arrayWithCapacity:listtask.count];
+        for(int i=0;i<[listtask count];i++)
+        {
+            ViewBackDetail *detail=listtask[i];
+            NSString *obj = [NSString stringWithFormat:Common_WSUrl,detail.AttachFilePath];
+            [_srcStringArray addObject:obj];
+        }
         [self.ImageTableView reloadData];
         [self.ImageTableView layoutIfNeeded];
     }
@@ -334,59 +321,29 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
-    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    ipParser.delegate = self;
-    [ipParser parse];
-    [self.NewTableView reloadData];
 }
-
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-    info = [[NSMutableDictionary alloc] initWithCapacity: 1];
 }
-
-
 //解析返回xml的节点elementName
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    NSLog(@"value2: %@\n", elementName);
-    //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
-    currentTagName = elementName;
-    
-    NSLog(@"%@",@"parser2-end");
 }
-
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    
-    NSLog(@"%@",@"parser3-begin");
-    
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName {
-    
 }
-
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    
-    NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
-    for (id key in info) {
-        [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
-    }
-    
 }
-
 //有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%@",@"numberOfSectionsInTableView-begin");
-    // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
-    // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
-    
     return 1;
 }
 
@@ -396,18 +353,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 {
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
-    NSLog(@"%@",@"tableView-begin");
-    //  return self.listdetail.count;
-    
     if ([tableView isEqual:self.NewTableView]) {
-        
-        NSLog(@"%@",@"tableView-begin");
         return self.listdetail.count;
-        
     } else if ([tableView isEqual:self.ImageTableView]) {
-        
         return 1;
-        
     }
     return 0;
 }

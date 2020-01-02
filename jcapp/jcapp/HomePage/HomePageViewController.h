@@ -18,8 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *resultString;
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
-
+@property (nonatomic, strong) NSTimer *timer;
+@property (weak, nonatomic) IBOutlet UIWebView *webview;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfMovies;
 @end

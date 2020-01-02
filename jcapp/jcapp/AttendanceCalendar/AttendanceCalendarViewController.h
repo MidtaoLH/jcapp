@@ -26,9 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfMovies;
 @property (strong,nonatomic) NSMutableArray *listOfMoviesDetail;
-@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
-@property (weak, nonatomic) IBOutlet UITableView *NewTableView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet WHUCalendarView *calview;
 @property (weak, nonatomic) IBOutlet UILabel *lblname;
 @property (weak, nonatomic) IBOutlet UILabel *lbldept;

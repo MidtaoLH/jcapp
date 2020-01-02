@@ -7,26 +7,19 @@
 //
 #import "ViewController.h"
 #import "UsersViewController.h"
-#import "AlterPWDController.h"
-#import "ZDYTTabBarViewController.h"
+#import "AlterPWDController.h" 
 #import "UserInfo.h"
 #import "MJExtension.h"
 #import "AppDelegate.h"
+#import "Masonry.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 @interface UsersViewController
 ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *lblname;
-@property (weak, nonatomic) IBOutlet UILabel *lblcode;
-@property (weak, nonatomic) IBOutlet UILabel *lbldept;
-@property (weak, nonatomic) IBOutlet UITableView *userslist;
-@property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
-@property (weak, nonatomic) IBOutlet UIButton *btnloginout;
-@property (nonatomic, strong) NSMutableData *mResponseData;
+
 @end
 
 @implementation UsersViewController
-- (void)viewDidLoad {
-    
+- (void)viewDidLoad {    
     [super viewDidLoad];
     self.edgesForExtendedLayout=0;
     self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
@@ -34,40 +27,35 @@
     self.myHeadPortrait.userInteractionEnabled = YES;//打开用户交互
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choseImage:)];
     [self.myHeadPortrait addGestureRecognizer:tap];
-   
-    CGFloat headimageX = self.view.frame.size.width * 0.08;
-    CGFloat headimageY = self.view.frame.size.height * 0.06;
-    CGFloat headimageW = self.view.frame.size.width * 0.25;
-    CGFloat headimageH = headimageW;
-    self.myHeadPortrait.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
     //这句必须写
     self.myHeadPortrait.layer.masksToBounds = YES;
-    self.myHeadPortrait.layer.cornerRadius = headimageW * 0.5;
+    self.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
     self.userslist.delegate=self;
     self.userslist.dataSource=self;
     self.userslist.bounces = NO;
-    headimageX = 0;
-    headimageY = self.view.frame.size.height*0.25;
-    headimageW = self.view.frame.size.width;
-    headimageH = 132;
-    self.userslist.frame = CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    self.btnloginout.frame=CGRectMake(0,  self.view.frame.size.height*0.5, self.view.frame.size.width, 44);
-    
-    headimageX = self.view.frame.size.width * 0.495;
-    headimageY = self.view.frame.size.height * 0.025;
-    headimageW = self.view.frame.size.width * 0.25;
-    headimageH =  headimageW;
-    self.lblname.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    headimageX = self.view.frame.size.width * 0.5;
-    headimageY = self.view.frame.size.height * 0.07;
-    self.lblcode.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    headimageX = self.view.frame.size.width * 0.5;
-    headimageY = self.view.frame.size.height * 0.10;
-    self.lbldept.frame=CGRectMake(headimageX, headimageY, headimageW, headimageH);
-    
-   
     [self loadinfo];
 }
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_userslist respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_userslist setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_userslist respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_userslist setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 //清除缓存按钮的点击事件
 - (void)clearRAM{
     NSString *message =@"删除缓存";
@@ -126,7 +114,8 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 132/3;
+    //列表高度
+    return Common_UserTableHeight/3;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) NSString *EvectionDescribe;
 
 @property (copy, nonatomic) NSString *EvectionTypeTxt;
- 
+@property (copy, nonatomic) NSString *ProcessApplyCode;
 @end
 
 NS_ASSUME_NONNULL_END

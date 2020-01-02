@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "HomePage/HomePageViewController.h"
-#import "HomePage/ZDYTTabBarViewController.h"
 #import "VatationPage/VatationPageViewController.h"
 #import "VatationPage/VatcationMainViewController.h"
 #import "VatationPage/VatcationMainView.h"
@@ -28,12 +27,17 @@
 #import "GoOut/GoOutViewController.h"
 #import "GoOut/GoOutWaitController.h"
 #import "GoOut/GoOutDeatileController.h"
+#import "GoOut/GoOutEditController.h"
+#import "TaskViewBack/TaskBackInfoViewController.h"
 
 #import "PendingPage/PendingViewController.h"
 #import "AppDelegate.h"
 #import "SDWebImage/UIImageView+WebCache.h"
+#import "AgentSet/AgentInfoViewController.h"
 
 
+#import "TabBar/TabBarViewController.h"
+#import "BusinessTrip/BusinessTripEditViewController.h"
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
@@ -126,7 +130,7 @@
 }
 -(IBAction)onClickButtonLeave:(id)sender {
 
-     LeaveDetailController * valueView = [[LeaveDetailController alloc] initWithNibName:@"LeaveDetailController"bundle:[NSBundle mainBundle]];
+     ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
      //从底部划入
      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转
@@ -136,7 +140,7 @@
     }
 
 -(IBAction)onClickButtonLeaveP:(id)sender {
-    PendingViewController * valueView = [[PendingViewController alloc] initWithNibName:@"PendingViewController"bundle:[NSBundle mainBundle]];
+    BusinessTripEditViewController * valueView = [[BusinessTripEditViewController alloc] initWithNibName:@"BusinessTripEditViewController"bundle:[NSBundle mainBundle]];
     //从底部划入
     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
     //跳转
@@ -245,10 +249,10 @@
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
             //跳转到首页
-            UITabBarController *tabBarCtrl = [[ZDYTTabBarViewController alloc]init];
-            
-            [self presentViewController:tabBarCtrl animated:YES completion:nil];
-            
+            myDelegate.tabbarType=@"1";
+            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+            [self presentViewController:navigationController animated:YES completion:nil];
         }
         
     }

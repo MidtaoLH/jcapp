@@ -11,6 +11,7 @@
 #import "../Model/MdlGoOutList.h"
 #import "GoOutWaitCell.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "GoOutDeatileController.h"
 
 @interface GoOutWaitController ()
 

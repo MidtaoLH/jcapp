@@ -17,7 +17,8 @@
 #import "../Model/MdlAnnex.h"
 #import "SDDemoCell.h"
 #import "SDPhotoItem.h"
-
+#import "AppDelegate.h"
+#import "TabBarViewController.h"
 @interface GoOutDeatileController ()
 {
     CGFloat scaleMini;
@@ -141,8 +142,8 @@ static NSString *identifierImage =@"ImageCell.h";
         VCCollect.evectionID=self.awardID_FK;
         VCCollect.processInstanceID=self.processInstanceID;
         VCCollect.ProcessApplyCode=self.ProcessApplyCode;
-        VCCollect.edittype = @"2";
-        VCCollect.urltype = @"getdata";
+        VCCollect.edittype = @"3";
+        VCCollect.urltype = @"getdata"; 
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else
@@ -169,8 +170,9 @@ static NSString *identifierImage =@"ImageCell.h";
                                                                  VCCollect.evectionID=self.awardID_FK;
                                                                  VCCollect.processInstanceID=self.processInstanceID;
                                                                  VCCollect.ProcessApplyCode=self.ProcessApplyCode;
-                                                                 VCCollect.edittype = @"2";
+                                                                 VCCollect.edittype = @"3";
                                                                  VCCollect.urltype = @"getdata";
+                                                                 VCCollect.proCelReson = text.text;
                                                                  [self.navigationController pushViewController:VCCollect animated:YES];
                                                              }
                                                          }];
@@ -317,8 +319,10 @@ static NSString *identifierImage =@"ImageCell.h";
             }
             else
             {
-                // 弹出 对话框
-                [self showError:@"操作成功！"];
+                AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
     }
     else if (edittype == 2)

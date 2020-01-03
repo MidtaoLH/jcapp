@@ -61,7 +61,7 @@
     datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
     [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
  
-    if([self.edittype isEqualToString:@"2"])
+    if([self.edittype isEqualToString:@"2"] || [self.edittype isEqualToString:@"3"])
     {
         //设置需要访问的ws和传入参数
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGoOutDataByID?userID=%@&EvectionID=%@&ProcessInstanceID=%@", userID,self.evectionID,self.processInstanceID ];
@@ -354,7 +354,7 @@
             ApplyCode = @"";
         }
         
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
     
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);
@@ -480,11 +480,16 @@
         {
             ApplyCode = @"";
         }
-        if([self.edittype isEqual:@"1"]){ //新增
+        //操作类型：1.新增-保存 4.新增-申请 2.修改-保存 5.修改-申请 3再申请-保存 6.再申请-申请
+        //
+        if([self.edittype isEqual:@"1"]){ //新增进入
             self.edittype=@"4";  //申请 原单海没有申请
         }
-        else if([self.edittype isEqual:@"2"]){ //修改
+        else if([self.edittype isEqual:@"2"]){ //待申请进入
             self.edittype=@"5";  //申请 原单海没有申请
+        }
+        else if([self.edittype isEqual:@"3"]){ //修改已申请进入
+            self.edittype=@"6";  //申请 原单海没有申请
         }
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode];
         
@@ -630,6 +635,15 @@
             {
                 ApplyCode = m.ApplyCode;
                 [self uploadImg];
+                
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @"提示信息！"
+                                      message: @"操作成功！"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+ 
             }
         }
     }
@@ -707,6 +721,13 @@
      
      */
 
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 //将图片保存到本地并且从本地返回出来

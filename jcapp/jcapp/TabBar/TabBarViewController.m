@@ -32,6 +32,8 @@
 #import "SetAgentViewController.h"
 #import "NewViewController.h"
 
+#import "SelectUserViewController.h"
+
 #import "Masonry.h"
 #import "AppDelegate.h"
 
@@ -108,7 +110,7 @@ NSInteger barheight;
         myDelegate.AppRoveType =@"agent";
         [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerSetAgent(@"", @"publish-text", 1)];
-        [self addChildViewController:childViewControllerAgent(@"", @"", 2)];
+        [self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
         self.navigationItem.title=@"代理人列表";
     }
     else if([myDelegate.tabbarType isEqualToString:@"10"])
@@ -550,7 +552,6 @@ UIViewController *childViewControllerAttendanceSummary (NSString *title, NSStrin
     return vc;
 }
 
-
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, NSUInteger tag) {
     AgentViewController *vc = [[AgentViewController alloc] init];
@@ -564,6 +565,15 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
     }];
+    setAnimation(vc.tabBarItem, tag);
+    return vc;
+}
+
+/// 自定义样式UITabBarItem
+UIViewController *childViewControllerSelectUser (NSString *title, NSString *imgName, NSUInteger tag) {
+    SelectUserViewController *vc = [[SelectUserViewController alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }

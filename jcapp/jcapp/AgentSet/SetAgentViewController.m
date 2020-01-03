@@ -34,6 +34,8 @@
     [self loadData];
     [self initUI];
 }
+ 
+
 - (void)goBack {
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
@@ -255,11 +257,8 @@
     switch (textField.tag) {
         case 0:
         {
-            SelectUserViewController *VC=[[SelectUserViewController alloc]init];
-            VC.startTime=self.infoModel.startdayStr;
-            VC.endTime=self.infoModel.enddayStr ;
-            VC.agentID=self.infoModel.agentID;
-            [self presentViewController:VC animated:YES completion:nil];
+            SelectUserViewController  * VCCollect = [[SelectUserViewController alloc] init];
+            [self.navigationController pushViewController:VCCollect animated:YES];
         }
             break;
         case 2:

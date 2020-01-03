@@ -6,6 +6,7 @@
 #import "AppDelegate.h"
 #import "SetAgentViewController.h"
 #import "../TabBar/TabBarViewController.h"
+#import "Masonry.h"
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 // 414
@@ -35,9 +36,42 @@
 @synthesize lbempid;
 @synthesize lbgroupid;
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.chosebutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
+    }];
+    [self.savebutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.75);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
+    }];
+    [self.lbgroupname mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.25);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
+    }];
+    [self.lbempname mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
+    }];
     lbempid.hidden = YES;
     lbgroupid.hidden = YES;
-    [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor  whiteColor];
     stringflag = @"group";
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGroup"];
@@ -51,6 +85,9 @@
     _tagView.delegate = self;
 }
 -(void)show{
+    
+   
+    
     btn = [UIButton  buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(100, 200, 100, 20);
     btn.backgroundColor = [UIColor  redColor];
@@ -74,9 +111,8 @@
     myDelegate.TimeStart=self.startTime;
     myDelegate.TimeEnd=self.endTime;
     myDelegate.agentid=self.agentID;
-    
-    SetAgentViewController *VC=[[SetAgentViewController alloc]init];
-    [self presentViewController:VC animated:YES completion:nil];
+    SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
 -(void)selectFindex:(NSInteger)f Tindex:(NSInteger)t {
     //这个方法 z暂时不管

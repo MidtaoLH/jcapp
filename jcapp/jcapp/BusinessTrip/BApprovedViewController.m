@@ -259,7 +259,7 @@ NSInteger currentPageCountbapproved;
     Pending * pending = self.listOfMovies[indexPath.row];
     NSLog(@"pending.PicID:%@",pending.DocumentName);
     //申请中、承认中、已驳回状态 跳到出差申请查看
-    if([pending.CaseStatusTxt isEqualToString:@"申请中"] || [pending.CaseStatusTxt isEqualToString:@"承认中"] ||[pending.CaseStatusTxt isEqualToString:@"已驳回"]){
+    if([pending.CaseStatusTxt isEqualToString:@"申请中"] || [pending.CaseStatusTxt isEqualToString:@"承认中"] ||[pending.CaseStatusTxt isEqualToString:@"已驳回"] ||[pending.CaseStatusTxt isEqualToString:@"待承认"]){
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.businessTripid=pending.AidFK;
         myDelegate.processid=pending.PicID;

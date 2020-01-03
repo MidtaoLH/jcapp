@@ -32,6 +32,7 @@
 		7708A4D423A8D6E90098A450 /* GoOutWaitController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7708A4D223A8D6E90098A450 /* GoOutWaitController.xib */; };
 		7708A4D723A8D7C30098A450 /* GoOutWaitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7708A4D623A8D7C30098A450 /* GoOutWaitCell.m */; };
 		770EAAA723A35A7300986A89 /* SDNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770EAAA523A35A7300986A89 /* SDNavigationController.m */; };
+		77110A0523BEE0B800966A15 /* CommonApplyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77110A0323BEE0B800966A15 /* CommonApplyController.m */; };
 		772B6C7B23A20B58003CE53D /* WaitTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C7823A20B57003CE53D /* WaitTaskController.m */; };
 		772B6C7C23A20B58003CE53D /* WaitTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C7A23A20B58003CE53D /* WaitTaskController.xib */; };
 		772B6C7F23A21183003CE53D /* WaitTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C7E23A21182003CE53D /* WaitTaskCell.m */; };
@@ -403,6 +404,8 @@
 		7708A4D623A8D7C30098A450 /* GoOutWaitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoOutWaitCell.m; sourceTree = "<group>"; };
 		770EAAA523A35A7300986A89 /* SDNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDNavigationController.m; sourceTree = "<group>"; };
 		770EAAA623A35A7300986A89 /* SDNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDNavigationController.h; sourceTree = "<group>"; };
+		77110A0323BEE0B800966A15 /* CommonApplyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonApplyController.m; sourceTree = "<group>"; };
+		77110A0423BEE0B800966A15 /* CommonApplyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonApplyController.h; sourceTree = "<group>"; };
 		772B6C7823A20B57003CE53D /* WaitTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitTaskController.m; sourceTree = "<group>"; };
 		772B6C7923A20B57003CE53D /* WaitTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitTaskController.h; sourceTree = "<group>"; };
 		772B6C7A23A20B58003CE53D /* WaitTaskController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitTaskController.xib; sourceTree = "<group>"; };
@@ -1038,6 +1041,15 @@
 				7700056123A373F80079B49F /* ExamineEditLController.xib */,
 			);
 			path = ExamineProj;
+			sourceTree = "<group>";
+		};
+		77110A0223BEE08400966A15 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				77110A0423BEE0B800966A15 /* CommonApplyController.h */,
+				77110A0323BEE0B800966A15 /* CommonApplyController.m */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		774270E8238E9AD500EC0C85 /* Recovered References */ = {
@@ -1891,6 +1903,7 @@
 		EB4315DF237FB413007D1213 /* jcapp */ = {
 			isa = PBXGroup;
 			children = (
+				77110A0223BEE08400966A15 /* Common */,
 				EBFE6ACA23B48174007169B9 /* TabBar */,
 				EBFF5F7123B3895700EB7F6B /* TLAnimationTabBar */,
 				EB7A33E423B23FDB00F34F46 /* BRPickerView */,
@@ -2383,6 +2396,7 @@
 				77FF8B2C2398EDA400C64307 /* LeaveHead.m in Sources */,
 				EBFB8F7B23AB3AEA0015C72E /* View+MASAdditions.m in Sources */,
 				AF9B0EB123A36471008138EB /* SWFormCommonController.m in Sources */,
+				77110A0523BEE0B800966A15 /* CommonApplyController.m in Sources */,
 				AF0ABF19238FCD3200F46278 /* UIColor+Hex.m in Sources */,
 				AF9B0F5823A36555008138EB /* TZPhotoPreviewCell.m in Sources */,
 				AF9B0F8B23A3678D008138EB /* SWFormImageCell+ImageHandle.m in Sources */,

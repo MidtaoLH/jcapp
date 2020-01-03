@@ -35,6 +35,7 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AgentSet/AgentInfoViewController.h"
 
+#import "Common/CommonApplyController.h"
 
 #import "TabBar/TabBarViewController.h"
 #import "BusinessTrip/BusinessTripEditViewController.h"
@@ -125,14 +126,13 @@
 
 -(IBAction)onClickButtontest:(id)sender {
     NSLog(@"%@", @"test");
-    
 
-}
+}	
 -(IBAction)onClickButtonLeave:(id)sender {
 
      ExamineEditLController * valueView = [[ExamineEditLController alloc] initWithNibName:@"ExamineEditLController"bundle:[NSBundle mainBundle]];
-     //从底部划入
-     [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    
+      [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
      //跳转
      [self presentModalViewController:valueView animated:YES];
      

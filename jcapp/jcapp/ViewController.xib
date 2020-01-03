@@ -74,14 +74,6 @@
                         <action selector="onClickButton:" destination="-1" eventType="touchUpInside" id="s9c-Ie-zbd"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-3C-Ef1">
-                    <rect key="frame" x="217" y="521" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                    <connections>
-                        <action selector="onClickButtontest:" destination="-1" eventType="touchUpInside" id="fFf-Ee-7si"/>
-                    </connections>
-                </button>
                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tsB-Ev-3n6">
                     <rect key="frame" x="36" y="460" width="97" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -103,6 +95,14 @@
                     <state key="normal" title="待审批"/>
                     <connections>
                         <action selector="onClickButtonLeaveP:" destination="-1" eventType="touchUpInside" id="9cf-hl-gmh"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8D-3C-Ef1">
+                    <rect key="frame" x="255" y="528" width="46" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="onClickButtontest:" destination="-1" eventType="touchUpInside" id="fFf-Ee-7si"/>
                     </connections>
                 </button>
             </subviews>

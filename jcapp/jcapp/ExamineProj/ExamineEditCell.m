@@ -40,18 +40,20 @@
     return _btnemail;
 }
 -(void)action:(id)sender{
-    MultiParamButton* multiParamButton = (MultiParamButton* )sender;
     
+    //当前登陆者
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"userid"];
+    
+    MultiParamButton* multiParamButton = (MultiParamButton* )sender;
     NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
- 
     NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"taskid"];
- 
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", @"1",obj1 ];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", userid,obj1 ];
     NSLog(@"%@", strURL);
     NSURL *url = [NSURL URLWithString:strURL];
+    
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
@@ -250,11 +252,11 @@
  
     self.lblgroupname.text = _leavedetail.groupname;
  
-     NSString * strtaskremark =[[NSString alloc]initWithFormat:@"%@%@",@"承认意见：",_leavedetail.Remark];
-    self.lblremark.text =  strtaskremark;
+   //  NSString * strtaskremark =[[NSString alloc]initWithFormat:@"%@%@",@"承认意见：",_leavedetail.Remark];
+    self.lblremark.text =  _leavedetail.Remark;
  
-     NSString * strtaskdate =[[NSString alloc]initWithFormat:@"%@%@",@"承认时间：",_leavedetail.TaskDate];
-    self.lblleaveDate.text = strtaskdate;
+  //   NSString * strtaskdate =[[NSString alloc]initWithFormat:@"%@%@",@"承认时间：",_leavedetail.TaskDate];
+    self.lblleaveDate.text = _leavedetail.TaskDate;
     
     self.btnemail.hidden = YES;
     if([_leavedetail.TaskNodeOperateType isEqualToString: @"2"])
@@ -277,24 +279,35 @@
 {
     [super layoutSubviews];
     
+    
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-
-    CGFloat leaveDateWidth = 200;
+    
+    CGFloat imageWH= height - 10* kMargin;
+    
+    CGFloat leaveDateWidth = 90;
     
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
-
-    //设置名称
-    self.textLabel.frame =CGRectMake(kMargin, kMargin, 6*kMargin, txtH);
     
-    //设置日期
-    self.lblleaveDate.frame = CGRectMake( kMargin ,2*kMargin + txtH, leaveDateWidth, txtH);
- 
-    self.lblremark.frame = CGRectMake(kMargin,  2*txtH+3*kMargin, width - 2*kMargin, 3*txtH);
- 
+    //先设置图片大小和位置
+    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    
+    //设置日期未知
+    self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    
+    //设置名称
+    self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
     //s设置部门
-    self.lblgroupname.frame = CGRectMake(8*kMargin,  kMargin, 10* kMargin, txtH);
+    self.lblgroupname.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
+    //级别名称和 员工名
+    self.lbllevelname.frame = CGRectMake(2*kMargin+imageWH + 80,  kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
+    self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
+    
+    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

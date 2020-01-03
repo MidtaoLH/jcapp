@@ -79,30 +79,115 @@ static NSString *identifierImage =@"ImageCell.h";
  
 }
 
+-(void)ShowMessage
+{
+    //提示框添加文本输入框
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请输入理由"
+                                                                   message:@"当前记录取消后不能恢复"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         //响应事件
+                                                         //得到文本信息
+                                                         for(UITextField *text in alert.textFields){
+                                                             
+                                                             NSLog(@"text = %@", text.text);
+                                                             
+                                                             if([text.text isEqualToString:@""])
+                                                             {
+                                                                 NSLog(@"text = %@", @"asdfsdfsdf");
+                                                                 [self ShowMessage];
+                                                                 return;
+                                                             }
+                                                             
+                                                             edittype = 1;
+                                                             
+                                                             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
+                                                             
+                                                             NSLog(@"%@", strURL);
+                                                             NSURL *url = [NSURL URLWithString:strURL];
+                                                             //进行请求
+                                                             NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+                                                             
+                                                             NSURLConnection *connection = [[NSURLConnection alloc]
+                                                                                            initWithRequest:request
+                                                                                            delegate:self];
+                                                         }
+                                                     }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                             NSLog(@"action = %@", alert.textFields);
+                                                         }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"取消修改理由必填";
+    }];
+    
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 -(void)TaskCancle:(id)sender{
  
-       edittype = 1;
-    
-     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, userID ];
- 
-     NSLog(@"%@", strURL);
-     NSURL *url = [NSURL URLWithString:strURL];
-     //进行请求
-     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
- 
-     NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+    [self ShowMessage];
 }
 -(void)TaskUpdate:(id)sender{
-    
-    GoOutEditController * VCCollect = [[GoOutEditController alloc] init];
-    VCCollect.evectionID=self.awardID_FK;
-    VCCollect.processInstanceID=self.processInstanceID;
-    VCCollect.ProcessApplyCode=self.ProcessApplyCode;
-    VCCollect.edittype = @"2";
-    VCCollect.urltype = @"getdata";
-    [self.navigationController pushViewController:VCCollect animated:YES];
+    //修改是已驳回不写理由。 直接跳到明细编辑画面，点保存生成下一版本
+    if([_lblleavestatus.text isEqualToString:@"已驳回"])
+    {
+        GoOutEditController * VCCollect = [[GoOutEditController alloc] init];
+        VCCollect.evectionID=self.awardID_FK;
+        VCCollect.processInstanceID=self.processInstanceID;
+        VCCollect.ProcessApplyCode=self.ProcessApplyCode;
+        VCCollect.edittype = @"2";
+        VCCollect.urltype = @"getdata";
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        //提示框添加文本输入框
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请输入理由"
+                                                                       message:@"当前记录修改后，原版本不能恢复"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                             //得到文本信息
+                                                             for(UITextField *text in alert.textFields){
+                                                                 
+                                                                 NSLog(@"text = %@", text.text);
+                                                                 
+                                                                 if([text.text isEqualToString:@""])
+                                                                 {
+                                                                     NSLog(@"text = %@", @"asdfsdfsdf");
+                                                                     return;
+                                                                 }
+                                                                 GoOutEditController * VCCollect = [[GoOutEditController alloc] init];
+                                                                 VCCollect.evectionID=self.awardID_FK;
+                                                                 VCCollect.processInstanceID=self.processInstanceID;
+                                                                 VCCollect.ProcessApplyCode=self.ProcessApplyCode;
+                                                                 VCCollect.edittype = @"2";
+                                                                 VCCollect.urltype = @"getdata";
+                                                                 [self.navigationController pushViewController:VCCollect animated:YES];
+                                                             }
+                                                         }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 //响应事件
+                                                                 NSLog(@"action = %@", alert.textFields);
+                                                             }];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"取消修改理由必填";
+        }];
+        
+        [alert addAction:okAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+
     
     /*
      edittype = 2;

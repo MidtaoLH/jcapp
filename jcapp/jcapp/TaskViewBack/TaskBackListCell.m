@@ -105,11 +105,11 @@
     if([_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"待承认"]
        ||[_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"未回览"])
     {
-        UIImage *imageView = [UIImage imageNamed:@"tabBar_icon_customer_default.png"];
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
         self.taskStatus.image=imageView;
     }
     else {
-        UIImage *imageView = [UIImage imageNamed:@"tabBar_icon_customer"];
+        UIImage *imageView = [UIImage imageNamed:@"selected_btn@2x.png"];
         self.taskStatus.image=imageView;
     }
    

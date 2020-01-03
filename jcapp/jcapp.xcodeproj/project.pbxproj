@@ -340,6 +340,8 @@
 		EBFF5F7A23B3895700EB7F6B /* TLTabBarAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7523B3895700EB7F6B /* TLTabBarAnimation.m */; };
 		EBFF5F7B23B3895700EB7F6B /* UITabBar+TLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7723B3895700EB7F6B /* UITabBar+TLAnimation.m */; };
 		EBFF5F7C23B3895700EB7F6B /* UITabBarItem+TLAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFF5F7923B3895700EB7F6B /* UITabBarItem+TLAnimation.m */; };
+		EBFF7ACB23BF483000176A43 /* unSelect_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBFF7ACA23BF482F00176A43 /* unSelect_btn@2x.png */; };
+		EBFF7ACD23BF484D00176A43 /* selected_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBFF7ACC23BF484D00176A43 /* selected_btn@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -997,6 +999,8 @@
 		EBFF5F7723B3895700EB7F6B /* UITabBar+TLAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+TLAnimation.m"; sourceTree = "<group>"; };
 		EBFF5F7823B3895700EB7F6B /* UITabBarItem+TLAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+TLAnimation.h"; sourceTree = "<group>"; };
 		EBFF5F7923B3895700EB7F6B /* UITabBarItem+TLAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+TLAnimation.m"; sourceTree = "<group>"; };
+		EBFF7ACA23BF482F00176A43 /* unSelect_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unSelect_btn@2x.png"; path = "Assets.xcassets/unSelect_btn@2x.png"; sourceTree = "<group>"; };
+		EBFF7ACC23BF484D00176A43 /* selected_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected_btn@2x.png"; path = "Assets.xcassets/selected_btn@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1938,6 +1942,8 @@
 				EB4315E4237FB413007D1213 /* ViewController.m */,
 				AFF2375223838BBF002AEAFB /* ViewController.xib */,
 				EB4315E9237FB414007D1213 /* Assets.xcassets */,
+				EBFF7ACC23BF484D00176A43 /* selected_btn@2x.png */,
+				EBFF7ACA23BF482F00176A43 /* unSelect_btn@2x.png */,
 				EB4315EB237FB414007D1213 /* LaunchScreen.storyboard */,
 				AF0ABF16238FCA5000F46278 /* PrefixHeader.pch */,
 				EB4315EE237FB414007D1213 /* Info.plist */,
@@ -2282,6 +2288,7 @@
 				EB30A4B62398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib in Resources */,
 				EBAD2EA2239A1424004FAE82 /* AttendanceSummaryViewController.xib in Resources */,
 				EB30A48F2398CECE00EEAE1E /* MJRefresh.bundle in Resources */,
+				EBFF7ACB23BF483000176A43 /* unSelect_btn@2x.png in Resources */,
 				7756E87B2397FC1300BF6944 /* LeaveDetailController.xib in Resources */,
 				8DA5572E238E1A3E005C7706 /* VatcationMainViewController.xib in Resources */,
 				EB7A340223B23FDB00F34F46 /* BRPickerView.bundle in Resources */,
@@ -2289,6 +2296,7 @@
 				AF7EC2EC2396140B00257CF1 /* ApprovingViewController.xib in Resources */,
 				EBB5CDE5238545B700FCA5B5 /* UsersViewController.xib in Resources */,
 				7708A4CC23A8D26C0098A450 /* GoOutViewController.xib in Resources */,
+				EBFF7ACD23BF484D00176A43 /* selected_btn@2x.png in Resources */,
 				AF3D92A223A22DEC00001C73 /* BusinessTripEditViewController.xib in Resources */,
 				EBAD2E7D239A1257004FAE82 /* AttendanceCalendarViewController.xib in Resources */,
 				7706233423AA189000030735 /* GoOutDeatileController.xib in Resources */,

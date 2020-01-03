@@ -12,6 +12,9 @@
 #import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "../Leave/LeaveDetailController.h"
+#import "../AppDelegate.h"
+#import "../BusinessTrip/BusinessTripDetailViewController.h"
+#import "../GoOut/GoOutDeatileController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -255,14 +258,21 @@ NSInteger currentPageCountwait3;
     //根据不同类型的单据跳转到不同的画面
     if([pending.DocumentName isEqualToString:@"请假"]){
         LeaveDetailController *order = [[LeaveDetailController alloc] init];
+        order.awardID_FK=pending.AidFK;
+        order.processInstanceID=pending.PicID;
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"出差"]){
-        LeaveDetailController *order = [[LeaveDetailController alloc] init];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.businessTripid=pending.AidFK;
+        myDelegate.processid=pending.PicID;
+        BusinessTripDetailViewController *order = [[BusinessTripDetailViewController alloc] init];
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"外出"]){
-        LeaveDetailController *order = [[LeaveDetailController alloc] init];
+        GoOutDeatileController *order = [[GoOutDeatileController alloc] init];
+        order.awardID_FK=pending.AidFK;
+        order.processInstanceID=pending.PicID;
         [self.navigationController pushViewController:order animated:YES];
     }
 }

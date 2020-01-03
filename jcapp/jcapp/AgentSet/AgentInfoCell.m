@@ -82,7 +82,7 @@
             // 添加上
             make.top.mas_equalTo(0);
             // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth, Common_TxTHeight));
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_TxTHeight));
         }];
         [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             // 添加左
@@ -90,7 +90,7 @@
             // 添加上
             make.top.mas_equalTo(Common_TxTHeight);
             // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth, Common_TxTHeight));
+            make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2, Common_TxTHeight));
         }];
         [_image mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(0, 0));

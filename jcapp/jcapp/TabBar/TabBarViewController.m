@@ -686,6 +686,7 @@ NSArray *imgs (){
     else if([myDelegate.tabbarType isEqualToString:@"9"]&&tabBar.selectedIndex==1)
     {
         SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+        VCCollect.infoModel.agentID=@"0";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     

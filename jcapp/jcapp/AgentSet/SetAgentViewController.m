@@ -258,6 +258,10 @@
         case 0:
         {
             SelectUserViewController  * VCCollect = [[SelectUserViewController alloc] init];
+            
+            VCCollect.startTime=self.infoModel.startdayStr;
+            VCCollect.endTime=self.infoModel.enddayStr ;
+            VCCollect.agentID=self.infoModel.agentID;
             [self.navigationController pushViewController:VCCollect animated:YES];
         }
             break;

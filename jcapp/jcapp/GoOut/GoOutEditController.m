@@ -19,6 +19,7 @@
 #import "../Model/MdlEvectionDetail.h"
 #import "../Model/MdlEvection.h"
 #import "../Model/MdlAnnex.h"
+#import "TabBarViewController.h"
 
 @interface GoOutEditController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -50,6 +51,10 @@
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
+    
+    // 任务id复植
+    processid = self.processInstanceID;
+    
     datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
     [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     
@@ -98,7 +103,12 @@
     [toolBar setItems:toolbarItems animated:NO];
     
 }
-
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate]; 
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 -(void)viewDidAppear:(BOOL)animated{
     
     
@@ -239,14 +249,11 @@
     
 }
 - (void)addAction {
+    
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
-        
         //n保存
-        /////
- 
-        if(self.businessTripStart.info.length > 0)
+         if(self.businessTripStart.info.length > 0)
         {
-            
         }
         else
         {
@@ -284,7 +291,6 @@
         }
         else
         {
-            
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @"提示信息！"
@@ -302,7 +308,6 @@
         }
         else
         {
-            
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @"提示信息！"
@@ -373,10 +378,9 @@
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
         //提交
- 
+        //n保存
         if(self.businessTripStart.info.length > 0)
         {
-            
         }
         else
         {
@@ -414,7 +418,6 @@
         }
         else
         {
-            
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @"提示信息！"
@@ -432,7 +435,6 @@
         }
         else
         {
-            
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @"提示信息！"
@@ -444,7 +446,7 @@
             return;
         }
         self.urltype = @"keepsave";
-    
+        
         NSString *type = self.VatcationType.info;
         NSString *timestart = self.businessTripStart.info;
         NSString *timeend = self.businessTripEnd.info;
@@ -452,8 +454,40 @@
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnapply?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode];
- 
+        if(self.evectionID.length >0)
+        {
+            
+        }
+        else
+        {
+            self.evectionID = @"";
+        }
+        
+        if(processid.length >0)
+        {
+            
+        }
+        else
+        {
+            processid = @"";
+        }
+        
+        if(ApplyCode.length >0)
+        {
+            
+        }
+        else
+        {
+            ApplyCode = @"";
+        }
+        if([self.edittype isEqual:@"1"]){ //新增
+            self.edittype=@"4";  //申请 原单海没有申请
+        }
+        else if([self.edittype isEqual:@"2"]){ //修改
+            self.edittype=@"5";  //申请 原单海没有申请
+        }
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode];
+        
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);
         NSURL *url = [NSURL URLWithString:urlStringUTF8];
@@ -682,9 +716,7 @@
     //NSString *urlString = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
     UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
-    
-    //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
-    
+ 
     [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];

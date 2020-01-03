@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *processInstanceID;
 @property (nonatomic,copy) NSString *evectionID;
 @property (nonatomic,copy) NSString *ProcessApplyCode;
-@property (nonatomic,copy) NSString *edittype;
+@property (nonatomic,copy) NSString *edittype;  //0 追加
 @property (nonatomic,copy) NSString *urltype;
 
 

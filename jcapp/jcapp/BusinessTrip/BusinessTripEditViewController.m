@@ -36,6 +36,7 @@ NSString * bflag = @"flase";
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"出差申请";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -387,7 +388,7 @@ NSString * bflag = @"flase";
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
             [alert show];
-            [self goBack];
+            //[self goBack];
         }
         
 
@@ -441,7 +442,7 @@ NSString * bflag = @"flase";
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
             [alert show];
-            [self goBack];
+            //[self goBack];
         }
         
         
@@ -542,7 +543,15 @@ NSString * bflag = @"flase";
     }
     
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if([operateType isEqual:@"0"]){
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }
+}
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if(![operateType isEqual:@"3"] ){
@@ -568,6 +577,15 @@ NSString * bflag = @"flase";
         }
         //上传图片
         if([operateType isEqual:@"0"]){
+            //保存成功
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"保存成功"
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            
             //接收返回的起案番号
             applyCode=requestTmp;
             operateType=@"3";

@@ -18,7 +18,7 @@
 #import "SelectUserViewController.h"
 #import "AppDelegate.h"
 #import "MJExtension.h"
-
+#import "TabBarViewController.h"
 @interface SetAgentViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 
@@ -28,10 +28,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"代理人设定";
     [self loadstyle];
     [self loadData];
     [self initUI];
 }
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 -(IBAction)savebtnClick:(id)sender {
     
 }
@@ -104,7 +113,31 @@
     ViewController *returnVC = [[ViewController alloc]init];
     [self.navigationController pushViewController:returnVC animated:YES];
 }
-- (void)loadstyle {
+- (void)loadstyle {    
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加上
+            make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+            // 添加左
+            make.left.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_TableHeight));
+        }];
+        [self.savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加上
+            make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
+            // 添加左
+            make.left.mas_equalTo(Common_ColSize);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+        }];
+        [self.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            // 添加上
+            make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
+            // 添加左
+            make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+        }];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _tableView.dataSource = self;
@@ -392,13 +425,26 @@
     if([xmlString containsString:@"msg"])
     {
         MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"提示信息！"
-                              message: messageInfo.msg
-                              delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
+        if([messageInfo.msg containsString:@"成功"])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: messageInfo.msg
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: messageInfo.msg
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }
     else
     {
@@ -413,6 +459,15 @@
         self.tableView.hidden = NO;
     }
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 -(IBAction)btnappClick:(id)sender {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [defaults objectForKey:@"userid"];

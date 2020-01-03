@@ -79,7 +79,6 @@ static NSInteger rowHeight=50;
 
 - (void)goBack {
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.tabbarType=@"5";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];

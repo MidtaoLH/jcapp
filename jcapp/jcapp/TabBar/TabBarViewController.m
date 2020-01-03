@@ -569,34 +569,10 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
 }
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerSetAgent (NSString *title, NSString *imgName, NSUInteger tag) {
-    SetAgentViewController *vc = [[SetAgentViewController alloc] init];
+    UIViewController *vc = [[UIViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     
-    [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_TableHeight));
-    }];
-    [vc.savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
-        // 添加左
-        make.left.mas_equalTo(Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
-    [vc.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
     vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, 5);
     vc.tabBarItem.imageInsets=UIEdgeInsetsMake(-1,0,1,0);
     
@@ -686,16 +662,22 @@ NSArray *imgs (){
         BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
-    if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
+    else if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
     {
         VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
-    if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
+    else if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
     {
         GoOutEditController  * VCCollect = [[GoOutEditController alloc] init];
         VCCollect.edittype = @"1"; //追加
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
+    else if([myDelegate.tabbarType isEqualToString:@"9"]&&tabBar.selectedIndex==1)
+    {
+        SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    
 }
 @end

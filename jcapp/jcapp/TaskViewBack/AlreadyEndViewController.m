@@ -187,6 +187,7 @@ static NSString * identifier = @"PendingsListCell";
     TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
     VCCollect.pagetype=@"0";
     VCCollect.code=code;
+    VCCollect.title=@"回览明细";
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 //解决tableview线不对的问题

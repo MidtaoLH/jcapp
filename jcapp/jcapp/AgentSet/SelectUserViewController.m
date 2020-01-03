@@ -74,13 +74,9 @@
     myDelegate.TimeStart=self.startTime;
     myDelegate.TimeEnd=self.endTime;
     myDelegate.agentid=self.agentID;
-  
-    myDelegate.tabbarType=@"9";
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    tabBarCtrl.selectedIndex=1;
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
-
+    
+    SetAgentViewController *VC=[[SetAgentViewController alloc]init];
+    [self presentViewController:VC animated:YES completion:nil];
 }
 -(void)selectFindex:(NSInteger)f Tindex:(NSInteger)t {
     //这个方法 z暂时不管

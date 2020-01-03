@@ -43,7 +43,7 @@
 #define kColor_Gray   [UIColor grayColor]
 #define kColor_Black  [UIColor blackColor]
 #define kColor_White  [UIColor whiteColor]
-#define kColor_Cyan  [UIColor cyanColor]
+#define kColor_Cyan  [UIColor colorWithRed:0/255.0 green:204/255.0 blue:204/255.0 alpha:1];
 #define kColor_Red    [UIColor redColor]
 #define kColor_Blue   [UIColor blueColor]
 #define kColor_Green  [UIColor greenColor]
@@ -117,13 +117,17 @@
 #define Common_TxTWidth 170.f
 /*明细列表高度*/
 #define Common_TableHeight 320.f
+#define Common_EditTableHeight 190.f
+
 #define Common_TableRowHeight 80.f
 #define Common_AttendanceTableHeight 80.f
 #define Common_AttendanceHeight 440.f
 #define Common_AttendanceTxTHeight 20.f
 /*图片列表高度*/
 #define Common_ImageTableHeight 120.f
+#define Common_EditImageTableHeight 80.f
 #define Common_ImageTableRowHeight 100.f
+#define Common_CRTableHeight 30.f
 /*图片列表高度*/
 #define Common_UserTableHeight 150.f
 #define Common_UserTableRowHeight 50.f

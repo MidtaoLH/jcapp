@@ -19,6 +19,7 @@
                 <outlet property="imgvemp" destination="YjY-L3-c7R" id="cx1-8O-L0V"/>
                 <outlet property="imgvleavestatus" destination="WQ1-8u-fym" id="ibQ-n6-LaV"/>
                 <outlet property="lblapplydate" destination="wC4-Gw-Zmo" id="Aon-lx-rSj"/>
+                <outlet property="lblcryj" destination="c1X-53-8y5" id="9FM-Sn-zZv"/>
                 <outlet property="lblempgroup" destination="cUj-Zn-jdG" id="UOD-dQ-alR"/>
                 <outlet property="lblleavecounts" destination="PaD-vq-kCF" id="dyS-ym-eXU"/>
                 <outlet property="lblleavedate" destination="uEX-k8-4ok" id="NWp-bi-vtA"/>
@@ -63,11 +64,11 @@
                     <rect key="frame" x="280" y="30" width="83" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9q-8e-AGW">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9q-8e-AGW">
                     <rect key="frame" x="289" y="51" width="64" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8G-iE-Ham">
@@ -133,14 +134,18 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FzL-rf-HQK">
                     <rect key="frame" x="223" y="629" width="101" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.061043888330459595" green="0.87681418657302856" blue="0.16324913501739502" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="同意"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="同意">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYR-eg-LoA">
                     <rect key="frame" x="46" y="629" width="109" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.99910753965377808" green="0.14828279614448547" blue="0.087459959089756012" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="驳回"/>
+                    <state key="normal" title="驳回">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

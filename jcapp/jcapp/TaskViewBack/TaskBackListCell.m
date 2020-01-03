@@ -105,11 +105,16 @@
     if([_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"待承认"]
        ||[_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"未回览"])
     {
-        UIImage *imageView = [UIImage imageNamed:@"tabBar_icon_customer_default.png"];
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
+        self.taskStatus.image=imageView;
+    }
+    else if([_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"已驳回"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"orderselect.png"];
         self.taskStatus.image=imageView;
     }
     else {
-        UIImage *imageView = [UIImage imageNamed:@"tabBar_icon_customer"];
+        UIImage *imageView = [UIImage imageNamed:@"finishe"];
         self.taskStatus.image=imageView;
     }
    
@@ -133,10 +138,11 @@
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     self.imageView.layer.zPosition = 1;
     // 设置透明度
-    self.imageView.alpha =0.5;
+
     self.taskStatus.frame = CGRectMake(self.imageView.width-kMargin,self.imageView.height-kMargin*2, imageWH/3, imageWH/3);
     self.taskStatus.layer.masksToBounds = YES;
     self.taskStatus.layer.zPosition = 2;
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

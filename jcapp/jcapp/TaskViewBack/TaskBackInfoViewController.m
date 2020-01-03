@@ -149,7 +149,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*4,Common_TxTHeight));
     }];
     [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -170,7 +170,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     // 审批列表view添加约束
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_TableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_ImageTableHeight+Common_RowSize*7)));
         // 添加左
         make.left.mas_equalTo(0);
         // 添加上
@@ -271,7 +271,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         
         self.lblproctype.text=viewBackInfo.HistoryType;
         self.lblprocdate.text=[NSString stringWithFormat:@"%@时间：%@～%@",viewBackInfo.DocumentName,viewBackInfo.strattime,viewBackInfo.endtime];
-        self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+        if([viewBackInfo.DocumentName isEqual:@"出差"])
+        {
+             self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（天）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+        }
+        else
+        {
+             self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+        }
+       
         self.lblprocremark.text=[NSString stringWithFormat:@"%@事由：%@",viewBackInfo.DocumentName,viewBackInfo.ProcDescribe];
         self.lblprocstatus.text=viewBackInfo.ProcStatus;
         
@@ -408,4 +416,5 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         [_ImageTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
 @end

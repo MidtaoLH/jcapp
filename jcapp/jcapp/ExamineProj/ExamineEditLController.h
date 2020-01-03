@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextView *txtvexamineremark;
 @property (weak, nonatomic) IBOutlet UIButton *btntaskno;
 @property (weak, nonatomic) IBOutlet UIButton *buttaskyes;
-
+@property (weak, nonatomic) IBOutlet UILabel *lblcryj;
 @property (strong,nonatomic) NSMutableArray *listdetail;
 @property (strong,nonatomic) NSMutableArray *listhead;
 @property (strong,nonatomic) NSMutableArray *listtask;

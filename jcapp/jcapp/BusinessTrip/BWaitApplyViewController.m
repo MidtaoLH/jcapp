@@ -266,7 +266,7 @@ NSInteger currentPageCountbwait;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Pending * pending = self.listOfMovies[indexPath.row];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.businessTripid=pending.AidFK;
     myDelegate.processid=pending.PicID;
     myDelegate.pageType=@"2";

@@ -11,7 +11,9 @@
 #import "../Model/Pending.h"
 #import "BusinessTripCell.h"
 #import "../MJRefresh/MJRefresh.h"
-
+#import "../BusinessTrip/BusinessTripDetailViewController.h"
+#import "../TaskViewBack/TaskBackInfoViewController.h"
+#import "../AppDelegate.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -254,12 +256,23 @@ NSInteger currentPageCountbapproved;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == [self.listOfMovies count])
-    {
+    Pending * pending = self.listOfMovies[indexPath.row];
+    NSLog(@"pending.PicID:%@",pending.DocumentName);
+    //申请中、承认中、已驳回状态 跳到出差申请查看
+    if([pending.CaseStatusTxt isEqualToString:@"申请中"] || [pending.CaseStatusTxt isEqualToString:@"承认中"] ||[pending.CaseStatusTxt isEqualToString:@"已驳回"]){
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.businessTripid=pending.AidFK;
+        myDelegate.processid=pending.PicID;
+        BusinessTripDetailViewController *order = [[BusinessTripDetailViewController alloc] init];
+        [self.navigationController pushViewController:order animated:YES];
     }
-    else
-    {
-        //其它单元格的事件
+    //跳到回览查看
+    else {
+        TaskBackInfoViewController *order = [[TaskBackInfoViewController alloc] init];
+        order.pagetype=@"1";
+        order.code=pending.PicID;
+        order.title=@"出差";
+        [self.navigationController pushViewController:order animated:YES];
     }
 }
 

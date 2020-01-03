@@ -13,6 +13,7 @@
 #import "BusinessTripDetailImagecell.h"
 #import "../Model/LeaveTask.h"
 #import "BusinessTripDetailCell.h"
+#import "../AppDelegate.h"
 
 @interface BusinessTripDetailViewController (){
     
@@ -44,6 +45,9 @@ static NSString *identifierImage =@"ImageCell.h";
     NSString *userid = @"77";
     NSString *BusinessTripID = @"10";
     NSString *ProcessInstanceID = @"50";
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    BusinessTripID=myDelegate.businessTripid;
+    ProcessInstanceID=myDelegate.processid;
     
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetBusinessTripDataByID?userID=%@&BusinessTripID=%@&ProcessInstanceID=%@", userid,BusinessTripID,ProcessInstanceID ];

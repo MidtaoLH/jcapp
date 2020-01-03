@@ -76,7 +76,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"qingjia";
         [self addChildViewController:childViewControllerWaitApply(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerVatcationMain(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerVatcationMain(@"", @"increase_meituan", 1)];
         [self addChildViewController:childViewControllerLeave(@"请假记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -87,7 +87,7 @@ NSInteger barheight;
         myDelegate.processid=@"0";
         myDelegate.pageType=@"1";
         [self addChildViewController:childViewControllerBWaitApply(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerSWFormCommon(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerSWFormCommon(@"", @"increase_meituan", 1)];
         [self addChildViewController:childViewControllerBApproved(@"出差记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -95,7 +95,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"waichu";
         [self addChildViewController:childViewControllerGoOutWait(@"待申请", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerGoOutEdit(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerGoOutEdit(@"", @"increase_meituan", 1)];
         [self addChildViewController:childViewControllerGoOut(@"外出记录", @"drop", 2)];
         self.navigationItem.title=@"待申请";
     }
@@ -109,7 +109,7 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"agent";
         [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerSetAgent(@"", @"publish-text", 1)];
+        [self addChildViewController:childViewControllerSetAgent(@"", @"increase_meituan", 1)];
         [self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
         self.navigationItem.title=@"代理人列表";
     }

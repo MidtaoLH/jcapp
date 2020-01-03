@@ -18,7 +18,7 @@
 #import "SelectUserViewController.h"
 #import "AppDelegate.h"
 #import "MJExtension.h"
-
+#import "TabBarViewController.h"
 @interface AgentInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 
@@ -249,7 +249,7 @@
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle: @"提示信息！"
                               message: messageInfo.msg
-                              delegate:nil
+                              delegate:self
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
         [alert show];
@@ -261,5 +261,12 @@
         [self.tableView layoutIfNeeded];        
         self.tableView.hidden = NO;
     }
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 @end

@@ -32,6 +32,8 @@
 #import "SetAgentViewController.h"
 #import "NewViewController.h"
 
+#import "SelectUserViewController.h"
+
 #import "Masonry.h"
 #import "AppDelegate.h"
 
@@ -108,7 +110,7 @@ NSInteger barheight;
         myDelegate.AppRoveType =@"agent";
         [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerSetAgent(@"", @"publish-text", 1)];
-        [self addChildViewController:childViewControllerAgent(@"", @"", 2)];
+        [self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
         self.navigationItem.title=@"代理人列表";
     }
     else if([myDelegate.tabbarType isEqualToString:@"10"])
@@ -550,7 +552,6 @@ UIViewController *childViewControllerAttendanceSummary (NSString *title, NSStrin
     return vc;
 }
 
-
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, NSUInteger tag) {
     AgentViewController *vc = [[AgentViewController alloc] init];
@@ -567,36 +568,21 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
+
+/// 自定义样式UITabBarItem
+UIViewController *childViewControllerSelectUser (NSString *title, NSString *imgName, NSUInteger tag) {
+    SelectUserViewController *vc = [[SelectUserViewController alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    setAnimation(vc.tabBarItem, tag);
+    return vc;
+}
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerSetAgent (NSString *title, NSString *imgName, NSUInteger tag) {
-    SetAgentViewController *vc = [[SetAgentViewController alloc] init];
+    UIViewController *vc = [[UIViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     
-    [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_TableHeight));
-    }];
-    [vc.savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
-        // 添加左
-        make.left.mas_equalTo(Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
-    [vc.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
     vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, 5);
     vc.tabBarItem.imageInsets=UIEdgeInsetsMake(-1,0,1,0);
     
@@ -686,16 +672,22 @@ NSArray *imgs (){
         BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
-    if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
+    else if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
     {
         VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
-    if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
+    else if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
     {
         GoOutEditController  * VCCollect = [[GoOutEditController alloc] init];
         VCCollect.edittype = @"1"; //追加
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
+    else if([myDelegate.tabbarType isEqualToString:@"9"]&&tabBar.selectedIndex==1)
+    {
+        SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    
 }
 @end

@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *ProcessApplyCode;
 @property (nonatomic,copy) NSString *edittype;  //0 追加
 @property (nonatomic,copy) NSString *urltype;
-
+@property (nonatomic,copy) NSString *proCelReson;
 
 
 // 添加数据源

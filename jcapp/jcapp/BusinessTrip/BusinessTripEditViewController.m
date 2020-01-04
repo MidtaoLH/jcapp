@@ -355,9 +355,9 @@ NSString * bflag = @"flase";
 }
 - (void)addAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
-        operateType=@"0";
+        self->operateType=@"0";
         
-        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myData, @"json",nil];
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
         //print out the data contents
@@ -380,15 +380,7 @@ NSString * bflag = @"flase";
         if (!connection) {
             NSLog(@"Failed to submit request");
         } else {
-            //显示信息
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: @"保存成功"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            //[self goBack];
+            
         }
         
 
@@ -415,10 +407,12 @@ NSString * bflag = @"flase";
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        if([self->pageType isEqual:@"2"]){
+        if([self->pageType isEqual:@"1"]){
+            self->pageType=@"4";
+        }else if([self->pageType isEqual:@"2"]){
             self->pageType=@"5";
         }else{
-            self->pageType=@"4";
+            self->pageType=@"6";
         }
         NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
@@ -434,15 +428,7 @@ NSString * bflag = @"flase";
         if (!connection) {
             NSLog(@"Failed to submit request");
         } else {
-            //显示信息
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: @"提交成功"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            //[self goBack];
+            
         }
         
         
@@ -545,7 +531,7 @@ NSString * bflag = @"flase";
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if([operateType isEqual:@"0"]){
+    if([alert isEqual:@"save"]){
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
@@ -577,19 +563,23 @@ NSString * bflag = @"flase";
         }
         //上传图片
         if([operateType isEqual:@"0"]){
-            //保存成功
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"保存成功"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            
             //接收返回的起案番号
             applyCode=requestTmp;
             operateType=@"3";
             [self uploadImg];
+            //保存成功 提交成功
+            NSString *message=@"提交成功";
+            if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                message=@"保存成功";
+            }
+            alert=@"save";
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: message
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
         }
         
         if([operateType isEqual:@"2"]){

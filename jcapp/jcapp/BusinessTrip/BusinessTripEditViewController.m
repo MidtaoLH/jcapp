@@ -34,14 +34,20 @@ NSString * bflag = @"flase";
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    self.navigationItem.title=@"出差申请";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
+    
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    businessTripid=myDelegate.businessTripid;
+    processid=myDelegate.processid;
+    pageType=myDelegate.pageType;
+
+    [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"出差申请";
     
     datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
     [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
@@ -92,10 +98,7 @@ NSString * bflag = @"flase";
     
     [toolBar setItems:toolbarItems animated:NO];
     
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    businessTripid=myDelegate.businessTripid;
-    processid=myDelegate.processid;
-    pageType=myDelegate.pageType;
+    
     if([pageType isEqualToString:@"2"]){
         operateType=@"2";
         //修改画面 加载数据
@@ -224,18 +227,23 @@ NSString * bflag = @"flase";
  创建footer
  */
 - (UIView *)footerView {
-    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+    if([pageType isEqualToString:@"1"]){
+        return nil;
+    }else{
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+        
+        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+        submitBtn.center = footer.center;
+        submitBtn.backgroundColor = [UIColor orangeColor];
+        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
+        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:submitBtn];
+        
+        return footer;
+    }
     
-    UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-    submitBtn.center = footer.center;
-    submitBtn.backgroundColor = [UIColor orangeColor];
-    [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
-    //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-    [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
-    [footer addSubview:submitBtn];
-    
-    return footer;
 }
 -(void)processAction{
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面

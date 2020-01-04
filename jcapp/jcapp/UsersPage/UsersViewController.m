@@ -117,39 +117,7 @@
     //列表高度
     return Common_UserTableHeight/3;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *ID=@"cellID";
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
-       
-        if(indexPath.row==0)
-        {
-            cell.textLabel.text=[NSString stringWithFormat:@"修改账户密码"];
-            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if(indexPath.row==1)
-        {
-            cell.textLabel.text=[NSString stringWithFormat:@"消息推送通知"];
-            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-        }
-        else if(indexPath.row==2)
-        {
-            //缓存
-            CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
-            NSString *message = size > 1 ? [NSString stringWithFormat:@"%.2fM", size] : [NSString stringWithFormat:@"%.2fK", size * 1024.0];
-            NSString *messagenew =[NSString stringWithFormat:@"清除缓存"];
-            cell.textLabel.text = messagenew;
-            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-            cell.detailTextLabel.text = message;
-            cell.detailTextLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-    }
-    return cell;
-}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row==0)
@@ -344,8 +312,11 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", infoString);
-    if([infoString containsString:@"xmlns"])
+    if([infoString containsString:@"成功"])
+    {
+        
+    }
+    else
     {
         // 字符串截取
         NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
@@ -377,12 +348,91 @@
     groupname = [defaults objectForKey:@"GroupName"];
     code= [defaults objectForKey:@"UserNO"];
     username= [defaults objectForKey:@"username"];
+    isNotice= [defaults objectForKey:@"IsNotice"];
     self.lblcode.text=code;
     self.lblname.text=empname;
     self.lbldept.text=groupname;
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
 }
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID=@"cellID";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
+    if (!cell) {
+        
+        
+        if(indexPath.row==0)
+        {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+            cell.textLabel.text=[NSString stringWithFormat:@"修改账户密码"];
+            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if(indexPath.row==1)
+        {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1  reuseIdentifier:ID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            UISwitch * mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+            [mySwitch addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+            if ([isNotice isEqual:@"1"]) {
+                 [mySwitch setOn:YES];
+            }
+            else {
+                 [mySwitch setOn:NO];
+            }
+           
+            cell.accessoryView = mySwitch;
+            cell.textLabel.text=[NSString stringWithFormat:@"消息推送通知"];
+            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+        }
+        else if(indexPath.row==2)
+        {
+            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+            //缓存
+            CGFloat size = [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject] + [self folderSizeAtPath:NSTemporaryDirectory()];
+            NSString *message = size > 1 ? [NSString stringWithFormat:@"%.2fM", size] : [NSString stringWithFormat:@"%.2fK", size * 1024.0];
+            NSString *messagenew =[NSString stringWithFormat:@"清除缓存"];
+            cell.textLabel.text = messagenew;
+            cell.textLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+            cell.detailTextLabel.text = message;
+            cell.detailTextLabel.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }
+    return cell;
+}
+
+-(void)switchAction:(id)sender
+{
+    UISwitch *switchButton = (UISwitch*)sender;
+    BOOL isButtonOn = [switchButton isOn];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    if (isButtonOn) {        
+        [defaults setObject:@"1" forKey:@"IsNotice"];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/SetIsNotice?id=%@&isNotice=%@",username,@"1"];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }else {
+        [defaults setObject:@"0" forKey:@"IsNotice"];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/SetIsNotice?id=%@&isNotice=%@",username,@"0"];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
+    
+}
+
+
 @end
 
 

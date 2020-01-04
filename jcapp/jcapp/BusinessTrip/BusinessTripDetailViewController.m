@@ -14,6 +14,11 @@
 #import "../Model/LeaveTask.h"
 #import "BusinessTripDetailCell.h"
 #import "../AppDelegate.h"
+#import "BusinessTripEditViewController.h"
+#import "../Model/MdlAnnex.h"
+#import "SDDemoCell.h"
+#import "SDPhotoItem.h"
+
 
 @interface BusinessTripDetailViewController (){
     
@@ -24,7 +29,7 @@
     long edittype;
     
 }
-
+@property (nonatomic, strong) NSMutableArray *srcStringArray;
 @property (strong,nonatomic) MdlBusinessTrip *leavehead;
 
 @end
@@ -37,22 +42,18 @@ static NSString *identifierImage =@"ImageCell.h";
 @synthesize listdetail;
 @synthesize listhead;
 @synthesize  listtask;
+@synthesize listAnnex;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     edittype = 0;
     
-    NSString *userid = @"77";
-    NSString *BusinessTripID = @"10";
-    NSString *ProcessInstanceID = @"50";
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    BusinessTripID=myDelegate.businessTripid;
-    ProcessInstanceID=myDelegate.processid;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    userid = [defaults objectForKey:@"userid"];
-    
+    userID = [defaults objectForKey:@"userid"];
+    //userID = @"77";
+   
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetBusinessTripDataByID?userID=%@&BusinessTripID=%@&ProcessInstanceID=%@", userid,BusinessTripID,ProcessInstanceID ];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetBusinessTripDataByID?userID=%@&BusinessTripID=%@&ProcessInstanceID=%@", userID,self.awardID_FK,self.processInstanceID ];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -66,7 +67,7 @@ static NSString *identifierImage =@"ImageCell.h";
     [_NewTableView registerClass:[BusinessTripDetailCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     
-    [_ImageTableView registerClass:[BusinessTripDetailImagecell class] forCellReuseIdentifier:identifierImage];
+    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = 150;
     
     NSLog(@"%@",@"viewDidLoad-end");
@@ -81,35 +82,123 @@ static NSString *identifierImage =@"ImageCell.h";
     [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
     [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
     
+    
+    
+}
+
+-(void)ShowMessage
+{
+    //提示框添加文本输入框
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请输入理由"
+                                                                   message:@"当前记录取消后不能恢复"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         //响应事件
+                                                         //得到文本信息
+                                                         for(UITextField *text in alert.textFields){
+                                                             
+                                                             NSLog(@"text = %@", text.text);
+                                                             
+                                                             if([text.text isEqualToString:@""])
+                                                             {
+                                                                 NSLog(@"text = %@", @"asdfsdfsdf");
+                                                                 [self ShowMessage];
+                                                                 return;
+                                                             }
+                                                             
+                                                             edittype = 1;
+                                                             
+                                                             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
+                                                             
+                                                             NSLog(@"%@", strURL);
+                                                             NSURL *url = [NSURL URLWithString:strURL];
+                                                             //进行请求
+                                                             NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+                                                             
+                                                             NSURLConnection *connection = [[NSURLConnection alloc]
+                                                                                            initWithRequest:request
+                                                                                            delegate:self];
+                                                         }
+                                                     }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                             NSLog(@"action = %@", alert.textFields);
+                                                         }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"取消修改理由必填";
+    }];
+    
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)TaskCancle:(id)sender{
     
-    edittype = 1;
-    
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", @"80", @"1", @"22770", @"80" ];
-    
-    NSLog(@"%@", strURL);
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+    [self ShowMessage];
 }
 -(void)TaskUpdate:(id)sender{
-    edittype = 2;
-    
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskUpdate?UserID=%@&ProcessInstanceID=%@&CelReson=%@&Updator=%@", @"80", @"22770", @"80" , @"80"];
-    NSLog(@"%@", strURL);
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+    //修改是已驳回不写理由。 直接跳到明细编辑画面，点保存生成下一版本
+    if([_lblleavestatus.text isEqualToString:@"已驳回"])
+    {
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.businessTripid = self.awardID_FK;
+        myDelegate.processid = self.processInstanceID;
+        myDelegate.pageType = @"3";
+       
+        
+        BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        //提示框添加文本输入框
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请输入理由"
+                                                                       message:@"当前记录修改后，原版本不能恢复"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                             //得到文本信息
+                                                             for(UITextField *text in alert.textFields){
+                                                                 
+                                                                 NSLog(@"text = %@", text.text);
+                                                                 
+                                                                 if([text.text isEqualToString:@""])
+                                                                 {
+                                                                     NSLog(@"text = %@", @"asdfsdfsdf");
+                                                                     return;
+                                                                 }
+                                                                 
+                                                                 AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                                                                 myDelegate.businessTripid = self.awardID_FK;
+                                                                 myDelegate.processid = self.processInstanceID;
+                                                                 myDelegate.pageType = @"3";
+                                                                 
+                                                                 
+                                                                 BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
+                                                                 [self.navigationController pushViewController:VCCollect animated:YES];
+                                                                 
+
+                                                             }
+                                                         }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 //响应事件
+                                                                 NSLog(@"action = %@", alert.textFields);
+                                                             }];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"取消修改理由必填";
+        }];
+        
+        [alert addAction:okAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 -(void)setlblcolor
@@ -138,7 +227,27 @@ static NSString *identifierImage =@"ImageCell.h";
         NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
         
         NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
-        NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
+        NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
+        
+        NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
+        NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
+        
+        //获取附件数据
+        NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
+        NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
+        
+        NSString *requestTmp3 = [NSString stringWithString:resultString3];
+        NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
+        listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
+        
+        //补充附件图片路径
+        NSMutableArray *array1 = [[NSMutableArray alloc] init];
+        for (MdlAnnex *mdla in listAnnex) {
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
+            [array1 addObject:urlstring];
+        }
+        _srcStringArray =array1;
         
         
         //获取回览明细表数据
@@ -227,7 +336,9 @@ static NSString *identifierImage =@"ImageCell.h";
             [self showError:@"操作成功！"];
         }
     }
-    NSLog(@"%@",@"connection1-end");
+    [self.ImageTableView reloadData];
+    [self.ImageTableView layoutIfNeeded];
+
 }
 // 提示错误信息
 - (void)showError:(NSString *)errorMsg {
@@ -356,7 +467,7 @@ static NSString *identifierImage =@"ImageCell.h";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+
     if ([tableView isEqual:self.NewTableView]) {
         BusinessTripDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
         
@@ -365,12 +476,16 @@ static NSString *identifierImage =@"ImageCell.h";
         return cell;
     } else if ([tableView isEqual:self.ImageTableView]) {
         
-        BusinessTripDetailImagecell * cell = [self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
-        
-        cell.str  = @"Rem【ar【k【k2";
-        
-        return cell;
-        
+        SDDemoCell *sdcell =[self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
+        sdcell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSMutableArray *temp = [NSMutableArray array];
+        [_srcStringArray enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+            SDPhotoItem *item = [[SDPhotoItem alloc] init];
+            item.thumbnail_pic = src;
+            [temp addObject:item];
+        }];
+        sdcell.photosGroup.photoItemArray = [temp copy];
+        return sdcell;
     }
     return 0;
     

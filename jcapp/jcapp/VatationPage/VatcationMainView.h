@@ -39,6 +39,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray *listOfKeepLeave;
 @property (strong,nonatomic) NSMutableArray *listOfLeave;
 
+@property (nonatomic,copy) NSString *processInstanceID;
+@property (nonatomic,copy) NSString *vatcationid;
+@property (nonatomic,copy) NSString *ProcessApplyCode;
+@property (nonatomic,copy) NSString *edittype;  //0 追加
+@property (nonatomic,copy) NSString *urltype;
+@property (nonatomic,copy) NSString *proCelReson;
+
 
 @end
 

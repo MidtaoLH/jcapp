@@ -17,8 +17,12 @@
 #import "KeepLeave.h"
 #import "LeaveStatusModel.h"
 #import "TabBarViewController.h"
-
+#import "WayViewController.h"
 static NSInteger rowHeight=50;
+
+
+NSString * boolflag = @"flase";
+
 @interface VatcationMainView ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
 @property (nonatomic, strong) SWFormItem *VatcationType;
@@ -39,7 +43,10 @@ static NSInteger rowHeight=50;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"请假编辑";
+
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -47,10 +54,39 @@ static NSInteger rowHeight=50;
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
 
-    edittype = @"NEW";
-    edittype = @"EDIT";
+    // 任务id复植
+    processid = self.processInstanceID;
     
-    if([edittype isEqualToString:@"EDIT"])
+    if(self.edittype.length > 0)
+    {
+        
+    }
+    else
+    {
+        self.edittype = @"1";
+    }
+    
+    if([self.edittype isEqualToString:@"2"] || [self.edittype isEqualToString:@"3"])
+    {
+        vatcationid = @"10673";
+        urltype = @"getdata";
+        processid = @"22783";
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@", userID,vatcationid,processid];
+        
+        NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", strURL);
+        NSURL *url = [NSURL URLWithString:urlStringUTF8];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+        
+    }
+    
+    
+    /*if([edittype isEqualToString:@"EDIT"])
     {
         vatcationid = @"10673";
         urltype = @"getdata";
@@ -67,6 +103,7 @@ static NSInteger rowHeight=50;
                                        initWithRequest:request
                                        delegate:self];
     }
+     */
 
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.AppRoveType = @"qingjia";
@@ -74,7 +111,7 @@ static NSInteger rowHeight=50;
     totalHeight=150;
 
     [self datas];
-   
+   self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
 }
 
 - (void)goBack {
@@ -283,7 +320,7 @@ static NSInteger rowHeight=50;
     [items addObject:_reason];
     
     self.image = SWFormItem_Add(@"图片", nil, SWFormItemTypeImage, YES, NO, UIKeyboardTypeDefault);
-    self.image.images = @[@"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=f04093d6da00baa1ae214ffb2e68dc7e/34fae6cd7b899e5160ce642e49a7d933c8950d43.jpg", @"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=b360ab28790e0cf3b4fa46bb633e9773/e850352ac65c10387071c8f8b9119313b07e89f8.jpg"];
+    self.image.images = @[];
     [items addObject:_image];
     
     SWFormSectionItem *sectionItem = SWSectionItem(items);
@@ -302,15 +339,30 @@ static NSInteger rowHeight=50;
     UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
     
     UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    submitBtn.bounds = CGRectMake(0, 0, 100, 40);
-    submitBtn.bottom = footer.bottom;
+    submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+    submitBtn.center = footer.center;
     submitBtn.backgroundColor = [UIColor orangeColor];
-    [submitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [submitBtn addTarget:self action:@selector(submitAction) forControlEvents:UIControlEventTouchUpInside];
-    //[footer addSubview:submitBtn];
+    [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
+   
+    [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+    [footer addSubview:submitBtn];
     
     return footer;
+}
+
+-(void)processAction{
+    WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
+    nextVc.processid=processid;
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    if([ boolflag isEqualToString:@"flase"])
+    {
+        NSLog(@"%@", @"wybuttonclick flag");
+        return ;
+    }
+    else
+    {
+        NSLog(@"%@", @"wybuttonclick");
+    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -414,23 +466,23 @@ static NSInteger rowHeight=50;
             [alert show];
             return;
         }
-        urltype = @"keepsave";
+        self.urltype = @"keepsave";
         
         //string edittype, string userid, string groupid, string empid, string vtype, string starttime, string endtime, string vatcationtime, string reason, string name, string leavleid, string processid, string imagecount, string applycode
         NSString *type = self.VatcationType.info;
         NSString *timestart = self.businessTripStart.info;
-        NSString *timeend = self.businessTripEnd.info;
+        NSString *timeend =	 self.businessTripEnd.info;
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
-        if(vatcationid.length >0)
+        if(self.vatcationid.length >0)
         {
             
         }
         else
         {
-            vatcationid = @"";
+            self.vatcationid = @"";
         }
         
         if(processid.length >0)
@@ -451,9 +503,8 @@ static NSInteger rowHeight=50;
             ApplyCode = @"";
         }
         
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,vatcationid,processid,imagecount,ApplyCode];
-        
-        
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave_new?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
+
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);
         NSURL *url = [NSURL URLWithString:urlStringUTF8];
@@ -561,7 +612,7 @@ static NSInteger rowHeight=50;
             [alert show];
             return;
         }
-        urltype = @"keepsave";
+        self.urltype = @"keepsave";
 
         //string edittype, string userid, string groupid, string empid, string vtype, string starttime, string endtime, string vatcationtime, string reason, string name, string leavleid, string processid, string imagecount, string applycode
         NSString *type = self.VatcationType.info;
@@ -571,9 +622,51 @@ static NSInteger rowHeight=50;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnapply?edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,vatcationid,processid,imagecount,ApplyCode];
+        if(self.vatcationid.length >0)
+        {
+            
+        }
+        else
+        {
+            self.vatcationid = @"";
+        }
         
-       
+        if(processid.length >0)
+        {
+            
+        }
+        else
+        {
+            processid = @"";
+        }
+        
+        if(ApplyCode.length >0)
+        {
+            
+        }
+        else
+        {
+            ApplyCode = @"";
+        }
+        
+        
+        if([self.edittype isEqual:@"1"]){ //新增进入
+            self.edittype=@"4";  //申请 原单海没有申请
+        }
+        else if([self.edittype isEqual:@"2"]){ //待申请进入
+            self.edittype=@"5";  //申请 原单海没有申请
+        }
+        else if([self.edittype isEqual:@"3"]){ //修改已申请进入
+            self.edittype=@"6";  //申请 原单海没有申请
+        }
+        
+        //操作类型：1.新增-保存 4.新增-申请 2.修改-保存 5.修改-申请 3再申请-保存 6.再申请-申请
+        //
+
+        
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave_new?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
+        
+        
         
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);
@@ -641,7 +734,7 @@ static NSInteger rowHeight=50;
     
     NSLog(@"%@", resultString);
     
-    if([urltype isEqualToString:@"getdata"])
+    if([self.urltype isEqualToString:@"getdata"])
     {
         NSString *requestTmp = [NSString stringWithString:resultString];
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
@@ -680,7 +773,7 @@ static NSInteger rowHeight=50;
             [self.formTableView reloadData];
         }
     }
-    else if([urltype isEqualToString:@"keepsave"] )
+    else if([self.urltype isEqualToString:@"keepsave"] )
     {
         
         NSString *requestTmp = [NSString stringWithString:resultString];
@@ -696,6 +789,7 @@ static NSInteger rowHeight=50;
             if ([ m.Status isEqualToString:@"suess"])
             {
                 ApplyCode = m.ApplyCode;
+                processid = m.ProcessID;
                     [self uploadImg];
             }
             

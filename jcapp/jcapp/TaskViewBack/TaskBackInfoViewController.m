@@ -62,6 +62,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     _lblproccounts.font=kFont_Lable_14;
     _lblprocremark.textColor = [UIColor grayColor];
     _lblprocremark.font=kFont_Lable_14;
+    _lblccdr.textColor = [UIColor grayColor];
+    _lblccdr.font=kFont_Lable_14;
     _lblprocstatus.font=kFont_Lable_18;
     _lblproctype.font=kFont_Lable_16;
     _imgvprocstatus.backgroundColor = kColor_Cyan;
@@ -119,11 +121,19 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
+    [_lblccdr mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
     [_lblproctype mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
         // 添加上
-      make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+      make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
@@ -271,13 +281,16 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         
         self.lblproctype.text=viewBackInfo.HistoryType;
         self.lblprocdate.text=[NSString stringWithFormat:@"%@时间：%@～%@",viewBackInfo.DocumentName,viewBackInfo.strattime,viewBackInfo.endtime];
+       
         if([viewBackInfo.DocumentName isEqual:@"出差"])
         {
              self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（天）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+             self.lblccdr.text=[NSString stringWithFormat:@"出差地点:%@",viewBackInfo.CCAddress];
         }
         else
         {
              self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+             self.lblccdr.text=@"";
         }
        
         self.lblprocremark.text=[NSString stringWithFormat:@"%@事由：%@",viewBackInfo.DocumentName,viewBackInfo.ProcDescribe];

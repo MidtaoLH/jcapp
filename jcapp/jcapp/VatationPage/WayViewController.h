@@ -25,7 +25,7 @@ UITableViewDelegate>{
     NSMutableArray *array2;
     NSInteger _page;
     NSInteger _pageSize;
-    NSString *processid;
+    //NSString *processid;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;

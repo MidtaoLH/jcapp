@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy, nonatomic) NSString *UserHour;
 
+@property (copy, nonatomic) NSString *IsNotice;
 @end
 
 NS_ASSUME_NONNULL_END

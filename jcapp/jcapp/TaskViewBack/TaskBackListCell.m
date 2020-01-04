@@ -96,7 +96,6 @@
     self.taskBackTypeLable.text = _taskBacklistitem.TaskNodeLevelNM;
     self.taskBackDateLable.text = _taskBacklistitem.TaskAuditeDate;
     self.taskBackRemarkLable.text = _taskBacklistitem.Remark;
-    
     UIImageView *imageView = [[UIImageView alloc] init];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_taskBacklistitem.UserCode];
     [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];

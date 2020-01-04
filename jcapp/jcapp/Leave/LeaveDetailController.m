@@ -17,6 +17,7 @@
 #import "SDPhotoItem.h"
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
+#import "../VatationPage/VatcationMainView.h"
 
 #define kCount 6  //图片总张数
 
@@ -161,7 +162,15 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                                      NSLog(@"text = %@", @"asdfsdfsdf");
                                                                      return;
                                                                  }
-             
+                                                                 //待申请任务 进入明细编辑画面为修改操作
+                                                                 VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+                                                                 VCCollect.vatcationid=self.awardID_FK;
+                                                                 VCCollect.processInstanceID=self.processInstanceID;
+                                                                 VCCollect.ProcessApplyCode=self.ProcessApplyCode;
+                                                                 VCCollect.edittype = @"3";
+                                                                 VCCollect.urltype = @"getdata";
+                                                                 VCCollect.proCelReson = text.text;
+                                                                 [self.navigationController pushViewController:VCCollect animated:YES];
                                                              }
                                                          }];
         UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel

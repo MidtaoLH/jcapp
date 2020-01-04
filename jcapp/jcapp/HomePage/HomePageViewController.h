@@ -16,6 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    
+    NSString *BLCount;
+    NSString *DCLCount;
+    NSString *HLCount;
 }
 
 @property (nonatomic, strong) NSTimer *timer;

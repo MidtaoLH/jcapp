@@ -17,6 +17,7 @@
                 <outlet property="imgvemp" destination="era-dv-Ioj" id="zMG-O8-maV"/>
                 <outlet property="imgvprocstatus" destination="9jw-Uf-7hb" id="Ww5-tc-bcH"/>
                 <outlet property="lblapplydate" destination="tEm-nH-shE" id="X5v-av-Kxf"/>
+                <outlet property="lblccdr" destination="jFf-AI-PcC" id="DsL-Ay-GCr"/>
                 <outlet property="lblcr" destination="aeZ-Ke-U3C" id="CPe-c4-E2k"/>
                 <outlet property="lblempgroup" destination="4EY-46-nAs" id="vvA-iN-Pxj"/>
                 <outlet property="lblproccounts" destination="viX-0B-h3l" id="xJp-U3-KSb"/>
@@ -119,6 +120,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="出差地点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jFf-AI-PcC">
+                    <rect key="frame" x="119" y="167" width="288" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

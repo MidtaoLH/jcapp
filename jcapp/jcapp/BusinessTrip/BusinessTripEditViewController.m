@@ -568,6 +568,7 @@ NSString * bflag = @"flase";
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
             [alert show];
+            return;
         }
         //上传图片
         if([operateType isEqual:@"0"]){

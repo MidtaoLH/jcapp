@@ -52,17 +52,6 @@ static NSString *identifierImage =@"ImageCell.h";
     userID = [defaults objectForKey:@"userid"];
     //userID = @"77";
    
-
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    self.awardID_FK =myDelegate.businessTripid;
-    self.processInstanceID=myDelegate.processid;
-    
-    self.awardID_FK = @"31";
-    self.processInstanceID = @"22897";
-    
-    //NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    //userid = [defaults objectForKey:@"userid"];
-    
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetBusinessTripDataByID?userID=%@&BusinessTripID=%@&ProcessInstanceID=%@", userID,self.awardID_FK,self.processInstanceID ];
     

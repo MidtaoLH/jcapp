@@ -38,9 +38,28 @@
                                    initWithRequest:request
                                    delegate:self];
     [super viewDidLoad];
-    [self setView1];
+    [self GetMsgCount];
+    //[self setView1];
     [self setView2];
     [self setView3];
+}
+//获取案件数量
+-(void)GetMsgCount
+{
+    //设置需要访问的ws和传入参数
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *empID = [defaults objectForKey:@"EmpID"];
+    //设置需要访问的ws和传入参数
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetMsgCount?User=%@",empID];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
 }
 
 - (void)nextImage
@@ -122,17 +141,27 @@
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    
     if([xmlString containsString:@"AttendanceCalendarTime"])
     {
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.aclistOfMovies = [AttendanceCalendar mj_objectArrayWithKeyValuesArray:resultDic];
         //[self.calview reloadInputViews];
         myDelegate.tabbarType=@"8";
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
         [self presentViewController:navigationController animated:YES completion:nil];
-    }else
-    {
+    }//解析案件数量
+    else if([xmlString containsString:@"BLCount"]){
+        NSDictionary *resultDic0;
+        for (NSDictionary *obj in resultDic) {
+            resultDic0=obj;
+        }
+        BLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"BLCount"]];
+        DCLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"DCLCount"]];//[resultDic0 objectForKey:@"DCLCount"];
+        HLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"HLCount"]];//[resultDic0 objectForKey:@"HLCount"];
+        [self setView1];
+    }else{
         listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
         //    图片中数
         NSInteger totalCount = listOfMovies.count;
@@ -271,7 +300,7 @@
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"我的申请",@"待我审批",@"待我回览"];
-    NSArray *image = @[@"1",@"2",@"3"];
+    NSArray *image = @[BLCount,DCLCount,HLCount];
     DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:image autolabelItem:title withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setLabelClickBlock:^(NSInteger index) {
         switch (index) {

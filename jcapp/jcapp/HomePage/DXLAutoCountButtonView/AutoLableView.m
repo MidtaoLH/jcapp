@@ -24,18 +24,28 @@
     _count = count;
     _countlb.text = count;
 }
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [_titlelb setTextAlignment:NSTextAlignmentCenter];
+    _titlelb.font = [UIFont systemFontOfSize:14];
+    _titlelb.adjustsFontSizeToFitWidth = YES;    
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-       
-        
         _titlelb = [UILabel new];
         _titlelb.textColor = kColor_BlackTitle;
         _titlelb.textAlignment = NSTextAlignmentCenter;
-        _titlelb.width=self.size.width/2;
+        _titlelb.width=50;//self.size.width/2;
         _titlelb.height=self.size.height-20;
         _titlelb.backgroundColor= UIColor.orangeColor;
-        _titlelb.font = kFont_Lable_14;
+        //_titlelb.font = kFont_Lable_14;
+        
+        [_titlelb setTextAlignment:NSTextAlignmentCenter];
+        _titlelb.font = [UIFont systemFontOfSize:14];
+        _titlelb.adjustsFontSizeToFitWidth = YES;
+        
         [self addSubview:_titlelb];
         _countlb = [UILabel new];
         _countlb.textColor = kColor_BlackTitle;

@@ -9,7 +9,9 @@
 #import "WaitApplyViewController.h"
 #import "MJExtension.h"
 #import "../Model/LeaveListModel.h"
-#import "LeaveWaitCell.h"
+#import "LeaveListCell.h"
+#import "../TaskViewBack/TaskBackInfoViewController.h"
+#import "../MJRefresh/MJRefresh.h"
 
 @interface WaitApplyViewController ()
 
@@ -22,13 +24,70 @@ static NSString *identifier =@"LeaveWaitCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     
-     self.title = @"待申请请假";
+    CGFloat headimageW = self.view.frame.size.width;
+    CGFloat headimageH =  self.view.frame.size.height;
+    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
+    
+    //e注册自定义 cell
+    [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = 150;
+    currentPageCount=[Common_PageSize intValue];
+    [self LoadData];
+    
+    // 添加头部的下拉刷新
+    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+    self.NewTableView.mj_header = header;
+    
+    // 添加底部的上拉加载
+    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+    self.NewTableView.mj_footer = footer;
+    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    
+    NSLog(@"%@",@"viewDidLoad-end");
+}
+// 2.实现下拉刷新和上拉加载的事件。
+// 头部的下拉刷新触发事件
+- (void)headerClick {
+    // 可在此处实现下拉刷新时要执行的代码
+    // ......
+    //if(currentPageCount>1)
+    //currentPageCount--;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_header endRefreshing];
+}
+// 底部的上拉加载触发事件
+- (void)footerClick {
+    // 可在此处实现上拉加载时要执行的代码
+    // ......
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_footer endRefreshing];
+}
+-(void)LoadData
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    empname = [defaults objectForKey:@"empname"];
+    groupid = [defaults objectForKey:@"Groupid"];
+    UserHour = [defaults objectForKey:@"UserHour"];
     
     //设置需要访问的ws和传入参数
+    // code, string userID, string menuID
+    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLeaveListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",@"2",@"",@"0"];
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveList"];
-    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -36,27 +95,10 @@ static NSString *identifier =@"LeaveWaitCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    
-    //e注册自定义 cell
-    [_NewTableView registerClass:[LeaveWaitCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
-    
-    [super viewDidLoad];
-    NSLog(@"%@",@"viewDidLoad-end");
 }
-
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
-    
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
     NSLog(@"%@", @"kaishidayin");
@@ -72,7 +114,6 @@ static NSString *identifier =@"LeaveWaitCell";
     
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
@@ -185,13 +226,9 @@ qualifiedName:(NSString *)qName {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    LeaveWaitCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    
-    // LeaveListCell * cell =[tableView dequeueReusableCellWithIdentifier:identifier];
-    
+    // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
+    LeaveListCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     cell.leavelistitem =self.listOfMovies[indexPath.row];//取出数据元素
-    
     return cell;
 }
  

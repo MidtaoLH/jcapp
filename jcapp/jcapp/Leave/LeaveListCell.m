@@ -7,7 +7,7 @@
 //
 
 #import "LeaveListCell.h"
-
+#import "../SDWebImage/UIImageView+WebCache.h"
 #define kMargin 10
 
 @interface LeaveListCell()
@@ -92,20 +92,22 @@
 -(void)setLeavelistitem:(LeaveListModel *)leavelistitem
 {
     _leavelistitem =leavelistitem;
+    self.textLabel.text = _leavelistitem.ApplyFileName;
     
-    self.textLabel.text = _leavelistitem.CaseName;
-    
-    self.leaveStatusLable.text = _leavelistitem.LeaveStatusTxt;
-    if([_leavelistitem.LeaveStatusTxt  isEqualToString:  @"已驳回"])
+    self.leaveDateLable.text = _leavelistitem.ApplyDate;
+ 
+    self.leaveStatusLable.text = _leavelistitem.ProcessStutasName;
+    if([_leavelistitem.ProcessStutasName  isEqualToString:  @"已驳回"])
     {
         _leaveStatusLable.textColor = [UIColor redColor];
     }
+ 
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavelistitem.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
     
-    self.leaveDateLable.text = _leavelistitem.LeaveDate;
-    
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
-    
-    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_leavelistitem.BeignDate];
+    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_leavelistitem.BeginDate];
  
     self.beignDateLable.text = strbegindate;
     
@@ -113,7 +115,7 @@
     
     self.endDateLable.text = strendate;
     
-     NSString * strLeaveTypeTxt =[[NSString alloc]initWithFormat:@"%@%@",@"请假类型：",_leavelistitem.LeaveTypeTxt];
+     NSString * strLeaveTypeTxt =[[NSString alloc]initWithFormat:@"%@%@",@"请假类型：",_leavelistitem.LeaveTypeName];
     
     self.leaveTypeLable.text = strLeaveTypeTxt;
     
@@ -123,18 +125,15 @@
 {
     [super layoutSubviews];
     
-    CGFloat 	width = self.bounds.size.width;
+    CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    
-    CGFloat imageWH= height - 2*kMargin;
-   
-    CGFloat leaveDateWidth = 80;
-    
+    CGFloat imageWH=  width/5;
+    CGFloat leaveDateWidth = 90;
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
+    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
-    
+    //申请日期
     self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     
     self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);

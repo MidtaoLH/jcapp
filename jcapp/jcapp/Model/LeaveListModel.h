@@ -12,18 +12,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LeaveListModel : NSObject
 
-@property (nonatomic,copy) NSString * CaseName;
-@property (nonatomic,copy) NSString * LeaveTypeTxt;
+@property (copy, nonatomic) NSString *ApplyFileName;
 
-@property (nonatomic,copy) NSString * BeignDate;
+@property (nonatomic,copy) NSString * CaseName;
+@property (nonatomic,copy) NSString * LeaveTypeName;
+
+@property (nonatomic,copy) NSString * BeginDate;
 @property (nonatomic,copy) NSString * EndDate;
 
-@property (nonatomic,copy) NSString * LeaveStatusTxt;
-
-@property (nonatomic,copy) NSString * LeaveDate;
-
+@property (copy, nonatomic) NSString *ProcessStutasName;
+@property (copy, nonatomic) NSString *ProcessInstanceID;
+@property (nonatomic,copy) NSString * ApplyDate;
+@property (copy, nonatomic) NSString *AwardID_FK;
 @property (nonatomic,copy) NSString * LeaveApplyCode;
 @property (nonatomic,copy) NSString * LeaveVersion;
+@property (copy, nonatomic) NSString *U_LoginName;
+
  
 @end
 

@@ -10,9 +10,10 @@
 #import "MJExtension.h"
 #import "../Model/MdlGoOutList.h"
 #import "GoOutWaitCell.h"
-#import "../MJRefresh/MJRefresh.h"
-#import "GoOutDeatileController.h"
 
+#import "GoOutDeatileController.h"
+#import "../TaskViewBack/TaskBackInfoViewController.h"
+#import "../MJRefresh/MJRefresh.h"
 static NSString * identifier = @"GoOutViewCell";
 
 @interface GoOutViewController ()
@@ -238,14 +239,27 @@ static NSString * identifier = @"GoOutViewCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     GoOutWaitCell *cell = (GoOutWaitCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.MdlGoOutListItem.AwardID_FK;
     NSString *taskcode= cell.MdlGoOutListItem.ProcessInstanceID;
     self.tabBarController.tabBar.hidden = YES;
-    GoOutDeatileController * VCCollect = [[GoOutDeatileController alloc] init];
-    VCCollect.awardID_FK=code;
-    VCCollect.processInstanceID=taskcode;
-    VCCollect.ProcessApplyCode=cell.MdlGoOutListItem.ProcessApplyCode;
-    [self.navigationController pushViewController:VCCollect animated:YES];
+   
+    if([cell.MdlGoOutListItem.ProcessStutasName isEqualToString:@"待承认"] || [cell.MdlGoOutListItem.ProcessStutasName isEqualToString:@"承认中"] || [cell.MdlGoOutListItem.ProcessStutasName isEqualToString:@"已驳回"])
+    {
+        GoOutDeatileController * VCCollect = [[GoOutDeatileController alloc] init];
+        VCCollect.awardID_FK=code;
+        VCCollect.processInstanceID=taskcode;
+        VCCollect.ProcessApplyCode=cell.MdlGoOutListItem.ProcessApplyCode;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        TaskBackInfoViewController *order = [[TaskBackInfoViewController alloc] init];
+        order.pagetype=@"1";
+        order.code=taskcode;
+        order.title=@"外出";
+        [self.navigationController pushViewController:order animated:YES];
+    }
 }
 @end

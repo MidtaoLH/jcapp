@@ -45,6 +45,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"外出编辑";
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -86,6 +89,13 @@
     self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
 }
 
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -103,19 +113,9 @@
     [toolBar setItems:toolbarItems animated:NO];
     
 }
-- (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate]; 
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
 -(void)viewDidAppear:(BOOL)animated{
-    
-    
     if(animated)
     {
-        
-        
         
     }
     else
@@ -131,12 +131,9 @@
             [defaults setObject:@"" forKey:@"vatcationname"];
             [self.formTableView reloadData];
         }
-        
     }
-    
-    
 }
-
+ 
 /**
  数据源处理
  */
@@ -491,7 +488,7 @@
         else if([self.edittype isEqual:@"3"]){ //修改已申请进入
             self.edittype=@"6";  //申请 原单海没有申请
         }
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
         
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);

@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *pageType;
     NSString *operateType;
     NSString *applyCode;
+    NSString *alert;
 }
 @end
 NS_ASSUME_NONNULL_END

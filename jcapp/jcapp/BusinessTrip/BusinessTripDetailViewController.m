@@ -48,6 +48,8 @@ static NSString *identifierImage =@"ImageCell.h";
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     BusinessTripID=myDelegate.businessTripid;
     ProcessInstanceID=myDelegate.processid;
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userid = [defaults objectForKey:@"userid"];
     
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetBusinessTripDataByID?userID=%@&BusinessTripID=%@&ProcessInstanceID=%@", userid,BusinessTripID,ProcessInstanceID ];

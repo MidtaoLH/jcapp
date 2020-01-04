@@ -91,27 +91,7 @@
 
 -(void)setLeavelistitem:(LeaveListModel *)leavelistitem
 {
-    _leavelistitem =leavelistitem;
-    
-    self.textLabel.text = _leavelistitem.CaseName;
-    
-    self.leaveStatusLable.text = _leavelistitem.LeaveStatusTxt;
-
-    self.leaveDateLable.text = _leavelistitem.LeaveDate;
-    
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
-    
-    NSString * strbegindate =[[NSString alloc]initWithFormat:@"%@%@",@"开始时间：",_leavelistitem.BeignDate];
-    
-    self.beignDateLable.text = strbegindate;
-    
-    NSString * strendate =[[NSString alloc]initWithFormat:@"%@%@",@"结束时间：",_leavelistitem.EndDate];
-    
-    self.endDateLable.text = strendate;
-    
-    NSString * strLeaveTypeTxt =[[NSString alloc]initWithFormat:@"%@%@",@"请假类型：",_leavelistitem.LeaveTypeTxt];
-    
-    self.leaveTypeLable.text = strLeaveTypeTxt;
+ 
     
 }
 

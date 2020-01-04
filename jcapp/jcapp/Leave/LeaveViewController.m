@@ -12,6 +12,8 @@
 #import "LeaveListCell.h"
 #import "../TaskViewBack/TaskBackInfoViewController.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "LeaveDetailController.h"
+
 
 static NSString * identifier = @"LeaveListCell";
 
@@ -237,11 +239,11 @@ static NSString * identifier = @"LeaveListCell";
     
     if([cell.leavelistitem.ProcessStutasName isEqualToString:@"待承认"] || [cell.leavelistitem.ProcessStutasName isEqualToString:@"承认中"] || [cell.leavelistitem.ProcessStutasName isEqualToString:@"已驳回"])
     {
-       /* GoOutDeatileController * VCCollect = [[GoOutDeatileController alloc] init];
+        LeaveDetailController * VCCollect = [[LeaveDetailController alloc] init];
         VCCollect.awardID_FK=code;
         VCCollect.processInstanceID=taskcode;
-        VCCollect.ProcessApplyCode=cell.MdlGoOutListItem.ProcessApplyCode;
-        [self.navigationController pushViewController:VCCollect animated:YES];*/
+        VCCollect.ProcessApplyCode=cell.leavelistitem.ProcessApplyCode;
+        [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else
     {

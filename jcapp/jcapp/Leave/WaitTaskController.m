@@ -176,28 +176,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
     for (LeaveHead *p1 in listhead) {
         _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
-        
-        _lblleavestatus.text = p1.LeaveStatusTxt;
-        _emplbl.text = p1.EmpCName;
-        _lblempgroup.text = p1.groupname;
-        
-        NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.LeaveDate];
-        
-        _lblapplydate.text = strapplydate;
-        
-        NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"请假时间：",p1.BeignDate,p1.EndDate];
-        
-        _lblleavedate.text = strleavedate;
-        
-        _lblleavetype.text = p1.LeaveTypeTxt;
-        
-        NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.LeavePlanNum];
-        
-        _lblleavecounts.text =strleavecounts;
-        
-        NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.LeaveDescribe];
-        
-        _lblleaveremark.text = strleaveremark;
+
     }
 
     

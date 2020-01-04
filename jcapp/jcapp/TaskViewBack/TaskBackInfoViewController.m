@@ -125,7 +125,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
         // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
@@ -133,7 +133,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
         // 添加上
-      make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+      make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];

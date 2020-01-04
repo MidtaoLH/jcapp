@@ -113,13 +113,13 @@
     //跳转
     //[self presentModalViewController:valueView animated:YES];
 
-    //BusinessTripDetailViewController *nextVc = [[BusinessTripDetailViewController alloc]init];//初始化下一个界面
-    //[self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    BusinessTripDetailViewController *nextVc = [[BusinessTripDetailViewController alloc]init];//初始化下一个界面
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
     
     
    
-    VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    //VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
+    //[self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 
 }

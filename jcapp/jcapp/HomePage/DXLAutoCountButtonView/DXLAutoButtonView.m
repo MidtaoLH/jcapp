@@ -55,9 +55,9 @@
             .centerXEqualToView(btn)
             .topSpaceToView(btn, imageTopWithView)
             .heightRatioToView(btn, heightRatioToView);
-            //设置按钮的文字位置
+            //设置按钮xiamian的文字位置
             btn.titleLabel.sd_layout
-            .autoHeightRatio(0)
+            //.autoHeightRatio(0)
             .leftSpaceToView(btn, 0)
             .rightSpaceToView(btn, 0)
             .bottomSpaceToView(btn, verticalMargin);
@@ -110,7 +110,8 @@
             lb.title = viewsArray[i];
             lb.count = labelArray[i];
             [self addSubview:lb];
-            lb.sd_layout.heightIs(self.frame.size.height);
+            lb.sd_layout.heightIs(Common_HomeCellSize);
+            lb.sd_layout.widthIs(Common_HomeCellSize);
             lb.tag = i;
             [temp addObject:lb];
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];

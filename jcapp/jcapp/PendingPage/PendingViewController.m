@@ -218,7 +218,7 @@ static NSString * identifier = @"PendingListCell";
         ExamineEditLController * VCCollect = [[ExamineEditLController alloc] init];
         VCCollect.taskType=code;
         VCCollect.strTaskid=taskcode;
-        VCCollect.title=@"审批明细";
+        VCCollect.title=@"审批事项明细";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
 }

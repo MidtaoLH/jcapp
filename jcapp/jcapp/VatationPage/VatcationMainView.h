@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *processid;
     NSString *urltype;
     NSString *ApplyCode;
-    
+    NSString *operateType;
 }
 
 

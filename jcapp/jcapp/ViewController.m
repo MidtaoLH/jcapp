@@ -244,7 +244,7 @@
             [defaults setObject:m.GroupName forKey:@"GroupName"];
             [defaults setObject:m.UserNO forKey:@"UserNO"];
             [defaults setObject:m.UserHour forKey:@"UserHour"];
-            
+            [defaults setObject:m.IsNotice forKey:@"IsNotice"];
             
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘

@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * LeaveVersion;
 @property (copy, nonatomic) NSString *U_LoginName;
 
+@property (copy, nonatomic) NSString *ProcessApplyCode;
  
 @end
 

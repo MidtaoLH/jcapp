@@ -20,6 +20,7 @@
 #import "../Model/MdlEvection.h"
 #import "../Model/MdlAnnex.h"
 #import "TabBarViewController.h"
+#import "../VatationPage/WayViewController.h"
 
 @interface GoOutEditController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -214,12 +215,50 @@
     //    sectionItem.footerHeight = 80;
     [self.mutableItems addObject:sectionItem];
     
-    self.formTableView.tableFooterView = [self footerView];
+     self.formTableView.tableFooterView = [self footerView];
 }
-
 /**
  创建footer
  */
+- (UIView *)footerView {
+    if([self.edittype isEqualToString:@"1"]){
+        return nil;
+    }else{
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+        
+        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+        submitBtn.center = footer.center;
+        submitBtn.backgroundColor = [UIColor orangeColor];
+        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
+        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:submitBtn];
+        
+        return footer;
+    }
+    
+}
+-(void)processAction{
+    NSString *bflag = @"flase";
+    WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
+    nextVc.processid=processid;
+    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    if([ bflag isEqualToString:@"flase"])
+    {
+        NSLog(@"%@", @"wybuttonclick flag");
+        return ;
+    }
+    else
+    {
+        
+        //tiaozhuan
+        NSLog(@"%@", @"wybuttonclick");
+    }
+}
+/*
+ 创建footer
+ 
 - (UIView *)footerView {
     UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
     
@@ -233,7 +272,7 @@
     //[footer addSubview:submitBtn];
     
     return footer;
-}
+}*/
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -516,7 +555,6 @@
     return ret;
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -524,7 +562,6 @@
 
 -(void)LoadTableLocation
 {
-    
     self.formTableView.frame=CGRectMake(0,totalHeight-20, self.view.frame.size.width, 500);
 }
 - (void)textFieldWithText:(UITextField *)textField
@@ -644,80 +681,6 @@
             }
         }
     }
-    /*
-     
-     // 字符串截取
-     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-     NSString *resultString = [xmlString substringWithRange:reusltRagne];
-     
-     NSLog(@"%@", resultString);
-     
-     if([urltype isEqualToString:@"getdata"])
-     {
-     NSString *requestTmp = [NSString stringWithString:resultString];
-     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-     
-     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-     listOfKeepLeave = [KeepLeave mj_objectArrayWithKeyValuesArray:resultDic];
-     
-     if(listOfKeepLeave.count > 0)
-     {
-     KeepLeave *kl = self.listOfKeepLeave[0];
-     self.VatcationType.info = kl.vatcationtrpe;
-     self.businessTripStart.info = kl.timestart;
-     self.businessTripEnd.info = kl.timesend;
-     self.businessNum.info = kl.timesum;
-     self.reason.info = kl.vatcationreason;
-     
-     NSMutableArray *imagepath = [[NSMutableArray alloc] init];
-     
-     
-     for(NSInteger i = 0;i <listOfKeepLeave.count;i++)
-     {
-     KeepLeave *kl2 = self.listOfKeepLeave[i];
-     
-     NSString *imagepath_s =
-     [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
-     
-     
-     UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
-     
-     [imagepath addObject:imagetest];
-     }
-     
-     
-     self.image.images =imagepath;
-     
-     [self.formTableView reloadData];
-     }
-     }
-     else if([urltype isEqualToString:@"keepsave"] )
-     {
-     
-     NSString *requestTmp = [NSString stringWithString:resultString];
-     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-     
-     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-     listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
-     
-     if(listOfLeave.count > 0)
-     {
-     LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
-     
-     if ([ m.Status isEqualToString:@"suess"])
-     {
-     ApplyCode = m.ApplyCode;
-     [self uploadImg];
-     }
-     
-     }
-     
-     }
-     
-     */
-
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

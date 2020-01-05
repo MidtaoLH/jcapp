@@ -99,7 +99,7 @@ NSString * bflag = @"flase";
     [toolBar setItems:toolbarItems animated:NO];
     
     
-    if([pageType isEqualToString:@"2"]){
+    if([pageType isEqualToString:@"2"] ||[pageType isEqualToString:@"3"]){
         operateType=@"2";
         //修改画面 加载数据
         [self LoadData];

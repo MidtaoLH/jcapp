@@ -12,19 +12,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LeaveHead : NSObject
 
-@property (nonatomic,copy) NSString * EmpCName;
-@property (nonatomic,copy) NSString * groupname;
+@property (copy, nonatomic) NSString *EmpName;
 
-@property (nonatomic,copy) NSString * BeignDate;
-@property (nonatomic,copy) NSString * EndDate;
+@property (copy, nonatomic) NSString *G_CName;
 
-@property (nonatomic,copy) NSString * LeaveStatusTxt;
+@property (copy, nonatomic) NSString *ApplyDate;
 
-@property (nonatomic,copy) NSString * LeaveDate;
+@property (copy, nonatomic) NSString *ProcessStutasTxt;
+@property (copy, nonatomic) NSString *PlanStartTime;
+@property (copy, nonatomic) NSString *PlanEndTime;
+@property (copy, nonatomic) NSString *TimePlanNum;
+@property (copy, nonatomic) NSString *CaseDescribe;
 
-@property (nonatomic,copy) NSString * LeavePlanNum;
-@property (nonatomic,copy) NSString * LeaveTypeTxt;
-@property (nonatomic,copy) NSString * LeaveDescribe;
+@property (copy, nonatomic) NSString *LeaveTypeTxt;
+@property (copy, nonatomic) NSString *ProcessApplyCode;
 
 @end
 

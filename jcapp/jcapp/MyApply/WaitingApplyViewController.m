@@ -262,9 +262,11 @@ NSInteger currentPageCountwait;
     if([pending.DocumentName isEqualToString:@"请假"]){
         AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
         //app.leaveid
-        VatcationMainViewController *order = [[VatcationMainViewController alloc] init];
-        //order.hidesBottomBarWhenPushed = YES;
-    //    [(UINavigationController *)self.tabBarController.selectedViewController pushViewController:order animated:YES];
+        VatcationMainView *order = [[VatcationMainView alloc] init];
+        order.vatcationid=pending.AidFK;
+        order.processInstanceID=pending.PicID;
+        order.edittype = @"2";
+        order.urltype =@"getdata";
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"出差"]){

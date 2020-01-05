@@ -11,22 +11,26 @@
 #import "../Model/LeaveHead.h"
 #import "../Model/LeaveDeatil.h"
 #import "LeaveDetailCell.h"
-#import "../Model/LeaveTask.h"
 #import "LeaveImageCell.h"
+#import "../Model/MdlAnnex.h"
+#import "SDDemoCell.h"
+#import "SDPhotoItem.h"
+#import "AppDelegate.h"
+#import "TabBarViewController.h"
+#import "../VatationPage/VatcationMainView.h"
 
 #define kCount 6  //图片总张数
-
- static long step = 0; //记录时钟动画调用次数
 
 @interface LeaveDetailController ()
 {
     CGFloat scaleMini;
     CGFloat scaleMax;
+    //0 初始化 1 承认 2 驳回
+    long edittype;
 }
 
 @property (strong,nonatomic) LeaveHead *leavehead;
- 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
+@property (nonatomic, strong) NSMutableArray *srcStringArray;
 
 @end
 
@@ -38,18 +42,19 @@ static NSString *identifierImage =@"LeaveImageCell.h";
 @synthesize listdetail;
 @synthesize listhead;
 @synthesize  listtask; 
+@synthesize  listAnnex;
 
 - (void)viewDidLoad {
     
-    
     [super viewDidLoad];
     
-    self.title = @"请假";
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
     
-    //设置需要访问的ws和传入参数
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLeaveDataByID?userID=%@&LeaveID=%@&ProcessInstanceID=%@", userID,self.awardID_FK,self.processInstanceID ];
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveDetail"];
-    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+ 
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -62,7 +67,7 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     [_NewTableView registerClass:[LeaveDetailCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
 
-    [_ImageTableView registerClass:[LeaveImageCell class] forCellReuseIdentifier:identifierImage];
+    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = 150;
     
         NSLog(@"%@",@"viewDidLoad-end");
@@ -73,52 +78,115 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     
     _imgvleavestatus.backgroundColor = [UIColor greenColor];
     [self setlblcolor];
-
-    /*
-    self.scrollview.frame=CGRectMake(0, 236, self.view.frame.size.width, 200);
-    self.scrollview.backgroundColor= UIColor.orangeColor;
-    self.scrollview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    int index = 0;
-    //
-    //    图片的宽
-    CGFloat imageW = 100;
-    //    CGFloat imageW = 300;
-    //    图片高
-    CGFloat imageH = 100;
-    //    图片的Y
-    CGFloat imageY = 50;
-    
-    for (int i = 0; i < 3; i++) {
-        index=i;
-        UIImageView *imageView = [[UIImageView alloc] init];
-        //        图片X
-        CGFloat imageX = i * imageW + i*50;
  
-        //        设置图片
-        NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
-        imageView.image = [UIImage imageNamed:name];
- 
-        imageView.userInteractionEnabled = YES;
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
-        [imageView addGestureRecognizer:tap];
-        //        隐藏指示条
-        self.scrollview.showsHorizontalScrollIndicator = NO;
-        
-        //        设置frame
-        imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-        [self.scrollview addSubview:imageView];
-        
-    }
-    // 2.设置scrollview的滚动范围-----
-    CGFloat contentW = 500 *imageW;
-    //不允许在垂直方向上进行滚动
-    self.scrollview.contentSize = CGSizeMake(contentW, 0);
-    
-    */
+    [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
+    [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
 }
+-(void)ShowMessage
+{
+    //提示框添加文本输入框
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请输入理由"
+                                                                   message:@"当前记录取消后不能恢复"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         //响应事件
+                                                         //得到文本信息
+                                                         for(UITextField *text in alert.textFields){
+                                                             
+                                                             NSLog(@"text = %@", text.text);
+                                                             
+                                                             if([text.text isEqualToString:@""])
+                                                             {
+                                                                 NSLog(@"text = %@", @"asdfsdfsdf");
+                                                                 [self ShowMessage];
+                                                                 return;
+                                                             }
+                                                             
+                                                             edittype = 1;
+                                                             
+                                                             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
+                                                             
+                                                             NSLog(@"%@", strURL);
+                                                             NSURL *url = [NSURL URLWithString:strURL];
+                                                             //进行请求
+                                                             NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+                                                             
+                                                             NSURLConnection *connection = [[NSURLConnection alloc]
+                                                                                            initWithRequest:request
+                                                                                            delegate:self];
+                                                         }
+                                                     }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                             NSLog(@"action = %@", alert.textFields);
+                                                         }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"取消修改理由必填";
+    }];
+    
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)TaskCancle:(id)sender{
+    
+    [self ShowMessage];
+}
+-(void)TaskUpdate:(id)sender{
+    //修改是已驳回不写理由。 直接跳到明细编辑画面，点保存生成下一版本
+    if([_lblleavestatus.text isEqualToString:@"已驳回"])
+    {
  
+    }
+    else
+    {
+        //提示框添加文本输入框
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"请输入理由"
+                                                                       message:@"当前记录修改后，原版本不能恢复"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {
+                                                             //响应事件
+                                                             //得到文本信息
+                                                             for(UITextField *text in alert.textFields){
+                                                                 
+                                                                 NSLog(@"text = %@", text.text);
+                                                                 
+                                                                 if([text.text isEqualToString:@""])
+                                                                 {
+                                                                     NSLog(@"text = %@", @"asdfsdfsdf");
+                                                                     return;
+                                                                 }
+                                                                 //待申请任务 进入明细编辑画面为修改操作
+                                                                 VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+                                                                 VCCollect.vatcationid=self.awardID_FK;
+                                                                 VCCollect.processInstanceID=self.processInstanceID;
+                                                                 VCCollect.ProcessApplyCode=self.ProcessApplyCode;
+                                                                 VCCollect.edittype = @"3";
+                                                                 VCCollect.urltype = @"getdata";
+                                                                 VCCollect.proCelReson = text.text;
+                                                                 [self.navigationController pushViewController:VCCollect animated:YES];
+                                                             }
+                                                         }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 //响应事件
+                                                                 NSLog(@"action = %@", alert.textFields);
+                                                             }];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"取消修改理由必填";
+        }];
+        
+        [alert addAction:okAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
 -(void)setlblcolor
 {
     _lblempgroup.textColor = [UIColor grayColor];
@@ -131,78 +199,132 @@ static NSString *identifierImage =@"LeaveImageCell.h";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    NSLog(@"%@",@"kaishidayin");
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"kaishidayin");
+ 
     NSLog(@"%@", xmlString);
-    
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"ds\":"];
-    NSRange endRagne = [xmlString rangeOfString:@",\"ds1\":"];
-    
-    NSRange startRange2 =[xmlString rangeOfString:@",\"ds1\":"];
-    NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
  
-
-    //获取回览明细表数据
-    NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
-    NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
-    
-    NSString *requestTmp2 = [NSString stringWithString:resultString2];
-    NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
-    listdetail = [LeaveDeatil mj_objectArrayWithKeyValuesArray:resultDic2];
-    
-    //获取头表数据
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
- 
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    
-    listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
-    for (LeaveHead *p1 in listhead) {
-        _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+    //此页面为详细 查看画面 0为查看
+    if(edittype == 0)
+    {
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
+        NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
         
-        _lblleavestatus.text = p1.LeaveStatusTxt;
-        _emplbl.text = p1.EmpCName;
-        _lblempgroup.text = p1.groupname;
+        NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
+        NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
         
-        NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.LeaveDate];
+        NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
+        NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
         
-        _lblapplydate.text = strapplydate;
+        //获取附件数据
+        NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
+        NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
         
-        NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"请假时间：",p1.BeignDate,p1.EndDate];
+        NSString *requestTmp3 = [NSString stringWithString:resultString3];
+        NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
+        listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
         
-        _lblleavedate.text = strleavedate;
+        //补充附件图片路径
+        NSMutableArray *array1 = [[NSMutableArray alloc] init];
+        for (MdlAnnex *mdla in listAnnex) {
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
+            [array1 addObject:urlstring];
+        }
+        _srcStringArray =array1;
         
-        _lblleavetype.text = p1.LeaveTypeTxt;
+        //获取回览明细表数据
+        NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
+        NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
         
-        NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.LeavePlanNum];
+        NSString *requestTmp2 = [NSString stringWithString:resultString2];
+        NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
+        listdetail = [LeaveDeatil mj_objectArrayWithKeyValuesArray:resultDic2];
         
-        _lblleavecounts.text =strleavecounts;
+        //获取头表数据
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
         
-        NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.LeaveDescribe];
+        NSLog(@"%@", resultString);
         
-        _lblleaveremark.text = strleaveremark;
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        
+          listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
+        for (LeaveHead *p1 in listhead) {
+            _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+            
+            _lblleavestatus.text = p1.ProcessStutasTxt;
+            _emplbl.text = p1.EmpName;
+            _lblempgroup.text = p1.G_CName;
+            
+            NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
+            
+            _lblapplydate.text = strapplydate;
+            
+            NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"外出时间：",p1.PlanStartTime,p1.PlanEndTime];
+            
+            _lblleavedate.text = strleavedate;
+            
+            _lblleavetype.text = p1.LeaveTypeTxt;
+            
+            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"外出时长(h)：",p1.TimePlanNum];
+            
+            _lblleavecounts.text =strleavecounts;
+            
+            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"外出事由：",p1.CaseDescribe];
+            
+            _lblleaveremark.text = strleaveremark;
+        }
     }
-
-    
-    
-    NSLog(@"%@", resultString2);
-    
+    else if (edittype == 1)
+    {
+        // 字符串截取
+        NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
+        
+        NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
+        NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
+        
+        if(![resultStringtaskedit isEqualToString:@"0"])
+        {
+            // 弹出 对话框
+         //   [self showError:resultStringtaskedit];
+        }
+        else
+        {
+            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+            [self presentViewController:navigationController animated:YES completion:nil];
+        }
+    }
+    else if (edittype == 2)
+    {
+        // 字符串截取
+        NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
+        
+        NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
+        NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
+        
+        if(![resultStringtaskedit isEqualToString:@"0"])
+        {
+            // 弹出 对话框
+         //   [self showError:resultStringtaskedit];
+        }
+        else
+        {
+            // 弹出 对话框
+         //   [self showError:@"操作成功！"];
+        }
+    }
+    [self.ImageTableView reloadData];
+    [self.ImageTableView layoutIfNeeded];
     NSLog(@"%@",@"connection1-end");
 }
 
@@ -324,24 +446,27 @@ static NSString *identifierImage =@"LeaveImageCell.h";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if ([tableView isEqual:self.NewTableView]) {
         LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
         
         cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
         
         return cell;
-    } else if ([tableView isEqual:self.ImageTableView]) {
+    }
+    else if ([tableView isEqual:self.ImageTableView]) {
         
-        LeaveImageCell * cell = [self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
-        
-        cell.str  = @"Rem【ar【k【k2";
-        
-        return cell;
-        
+       SDDemoCell *sdcell =[self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
+         sdcell.selectionStyle = UITableViewCellSelectionStyleNone;
+         NSMutableArray *temp = [NSMutableArray array];
+         [_srcStringArray enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
+         SDPhotoItem *item = [[SDPhotoItem alloc] init];
+         item.thumbnail_pic = src;
+         [temp addObject:item];
+         }];
+         sdcell.photosGroup.photoItemArray = [temp copy];
+         return sdcell;
     }
     return 0;
- 
 }
 
 @end

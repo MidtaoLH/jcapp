@@ -12,6 +12,7 @@
 #import "LeaveListCell.h"
 #import "../TaskViewBack/TaskBackInfoViewController.h"
 #import "../MJRefresh/MJRefresh.h"
+#import "../VatationPage/VatcationMainView.h"
 
 @interface WaitApplyViewController ()
 
@@ -232,6 +233,21 @@ qualifiedName:(NSString *)qName {
     return cell;
 }
  
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LeaveListCell *cell = (LeaveListCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *code= cell.leavelistitem.AwardID_FK;
+    NSString *taskcode= cell.leavelistitem.ProcessInstanceID;
+    self.tabBarController.tabBar.hidden = YES;
+    
+    //待申请任务 进入明细编辑画面为修改操作
+    VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+    VCCollect.vatcationid=code;
+    VCCollect.processInstanceID=taskcode;
+    VCCollect.ProcessApplyCode=cell.leavelistitem.ProcessApplyCode;
+    VCCollect.edittype = @"2"; //编辑
+    VCCollect.urltype = @"getdata";
+    [self.navigationController pushViewController:VCCollect animated:YES];
+}
 @end
 

@@ -19,6 +19,8 @@
 #import "SDPhotoItem.h"
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
+
+
 @interface GoOutDeatileController ()
 {
     CGFloat scaleMini;

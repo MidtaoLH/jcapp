@@ -314,6 +314,20 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 -(void)settsaktype
 {
+    //请假
+    if([self.taskType isEqualToString:@"1"])
+    {
+        strlblleavedate = @"请假时间：";
+        strlblleavecounts = @"请假时长：";
+        strlblleaveremark = @"请假事由：";
+    }
+    //外出
+    if([self.taskType isEqualToString:@"3"])
+    {
+        strlblleavedate = @"外出时间：";
+        strlblleavecounts = @"外出时长：";
+        strlblleaveremark = @"外出事由：";
+    }
     //出差
     if([self.taskType isEqualToString:@"13"])
     {
@@ -400,8 +414,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         }
         else
         {
-            // 弹出 对话框
-            [self showError:@"操作成功！"];
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"操作成功！"
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
         }
     }
     else if (edittype == 2)
@@ -416,8 +435,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         }
         else
         {
-            // 弹出 对话框
-            [self showError:@"操作成功！"];
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @"提示信息！"
+                                  message: @"操作成功！"
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
         }
     }
     else
@@ -508,6 +532,14 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [self.ImageTableView reloadData];
     [self.ImageTableView layoutIfNeeded];
     NSLog(@"%@",@"connection1-end");
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 //弹出消息框

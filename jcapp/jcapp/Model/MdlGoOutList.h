@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MdlGoOutList : NSObject
 
+@property (nonatomic,copy) NSString * ApplyDate;
+
 @property (copy, nonatomic) NSString *ApplyFileName;
 
 @property (copy, nonatomic) NSString *EvectionPlanTime;

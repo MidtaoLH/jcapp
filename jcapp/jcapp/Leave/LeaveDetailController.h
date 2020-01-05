@@ -17,9 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    NSString *userID;
 }
 @property (nonatomic,copy) NSString *awardID_FK;
 @property (nonatomic,copy) NSString *processInstanceID;
+@property (nonatomic,copy) NSString *ProcessApplyCode;
 
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
@@ -48,7 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray *listdetail;
 @property (strong,nonatomic) NSMutableArray *listhead;
 @property (strong,nonatomic) NSMutableArray *listtask;
- 
+@property (strong,nonatomic) NSMutableArray *listAnnex;
+@property (weak, nonatomic) IBOutlet UIButton *btncancle;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnEdit;
+
 @end
 
 NS_ASSUME_NONNULL_END

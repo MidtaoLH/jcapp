@@ -9,7 +9,7 @@
 #import "LeaveDetailCell.h"
 #import "MultiParamButton.h"
 #import "MJExtension.h"
-
+#import "../SDWebImage/UIImageView+WebCache.h"
 #define kMargin 10
 
 @interface LeaveDetailCell()

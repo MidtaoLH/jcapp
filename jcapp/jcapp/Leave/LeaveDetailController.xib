@@ -13,6 +13,8 @@
             <connections>
                 <outlet property="ImageTableView" destination="tDV-z7-OdW" id="JZs-Lj-jKy"/>
                 <outlet property="NewTableView" destination="OMQ-IU-FK8" id="8Zy-52-8yK"/>
+                <outlet property="btnEdit" destination="jCK-EP-8dx" id="Lnp-su-AYi"/>
+                <outlet property="btncancle" destination="eEZ-5f-rb5" id="TfI-8p-GGk"/>
                 <outlet property="emplbl" destination="C6z-pf-Nc7" id="KcC-tM-l9e"/>
                 <outlet property="imgvemp" destination="uTQ-QC-N49" id="len-xf-2uB"/>
                 <outlet property="imgvleavestatus" destination="P9Z-a0-CNd" id="Zoi-to-0U1"/>
@@ -23,7 +25,6 @@
                 <outlet property="lblleaveremark" destination="gJt-Bh-EW2" id="dWa-yu-IKw"/>
                 <outlet property="lblleavestatus" destination="7kS-Gf-UfU" id="Zn9-CL-e8q"/>
                 <outlet property="lblleavetype" destination="4lp-No-pph" id="kts-js-agx"/>
-                <outlet property="scrollview" destination="zEF-h0-qqN" id="Cy7-sB-6da"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -33,7 +34,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OMQ-IU-FK8">
-                    <rect key="frame" x="0.0" y="460" width="375" height="207"/>
+                    <rect key="frame" x="-2" y="396" width="375" height="207"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
@@ -105,15 +106,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEF-h0-qqN">
-                    <rect key="frame" x="-15" y="236" width="404" height="35"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="7oM-EF-FVW"/>
-                    </connections>
-                </scrollView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tDV-z7-OdW">
-                    <rect key="frame" x="-2" y="279" width="371" height="128"/>
+                    <rect key="frame" x="0.0" y="260" width="371" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
@@ -121,6 +115,16 @@
                         <outlet property="delegate" destination="-1" id="DtB-km-CjQ"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCK-EP-8dx">
+                    <rect key="frame" x="212" y="625" width="62" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="修改申请"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEZ-5f-rb5">
+                    <rect key="frame" x="97" y="625" width="62" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="取消申请"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

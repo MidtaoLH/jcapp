@@ -35,9 +35,13 @@ UITableViewDelegate>{
 
 @property (nonatomic, retain)IBOutlet UIButton *savebutton;
 
+@property (nonatomic, retain)IBOutlet UIButton *returnbutton;
+
 @property (nonatomic, copy) NSString *processid;
 
 -(IBAction)onClickButtonsave:(id)sender;
+
+-(IBAction)onClickButtonreturn:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END

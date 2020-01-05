@@ -472,18 +472,22 @@
 }
 
 -(IBAction)btnappClick:(id)sender {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userID = [defaults objectForKey:@"userid"];
-    NSString *empID = [defaults objectForKey:@"EmpID"];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&agentSetID=%@",userID,self.infoModel.agentID];
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
+    if(self.infoModel.agentID.length>0&&![self.infoModel.agentID isEqual:@"0"])
+    {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString *userID = [defaults objectForKey:@"userid"];
+        NSString *empID = [defaults objectForKey:@"EmpID"];
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        //设置需要访问的ws和传入参数
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&agentSetID=%@",userID,self.infoModel.agentID];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
+   
 }
 @end

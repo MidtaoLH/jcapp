@@ -21,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     self.calview.tagStringOfDate=^NSString*(NSArray* calm,NSArray* itemDateArray){
         NSString *datestr = [NSString stringWithFormat:@"%@-%@-%@",itemDateArray[0],itemDateArray[1],itemDateArray[2]];

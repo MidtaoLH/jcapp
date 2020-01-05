@@ -336,18 +336,26 @@ NSString * boolflag = @"flase";
  创建footer
  */
 - (UIView *)footerView {
-    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
     
-    UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-    submitBtn.center = footer.center;
-    submitBtn.backgroundColor = [UIColor orangeColor];
-    [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
-   
-    [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
-    [footer addSubview:submitBtn];
+    if([self.edittype isEqualToString:@"1"]){
+        return nil;
+    }else{
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+        
+        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+        submitBtn.center = footer.center;
+        submitBtn.backgroundColor = [UIColor orangeColor];
+        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
+        
+        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:submitBtn];
+        
+        return footer;
+        
+    }
     
-    return footer;
+    
 }
 
 -(void)processAction{
@@ -790,6 +798,16 @@ NSString * boolflag = @"flase";
             {
                 ApplyCode = m.ApplyCode;
                 processid = m.ProcessID;
+                
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @"提示信息！"
+                                      message: @"操作成功！"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+                
+                
                     [self uploadImg];
             }
             
@@ -797,6 +815,14 @@ NSString * boolflag = @"flase";
         
     }
 
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 //将图片保存到本地并且从本地返回出来

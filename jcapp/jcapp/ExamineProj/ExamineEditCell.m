@@ -236,7 +236,7 @@
         [self.contentView  addSubview:self.lblleaveDate];
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
-        [self.contentView  addSubview:self.btnemail];
+      //  [self.contentView  addSubview:self.btnemail];
     }
     return self;
 }

@@ -332,7 +332,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     if([self.taskType isEqualToString:@"13"])
     {
         strlblleavedate = @"出差时间：";
-        strlblleavecounts = @"出差时长：";
+        strlblleavecounts = @"出差时长(天)：";
         strlblleaveremark = @"出差事由：";
     }
 }

@@ -127,7 +127,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
     }];
     [_lblproctype mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -135,7 +135,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
       make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
     }];
     [_lblprocdate mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -143,7 +143,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*3);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
     }];
     [_lblproccounts mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -151,7 +151,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*4);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
     }];
     [_lblprocremark mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -159,7 +159,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*4,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
     }];
     [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左

@@ -93,10 +93,10 @@
     _MdlGoOutListItem =MdlGoOutListItem;
     
     NSString *strtextLabel =  [_MdlGoOutListItem.ApplyFileName substringToIndex:_MdlGoOutListItem.ApplyFileName.length - 8];
-    self.textLabel.text = strtextLabel;
+    self.textLabel.text = _MdlGoOutListItem.ApplyFileName;
 
     NSString *strleaveDateLable = [_MdlGoOutListItem.ApplyFileName substringFromIndex:_MdlGoOutListItem.ApplyFileName.length - 8];
-    self.leaveDateLable.text = strleaveDateLable;
+    self.leaveDateLable.text = _MdlGoOutListItem.ApplyDate;
     
     UIImageView *imageView = [[UIImageView alloc] init];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_MdlGoOutListItem.U_LoginName];
@@ -119,27 +119,30 @@
 {
     [super layoutSubviews];
     
-    CGFloat     width = self.bounds.size.width;
+    CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    
-    CGFloat imageWH= height - 2*kMargin;
-    
-    CGFloat leaveDateWidth = 80;
+    CGFloat imageWH=  width/5;
+    CGFloat leaveDateWidth = 90;
     
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/5;
+     
+    //每行的文本的高度
+
+    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
-    
+    //申请日期
     self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     
     self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
- 
-    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 1*txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
+    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
+    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
 }
 - (void)awakeFromNib {

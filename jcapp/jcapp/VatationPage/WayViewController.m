@@ -18,6 +18,7 @@
 static NSString * identifier = @"TableCell";
 
 NSString * saveflag = @"flase";
+NSString * suessflag = @"false";
 @interface WayViewController ()
 
 @end
@@ -244,15 +245,18 @@ NSInteger currentPageCountwait_new;
     {
         if([resultString isEqualToString:@"suess"])
         {
-           
+            suessflag = @"true";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @"保存结果"
                                   message: @"保存成功"
-                                  delegate:nil
+                                  delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
             [alert show];
+            
+           
+           
         }
         else
         {
@@ -269,6 +273,14 @@ NSInteger currentPageCountwait_new;
     
     
     NSLog(@"%@",@"connection1-end");
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if([suessflag isEqualToString:@"true"])
+    {
+         [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+    }
 }
 
 //弹出消息框
@@ -397,7 +409,9 @@ NSInteger currentPageCountwait_new;
    NSLog(@"%@",@"电视机删除");
 }
 
-
+-(IBAction)onClickButtonreturn:(id)sender {
+  [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+}
 
 
 -(IBAction)onClickButtonsave:(id)sender {

@@ -56,7 +56,7 @@ NSString * boolflag = @"flase";
 
     // 任务id复植
     processid = self.processInstanceID;
-    
+    vatcationid =self.vatcationid;
     if(self.edittype.length > 0)
     {
         
@@ -68,9 +68,9 @@ NSString * boolflag = @"flase";
     
     if([self.edittype isEqualToString:@"2"] || [self.edittype isEqualToString:@"3"])
     {
-        vatcationid = @"10673";
-        urltype = @"getdata";
-        processid = @"22783";
+        //vatcationid = @"10673";
+       // urltype = @"getdata";
+        //processid = @"22783";
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@", userID,vatcationid,processid];
         
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

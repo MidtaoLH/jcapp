@@ -146,6 +146,7 @@ didFailWithError: (NSError *)error {
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -251,8 +252,9 @@ qualifiedName:(NSString *)qName {
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end
 

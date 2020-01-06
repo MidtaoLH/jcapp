@@ -104,8 +104,7 @@ static NSString * identifier = @"PendingListCell";
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [Agent mj_objectArrayWithKeyValuesArray:resultDic];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+  
     //[self.listOfMovies addObjectsFromArray:self.listMovies];
 }
 
@@ -126,6 +125,8 @@ static NSString * identifier = @"PendingListCell";
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 
 }
 
@@ -217,8 +218,9 @@ static NSString * identifier = @"PendingListCell";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 
 

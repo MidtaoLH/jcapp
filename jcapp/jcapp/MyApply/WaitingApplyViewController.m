@@ -47,7 +47,6 @@ NSInteger currentPageCountwait;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
-    
     [self LoadData];
     
     // 添加头部的下拉刷新
@@ -165,6 +164,8 @@ NSInteger currentPageCountwait;
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
+    
 }
 
 //解析xml回调方法
@@ -287,7 +288,8 @@ NSInteger currentPageCountwait;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end

@@ -45,7 +45,7 @@ NSInteger currentPageCountwait3;
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     
-    [self LoadData];
+
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -162,6 +162,7 @@ NSInteger currentPageCountwait3;
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -263,10 +264,9 @@ NSInteger currentPageCountwait3;
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"出差"]){
-        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        myDelegate.businessTripid=pending.AidFK;
-        myDelegate.processid=pending.PicID;
         BusinessTripDetailViewController *order = [[BusinessTripDetailViewController alloc] init];
+        order.processInstanceID=pending.PicID;
+        order.awardID_FK=pending.AidFK;
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"外出"]){
@@ -278,8 +278,9 @@ NSInteger currentPageCountwait3;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end
 

@@ -99,8 +99,7 @@ static NSString * identifier = @"PendingsListCell";
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
     //[self.listOfMovies addObjectsFromArray:self.listMovies];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+
 }
 
 //弹出消息框
@@ -117,7 +116,8 @@ static NSString * identifier = @"PendingsListCell";
 
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
-
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -212,8 +212,9 @@ static NSString * identifier = @"PendingsListCell";
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end
 

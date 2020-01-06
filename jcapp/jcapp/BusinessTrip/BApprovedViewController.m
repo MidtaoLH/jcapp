@@ -58,11 +58,6 @@ NSInteger currentPageCountbapproved;
     
     _NewTableView.top=-_NewTableView.mj_header.size.height+5;
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-    [self LoadData];
-    [self.NewTableView reloadData];
-}
 -(void)LoadData
 {
     //设置需要访问的ws和传入参数
@@ -165,6 +160,7 @@ NSInteger currentPageCountbapproved;
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -276,8 +272,9 @@ NSInteger currentPageCountbapproved;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end
 

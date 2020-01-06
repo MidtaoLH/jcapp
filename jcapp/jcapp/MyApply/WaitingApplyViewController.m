@@ -47,7 +47,6 @@ NSInteger currentPageCountwait;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
-    
     [self LoadData];
     
     // 添加头部的下拉刷新
@@ -165,6 +164,8 @@ NSInteger currentPageCountwait;
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
+    
 }
 
 //解析xml回调方法
@@ -281,14 +282,14 @@ NSInteger currentPageCountwait;
         GoOutEditController *order = [[GoOutEditController alloc] init];
         order.evectionID=pending.AidFK;
         order.processInstanceID=pending.PicID;
-        order.edittype = @"2"; //编辑
-        order.urltype = @"getdata";
+        order.edittype = @"2";
         [self.navigationController pushViewController:order animated:YES];
     }
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end

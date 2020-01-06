@@ -295,15 +295,17 @@
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat imageWH= height - 10* kMargin;
+    CGFloat imageWH= width/6;
     
-    CGFloat leaveDateWidth = 90;
+    CGFloat leaveDateWidth = 80;
     
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/5;
+    CGFloat txtH =  (height - 3*kMargin)/4;
     
     //先设置图片大小和位置
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
     
     //设置日期未知
     self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);

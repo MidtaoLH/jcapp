@@ -25,16 +25,6 @@ static NSString * identifier = @"PendingListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"待审批记录";
-    //设置子视图的f导航栏的返回按钮
-    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    temporaryBarButtonItem.title =@"返回";
-    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    
-    CGFloat headimageW = self.view.frame.size.width;
-    CGFloat headimageH =  self.view.frame.size.height;
-    self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
-    
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
@@ -244,7 +234,8 @@ static NSString * identifier = @"PendingListCell";
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end

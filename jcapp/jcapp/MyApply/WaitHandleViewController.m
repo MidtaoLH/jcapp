@@ -45,7 +45,7 @@ NSInteger currentPageCountwait3;
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
     
-    [self LoadData];
+
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -162,6 +162,7 @@ NSInteger currentPageCountwait3;
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -278,8 +279,9 @@ NSInteger currentPageCountwait3;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end
 

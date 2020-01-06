@@ -36,7 +36,7 @@ static NSString * identifier = @"LeaveListCell";
     [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     currentPageCount=[Common_PageSize intValue];
-    [self LoadData];
+  
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -256,7 +256,6 @@ static NSString * identifier = @"LeaveListCell";
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+      [self LoadData];
 }
 @end

@@ -26,23 +26,13 @@ NSInteger currentPageCountwait2;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    //设置顶部导航栏的显示名称
-    //    self.navigationItem.title=@"待申请记录";
-    //    //设置子视图的f导航栏的返回按钮
-    //    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
-    //    temporaryBarButtonItem.title =@"返回";
-    //    self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
-    //self.parentViewController.navigationItem.backBarButtonItem=temporaryBarButtonItem;
-    //e注册自定义 cell
+   
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     currentPageCountwait2=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
-    
-    [self LoadData];
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -131,7 +121,6 @@ NSInteger currentPageCountwait2;
     
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
-    [self.NewTableView reloadData];
     NSLog(@"%@",@"connection1-end");
 }
 
@@ -157,7 +146,8 @@ NSInteger currentPageCountwait2;
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 //    [self.NewTableView reloadData];
 }
 
@@ -277,8 +267,9 @@ NSInteger currentPageCountwait2;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end
 

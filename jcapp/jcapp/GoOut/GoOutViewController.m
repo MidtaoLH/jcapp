@@ -36,7 +36,6 @@ static NSString * identifier = @"GoOutViewCell";
     [_NewTableView registerClass:[GoOutWaitCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     currentPageCount=[Common_PageSize intValue];
-    [self LoadData];
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -151,6 +150,7 @@ static NSString * identifier = @"GoOutViewCell";
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -264,7 +264,8 @@ static NSString * identifier = @"GoOutViewCell";
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 @end

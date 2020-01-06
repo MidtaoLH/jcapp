@@ -30,25 +30,27 @@ static NSString *identifier =@"NoticeCell";
     
     NSLog(@"%@",@"viewDidLoad-bgn");
  
-    //设置需要访问的ws和传入参数
-    
-     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetNoticeNews"];
-    
-    NSURL *url = [NSURL URLWithString:strURL];
-    //进行请求
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    
-    NSURLConnection *connection = [[NSURLConnection alloc]
-                                   initWithRequest:request
-                                   delegate:self];
- 
+   
     //注册自定义 cell
     [_NewTableView registerClass:[NoticeCell class] forCellReuseIdentifier:identifier];
      _NewTableView.rowHeight = 100;
- 
+    [self LoadData];
    NSLog(@"%@",@"viewDidLoad-end");
 }
+//设置需要访问的ws和传入参数
+-(void)LoadData
+{
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetNoticeNews"];
 
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+
+}
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -101,6 +103,7 @@ static NSString *identifier =@"NoticeCell";
      NSLog(@"%@",@"connectionDidFinishLoading-end");
     
     [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法
@@ -204,8 +207,9 @@ static NSString *identifier =@"NoticeCell";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+    if (!animated) {
+        [self LoadData];
+    }
 }
 
 

@@ -282,6 +282,7 @@ NSInteger currentPageCountwait;
         GoOutEditController *order = [[GoOutEditController alloc] init];
         order.evectionID=pending.AidFK;
         order.processInstanceID=pending.PicID;
+        order.edittype = @"2";
         [self.navigationController pushViewController:order animated:YES];
     }
 }

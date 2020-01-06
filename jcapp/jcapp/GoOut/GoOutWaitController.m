@@ -253,4 +253,9 @@ static NSString *identifier =@"GoOutWaitCell";
     VCCollect.urltype = @"getdata";
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
+}
 @end

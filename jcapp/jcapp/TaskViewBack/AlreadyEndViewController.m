@@ -212,8 +212,8 @@ static NSString * identifier = @"PendingsListCell";
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self LoadData];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
-
 @end
 

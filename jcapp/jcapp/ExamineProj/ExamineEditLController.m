@@ -303,13 +303,17 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@",@"1",self.strTaskid,objremark,objtasktype,@"1"];
     
-    NSURL *url = [NSURL URLWithString:strURL];
+    NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@", strURL);
+    NSURL *url = [NSURL URLWithString:urlStringUTF8];
+ 
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+ 
 }
 // 驳回操作
 -(void)actionno:(id)sender{

@@ -57,7 +57,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     [super viewDidLoad];
     [self loadstyle];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+   
     
     edittype = 0;
  
@@ -93,49 +93,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
      [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
      [_buttaskyes addTarget:self action:@selector(actionyes:)   forControlEvents:UIControlEventTouchUpInside];
     
-    /*
-     self.scrollview.frame=CGRectMake(0, 236, self.view.frame.size.width, 200);
-     self.scrollview.backgroundColor= UIColor.orangeColor;
-     self.scrollview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-     
-     int index = 0;
-     //
-     //    图片的宽
-     CGFloat imageW = 100;
-     //    CGFloat imageW = 300;
-     //    图片高
-     CGFloat imageH = 100;
-     //    图片的Y
-     CGFloat imageY = 50;
-     
-     for (int i = 0; i < 3; i++) {
-     index=i;
-     UIImageView *imageView = [[UIImageView alloc] init];
-     //        图片X
-     CGFloat imageX = i * imageW + i*50;
-     
-     //        设置图片
-     NSString *name = [NSString stringWithFormat:@"0%d.jpg", i + 1];
-     imageView.image = [UIImage imageNamed:name];
-     
-     imageView.userInteractionEnabled = YES;
-     
-     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
-     [imageView addGestureRecognizer:tap];
-     //        隐藏指示条
-     self.scrollview.showsHorizontalScrollIndicator = NO;
-     
-     //        设置frame
-     imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-     [self.scrollview addSubview:imageView];
-     
-     }
-     // 2.设置scrollview的滚动范围-----
-     CGFloat contentW = 500 *imageW;
-     //不允许在垂直方向上进行滚动
-     self.scrollview.contentSize = CGSizeMake(contentW, 0);
-     
-     */
+   
 }
 -(void)setlblcolor
 {
@@ -337,12 +295,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     }
 }
 
-- (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate]; 
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
 -(void)taskedittoservice:(NSMutableDictionary *)mutableDic0
 {
     id objtasktype = mutableDic0[@"tasktype"];

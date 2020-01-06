@@ -242,4 +242,9 @@ static NSString * identifier = @"PendingListCell";
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
+}
 @end

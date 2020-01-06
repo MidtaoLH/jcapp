@@ -634,6 +634,20 @@
             self.businessNum.info = p1.TimePlanNum;
             self.reason.info = p1.EvectionDescribe;
             
+            // 日期格式化类
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            // 设置日期格式 为了转换成功
+            format.dateFormat = @"yyyy-MM-dd";
+            // 时间字符串
+            NSString *string = self.businessTripStart.info;
+            // NSString * -> NSDate *
+            NSDate *data = [format dateFromString:string];
+            [datePickers setDate:data animated:YES];
+            // 时间字符串
+            string = self.businessTripEnd.info;
+            // NSString * -> NSDate *
+            data = [format dateFromString:string];
+            [datePickere setDate:data animated:YES];
             NSMutableArray *imagepath = [[NSMutableArray alloc] init];
             
             for(NSInteger i = 0;i <listAnnex.count;i++)

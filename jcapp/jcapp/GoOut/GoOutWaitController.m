@@ -52,6 +52,12 @@ static NSString *identifier =@"GoOutWaitCell";
     NSLog(@"%@",@"viewDidLoad-end");
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self LoadData];
+    [self.NewTableView reloadData];
+}
+
 // 2.实现下拉刷新和上拉加载的事件。
 // 头部的下拉刷新触发事件
 - (void)headerClick {
@@ -252,5 +258,10 @@ static NSString *identifier =@"GoOutWaitCell";
     VCCollect.edittype = @"2"; //编辑
     VCCollect.urltype = @"getdata";
     [self.navigationController pushViewController:VCCollect animated:YES];
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
 }
 @end

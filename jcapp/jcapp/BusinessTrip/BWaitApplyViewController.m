@@ -274,6 +274,10 @@ NSInteger currentPageCountbwait;
     order.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:order animated:YES];
 }
-
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.NewTableView reloadData];
+    [self.NewTableView layoutIfNeeded];
+}
 @end
 

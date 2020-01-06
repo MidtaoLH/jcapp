@@ -264,10 +264,9 @@ NSInteger currentPageCountwait3;
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"出差"]){
-        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        myDelegate.businessTripid=pending.AidFK;
-        myDelegate.processid=pending.PicID;
         BusinessTripDetailViewController *order = [[BusinessTripDetailViewController alloc] init];
+        order.processInstanceID=pending.PicID;
+        order.awardID_FK=pending.AidFK;
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"外出"]){

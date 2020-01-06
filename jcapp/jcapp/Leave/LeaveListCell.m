@@ -29,7 +29,7 @@
  if (!_leaveStatusLable) {
  _leaveStatusLable = [[UILabel alloc] init];
  _leaveStatusLable.font = [UIFont systemFontOfSize:15];
- _leaveStatusLable.textColor = [UIColor greenColor];
+     _leaveStatusLable.textColor = Color_ProcessStutasColor;
  }
  return _leaveStatusLable;
  }
@@ -124,19 +124,21 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    __weak typeof (self) weakSelf = self;
     
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
-    CGFloat imageWH=  width/5;
-    CGFloat leaveDateWidth = 90;
+    CGFloat imageWH=  width/4;
+    CGFloat leaveDateWidth = 80;
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/5;
-    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
+    CGFloat txtH = (height - 6*kMargin)/4;
+    
+     self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
     //申请日期
     self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     
-    self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
     
     self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
@@ -146,6 +148,8 @@
     
     self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
  
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

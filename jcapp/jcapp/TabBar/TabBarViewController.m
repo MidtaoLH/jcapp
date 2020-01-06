@@ -466,6 +466,7 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
     AttendanceCalendarViewController *vc = [[AttendanceCalendarViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    
     [vc.myHeadPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
         
@@ -488,18 +489,18 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [vc.calview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_AttendanceHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.45));
     }];
     [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_AttendanceHeight+Common_RowSize*3);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+kScreenHeight*0.45+Common_RowSize*2);
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_AttendanceTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.3));
     }]; 
     vc.myHeadPortrait.layer.masksToBounds = YES;
     vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;

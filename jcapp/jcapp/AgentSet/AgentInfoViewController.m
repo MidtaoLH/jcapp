@@ -90,7 +90,7 @@
     _stopbtn.font = kFont_Lable_16;
     _stopbtn.titleLabel.textAlignment= NSTextAlignmentCenter;
     _stopbtn.titleLabel.text  = @"终止";
-  
+    _stopbtn.hidden=YES;
 }
 - (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
     UITextField *textField = [[UITextField alloc]initWithFrame:frame];
@@ -257,6 +257,10 @@
     }else
     {
          _agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+        if(![_agentInfo.AgentStatus containsString:@"终止"])
+        {
+            self.stopbtn.hidden=NO;
+        }
         [self.tableView reloadData];
         [self.tableView layoutIfNeeded];        
         self.tableView.hidden = NO;

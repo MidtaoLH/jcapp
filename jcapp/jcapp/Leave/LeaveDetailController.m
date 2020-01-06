@@ -19,7 +19,7 @@
 #import "TabBarViewController.h"
 #import "../VatationPage/VatcationMainView.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
-
+#import "Masonry.h"
 #define kCount 6  //图片总张数
 
 @interface LeaveDetailController ()
@@ -64,24 +64,143 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                    initWithRequest:request
                                    delegate:self];
     
-    //e注册自定义 cell
-    [_NewTableView registerClass:[LeaveDetailCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
-
-    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
-    _ImageTableView.rowHeight = 150;
+   
     
-        NSLog(@"%@",@"viewDidLoad-end");
-    
-    _imgvleavestatus.layer.masksToBounds = YES;
-    
-    _imgvleavestatus.layer.cornerRadius = _imgvleavestatus.frame.size.width / 2;
-    
-    _imgvleavestatus.backgroundColor = [UIColor greenColor];
     [self setlblcolor];
  
     [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
     [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
+    
+    [self loadstyle];
+}
+
+-(void)loadstyle{
+    _emplbl.font=kFont_Lable_15;
+    _lblempgroup.textColor = [UIColor grayColor];
+    _lblempgroup.font=kFont_Lable_14;
+    _lblapplydate.textColor = [UIColor grayColor];
+    _lblapplydate.font=kFont_Lable_14;
+    _lblapplydate.textColor = [UIColor grayColor];
+    _lblapplydate.font=kFont_Lable_14;
+    _lblleavecounts.textColor = [UIColor grayColor];
+    _lblleavecounts.font=kFont_Lable_14;
+    _lblleaveremark.textColor = [UIColor grayColor];
+    _lblleaveremark.font=kFont_Lable_14;
+    _lblleavedate.textColor = [UIColor grayColor];
+    _lblleavedate.font=kFont_Lable_14;
+    _lblleavestatus.font=kFont_Lable_18;
+    _lblleavetype.font=kFont_Lable_16;
+    _imgvleavestatus.backgroundColor = kColor_Cyan;
+    //注册自定义 cell
+    [_NewTableView registerClass:[LeaveDetailCell class] forCellReuseIdentifier:identifier];
+    _NewTableView.rowHeight = Common_TableRowHeight;
+    
+    [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
+    _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+    [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+    }];
+    [_imgvleavestatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加右
+        make.right.mas_equalTo(-Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize,Common_StatusImageSize));
+    }];
+    [_lblleavestatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加右
+        make.right.mas_equalTo(-Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize,Common_StatusImageSize));
+    }];
+    [_emplbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblempgroup mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblapplydate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_UserImageSize+Common_ColSize*2);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblleavetype mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblleavedate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2,Common_TxTHeight));
+    }];
+    [_lblleavecounts mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*3);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblleaveremark mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*4);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*4,Common_TxTHeight));
+    }];
+    [_ImageTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditImageTableHeight));
+    }];
+    
+    // 审批列表view添加约束
+    [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
+        // 添加左
+        make.left.mas_equalTo(0);
+        
+    }];
+    _imgvemp.layer.masksToBounds = YES;
+    _imgvemp.layer.cornerRadius = Common_UserImageSize * 0.5;
+    
+    _imgvleavestatus.layer.masksToBounds = YES;
+    _imgvleavestatus.layer.cornerRadius = self.imgvleavestatus.width * 0.5;
 }
 -(void)ShowMessage
 {
@@ -472,5 +591,24 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     }
     return 0;
 }
-
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 @end

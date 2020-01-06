@@ -265,7 +265,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
     }];
     _imgvemp.layer.masksToBounds = YES;
-    _imgvemp.layer.cornerRadius = self.imgvemp.width * 0.5;
+    _imgvemp.layer.cornerRadius = Common_UserImageSize * 0.5;
     
     _imgvleavestatus.layer.masksToBounds = YES;
     _imgvleavestatus.layer.cornerRadius = self.imgvleavestatus.width * 0.5;

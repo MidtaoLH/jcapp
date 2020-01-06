@@ -415,6 +415,7 @@ NSString * bflag = @"flase";
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSLog(@"text字典里面的内容为--》%@", text );
         if([self->pageType isEqual:@"1"]){
             self->pageType=@"4";
         }else if([self->pageType isEqual:@"2"]){
@@ -631,6 +632,7 @@ NSString * bflag = @"flase";
             for (NSDictionary *obj in resultDic) {
                 [myData addObject:[obj objectForKey:@"BusinessTripPlace"]];
             }
+            totalHeight=totalHeight+Common_CCRowHeight*(resultDic.count-1);
             
             //解析图片数据
             resData = [[NSData alloc] initWithData:[array[2] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -638,7 +640,6 @@ NSString * bflag = @"flase";
             NSLog(@"resultDic1:%@",resultDic);
             NSMutableArray *imagepath = [[NSMutableArray alloc] init];
             for (NSDictionary *obj in resultDic) {
-                [myData addObject:[obj objectForKey:@"AnnexPath"]];
                 
                 NSString *userurlString =[NSString stringWithFormat:Common_WSUrl,[obj objectForKey:@"AnnexPath"]];
                 
@@ -649,7 +650,7 @@ NSString * bflag = @"flase";
             self.image.images =imagepath;
             
             [self.formTableView reloadData];
-            [tableViewPlace reloadData];
+            [self LoadTableLocation];
         }
     }
 }

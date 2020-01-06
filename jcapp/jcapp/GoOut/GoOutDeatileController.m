@@ -19,7 +19,7 @@
 #import "SDPhotoItem.h"
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
-
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 @interface GoOutDeatileController ()
 {
@@ -280,7 +280,10 @@ static NSString *identifierImage =@"ImageCell.h";
         
         listhead = [MdlEvection mj_objectArrayWithKeyValuesArray:resultDic];
         for (MdlEvection *p1 in listhead) {
-            _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,p1.U_LoginName];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            _imgvemp.image =imageView.image;
             
             _lblleavestatus.text = p1.ProcessStutasTxt;
             _emplbl.text = p1.EmpName;

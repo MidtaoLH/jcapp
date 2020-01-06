@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
 #import "../VatationPage/VatcationMainView.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 #define kCount 6  //图片总张数
 
@@ -256,7 +257,10 @@ static NSString *identifierImage =@"LeaveImageCell.h";
         
           listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
         for (LeaveHead *p1 in listhead) {
-            _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,p1.U_LoginName];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            _imgvemp.image =imageView.image;
             
             _lblleavestatus.text = p1.ProcessStutasTxt;
             _emplbl.text = p1.EmpName;

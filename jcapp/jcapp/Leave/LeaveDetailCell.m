@@ -250,7 +250,10 @@
  
     self.lblgroupname.text = _leavedetail.groupname;
     
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
 
     self.lblremark.text =  _leavedetail.Remark;
  

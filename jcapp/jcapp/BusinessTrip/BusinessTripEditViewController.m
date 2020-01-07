@@ -44,6 +44,7 @@ NSString * bflag = @"flase";
     businessTripid=myDelegate.businessTripid;
     processid=myDelegate.processid;
     pageType=myDelegate.pageType;
+    isLoad=@"true";
 
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
@@ -592,7 +593,7 @@ NSString * bflag = @"flase";
             [alert show];
         }
         
-        if([operateType isEqual:@"2"]){
+        if([operateType isEqual:@"2"] && [isLoad isEqualToString:@"true"]){
             //将明细数据拆分，头表数据及出差地点数据
             NSArray *array = [requestTmp componentsSeparatedByString:@"+"];
             //解析头表数据
@@ -651,6 +652,7 @@ NSString * bflag = @"flase";
             
             [self.formTableView reloadData];
             [self LoadTableLocation];
+            isLoad=@"false";
         }
     }
 }

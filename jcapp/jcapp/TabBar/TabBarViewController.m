@@ -667,19 +667,22 @@ NSArray *imgs (){
 // MARK: - UITabBarItemDelegate 监听TabBarItem点击事件
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    self.navigationItem.title=item.title;
+    
     if([myDelegate.tabbarType isEqualToString:@"6"]&&tabBar.selectedIndex==1)
     {
+        self.navigationItem.title=item.title;
         BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
     {
+        self.navigationItem.title=item.title;
         VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)
     {
+        self.navigationItem.title=item.title;
         GoOutEditController  * VCCollect = [[GoOutEditController alloc] init];
         VCCollect.edittype = @"1"; //追加
         VCCollect.ProcessApplyCode= @""; 
@@ -687,6 +690,7 @@ NSArray *imgs (){
     }
     else if([myDelegate.tabbarType isEqualToString:@"9"]&&tabBar.selectedIndex==1)
     {
+        self.navigationItem.title=item.title;
         SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
         VCCollect.infoModel.agentID=@"0";
         [self.navigationController pushViewController:VCCollect animated:YES];

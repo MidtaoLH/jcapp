@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * numcount;
 
 @property (nonatomic,copy) NSString * U_LoginName;
-
+@property (nonatomic,copy) NSString * CCAddress;
 @end
 
 NS_ASSUME_NONNULL_END

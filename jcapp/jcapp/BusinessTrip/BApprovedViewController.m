@@ -259,6 +259,7 @@ NSInteger currentPageCountbapproved;
         BusinessTripDetailViewController *order = [[BusinessTripDetailViewController alloc] init];
         order.processInstanceID=pending.PicID;
         order.awardID_FK=pending.AidFK;
+        order.title=@"出差申请";
         [self.navigationController pushViewController:order animated:YES];
     }
     //跳到回览查看

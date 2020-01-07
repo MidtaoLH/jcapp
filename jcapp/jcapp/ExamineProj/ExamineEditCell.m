@@ -9,7 +9,7 @@
 #import "ExamineEditCell.h"
 #import "MultiParamButton.h"
 #import "MJExtension.h"
-
+#import "../SDWebImage/UIImageView+WebCache.h"
 #define kMargin 10
 
 @interface ExamineEditCell()
@@ -19,7 +19,7 @@
 @property (nonatomic, strong) UILabel *lblgroupname;
 @property (nonatomic, strong) UILabel *lbllevelname;
 @property (nonatomic, strong) UILabel *lblremark;
-
+@property (nonatomic, strong) UIImageView *taskStatus;
 @property (nonatomic, strong) MultiParamButton *btnemail;
 
 // (nonatomic, strong)   (nonatomic,weak)
@@ -169,13 +169,12 @@
 }
 
 
-
 - (UILabel *)lblleaveDate {
     
     if (!_lblleaveDate) {
         _lblleaveDate = [[UILabel alloc] init];
-        _lblleaveDate.font = [UIFont systemFontOfSize:15];
-        _lblleaveDate.textColor = [UIColor grayColor];
+        _lblleaveDate.font = kFont_Lable_12;
+        _lblleaveDate.textColor =kColor_Gray;
     }
     return _lblleaveDate;
 }
@@ -184,8 +183,8 @@
     
     if (!_lblgroupname) {
         _lblgroupname = [[UILabel alloc] init];
-        _lblgroupname.font = [UIFont systemFontOfSize:15];
-        _lblgroupname.textColor = [UIColor grayColor];
+        _lblgroupname.font = kFont_Lable_12;
+        _lblgroupname.textColor = kColor_Gray;
     }
     return _lblgroupname;
 }
@@ -193,8 +192,8 @@
     
     if (!_lbllevelname) {
         _lbllevelname = [[UILabel alloc] init];
-        _lbllevelname.font = [UIFont systemFontOfSize:15];
-        _lbllevelname.textColor = [UIColor grayColor];
+        _lbllevelname.font = kFont_Lable_12;
+        _lbllevelname.textColor = kColor_Gray;
     }
     return _lbllevelname;
 }
@@ -203,8 +202,8 @@
     
     if (!_lblremark) {
         _lblremark = [[UILabel alloc] init];
-        _lblremark.font = [UIFont systemFontOfSize:15];
-        _lblremark.textColor = [UIColor grayColor];
+        _lblremark.font = kFont_Lable_12;
+        _lblremark.textColor = kColor_Gray;
         _lblremark.height = 1;
         
         //设置换行
@@ -217,12 +216,17 @@
     
     if (!_lblempname) {
         _lblempname = [[UILabel alloc] init];
-        _lblempname.font = [UIFont systemFontOfSize:15];
-        _lblempname.textColor = [UIColor grayColor];
+        _lblempname.font = kFont_Lable_12;
+        _lblempname.textColor = kColor_Gray;
     }
     return _lblempname;
 }
-
+- (UIImageView *)taskStatus {
+    if (!_taskStatus) {
+        _taskStatus = [[UIImageView alloc]init];
+    }
+    return _taskStatus;
+}
 
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -237,6 +241,7 @@
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
       //  [self.contentView  addSubview:self.btnemail];
+                 [self.contentView addSubview:self.taskStatus];
     }
     return self;
 }
@@ -252,10 +257,28 @@
  
     self.lblgroupname.text = _leavedetail.groupname;
  
-   //  NSString * strtaskremark =[[NSString alloc]initWithFormat:@"%@%@",@"承认意见：",_leavedetail.Remark];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
     self.lblremark.text =  _leavedetail.Remark;
  
-  //   NSString * strtaskdate =[[NSString alloc]initWithFormat:@"%@%@",@"承认时间：",_leavedetail.TaskDate];
+    if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]
+       ||[_leavedetail.TaskAuditeStatus isEqualToString:@"2"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
+        self.taskStatus.image=imageView;
+    }
+    else if([_leavedetail.TaskAuditeStatus isEqualToString:@"4"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"orderselect.png"];
+        self.taskStatus.image=imageView;
+    }
+    else {
+        UIImage *imageView = [UIImage imageNamed:@"finishe"];
+        self.taskStatus.image=imageView;
+    }
+    
     self.lblleaveDate.text = _leavedetail.TaskDate;
     
     self.btnemail.hidden = YES;
@@ -279,19 +302,25 @@
 {
     [super layoutSubviews];
     
-    
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat imageWH= height - 10* kMargin;
+    CGFloat imageWH= width/6;
     
-    CGFloat leaveDateWidth = 90;
+    CGFloat leaveDateWidth = 80;
     
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/5;
+    CGFloat txtH =  (height - 3*kMargin)/4;
     
     //先设置图片大小和位置
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
+    self.imageView.layer.zPosition = 1;
+    
+    self.taskStatus.frame = CGRectMake(self.imageView.width-kMargin,self.imageView.height-kMargin*2, imageWH/3, imageWH/3);
+    self.taskStatus.layer.masksToBounds = YES;
+    self.taskStatus.layer.zPosition = 2;
     
     //设置日期未知
     self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
@@ -305,9 +334,9 @@
     //级别名称和 员工名
     self.lbllevelname.frame = CGRectMake(2*kMargin+imageWH + 80,  kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
+    self.lblremark.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
+    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH*2);
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

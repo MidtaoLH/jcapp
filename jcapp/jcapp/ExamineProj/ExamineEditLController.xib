@@ -19,6 +19,7 @@
                 <outlet property="imgvemp" destination="YjY-L3-c7R" id="cx1-8O-L0V"/>
                 <outlet property="imgvleavestatus" destination="WQ1-8u-fym" id="ibQ-n6-LaV"/>
                 <outlet property="lblapplydate" destination="wC4-Gw-Zmo" id="Aon-lx-rSj"/>
+                <outlet property="lblccdr" destination="hcj-Kb-BKR" id="9s5-fd-WrM"/>
                 <outlet property="lblcryj" destination="c1X-53-8y5" id="9FM-Sn-zZv"/>
                 <outlet property="lblempgroup" destination="cUj-Zn-jdG" id="UOD-dQ-alR"/>
                 <outlet property="lblleavecounts" destination="PaD-vq-kCF" id="dyS-ym-eXU"/>
@@ -72,7 +73,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8G-iE-Ham">
-                    <rect key="frame" x="29" y="92" width="213" height="21"/>
+                    <rect key="frame" x="136" y="92" width="213" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.34622698289999998" green="0.52746840780000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -147,6 +148,13 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcj-Kb-BKR">
+                    <rect key="frame" x="23" y="92" width="324" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>

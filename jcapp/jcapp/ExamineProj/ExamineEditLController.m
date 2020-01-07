@@ -85,9 +85,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     _ImageTableView.rowHeight = Common_EditImageTableHeight;
     
     NSLog(@"%@",@"viewDidLoad-end");
-    
-    [self setlblcolor];
-    //d根据不同单据类型 设置文字
+        //d根据不同单据类型 设置文字
     [self settsaktype];
     
      [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
@@ -95,19 +93,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
    
 }
--(void)setlblcolor
-{
-    _lblempgroup.textColor = [UIColor grayColor];
-    _lblleavedate.textColor = [UIColor grayColor];
-    _lblapplydate.textColor = [UIColor grayColor];
-    _lblleavecounts.textColor = [UIColor grayColor];
-    _lblleaveremark.textColor = [UIColor grayColor];
-    
-    _txtvexamineremark.layer.backgroundColor = [[UIColor clearColor] CGColor];
-    _txtvexamineremark.layer.borderColor = [[UIColor redColor]CGColor];
-    _txtvexamineremark.layer.borderWidth = 1.0;
-    [_txtvexamineremark.layer setMasksToBounds:YES];
-}
+
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];
@@ -122,6 +108,14 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     _lblleaveremark.font=kFont_Lable_14;
     _lblleavedate.textColor = [UIColor grayColor];
     _lblleavedate.font=kFont_Lable_14;
+    _lblccdr.textColor = [UIColor grayColor];
+    _lblccdr.font=kFont_Lable_14;
+    
+    _txtvexamineremark.layer.borderColor =[[UIColor redColor] CGColor];
+    _txtvexamineremark.font =kFont_Lable_16;
+    _txtvexamineremark.layer.borderWidth = 1.0f;
+    _txtvexamineremark.layer.cornerRadius = 6.0f;
+    
     
     _lblleavestatus.font=kFont_Lable_18;
     _lblleavetype.font=kFont_Lable_16;
@@ -196,6 +190,14 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth*2,Common_TxTHeight));
     }];
+    [_lblccdr mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
+    }];
     [_lblleavecounts mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
@@ -241,9 +243,9 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     // 审批列表view添加约束
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加上
-    make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6);
+    make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*7);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight-Common_RowSize));
         // 添加左
         make.left.mas_equalTo(0);
         
@@ -275,23 +277,23 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     //请假
     if([self.taskType isEqualToString:@"1"])
     {
-        strlblleavedate = @"请假时间：";
-        strlblleavecounts = @"请假时长：";
-        strlblleaveremark = @"请假事由：";
+        strlblleavedate = @"请假时间:";
+        strlblleavecounts = @"请假时长:";
+        strlblleaveremark = @"请假事由:";
     }
     //外出
     if([self.taskType isEqualToString:@"3"])
     {
-        strlblleavedate = @"外出时间：";
-        strlblleavecounts = @"外出时长：";
-        strlblleaveremark = @"外出事由：";
+        strlblleavedate = @"外出时间:";
+        strlblleavecounts = @"外出时长:";
+        strlblleaveremark = @"外出事由:";
     }
     //出差
     if([self.taskType isEqualToString:@"13"])
     {
-        strlblleavedate = @"出差时间：";
-        strlblleavecounts = @"出差时长(天)：";
-        strlblleaveremark = @"出差事由：";
+        strlblleavedate = @"出差时间:";
+        strlblleavecounts = @"出差时长(天):";
+        strlblleaveremark = @"出差事由:";
     }
 }
 
@@ -472,7 +474,14 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             _lblleavestatus.text = p1.StatusTxt;
             _emplbl.text = p1.EmpCName;
             _lblempgroup.text = p1.groupname;
-            
+            if([self.taskType isEqualToString:@"13"])
+            {
+                self.lblccdr.text=[NSString stringWithFormat:@"出差地点:%@",p1.CCAddress];
+            }
+            else
+            {
+                self.lblccdr.text=@"";
+            }
             NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ExamineDate];
             
             _lblapplydate.text = strapplydate;

@@ -10,6 +10,7 @@
 #import "MultiParamButton.h"
 #import "MJExtension.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
+
 #define kMargin 10
 
 @interface ExamineEditCell()
@@ -168,6 +169,12 @@
     //[xmlString release];
 }
 
+- (UIImageView *)taskStatus {
+    if (!_taskStatus) {
+        _taskStatus = [[UIImageView alloc]init];
+    }
+    return _taskStatus;
+}
 
 - (UILabel *)lblleaveDate {
     
@@ -221,12 +228,7 @@
     }
     return _lblempname;
 }
-- (UIImageView *)taskStatus {
-    if (!_taskStatus) {
-        _taskStatus = [[UIImageView alloc]init];
-    }
-    return _taskStatus;
-}
+ 
 
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -240,8 +242,8 @@
         [self.contentView  addSubview:self.lblleaveDate];
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
-      //  [self.contentView  addSubview:self.btnemail];
-                 [self.contentView addSubview:self.taskStatus];
+        [self.contentView addSubview:self.taskStatus];
+      //  [self.contentView  addSubview:self.btnemail];v
     }
     return self;
 }
@@ -252,15 +254,32 @@
     _leavedetail =leavedetail;
     
     self.textLabel.text = _leavedetail.name;
+
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
+    
+    if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]
+       ||[_leavedetail.TaskAuditeStatus isEqualToString:@"2"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
+        self.taskStatus.image=imageView;
+    }
+    else if([_leavedetail.TaskAuditeStatus isEqualToString:@"4"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"orderselect.png"];
+        self.taskStatus.image=imageView;
+    }
+    else {
+        UIImage *imageView = [UIImage imageNamed:@"finishe"];
+        self.taskStatus.image=imageView;
+    }
     
     self.lbllevelname.text = _leavedetail.levelname;
  
     self.lblgroupname.text = _leavedetail.groupname;
  
-    UIImageView *imageView = [[UIImageView alloc] init];
-    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-    self.imageView.image=imageView.image;
     self.lblremark.text =  _leavedetail.Remark;
  
     if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]
@@ -301,6 +320,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    __weak typeof (self) weakSelf = self;
     
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
@@ -323,7 +343,7 @@
     self.taskStatus.layer.zPosition = 2;
     
     //设置日期未知
-    self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-2*kMargin,kMargin, leaveDateWidth+kMargin, txtH);
     
     //设置名称
     self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);

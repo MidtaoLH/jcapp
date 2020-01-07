@@ -108,8 +108,10 @@ static NSString *identifierImage =@"ImageCell.h";
                                                              
                                                              NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
                                                              
+                                                             NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                                                              NSLog(@"%@", strURL);
-                                                             NSURL *url = [NSURL URLWithString:strURL];
+                                                             NSURL *url = [NSURL URLWithString:urlStringUTF8];
+    
                                                              //进行请求
                                                              NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
                                                              

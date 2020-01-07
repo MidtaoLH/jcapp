@@ -693,6 +693,11 @@
                 [alert show];
  
             }
+            else
+            {
+                // 弹出 对话框
+                [self showError:m.LeaveID];
+            }
         }
     }
 }
@@ -703,7 +708,15 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
-
+// 提示错误信息
+- (void)showError:(NSString *)errorMsg {
+    // 1.弹框提醒
+    // 初始化对话框
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+    // 弹出对话框
+    [self presentViewController:alert animated:true completion:nil];
+}
 //将图片保存到本地并且从本地返回出来
 -(UIImage*)SaveImageToLocal:(NSString*)url Keys:(NSString*)key {
     

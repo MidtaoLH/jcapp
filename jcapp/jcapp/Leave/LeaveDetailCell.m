@@ -19,7 +19,7 @@
 @property (nonatomic, strong) UILabel *lblgroupname;
 @property (nonatomic, strong) UILabel *lbllevelname;
 @property (nonatomic, strong) UILabel *lblremark;
-
+@property (nonatomic, strong) UIImageView *taskStatus;
 @property (nonatomic, strong) MultiParamButton *btnemail;
 
 // (nonatomic, strong)   (nonatomic,weak)
@@ -220,7 +220,12 @@
     }
     return _lblempname;
 }
-
+- (UIImageView *)taskStatus {
+    if (!_taskStatus) {
+        _taskStatus = [[UIImageView alloc]init];
+    }
+    return _taskStatus;
+}
 
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -235,6 +240,7 @@
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
         [self.contentView  addSubview:self.btnemail];
+              [self.contentView addSubview:self.taskStatus];
     }
     return self;
 }
@@ -250,7 +256,10 @@
  
     self.lblgroupname.text = _leavedetail.groupname;
     
-    self.imageView.image =[UIImage imageNamed:@"01.jpg"];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
 
     self.lblremark.text =  _leavedetail.Remark;
  
@@ -267,7 +276,21 @@
          
          */
 
-  
+    if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]
+       ||[_leavedetail.TaskAuditeStatus isEqualToString:@"2"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
+        self.taskStatus.image=imageView;
+    }
+    else if([_leavedetail.TaskAuditeStatus isEqualToString:@"4"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"orderselect.png"];
+        self.taskStatus.image=imageView;
+    }
+    else {
+        UIImage *imageView = [UIImage imageNamed:@"finishe"];
+        self.taskStatus.image=imageView;
+    }
     
      self.lblleaveDate.text = _leavedetail.TaskDate;
     
@@ -306,6 +329,11 @@
     self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
+    self.imageView.layer.zPosition = 1;
+    
+    self.taskStatus.frame = CGRectMake(self.imageView.width-kMargin,self.imageView.height-kMargin*2, imageWH/3, imageWH/3);
+    self.taskStatus.layer.masksToBounds = YES;
+    self.taskStatus.layer.zPosition = 2;
     
     //设置日期未知
     self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
@@ -321,7 +349,9 @@
     
     self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
     
-    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
+    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH*2);
+    
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -47,7 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    self.navigationItem.title=@"外出编辑";
+    self.navigationItem.title=@"外出申请";
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -196,7 +196,7 @@
     };
     [items addObject:_businessTripEnd];
     
-    self.businessNum = SWFormItem_Add(@"外出时长(h)", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
+    self.businessNum = SWFormItem_Add(@"外出时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 5;
     self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
     [items addObject:_businessNum];
@@ -288,72 +288,7 @@
     
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         //n保存
-         if(self.businessTripStart.info.length > 0)
-        {
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"出发时间不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-        
-        if(self.businessTripEnd.info.length > 0)
-        {
-            
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"返回时间不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-        
-        if(self.businessNum.info.length > 0)
-        {
-            
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"时长不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-        
-        if(self.reason.info.length > 0)
-        {
-            
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"事由不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
+ 
         self.urltype = @"keepsave";
  
         NSString *type = self.VatcationType.info;
@@ -406,7 +341,17 @@
         
         
     } failure:^(NSString *error) {
-        NSLog(@"error====%@",error);
+        //NSLog(@"error====%@",error);
+        //返回不为1显示登陆失败
+        NSString *message = [[NSString alloc] initWithFormat:@"%@", error];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }];
 }
 - (void)submitAction {
@@ -414,73 +359,6 @@
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
         //提交
-        //n保存
-        if(self.businessTripStart.info.length > 0)
-        {
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"出发时间不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-        
-        if(self.businessTripEnd.info.length > 0)
-        {
-            
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"返回时间不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-        
-        if(self.businessNum.info.length > 0)
-        {
-            
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"时长不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
-        
-        if(self.reason.info.length > 0)
-        {
-            
-        }
-        else
-        {
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"事由不能为空！"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
         self.urltype = @"keepsave";
         
         NSString *type = self.VatcationType.info;
@@ -540,7 +418,17 @@
                                        delegate:self];
 
     } failure:^(NSString *error) {
-        NSLog(@"error====%@",error);
+        //NSLog(@"error====%@",error);
+        //返回不为1显示登陆失败
+        NSString *message = [[NSString alloc] initWithFormat:@"%@", error];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }];
 }
 

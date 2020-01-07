@@ -319,6 +319,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 -(void)actionno:(id)sender{
  
     NSLog(@"Vvvverify : %@", @"23423");
+    
+    if([self.txtvexamineremark.text isEqualToString:@""])
+    {
+        [self showError:@"请输入驳回理由"];
+        return;
+    }
+    
     edittype = 2;
     NSMutableDictionary *mutableDic0 = [NSMutableDictionary dictionary];
     [mutableDic0 setObject:@"3" forKey:@"tasktype"];

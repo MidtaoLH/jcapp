@@ -55,9 +55,9 @@
         
         [_image mas_makeConstraints:^(MASConstraintMaker *make) {
             // 添加左
-            make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
+            make.left.mas_equalTo(kScreenWidth*0.75);
             // 添加上
-            make.top.mas_equalTo(10);
+            make.top.mas_equalTo(0);
             // 添加大小约束
             make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize, Common_StatusImageSize));
         }];
@@ -65,9 +65,9 @@
         _image.alpha =0.5;
         [_statusDateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             // 添加左
-            make.left.mas_equalTo(self.contentView.bounds.size.width*0.75);
+            make.left.mas_equalTo(kScreenWidth*0.75);
             // 添加上
-            make.top.mas_equalTo(10);
+            make.top.mas_equalTo(0);
             // 添加大小约束
             make.size.mas_equalTo(CGSizeMake(Common_StatusImageSize, Common_StatusImageSize));
         }];
@@ -141,7 +141,7 @@
         } else {
             _infoLabel.textColor = [UIColor blackColor];
         }
-        _infoLabel.font = kFont_Lable_16;
+        _infoLabel.font = kFont_Lable_15;
         _infoLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _infoLabel;
@@ -155,7 +155,7 @@
         } else {
             _dateLabel.textColor = [UIColor blackColor];
         }
-        _dateLabel.font = kFont_Lable_16;
+        _dateLabel.font = kFont_Lable_15;
         _dateLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _dateLabel;

@@ -243,9 +243,9 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     // 审批列表view添加约束
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加上
-    make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*7);
+    make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight-Common_RowSize));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
         // 添加左
         make.left.mas_equalTo(0);
         

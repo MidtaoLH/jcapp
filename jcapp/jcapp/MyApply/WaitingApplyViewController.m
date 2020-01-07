@@ -22,7 +22,6 @@
 static NSString * identifier = @"PendingListCell";
 
 @interface WaitingApplyViewController ()
-@property (nonatomic, strong) NSMutableArray *deleteData;
 @end
 
 @implementation WaitingApplyViewController
@@ -117,12 +116,11 @@ NSInteger currentPageCountwait;
     //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
     //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
      xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([xmlString containsString:@"Delete"])
+    if([xmlString containsString:@"DelteProcessInstance"])
     {
        [self LoadData];
     }
     else{
-        NSLog(@"%@", xmlString);
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -317,6 +315,7 @@ NSInteger currentPageCountwait;
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *deleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        
         Pending * pending = self.listOfMovies[indexPath.row];
         [self deleteData:pending.PicID];
     }];

@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *array2;
     NSInteger _page;
     NSInteger _pageSize;
-    NSString *deletetype;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;

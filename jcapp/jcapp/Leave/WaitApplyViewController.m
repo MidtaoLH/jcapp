@@ -101,25 +101,23 @@ static NSString *identifier =@"LeaveWaitCell";
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
-    
+    if([xmlString containsString:@"DelteProcessInstance"])
+    {
+        [self LoadData];
+    }
+    else{
     // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
-    
-    NSLog(@"%@",@"connection1-end");
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+    }
 }
 
 //弹出消息框
@@ -275,6 +273,32 @@ qualifiedName:(NSString *)qName {
     if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        
+        LeaveListModel * pending = self.listOfMovies[indexPath.row];
+        [self deleteData:pending.ProcessInstanceID];
+    }];
+    //    moreRowAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    return @[deleteRowAction];
+}
+- (void)deleteData:(NSString*)deleteID
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid= [defaults objectForKey:@"userid"];
+    //设置需要访问的ws和传入参数
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@",userid,deleteID];
+    
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
 }
 @end
 

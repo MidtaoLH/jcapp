@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * TaskNodeOperateType;
 @property (nonatomic,copy) NSString * TaskAuditeStatus;
 @property (nonatomic,copy) NSString * ProcessStutas;
-
+@property (copy, nonatomic) NSString *U_LoginName;
 @property (nonatomic,copy) NSString * TaskInstanceID;
 
 @end

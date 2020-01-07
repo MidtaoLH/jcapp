@@ -200,18 +200,21 @@ static NSString * identifier = @"PendingListCell";
         TaskBackInfoViewController *order = [[TaskBackInfoViewController alloc] init];
         order.pagetype=@"1";
         order.code=pending.PicID;
+        order.title=@"请假申请";
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"出差"]){
         TaskBackInfoViewController *order = [[TaskBackInfoViewController alloc] init];
         order.pagetype=@"1";
         order.code=pending.PicID;
+        order.title=@"出差申请";
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"外出"]){
         TaskBackInfoViewController *order = [[TaskBackInfoViewController alloc] init];
         order.pagetype=@"1";
         order.code=pending.PicID;
+        order.title=@"外出申请";
         [self.navigationController pushViewController:order animated:YES];
     }
 }

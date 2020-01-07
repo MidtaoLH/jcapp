@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSString *userID;
 }
- 
+ @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *awardID_FK;
 @property (nonatomic,copy) NSString *processInstanceID;
 @property (nonatomic,copy) NSString *ProcessApplyCode;

@@ -198,7 +198,7 @@ static NSString * identifier = @"PendingListCell";
       VCCollect.pagetype=@"0";
     VCCollect.code=code;
     VCCollect.taskcode=taskcode;
-    VCCollect.title=cell.pendinglistitem.DocumentName;
+     VCCollect.title=@"回览事项明细"; 
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 //解决tableview线不对的问题

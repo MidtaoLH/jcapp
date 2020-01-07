@@ -252,18 +252,21 @@ NSInteger currentPageCountwait1;
         LeaveDetailController *order = [[LeaveDetailController alloc] init];
         order.awardID_FK=pending.AidFK;
         order.processInstanceID=pending.PicID;
+          order.title=@"请假申请";
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"出差"]){
         BusinessTripDetailViewController *order = [[BusinessTripDetailViewController alloc] init];
         order.processInstanceID=pending.PicID;
         order.awardID_FK=pending.AidFK;
+          order.title=@"出差申请";
         [self.navigationController pushViewController:order animated:YES];
     }
     else if([pending.DocumentName isEqualToString:@"外出"]){
         GoOutDeatileController *order = [[GoOutDeatileController alloc] init];
         order.awardID_FK=pending.AidFK;
         order.processInstanceID=pending.PicID;
+          order.title=@"外出申请";
         [self.navigationController pushViewController:order animated:YES];
     }
 }

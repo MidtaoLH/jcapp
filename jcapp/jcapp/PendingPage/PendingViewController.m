@@ -199,6 +199,7 @@ static NSString * identifier = @"PendingListCell";
         TaskBackInfoViewController * VCCollect = [[TaskBackInfoViewController alloc] init];
         VCCollect.pagetype=@"1";
         VCCollect.code=code;
+        VCCollect.title=@"预览事项明细";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else

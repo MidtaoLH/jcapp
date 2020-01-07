@@ -250,6 +250,7 @@ static NSString * identifier = @"GoOutViewCell";
         GoOutDeatileController * VCCollect = [[GoOutDeatileController alloc] init];
         VCCollect.awardID_FK=code;
         VCCollect.processInstanceID=taskcode;
+        VCCollect.title=@"外出申请";
         VCCollect.ProcessApplyCode=cell.MdlGoOutListItem.ProcessApplyCode;
         [self.navigationController pushViewController:VCCollect animated:YES];
     }

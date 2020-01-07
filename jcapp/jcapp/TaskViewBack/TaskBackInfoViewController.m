@@ -38,7 +38,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 @synthesize  listdetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+     self.navigationItem.title=self.title;
     [self loadstyle];
     [self loadInfo];
     [self loadTaskInfo];
@@ -274,7 +274,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         ViewBackInfo *viewBackInfo = [ViewBackInfo mj_objectWithKeyValues:resultDic];
         //设置子视图的f导航栏的返回按钮
-        self.navigationItem.title= [NSString stringWithFormat:@"%@申请",viewBackInfo.DocumentName];
+       // self.navigationItem.title= [NSString stringWithFormat:@"%@申请",viewBackInfo.DocumentName];
         //self.navigationItem.title=viewBackInfo.DocumentName;
         self.emplbl.text=viewBackInfo.ApplyManName;
         self.lblempgroup.text=viewBackInfo.ApplyGroupName;

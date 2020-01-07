@@ -243,6 +243,7 @@ static NSString * identifier = @"LeaveListCell";
         VCCollect.awardID_FK=code;
         VCCollect.processInstanceID=taskcode;
         VCCollect.ProcessApplyCode=cell.leavelistitem.ProcessApplyCode;
+        VCCollect.title=@"请假申请";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else

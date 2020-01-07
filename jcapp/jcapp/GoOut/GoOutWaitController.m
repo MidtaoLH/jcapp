@@ -266,4 +266,24 @@ static NSString *identifier =@"GoOutWaitCell";
         [self LoadData];
     }
 }
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 @end

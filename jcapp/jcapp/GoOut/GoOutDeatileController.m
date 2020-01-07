@@ -654,5 +654,11 @@ static NSString *identifierImage =@"ImageCell.h";
     if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
+    if ([_ImageTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_ImageTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_ImageTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 @end

@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *lblleavestatus;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblleaveddr;
+
 @property (strong,nonatomic) NSMutableArray *listdetail;
 @property (strong,nonatomic) NSMutableArray *listhead;
 @property (strong,nonatomic) NSMutableArray *listtask;

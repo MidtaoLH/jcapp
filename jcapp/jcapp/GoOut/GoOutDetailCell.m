@@ -166,13 +166,12 @@
 }
 
 
-
 - (UILabel *)lblleaveDate {
     
     if (!_lblleaveDate) {
         _lblleaveDate = [[UILabel alloc] init];
-        _lblleaveDate.font = [UIFont systemFontOfSize:15];
-        _lblleaveDate.textColor = [UIColor grayColor];
+        _lblleaveDate.font = kFont_Lable_12;
+        _lblleaveDate.textColor =kColor_Gray;
     }
     return _lblleaveDate;
 }
@@ -181,8 +180,8 @@
     
     if (!_lblgroupname) {
         _lblgroupname = [[UILabel alloc] init];
-        _lblgroupname.font = [UIFont systemFontOfSize:15];
-        _lblgroupname.textColor = [UIColor grayColor];
+        _lblgroupname.font = kFont_Lable_12;
+        _lblgroupname.textColor = kColor_Gray;
     }
     return _lblgroupname;
 }
@@ -190,8 +189,8 @@
     
     if (!_lbllevelname) {
         _lbllevelname = [[UILabel alloc] init];
-        _lbllevelname.font = [UIFont systemFontOfSize:15];
-        _lbllevelname.textColor = [UIColor grayColor];
+        _lbllevelname.font = kFont_Lable_12;
+        _lbllevelname.textColor = kColor_Gray;
     }
     return _lbllevelname;
 }
@@ -200,8 +199,8 @@
     
     if (!_lblremark) {
         _lblremark = [[UILabel alloc] init];
-        _lblremark.font = [UIFont systemFontOfSize:15];
-        _lblremark.textColor = [UIColor grayColor];
+        _lblremark.font = kFont_Lable_12;
+        _lblremark.textColor = kColor_Gray;
         _lblremark.height = 1;
         
         //设置换行
@@ -214,8 +213,8 @@
     
     if (!_lblempname) {
         _lblempname = [[UILabel alloc] init];
-        _lblempname.font = [UIFont systemFontOfSize:15];
-        _lblempname.textColor = [UIColor grayColor];
+        _lblempname.font = kFont_Lable_12;
+        _lblempname.textColor = kColor_Gray;
     }
     return _lblempname;
 }

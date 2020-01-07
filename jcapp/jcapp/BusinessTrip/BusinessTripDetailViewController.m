@@ -62,10 +62,7 @@ static NSString *identifierImage =@"ImageCell.h";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    
    
-    [self setlblcolor];
-    
     [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
     [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
     
@@ -85,6 +82,8 @@ static NSString *identifierImage =@"ImageCell.h";
     _lblleavecounts.font=kFont_Lable_14;
     _lblleaveremark.textColor = [UIColor grayColor];
     _lblleaveremark.font=kFont_Lable_14;
+    _lblleaveddr.textColor = [UIColor grayColor];
+    _lblleaveddr.font=kFont_Lable_14;
     _lblleavedate.textColor = [UIColor grayColor];
     _lblleavedate.font=kFont_Lable_14;
     _lblleavestatus.font=kFont_Lable_18;
@@ -151,6 +150,14 @@ static NSString *identifierImage =@"ImageCell.h";
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
+    }];
+    [_lblleaveddr mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize,Common_TxTHeight));
     }];
     [_lblleavedate mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -332,17 +339,6 @@ static NSString *identifierImage =@"ImageCell.h";
         [self presentViewController:alert animated:YES completion:nil];
     }
 }
-
--(void)setlblcolor
-{
-    _lblempgroup.textColor = [UIColor grayColor];
-    _lblleavedate.textColor = [UIColor grayColor];
-    _lblapplydate.textColor = [UIColor grayColor];
-    _lblleavecounts.textColor = [UIColor grayColor];
-    _lblleaveremark.textColor = [UIColor grayColor];
-}
-
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"%@",@"connection1-begin");
@@ -408,10 +404,10 @@ static NSString *identifierImage =@"ImageCell.h";
             _lblleavestatus.text = p1.ProcessStutasTxt;
             _emplbl.text = p1.EmpName;
             _lblempgroup.text = p1.G_CName;
-            
+            _lblapplydate.text=[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
             NSString * strapplyplace =[[NSString alloc]initWithFormat:@"%@%@",@"出差地点：",p1.ApplyPlace];
             
-            _lblapplydate.text = strapplyplace;
+            _lblleaveddr.text = strapplyplace;
             
             NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"出差时间：",p1.StartTime,p1.EndTime];
             
@@ -622,6 +618,31 @@ static NSString *identifierImage =@"ImageCell.h";
     return 0;
     
 }
-
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_NewTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_NewTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_ImageTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_ImageTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 @end

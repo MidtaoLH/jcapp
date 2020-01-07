@@ -228,12 +228,7 @@
     }
     return _lblempname;
 }
-- (UIImageView *)taskStatus {
-    if (!_taskStatus) {
-        _taskStatus = [[UIImageView alloc]init];
-    }
-    return _taskStatus;
-}
+ 
 
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -248,8 +243,7 @@
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
         [self.contentView addSubview:self.taskStatus];
-      //  [self.contentView  addSubview:self.btnemail];
-                 [self.contentView addSubview:self.taskStatus];
+      //  [self.contentView  addSubview:self.btnemail];v
     }
     return self;
 }
@@ -286,10 +280,6 @@
  
     self.lblgroupname.text = _leavedetail.groupname;
  
-    UIImageView *imageView = [[UIImageView alloc] init];
-    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-    self.imageView.image=imageView.image;
     self.lblremark.text =  _leavedetail.Remark;
  
     if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]

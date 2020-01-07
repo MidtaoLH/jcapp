@@ -62,8 +62,7 @@ static NSString *identifierImage =@"ImageCell.h";
                                    initWithRequest:request
                                    delegate:self];
  
-    
-    [self setlblcolor];
+     [self setlblcolor];
     
      [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
      [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];

@@ -91,11 +91,7 @@
 -(void)setMdlGoOutListItem:(MdlGoOutList *)MdlGoOutListItem
 {
     _MdlGoOutListItem =MdlGoOutListItem;
-    
-    NSString *strtextLabel =  [_MdlGoOutListItem.ApplyFileName substringToIndex:_MdlGoOutListItem.ApplyFileName.length - 8];
     self.textLabel.text = _MdlGoOutListItem.ApplyFileName;
-
-    NSString *strleaveDateLable = [_MdlGoOutListItem.ApplyFileName substringFromIndex:_MdlGoOutListItem.ApplyFileName.length - 8];
     self.leaveDateLable.text = _MdlGoOutListItem.ApplyDate;
     
     UIImageView *imageView = [[UIImageView alloc] init];

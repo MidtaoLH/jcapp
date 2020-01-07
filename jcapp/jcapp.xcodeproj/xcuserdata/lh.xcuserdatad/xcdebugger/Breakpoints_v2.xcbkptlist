@@ -152,12 +152,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/MyApply/WaitingApplyViewController.m"
-            timestampString = "600072847.5057321"
+            timestampString = "600080140.526131"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-connection:didReceiveData:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "jcapp/MyApply/WaitingApplyViewController.m"
+            timestampString = "600080140.526203"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-LoadData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

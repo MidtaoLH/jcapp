@@ -243,7 +243,6 @@ static NSString * identifier = @"GoOutViewCell";
     GoOutWaitCell *cell = (GoOutWaitCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.MdlGoOutListItem.AwardID_FK;
     NSString *taskcode= cell.MdlGoOutListItem.ProcessInstanceID;
-    self.tabBarController.tabBar.hidden = YES;
    
     if([cell.MdlGoOutListItem.ProcessStutasName isEqualToString:@"待承认"] || [cell.MdlGoOutListItem.ProcessStutasName isEqualToString:@"承认中"] || [cell.MdlGoOutListItem.ProcessStutasName isEqualToString:@"已驳回"])
     {

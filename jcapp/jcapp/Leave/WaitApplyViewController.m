@@ -237,7 +237,6 @@ qualifiedName:(NSString *)qName {
     LeaveListCell *cell = (LeaveListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.leavelistitem.AwardID_FK;
     NSString *taskcode= cell.leavelistitem.ProcessInstanceID;
-    self.tabBarController.tabBar.hidden = YES;
     
     //待申请任务 进入明细编辑画面为修改操作
     VatcationMainView * VCCollect = [[VatcationMainView alloc] init];

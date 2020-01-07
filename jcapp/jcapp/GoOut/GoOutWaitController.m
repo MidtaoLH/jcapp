@@ -246,7 +246,6 @@ static NSString *identifier =@"GoOutWaitCell";
     GoOutWaitCell *cell = (GoOutWaitCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.MdlGoOutListItem.AwardID_FK;
     NSString *taskcode= cell.MdlGoOutListItem.ProcessInstanceID;
-    self.tabBarController.tabBar.hidden = YES;
  
     //待申请任务 进入明细编辑画面为修改操作
     GoOutEditController * VCCollect = [[GoOutEditController alloc] init];

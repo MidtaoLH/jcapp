@@ -235,7 +235,6 @@ static NSString * identifier = @"LeaveListCell";
     LeaveListCell *cell = (LeaveListCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.leavelistitem.AwardID_FK;
     NSString *taskcode= cell.leavelistitem.ProcessInstanceID;
-    self.tabBarController.tabBar.hidden = YES;
     
     if([cell.leavelistitem.ProcessStutasName isEqualToString:@"待承认"] || [cell.leavelistitem.ProcessStutasName isEqualToString:@"承认中"] || [cell.leavelistitem.ProcessStutasName isEqualToString:@"已驳回"])
     {

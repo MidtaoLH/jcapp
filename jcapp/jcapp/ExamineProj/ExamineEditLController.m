@@ -476,7 +476,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             _lblempgroup.text = p1.groupname;
             if([self.taskType isEqualToString:@"13"])
             {
-                self.lblccdr.text=[NSString stringWithFormat:@"出差地点:%@",p1.CCAddress];
+                self.lblccdr.text=[NSString stringWithFormat:@"出差地点：%@",p1.BusinessTripPlace];
             }
             else
             {

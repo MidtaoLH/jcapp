@@ -19,7 +19,7 @@
 @property (nonatomic, strong) UILabel *lblgroupname;
 @property (nonatomic, strong) UILabel *lbllevelname;
 @property (nonatomic, strong) UILabel *lblremark;
-
+@property (nonatomic, strong) UIImageView *taskStatus;
 @property (nonatomic, strong) MultiParamButton *btnemail;
 
 // (nonatomic, strong)   (nonatomic,weak)
@@ -106,7 +106,6 @@
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
 }
 
 //解析xml回调方法 六
@@ -220,7 +219,12 @@
     }
     return _lblempname;
 }
-
+- (UIImageView *)taskStatus {
+    if (!_taskStatus) {
+        _taskStatus = [[UIImageView alloc]init];
+    }
+    return _taskStatus;
+}
 
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -235,6 +239,7 @@
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
         [self.contentView  addSubview:self.btnemail];
+        [self.contentView addSubview:self.taskStatus];
     }
     return self;
 }
@@ -269,7 +274,21 @@
      [self.lblremark setFrame:frame];
      
      */
-    
+    if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]
+       ||[_leavedetail.TaskAuditeStatus isEqualToString:@"2"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
+        self.taskStatus.image=imageView;
+    }
+    else if([_leavedetail.TaskAuditeStatus isEqualToString:@"4"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"orderselect.png"];
+        self.taskStatus.image=imageView;
+    }
+    else {
+        UIImage *imageView = [UIImage imageNamed:@"finishe"];
+        self.taskStatus.image=imageView;
+    }
     
     
     self.lblleaveDate.text = _leavedetail.TaskDate;
@@ -298,15 +317,22 @@
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat imageWH= height - 10* kMargin;
+    CGFloat imageWH= width/6;
     
-    CGFloat leaveDateWidth = 90;
+    CGFloat leaveDateWidth = 80;
     
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/5;
+    CGFloat txtH =  (height - 3*kMargin)/4;
     
     //先设置图片大小和位置
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
+    self.imageView.layer.zPosition = 1;
+    
+    self.taskStatus.frame = CGRectMake(self.imageView.width-kMargin,self.imageView.height-kMargin*2, imageWH/3, imageWH/3);
+    self.taskStatus.layer.masksToBounds = YES;
+    self.taskStatus.layer.zPosition = 2;
     
     //设置日期未知
     self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
@@ -320,9 +346,10 @@
     //级别名称和 员工名
     self.lbllevelname.frame = CGRectMake(2*kMargin+imageWH + 80,  kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
+    self.lblremark.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
+    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH*2);
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -46,7 +46,8 @@ static NSString *identifierImage =@"ImageCell.h";
 - (void)viewDidLoad {
 
     [super viewDidLoad];
- 
+    //设置子视图的f导航栏的返回按钮
+    self.navigationItem.title=@"外出申请";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     
@@ -653,6 +654,12 @@ static NSString *identifierImage =@"ImageCell.h";
     }
     if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_ImageTableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_ImageTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_ImageTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 @end

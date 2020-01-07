@@ -108,26 +108,23 @@ static NSString *identifier =@"GoOutWaitCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
-    
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-                          NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
-    
-    NSLog(@"%@",@"connection1-end");
+    if([xmlString containsString:@"DelteProcessInstance"])
+    {
+        [self LoadData];
+    }
+    else{
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+                              NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
+    }
 }
 
 //弹出消息框
@@ -249,7 +246,6 @@ static NSString *identifier =@"GoOutWaitCell";
     GoOutWaitCell *cell = (GoOutWaitCell *)[tableView cellForRowAtIndexPath:indexPath];
     NSString *code= cell.MdlGoOutListItem.AwardID_FK;
     NSString *taskcode= cell.MdlGoOutListItem.ProcessInstanceID;
-    self.tabBarController.tabBar.hidden = YES;
  
     //待申请任务 进入明细编辑画面为修改操作
     GoOutEditController * VCCollect = [[GoOutEditController alloc] init];
@@ -285,5 +281,32 @@ static NSString *identifier =@"GoOutWaitCell";
     if ([_NewTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        
+        MdlGoOutList * pending = self.listDatas[indexPath.row];
+        [self deleteData:pending.ProcessInstanceID];
+    }];
+    //    moreRowAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    return @[deleteRowAction];
+}
+- (void)deleteData:(NSString*)deleteID
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid= [defaults objectForKey:@"userid"];
+    //设置需要访问的ws和传入参数
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@",userid,deleteID];
+    
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
 }
 @end

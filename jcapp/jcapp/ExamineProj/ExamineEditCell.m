@@ -9,6 +9,7 @@
 #import "ExamineEditCell.h"
 #import "MultiParamButton.h"
 #import "MJExtension.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 #define kMargin 10
 
@@ -19,7 +20,7 @@
 @property (nonatomic, strong) UILabel *lblgroupname;
 @property (nonatomic, strong) UILabel *lbllevelname;
 @property (nonatomic, strong) UILabel *lblremark;
-
+@property (nonatomic, strong) UIImageView *taskStatus;
 @property (nonatomic, strong) MultiParamButton *btnemail;
 
 // (nonatomic, strong)   (nonatomic,weak)
@@ -168,7 +169,12 @@
     //[xmlString release];
 }
 
-
+- (UIImageView *)taskStatus {
+    if (!_taskStatus) {
+        _taskStatus = [[UIImageView alloc]init];
+    }
+    return _taskStatus;
+}
 
 - (UILabel *)lblleaveDate {
     
@@ -236,6 +242,7 @@
         [self.contentView  addSubview:self.lblleaveDate];
         [self.contentView  addSubview:self.lblgroupname];
         [self.contentView  addSubview:self.lbllevelname];
+        [self.contentView addSubview:self.taskStatus];
       //  [self.contentView  addSubview:self.btnemail];
     }
     return self;
@@ -247,6 +254,27 @@
     _leavedetail =leavedetail;
     
     self.textLabel.text = _leavedetail.name;
+
+    UIImageView *imageView = [[UIImageView alloc] init];
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavedetail.U_LoginName];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    self.imageView.image=imageView.image;
+    
+    if([_leavedetail.TaskAuditeStatus isEqualToString:@"1"]
+       ||[_leavedetail.TaskAuditeStatus isEqualToString:@"2"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
+        self.taskStatus.image=imageView;
+    }
+    else if([_leavedetail.TaskAuditeStatus isEqualToString:@"4"])
+    {
+        UIImage *imageView = [UIImage imageNamed:@"orderselect.png"];
+        self.taskStatus.image=imageView;
+    }
+    else {
+        UIImage *imageView = [UIImage imageNamed:@"finishe"];
+        self.taskStatus.image=imageView;
+    }
     
     self.lbllevelname.text = _leavedetail.levelname;
  
@@ -278,23 +306,30 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
+    __weak typeof (self) weakSelf = self;
     
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat imageWH= height - 10* kMargin;
+    CGFloat imageWH= width/6;
     
-    CGFloat leaveDateWidth = 90;
+    CGFloat leaveDateWidth = 80;
     
     //每行的文本的高度
-    CGFloat txtH = (height - 6*kMargin)/5;
+    CGFloat txtH =  (height - 3*kMargin)/4;
     
     //先设置图片大小和位置
-    self.imageView.frame = CGRectMake(kMargin,kMargin, imageWH, imageWH);
+    self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = imageWH * 0.5;
+    self.imageView.layer.zPosition = 1;
+    
+    self.taskStatus.frame = CGRectMake(self.imageView.width-kMargin,self.imageView.height-kMargin*2, imageWH/3, imageWH/3);
+    self.taskStatus.layer.masksToBounds = YES;
+    self.taskStatus.layer.zPosition = 2;
     
     //设置日期未知
-    self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
+    self.lblleaveDate.frame = CGRectMake(width-leaveDateWidth-2*kMargin,kMargin, leaveDateWidth+kMargin, txtH);
     
     //设置名称
     self.textLabel.frame =CGRectMake(2 * kMargin + imageWH, kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
@@ -305,9 +340,8 @@
     //级别名称和 员工名
     self.lbllevelname.frame = CGRectMake(2*kMargin+imageWH + 80,  kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.lblremark.frame = CGRectMake(2*kMargin+imageWH  + 80 ,  txtH+kMargin, width - leaveDateWidth - kMargin - imageWH, 3*txtH);
+    self.lblremark.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH);
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

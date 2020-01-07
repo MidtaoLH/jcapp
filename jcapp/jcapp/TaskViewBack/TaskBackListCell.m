@@ -102,7 +102,8 @@
     self.imageView.image=imageView.image;
     
     if([_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"待承认"]
-       ||[_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"未回览"])
+       ||[_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"未回览"]
+       ||[_taskBacklistitem.TaskAuditeStatusNM isEqualToString:@"予定中"])
     {
         UIImage *imageView = [UIImage imageNamed:@"unSelect_btn@2x.png"];
         self.taskStatus.image=imageView;

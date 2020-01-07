@@ -196,6 +196,23 @@ static NSString *identifierImage =@"LeaveImageCell.h";
         make.left.mas_equalTo(0);
         
     }];
+    
+    [self.btncancle mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+    }];
+    [self.btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+    }];
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = Common_UserImageSize * 0.5;
     
@@ -389,17 +406,17 @@ static NSString *identifierImage =@"LeaveImageCell.h";
             
             _lblapplydate.text = strapplydate;
             
-            NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"外出时间：",p1.PlanStartTime,p1.PlanEndTime];
+            NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"请假时间：",p1.PlanStartTime,p1.PlanEndTime];
             
             _lblleavedate.text = strleavedate;
             
             _lblleavetype.text = p1.LeaveTypeTxt;
             
-            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"外出时长(h)：",p1.TimePlanNum];
+            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"请假时长(h)：",p1.TimePlanNum];
             
             _lblleavecounts.text =strleavecounts;
             
-            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"外出事由：",p1.CaseDescribe];
+            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"请假事由：",p1.CaseDescribe];
             
             _lblleaveremark.text = strleaveremark;
         }

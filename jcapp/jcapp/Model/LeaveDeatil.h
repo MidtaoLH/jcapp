@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * ProcessStutas;
 
 @property (nonatomic,copy) NSString * TaskInstanceID;
-
+@property (nonatomic,copy) NSString * UserCode;
 @end
 
 NS_ASSUME_NONNULL_END

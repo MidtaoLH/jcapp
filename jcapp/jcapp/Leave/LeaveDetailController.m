@@ -48,7 +48,8 @@ static NSString *identifierImage =@"LeaveImageCell.h";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
+    //设置子视图的f导航栏的返回按钮
+    self.navigationItem.title=@"请假申请";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     

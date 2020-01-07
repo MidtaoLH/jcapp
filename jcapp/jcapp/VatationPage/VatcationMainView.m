@@ -299,7 +299,7 @@ NSString * boolflag = @"flase";
     };
     [items addObject:_businessTripEnd];
     
-    self.businessNum = SWFormItem_Add(@"请假时长(h)", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
+    self.businessNum = SWFormItem_Add(@"请假时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 5;
     self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
     [items addObject:_businessNum];

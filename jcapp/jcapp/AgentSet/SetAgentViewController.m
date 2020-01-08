@@ -429,7 +429,7 @@
         if([messageInfo.msg containsString:@"成功"])
         {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: messageInfo.msg
                                   delegate:self
                                   cancelButtonTitle:@"OK"
@@ -439,7 +439,7 @@
         else
         {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: messageInfo.msg
                                   delegate:nil
                                   cancelButtonTitle:@"OK"

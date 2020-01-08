@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
     
-    NSString *BLCount;
-    NSString *DCLCount;
-    NSString *HLCount;
+    NSString *BLCount;//我的申请
+    NSString *DCLCount;//待我审批
+    NSString *HLCount;//待我回览
 }
 
 @property (nonatomic, strong) NSTimer *timer;

@@ -94,7 +94,7 @@ NSString * boolflag = @"flase";
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.AppRoveType = @"qingjia";
 
-    totalHeight=150;
+    totalHeight=Common_CCRowHeight;
 
     [self datas];
    self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
@@ -337,7 +337,7 @@ NSString * boolflag = @"flase";
         {
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"请假类型不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -354,7 +354,7 @@ NSString * boolflag = @"flase";
         {
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"开始时间不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -371,7 +371,7 @@ NSString * boolflag = @"flase";
         {
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"结束时间不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -389,7 +389,7 @@ NSString * boolflag = @"flase";
             
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"时长不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -407,7 +407,7 @@ NSString * boolflag = @"flase";
             
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"请假事由不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -424,6 +424,18 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
+        
+        if(![self isNumber:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         
         if(self.vatcationid.length >0)
         {
@@ -493,7 +505,7 @@ NSString * boolflag = @"flase";
         {
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"请假类型不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -510,7 +522,7 @@ NSString * boolflag = @"flase";
         {
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"开始时间不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -527,7 +539,7 @@ NSString * boolflag = @"flase";
         {
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"结束时间不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -545,7 +557,7 @@ NSString * boolflag = @"flase";
             
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"时长不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -563,7 +575,7 @@ NSString * boolflag = @"flase";
            
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: @"请假事由不能为空！"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -580,7 +592,17 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
-        
+        if(![self isNumber:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(self.vatcationid.length >0)
         {
             
@@ -651,7 +673,22 @@ NSString * boolflag = @"flase";
     }];
 }
 
-
+- (BOOL)isNumber:(NSString *)strValue
+{
+    if (strValue == nil || [strValue length] <= 0)
+    {
+        return NO;
+    }
+    
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
+    NSString *filtered = [[strValue componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    
+    if (![strValue isEqualToString:filtered])
+    {
+        return NO;
+    }
+    return YES;
+}
 
 - (NSString*)CharacterStringMainString:(NSString*)MainString AddDigit:(int)AddDigit AddString:(NSString*)AddString
 {
@@ -774,7 +811,7 @@ NSString * boolflag = @"flase";
                 processid = m.ProcessID;
                 
                 UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @"提示信息！"
+                                      initWithTitle: @""
                                       message: @"操作成功！"
                                       delegate:self
                                       cancelButtonTitle:@"OK"

@@ -246,6 +246,23 @@ NSString * bflag = @"flase";
     }
     
 }
+- (BOOL)isNumber:(NSString *)strValue
+{
+    if (strValue == nil || [strValue length] <= 0)
+    {
+        return NO;
+    }
+    
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
+    NSString *filtered = [[strValue componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    
+    if (![strValue isEqualToString:filtered])
+    {
+        return NO;
+    }
+    return YES;
+}
+
 -(void)processAction{
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
     nextVc.processid=processid;
@@ -364,6 +381,17 @@ NSString * bflag = @"flase";
 }
 - (void)addAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
+        if(![self isNumber:self.businessNum.info])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         self->operateType=@"0";
         
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
@@ -409,6 +437,17 @@ NSString * bflag = @"flase";
 }
 - (void)submitAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
+        if(![self isNumber:self.businessNum.info])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         self->operateType=@"0";
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
         //convert object to data
@@ -585,7 +624,7 @@ NSString * bflag = @"flase";
             }
             alert=@"save";
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: message
                                   delegate:self
                                   cancelButtonTitle:@"OK"

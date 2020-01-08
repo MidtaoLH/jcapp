@@ -248,7 +248,7 @@ NSInteger currentPageCountwait_new;
             suessflag = @"true";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"保存结果"
+                                  initWithTitle: @""
                                   message: @"保存成功"
                                   delegate:self
                                   cancelButtonTitle:@"OK"
@@ -261,7 +261,7 @@ NSInteger currentPageCountwait_new;
         else
         {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"保存结果"
+                                  initWithTitle: @""
                                   message: resultString
                                   delegate:nil
                                   cancelButtonTitle:@"OK"

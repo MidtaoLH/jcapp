@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/Leave/LeaveListCell.m"
-            timestampString = "600147141.618916"
+            timestampString = "600154019.034682"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
@@ -48,22 +48,6 @@
             startingLineNumber = "121"
             endingLineNumber = "121"
             landmarkName = "-parser:parseErrorOccurred:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "jcapp/BusinessTrip/BusinessTripEditViewController.m"
-            timestampString = "600062097.644264"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "366"
-            endingLineNumber = "366"
-            landmarkName = "-addAction"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

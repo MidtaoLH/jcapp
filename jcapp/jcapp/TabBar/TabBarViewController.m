@@ -131,6 +131,7 @@ NSInteger barheight;
     else{
    
     }
+ 
 }
 UIViewController *childViewControllerHomePage (NSString *title, NSString *imgName, NSUInteger tag) {
     HomePageViewController *vc = [[HomePageViewController alloc] init];
@@ -668,6 +669,8 @@ NSArray *imgs (){
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
      self.navigationItem.title=item.title;
+    //NSUInteger tabIndex = [tabBar.items indexOfObject:item];
+    //myDelegate.tabbarIndex=tabIndex;
     if([myDelegate.tabbarType isEqualToString:@"6"]&&tabBar.selectedIndex==1)
     {
       

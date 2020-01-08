@@ -20,6 +20,7 @@
 #import "SDPhotoItem.h"
 #import "Masonry.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
+#import "TabBarViewController.h"
 @interface BusinessTripDetailViewController (){
     
     CGFloat scaleMini;
@@ -244,9 +245,13 @@ static NSString *identifierImage =@"ImageCell.h";
                                                                  [self ShowMessage];
                                                                  return;
                                                              }
+                                                             
                                                              edittype = 1;
                                                              NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text];
-                                                             NSURL *url = [NSURL URLWithString:strURL];
+                                                             
+                                                             NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                                                             NSURL *url = [NSURL URLWithString:urlStringUTF8];
+                                                             
                                                              //进行请求
                                                              NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
                                                              
@@ -257,8 +262,7 @@ static NSString *identifierImage =@"ImageCell.h";
                                                      }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", alert.textFields);
+                                                             
                                                          }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"取消修改理由必填";
@@ -438,7 +442,14 @@ static NSString *identifierImage =@"ImageCell.h";
         else
         {
             // 弹出 对话框
-            [self showError:@"操作成功！"];
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"操作成功！"
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+           
         }
     }
     else if (edittype == 2)
@@ -465,6 +476,15 @@ static NSString *identifierImage =@"ImageCell.h";
     [self.ImageTableView layoutIfNeeded];
 
 }
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    //tabBarCtrl.selectedIndex=myDelegate.tabbarIndex;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 // 提示错误信息
 - (void)showError:(NSString *)errorMsg {
     // 1.弹框提醒

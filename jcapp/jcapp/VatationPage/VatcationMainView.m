@@ -45,7 +45,7 @@ NSString * boolflag = @"flase";
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    self.navigationItem.title=@"请假编辑";
+    self.navigationItem.title=@"请假申请";
 
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -85,25 +85,11 @@ NSString * boolflag = @"flase";
         
     }
     
+    datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
+    [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     
-    /*if([edittype isEqualToString:@"EDIT"])
-    {
-        vatcationid = @"10673";
-        urltype = @"getdata";
-        processid = @"22783";
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@", userID,vatcationid,processid];
-
-        NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", strURL);
-        NSURL *url = [NSURL URLWithString:urlStringUTF8];
-        //进行请求
-        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-        
-        NSURLConnection *connection = [[NSURLConnection alloc]
-                                       initWithRequest:request
-                                       delegate:self];
-    }
-     */
+    datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
+    [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
 
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.AppRoveType = @"qingjia";
@@ -200,54 +186,30 @@ NSString * boolflag = @"flase";
     timecount.keyboardType = UIReturnKeyDefault;
     [items addObject:timecount];
 
-    self.businessTripStart = SWFormItem_Add(@"开始时间", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
+    self.businessTripStart = SWFormItem_Add(@"开始日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
     self.businessTripStart.itemSelectCompletion = ^(SWFormItem *item) {
-        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert.view addSubview:datePickers];
         
-   /////
-        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-        datePicker.datePickerMode = UIDatePickerModeTime;
-        datePicker.frame = CGRectMake(0, 40,272,60);
-        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-        fmt.dateFormat = @"yyyy-MM-dd";
-        NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
-        NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
-            datePicker.minimumDate = minDate; // 设置最小时间
-            datePicker.maximumDate = maxDate; // 设置最大时间
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
-        datePicker.locale = locale;
-            datePicker.datePickerMode = UIDatePickerModeDate;
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置\n\n" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alert.view addSubview:datePicker];
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
-            //设置时间格式
-            dateFormat.dateFormat = @"yyyy-MM-dd";
-
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
-            
+            //实例化一个NSDateFormatter对象
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+            NSString *dateString = [dateFormat stringFromDate:datePickers.date];
+            //求出当天的时间字符串
             NSLog(@"%@",dateString);
-            
-            self.businessTripStart.info =dateString;
-            //[self.formTableView reloadData];
+            self.businessTripStart.info=dateString;
             [self.formTableView beginUpdates];
             [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
             [self.formTableView endUpdates];
-            
-      
         }];
-
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-
-        }];
-
-        [alert addAction:ok];//添加按钮
-        [alert addAction:cancel];//添加按钮
+            　 }];
+        [alert addAction:ok];
+        [alert addAction:cancel];
         [self presentViewController:alert animated:YES completion:^{ }];
-        ////////
-
     };
     [items addObject:_businessTripStart];
     
@@ -255,47 +217,26 @@ NSString * boolflag = @"flase";
     self.businessTripEnd.maxInputLength = 30;
     //self.age.info=@"2019-12-15";
     self.businessTripEnd.itemSelectCompletion = ^(SWFormItem *item) {
-
-        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert.view addSubview:datePickere];
         
-        /////
-        UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-        datePicker.datePickerMode = UIDatePickerModeTime;
-        datePicker.frame = CGRectMake(0, 40,272,60);
-        NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-        fmt.dateFormat = @"yyyy-MM-dd";
-        NSDate *minDate = [fmt dateFromString:@"1930-01-01"];
-        NSDate *maxDate = [fmt dateFromString:@"2099-01-01"];
-            datePicker.minimumDate = minDate; // 设置最小时间
-            datePicker.maximumDate = maxDate; // 设置最大时间
-            NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];//设置为中文
-        datePicker.locale = locale;
-            datePicker.datePickerMode = UIDatePickerModeDate;
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"设置\n\n" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alert.view addSubview:datePicker];
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
-            //设置时间格式
-            dateFormat.dateFormat = @"yyyy-MM-dd";
-            
-            NSString *dateString = [dateFormat stringFromDate:datePicker.date];
-            
+            //实例化一个NSDateFormatter对象
+            [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+            NSString *dateString = [dateFormat stringFromDate:datePickere.date];
+            //求出当天的时间字符串
             NSLog(@"%@",dateString);
-            
-            self.businessTripEnd.info =dateString;
+            self.businessTripEnd.info=dateString;
             [self.formTableView beginUpdates];
             [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
             [self.formTableView endUpdates];
         }];
-        
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-        }];
-        
-        [alert addAction:ok];//添加按钮
-        [alert addAction:cancel];//添加按钮
+            　 }];
+        [alert addAction:ok];
+        [alert addAction:cancel];
         [self presentViewController:alert animated:YES completion:^{ }];
-        ////////
     };
     [items addObject:_businessTripEnd];
     
@@ -527,7 +468,17 @@ NSString * boolflag = @"flase";
         
         
     } failure:^(NSString *error) {
-        NSLog(@"error====%@",error);
+        //NSLog(@"error====%@",error);
+        //返回不为1显示登陆失败
+        NSString *message = [[NSString alloc] initWithFormat:@"%@", error];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }];
 }
 - (void)submitAction {
@@ -669,9 +620,7 @@ NSString * boolflag = @"flase";
         }
         
         //操作类型：1.新增-保存 4.新增-申请 2.修改-保存 5.修改-申请 3再申请-保存 6.再申请-申请
-        //
-
-        
+ 
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave_new?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
         
         
@@ -688,9 +637,18 @@ NSString * boolflag = @"flase";
     
     
     } failure:^(NSString *error) {
-        NSLog(@"error====%@",error);
+        //NSLog(@"error====%@",error);
+        //返回不为1显示登陆失败
+        NSString *message = [[NSString alloc] initWithFormat:@"%@", error];
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }];
-    
 }
 
 
@@ -759,6 +717,21 @@ NSString * boolflag = @"flase";
             self.businessNum.info = kl.timesum;
             self.reason.info = kl.vatcationreason;
             
+            // 日期格式化类
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            // 设置日期格式 为了转换成功
+            format.dateFormat = @"yyyy-MM-dd";
+            // 时间字符串
+            NSString *string = self.businessTripStart.info;
+            // NSString * -> NSDate *
+            NSDate *data = [format dateFromString:string];
+            [datePickers setDate:data animated:YES];
+            // 时间字符串
+            string = self.businessTripEnd.info;
+            // NSString * -> NSDate *
+            data = [format dateFromString:string];
+            [datePickere setDate:data animated:YES];
+            
             NSMutableArray *imagepath = [[NSMutableArray alloc] init];
            
             
@@ -766,16 +739,17 @@ NSString * boolflag = @"flase";
             {
                  KeepLeave *kl2 = self.listOfKeepLeave[i];
                 
-                NSString *imagepath_s =
-                [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
-
-                
-                UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
-                
-                [imagepath addObject:imagetest];
+                if(kl2.imagepath != nil)
+                {
+                    NSString *imagepath_s =
+                    [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
+                    
+                    UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
+                    
+                    [imagepath addObject:imagetest];
+                }
             }
            
-            
             self.image.images =imagepath;
 
             [self.formTableView reloadData];

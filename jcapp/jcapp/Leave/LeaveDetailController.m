@@ -278,7 +278,14 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     //修改是已驳回不写理由。 直接跳到明细编辑画面，点保存生成下一版本
     if([_lblleavestatus.text isEqualToString:@"已驳回"])
     {
- 
+        //待申请任务 进入明细编辑画面为修改操作
+        VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+        VCCollect.vatcationid=self.awardID_FK;
+        VCCollect.processInstanceID=self.processInstanceID;
+        VCCollect.ProcessApplyCode=self.ProcessApplyCode;
+        VCCollect.edittype = @"3"; //编辑
+        VCCollect.urltype = @"getdata";
+        [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else
     {
@@ -456,19 +463,27 @@ static NSString *identifierImage =@"LeaveImageCell.h";
         if(![resultStringtaskedit isEqualToString:@"0"])
         {
             // 弹出 对话框
-         //   [self showError:resultStringtaskedit];
+            [self showError:resultStringtaskedit];
         }
         else
         {
             // 弹出 对话框
-         //   [self showError:@"操作成功！"];
+            [self showError:@"操作成功！"];
         }
     }
     [self.ImageTableView reloadData];
     [self.ImageTableView layoutIfNeeded];
     NSLog(@"%@",@"connection1-end");
 }
-
+// 提示错误信息
+- (void)showError:(NSString *)errorMsg {
+    // 1.弹框提醒
+    // 初始化对话框
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+    // 弹出对话框
+    [self presentViewController:alert animated:true completion:nil];
+}
 //弹出消息框
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {

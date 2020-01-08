@@ -133,20 +133,20 @@
     //每行的文本的高度
     CGFloat txtH = (height - 6*kMargin)/4;
     
-     self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.frame = CGRectMake(kMargin,(height - 2*kMargin-imageWH)/2, imageWH, imageWH );
     
     //申请日期
     self.leaveDateLable.frame = CGRectMake(width-leaveDateWidth-kMargin,kMargin, leaveDateWidth, txtH);
     
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH,kMargin, imageWH*2, txtH);
     
-    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.leaveTypeLable.frame = CGRectMake(2*kMargin+imageWH, txtH+1.1*kMargin , width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.beignDateLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+2.1*kMargin , width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+4*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.endDateLable.frame = CGRectMake(2*kMargin+imageWH, 3*txtH+3.1*kMargin  , width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+5*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.leaveStatusLable.frame = CGRectMake(2*kMargin+imageWH, 4*txtH+4.1*kMargin , width - leaveDateWidth - kMargin - imageWH, txtH);
  
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;

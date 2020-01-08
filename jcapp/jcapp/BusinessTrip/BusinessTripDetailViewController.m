@@ -19,7 +19,7 @@
 #import "SDDemoCell.h"
 #import "SDPhotoItem.h"
 #import "Masonry.h"
-
+#import "../SDWebImage/UIImageView+WebCache.h"
 @interface BusinessTripDetailViewController (){
     
     CGFloat scaleMini;
@@ -239,21 +239,13 @@ static NSString *identifierImage =@"ImageCell.h";
                                                          //响应事件
                                                          //得到文本信息
                                                          for(UITextField *text in alert.textFields){
-                                                             
-                                                             NSLog(@"text = %@", text.text);
-                                                             
                                                              if([text.text isEqualToString:@""])
                                                              {
-                                                                 NSLog(@"text = %@", @"asdfsdfsdf");
                                                                  [self ShowMessage];
                                                                  return;
                                                              }
-                                                             
                                                              edittype = 1;
-                                                             
-                                                             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
-                                                             
-                                                             NSLog(@"%@", strURL);
+                                                             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text];
                                                              NSURL *url = [NSURL URLWithString:strURL];
                                                              //进行请求
                                                              NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -401,7 +393,10 @@ static NSString *identifierImage =@"ImageCell.h";
         
         listhead = [MdlBusinessTrip mj_objectArrayWithKeyValuesArray:resultDic];
         for (MdlBusinessTrip *p1 in listhead) {
-            _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,p1.ApplyMan];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            self.imgvemp.image=imageView.image;
             
             _lblleavestatus.text = p1.ProcessStutasTxt;
             _emplbl.text = p1.EmpName;
@@ -417,7 +412,7 @@ static NSString *identifierImage =@"ImageCell.h";
             
             _lblleavetype.text = @"";
             
-            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"出差天数(h)：",p1.TimeNum];
+            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"出差天数：",p1.TimeNum];
             
             _lblleavecounts.text =strleavecounts;
             

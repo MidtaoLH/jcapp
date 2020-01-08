@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) NSString *EndTime;
 @property (copy, nonatomic) NSString *TimeNum;
 @property (copy, nonatomic) NSString *BusinessTripReason; //liyou
-
+@property (copy, nonatomic) NSString *ApplyMan;
 //@property (copy, nonatomic) NSString *EvectionTypeTxt;
 
 @end

@@ -27,7 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
-
+@property (strong, nonatomic) UIAlertAction *okAction;
+@property (strong, nonatomic) UIAlertAction *cancelAction;
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfMovies;
 

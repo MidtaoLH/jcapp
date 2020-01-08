@@ -17,7 +17,7 @@
 #import "../BusinessTrip/BusinessTripEditViewController.h"
 #import "../GoOut/GoOutEditController.h"
 #import "../AppDelegate.h"
-
+#import "../TabBar/TabBarViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -118,7 +118,9 @@ NSInteger currentPageCountwait;
      xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if([xmlString containsString:@"DelteProcessInstance"])
     {
-       [self LoadData];
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
     }
     else{
         // 字符串截取
@@ -315,9 +317,20 @@ NSInteger currentPageCountwait;
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *deleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        // 初始化对话框
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认删除？" preferredStyle:UIAlertControllerStyleAlert];
+        // 确定注销
+        _okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+            Pending * pending = self.listOfMovies[indexPath.row];
+            [self deleteData:pending.PicID];
+        }];
+        _cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         
-        Pending * pending = self.listOfMovies[indexPath.row];
-        [self deleteData:pending.PicID];
+        [alert addAction:_okAction];
+        [alert addAction:_cancelAction];
+        // 弹出对话框
+        [self presentViewController:alert animated:true completion:nil];
+        
     }];
     //    moreRowAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     return @[deleteRowAction];

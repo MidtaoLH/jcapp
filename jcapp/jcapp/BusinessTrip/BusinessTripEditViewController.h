@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *operateType;
     NSString *applyCode;
     NSString *alert;
+    NSString *isLoad;
 }
 @end
 NS_ASSUME_NONNULL_END

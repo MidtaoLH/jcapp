@@ -349,8 +349,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 - (void)showError:(NSString *)errorMsg {
     // 1.弹框提醒
     // 初始化对话框
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     // 弹出对话框
     [self presentViewController:alert animated:true completion:nil];
 }
@@ -380,8 +380,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         else
         {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"操作成功！"
+                                  initWithTitle: @""
+                                  message: @"同意成功"
                                   delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -401,8 +401,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         else
         {
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
-                                  message: @"操作成功！"
+                                  initWithTitle: @""
+                                  message: @"驳回成功"
                                   delegate:self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];

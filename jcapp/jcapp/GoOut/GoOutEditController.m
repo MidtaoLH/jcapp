@@ -84,7 +84,7 @@
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.AppRoveType = @"waichu";
     
-    totalHeight=150;
+    totalHeight=Common_CCRowHeight;
     
     [self datas];
     self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
@@ -273,7 +273,22 @@
     
     return footer;
 }*/
-
+- (BOOL)isNumber:(NSString *)strValue
+{
+    if (strValue == nil || [strValue length] <= 0)
+    {
+        return NO;
+    }
+    
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
+    NSString *filtered = [[strValue componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    
+    if (![strValue isEqualToString:filtered])
+    {
+        return NO;
+    }
+    return YES;
+}
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIDatePicker *datePicker = (UIDatePicker *)[actionSheet viewWithTag:101];
@@ -297,6 +312,18 @@
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
+        
+        if(![self isNumber:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+             initWithTitle: @""
+             message: @"外出时长必须为数字"
+             delegate:nil
+             cancelButtonTitle:@"OK"
+             otherButtonTitles:nil];
+             [alert show];
+            return;
+        }
         
         if(self.evectionID.length >0)
         {
@@ -367,6 +394,18 @@
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
+        
+        if(![self isNumber:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         
         if(self.evectionID.length >0)
         {

@@ -573,7 +573,7 @@
                 [self uploadImg];
                 
                 UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @"提示信息！"
+                                      initWithTitle: @""
                                       message: @"操作成功！"
                                       delegate:self
                                       cancelButtonTitle:@"OK"

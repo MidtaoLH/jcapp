@@ -585,7 +585,7 @@ NSString * bflag = @"flase";
             }
             alert=@"save";
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"提示信息！"
+                                  initWithTitle: @""
                                   message: message
                                   delegate:self
                                   cancelButtonTitle:@"OK"

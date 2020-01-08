@@ -13,7 +13,7 @@
 #import "GoOutEditController.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "GoOutDeatileController.h"
-
+#import "../TabBar/TabBarViewController.h"
 @interface GoOutWaitController ()
 
 @end
@@ -55,7 +55,6 @@ static NSString *identifier =@"GoOutWaitCell";
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self LoadData];
-    [self.NewTableView reloadData];
 }
 
 // 2.实现下拉刷新和上拉加载的事件。
@@ -112,7 +111,9 @@ static NSString *identifier =@"GoOutWaitCell";
     
     if([xmlString containsString:@"DelteProcessInstance"])
     {
-        [self LoadData];
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
     }
     else{
         // 字符串截取
@@ -286,9 +287,19 @@ static NSString *identifier =@"GoOutWaitCell";
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *deleteRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        // 初始化对话框
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认删除？" preferredStyle:UIAlertControllerStyleAlert];
+        // 确定注销
+        _okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+            MdlGoOutList * pending = self.listDatas[indexPath.row];
+            [self deleteData:pending.ProcessInstanceID];
+        }];
+        _cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         
-        MdlGoOutList * pending = self.listDatas[indexPath.row];
-        [self deleteData:pending.ProcessInstanceID];
+        [alert addAction:_okAction];
+        [alert addAction:_cancelAction];
+        // 弹出对话框
+        [self presentViewController:alert animated:true completion:nil];
     }];
     //    moreRowAction.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     return @[deleteRowAction];

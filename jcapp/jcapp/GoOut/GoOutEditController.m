@@ -610,10 +610,14 @@
             {
                 ApplyCode = m.ApplyCode;
                 [self uploadImg];
-                
+                //保存成功 提交成功
+                NSString *message=@"提交成功";
+                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                    message=@"保存成功";
+                }
                 UIAlertView *alert = [[UIAlertView alloc]
                                       initWithTitle: @""
-                                      message: @"操作成功！"
+                                      message: message
                                       delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];
@@ -630,7 +634,7 @@
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -639,8 +643,8 @@
 - (void)showError:(NSString *)errorMsg {
     // 1.弹框提醒
     // 初始化对话框
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     // 弹出对话框
     [self presentViewController:alert animated:true completion:nil];
 }

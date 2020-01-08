@@ -809,10 +809,14 @@ NSString * boolflag = @"flase";
             {
                 ApplyCode = m.ApplyCode;
                 processid = m.ProcessID;
-                
+                //保存成功 提交成功
+                NSString *message=@"提交成功";
+                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                    message=@"保存成功";
+                }
                 UIAlertView *alert = [[UIAlertView alloc]
                                       initWithTitle: @""
-                                      message: @"操作成功！"
+                                      message: message
                                       delegate:self
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil];

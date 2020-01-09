@@ -7,4 +7,5 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, assign) BOOL isNext;
+@property (nonatomic, assign) UIButton *btnUpdate;
 @end

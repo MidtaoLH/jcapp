@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SetAgentViewController : UIViewController
 {
+    UIDatePicker*datePickers;
+    UIDatePicker*datePickere;
     NSString *xmlString;
     NSMutableDictionary *info;
     NSString *currentTagName;

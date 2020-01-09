@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 @property (nonatomic, copy) NSArray *titleArr;
 @property (nonatomic, strong) pwdInfo *infoModel;
-@property (weak, nonatomic) IBOutlet UIButton *btnUpdate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 

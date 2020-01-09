@@ -10,6 +10,8 @@
 #import "BRPickerView.h"
 #import "BRInfoCell.h"
 #import "Masonry.h"
+#import "SWForm.h"
+#import "SWFormHandler.h"
 #import "../Model/BRInfoModel.h"
 #import "../Model/MessageInfo.h"
 #import "../Model/AgentInfo.h"
@@ -20,8 +22,6 @@
 #import "MJExtension.h"
 #import "TabBarViewController.h"
 @interface SetAgentViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
-
-
 @end
 
 @implementation SetAgentViewController
@@ -32,7 +32,11 @@
     self.navigationItem.title=@"代理人设定";
     [self loadstyle];
     [self loadData];
-    [self initUI];
+    datePickers = [[UIDatePicker alloc] init]; datePickers.datePickerMode = UIDatePickerModeDate;
+    [datePickers setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
+    
+    datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
+    [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
 }
  
 
@@ -50,6 +54,7 @@
       AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     if ([myDelegate.agentType isEqualToString:@"info"]) {
         self.tableView.hidden=YES;
+        self.applicationbtn.hidden=NO;
         myDelegate.agentType=@"";
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *userID = [defaults objectForKey:@"userid"];
@@ -64,16 +69,27 @@
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request
                                        delegate:self];
+        
     }
     else if ([myDelegate.agentType isEqualToString:@"true"]) {
+        // 日期格式化类
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        // 设置日期格式 为了转换成功
+        format.dateFormat = @"yyyy-MM-dd";
+         self.savebtn.hidden=NO;
         self.infoModel.codeStr = myDelegate.way_empid;
         self.infoModel.nameStr = myDelegate.way_empname;
         self.infoModel.deptStr = myDelegate.way_groupname;
         self.infoModel.startdayStr = myDelegate.TimeStart;
         self.infoModel.enddayStr = myDelegate.TimeEnd;
         self.infoModel.agentID=myDelegate.agentid;
+        NSDate *data = [format dateFromString:self.infoModel.startdayStr ];
+        [datePickers setDate:data animated:YES];
+        data = [format dateFromString:self.infoModel.enddayStr ];
+        [datePickere setDate:data animated:YES];
     }
     else{
+          self.savebtn.hidden=NO;
         myDelegate.agentid=@"0";
         self.infoModel.agentID= @"0";
         self.infoModel.codeStr = @"";
@@ -83,33 +99,6 @@
         self.infoModel.enddayStr = @"";
         self.infoModel.agentID= @"0";
     }
-}
-- (void)initUI {
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_TableHeight));
-    }];
-    [self.savebtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
-        // 添加左
-        make.left.mas_equalTo(Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
-    [self.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
-    self.tableView.hidden = NO;
 }
 - (void)clickGoto {
     ViewController *returnVC = [[ViewController alloc]init];
@@ -130,15 +119,15 @@
             // 添加左
             make.left.mas_equalTo(Common_ColSize);
             // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize*2,Common_BtnHeight));
         }];
         [self.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
             // 添加上
             make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
             // 添加左
-            make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+            make.left.mas_equalTo(Common_ColSize);
             // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+           make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize*2,Common_BtnHeight));
         }];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -267,65 +256,59 @@
             break;
         case 2:
         {
-            // 开始日期
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
-            datePickerView.title = @"请选择开始日期";
-            //datePickerView.selectValue = @"1948-10-01";
-            datePickerView.selectDate = self.startdaySelectDate;
-            datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
-            datePickerView.isAutoSelect = YES;
-            //datePickerView.addToNow = YES;
-            //datePickerView.showToday = YES;
-            datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
-                self.startdaySelectDate = selectDate;
-                self.infoModel.startdayStr = selectValue;
-                textField.text = selectValue;
-                AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-                myDelegate.TimeStart=selectValue;
-            };
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+            [alert.view addSubview:datePickers];
             
-            // 自定义弹框样式
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.topCornerRadius = 16.0f;
-            customStyle.hiddenTitleBottomBorder = YES;
-            customStyle.hiddenCancelBtn = YES;
-            customStyle.doneBtnImage = [UIImage imageNamed:@"icon_close"];
-            customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 0, 44, 44);
-            customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
-            datePickerView.pickerStyle = customStyle;
-            [datePickerView show];
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+                //实例化一个NSDateFormatter对象
+                [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+                NSString *dateString = [dateFormat stringFromDate:datePickers.date];
+                //求出当天的时间字符串
+                self.startdaySelectDate = dateString;
+                self.infoModel.startdayStr = dateString;
+                textField.text = dateString;
+                AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+                myDelegate.TimeStart=dateString;
+                [self.tableView beginUpdates];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView endUpdates];
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                　 }];
+            [alert addAction:ok];
+            [alert addAction:cancel];
+            // 3.显示警报控制器
+            [self presentViewController:alert animated:YES completion:^{ }];
         }
             break;
         case 3:
         {
-            // 结束日期
-            BRDatePickerView *datePickerView = [[BRDatePickerView alloc]initWithPickerMode:BRDatePickerModeYMD];
-            datePickerView.title = @"请选择结束日期";
-            //datePickerView.selectValue = @"1948-10-01";
-            datePickerView.selectDate = self.enddaySelectDate;
-            datePickerView.minDate = [NSDate br_setYear:1948 month:10 day:1];
-            datePickerView.isAutoSelect = YES;
-            //datePickerView.addToNow = YES;
-            //datePickerView.showToday = YES;
-            datePickerView.resultBlock = ^(NSDate *selectDate, NSString *selectValue) {
-                self.enddaySelectDate = selectDate;
-                self.infoModel.enddayStr = selectValue;
-                textField.text = selectValue;
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n\n" message:nil 　　preferredStyle:UIAlertControllerStyleActionSheet];
+            [alert.view addSubview:datePickere];
+            
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
+                //实例化一个NSDateFormatter对象
+                [dateFormat setDateFormat:@"yyyy-MM-dd"];//设定时间格式
+                NSString *dateString = [dateFormat stringFromDate:datePickere.date];
+                //求出当天的时间字符串
+                self.enddaySelectDate = dateString;
+                self.infoModel.enddayStr = dateString;
+                textField.text = dateString;
                 AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-                myDelegate.TimeEnd=selectValue;
-            };
-            
-            // 自定义弹框样式
-            BRPickerStyle *customStyle = [[BRPickerStyle alloc]init];
-            customStyle.topCornerRadius = 16.0f;
-            customStyle.hiddenTitleBottomBorder = YES;
-            customStyle.hiddenCancelBtn = YES;
-            customStyle.doneBtnImage = [UIImage imageNamed:@"icon_close"];
-            customStyle.doneBtnFrame = CGRectMake(SCREEN_WIDTH - 44, 0, 44, 44);
-            customStyle.pickerTextFont = [UIFont systemFontOfSize:20.0f];
-            datePickerView.pickerStyle = customStyle;
-            [datePickerView show];
-            
+                myDelegate.TimeEnd=dateString;
+                [self.tableView beginUpdates];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView endUpdates];
+                
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                　 }];
+            [alert addAction:ok];
+            [alert addAction:cancel];
+            // 3.显示警报控制器
+            [self presentViewController:alert animated:YES completion:^{ }];
         }
             break;
         
@@ -449,12 +432,20 @@
     }
     else
     {
+        // 日期格式化类
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        // 设置日期格式 为了转换成功
+        format.dateFormat = @"yyyy-MM-dd";
         AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
         self.infoModel.codeStr = agentInfo.EmpID;
         self.infoModel.nameStr = agentInfo.EmpName;
         self.infoModel.deptStr = agentInfo.DeptName;
         self.infoModel.startdayStr = agentInfo.AgentStartDate;
+        NSDate *data = [format dateFromString:self.infoModel.startdayStr ];
+        [datePickers setDate:data animated:YES];
         self.infoModel.enddayStr = agentInfo.AgentEndDate;
+        data = [format dateFromString:self.infoModel.enddayStr ];
+        [datePickere setDate:data animated:YES];
         [self.tableView reloadData];
         [self.tableView layoutIfNeeded];
         self.tableView.hidden = NO;

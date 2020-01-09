@@ -84,7 +84,7 @@
         // 添加上
         make.top.mas_equalTo(tabBarHeight+Common_TableHeight+Common_RowSize*2);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(width-Common_ColSize*2,Common_TxTHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize*2,Common_TxTHeight));
     }];
     _stopbtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _stopbtn.font = kFont_Lable_16;

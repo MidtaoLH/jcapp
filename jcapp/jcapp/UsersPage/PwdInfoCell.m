@@ -7,7 +7,6 @@
 
 @interface PwdInfoCell ()
 @property (nonatomic, strong) UIImageView *nextImageView;
-
 @end
 
 @implementation PwdInfoCell
@@ -18,6 +17,7 @@
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.textField];
         [self.contentView addSubview:self.nextImageView];
+        [self.contentView addSubview:self.btnUpdate];
     }
     return self;
 }
@@ -68,5 +68,14 @@
         _nextImageView.image = [UIImage imageNamed:@"icon_next"];
     }
     return _nextImageView;
+}
+- (UIButton *)btnUpdate {
+    if (!_btnUpdate) {
+        _btnUpdate.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _btnUpdate.font = kFont_Lable_16;
+        _btnUpdate.titleLabel.textAlignment= NSTextAlignmentCenter;
+        _btnUpdate.titleLabel.text  = @"修改";
+    }
+    return _btnUpdate;
 }
 @end

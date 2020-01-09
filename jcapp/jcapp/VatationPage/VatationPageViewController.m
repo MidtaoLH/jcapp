@@ -15,6 +15,8 @@
 
 @implementation VatationPageViewController
 
+NSString *strtype;
+
 - (void)viewDidLoad {
     
     allString = @"";
@@ -111,7 +113,7 @@
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
-    
+    strtype = cell.textLabel.text;
     [defaults setObject:cell.textLabel.text forKey:@"vatcationname"];
     
     [defaults synchronize];//保存到磁盘
@@ -216,9 +218,30 @@
 
 -(IBAction)onClickButtontest:(id)sender {
     
-    // 定义一个JSON字符串
-  [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+    //当代理响应sendValue方法时，把_tx.text中的值传到VCA
+    if ([_delegate respondsToSelector:@selector(sendValue:)]) {
+        [_delegate sendValue:strtype];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
+    // 定义一个JSON字符串
+ [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+ /*    [self.formTableView beginUpdates];
+    [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    [self.formTableView endUpdates];
+    
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.way_groupname =lbgroupname.text;
+    myDelegate.way_groupid =lbgroupid.text;
+    myDelegate.way_empid =lbempid.text;
+    myDelegate.way_empname =lbempname.text;
+    
+    myDelegate.agentType = @"true";
+    myDelegate.TimeStart=self.startTime;
+    myDelegate.TimeEnd=self.endTime;
+    myDelegate.agentid=self.agentID;
+    SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+    [self.navigationController pushViewController:VCCollect animated:YES];*/
 }
 
 -(IBAction)onClickButtonreturn:(id)sender {

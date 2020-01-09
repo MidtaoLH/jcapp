@@ -325,7 +325,19 @@
              [alert show];
             return;
         }
-        
+        // 字符串转float
+        float floatString = [vatcationtime floatValue];
+        if(floatString>9999)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长不能大于9999"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(self.evectionID.length >0)
         {
             
@@ -407,7 +419,19 @@
             [alert show];
             return;
         }
-        
+        // 字符串转float
+        float floatString = [vatcationtime floatValue];
+        if(floatString>9999)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长不能大于9999"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(self.evectionID.length >0)
         {
             

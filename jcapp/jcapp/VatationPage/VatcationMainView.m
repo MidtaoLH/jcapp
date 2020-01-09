@@ -23,7 +23,7 @@ static NSInteger rowHeight=50;
 
 NSString * boolflag = @"flase";
 
-@interface VatcationMainView ()<UIActionSheetDelegate>
+@interface VatcationMainView ()<UIActionSheetDelegate,VcBDelegate>//遵循协议
 @property (nonatomic, strong) NSArray *genders;
 @property (nonatomic, strong) SWFormItem *VatcationType;
 @property (nonatomic, strong) SWFormItem *businessTripStart;
@@ -158,6 +158,16 @@ NSString * boolflag = @"flase";
 /**
  数据源处理
  */
+
+//实现协议方法，把接收到的值展示
+- (void)sendValue:(NSString *)value
+{
+    self.VatcationType.info = value;
+    [self.formTableView beginUpdates];
+    [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    [self.formTableView endUpdates];
+}
+
 - (void)datas {
     SWWeakSelf
     NSMutableArray *items = [NSMutableArray array];
@@ -177,8 +187,10 @@ NSString * boolflag = @"flase";
         [defaults synchronize];//保存到磁盘
         
         VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
+      
+        nextVc.delegate = self;
         [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
-        
+ 
     };
     [items addObject:_VatcationType];
     
@@ -437,7 +449,19 @@ NSString * boolflag = @"flase";
             [alert show];
             return;
         }
-        
+        // 字符串转float
+        float floatString = [vatcationtime floatValue];
+        if(floatString>9999)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长不能大于9999"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(self.vatcationid.length >0)
         {
             
@@ -598,6 +622,19 @@ NSString * boolflag = @"flase";
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
                                   message: @"请假时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        // 字符串转float
+        float floatString = [vatcationtime floatValue];
+        if(floatString>9999)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长不能大于9999"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];

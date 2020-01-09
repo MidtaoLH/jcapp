@@ -10,6 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//创建协议
+@protocol VcBDelegate <NSObject>
+- (void)sendValue:(NSString *)value; //声明协议方法
+@end
+
 @interface VatationPageViewController : UIViewController<UITableViewDataSource,
 UITableViewDelegate>{
     
@@ -25,8 +30,9 @@ UITableViewDelegate>{
     NSMutableDictionary *info;
     NSMutableArray *vatcationArray;
     NSMutableArray *listOfMovies;
-    
+ 
 }
+@property (nonatomic, weak)id<VcBDelegate> delegate; //声明协议变量
 
 @property(retain,nonatomic) NSArray *data;
 @property (copy, nonatomic) NSArray *datas;

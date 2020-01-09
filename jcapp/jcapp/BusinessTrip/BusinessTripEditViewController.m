@@ -380,6 +380,22 @@ NSString * bflag = @"flase";
     }
 }
 - (void)addAction {
+    NSMutableArray *myDataCopy=[[NSMutableArray alloc]init];
+    for (int i=0; i<myData.count; i++) {
+        NSString *ele=myData[i];
+        [myDataCopy addObject:ele];
+    }
+    [myDataCopy removeObject:@""];
+    if(myDataCopy.count==0){
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"请输入出差地点"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         if(![self isNumber:self.businessNum.info])
         {
@@ -407,7 +423,7 @@ NSString * bflag = @"flase";
         }
         self->operateType=@"0";
         
-        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myDataCopy, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
         //print out the data contents
@@ -546,7 +562,10 @@ NSString * bflag = @"flase";
 //        // 添加大小约束
 //        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
 //    }];
-    [tableViewPlace reloadData];
+    //[tableViewPlace reloadData];
+    [tableViewPlace beginUpdates];
+    [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    [tableViewPlace endUpdates];
     self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
@@ -575,7 +594,9 @@ NSString * bflag = @"flase";
         // do something
         //totalcount++;
         [myData addObject:@""];
-        totalHeight=totalHeight+Common_CCRowHeight;
+        if(totalHeight<Common_CCRowHeight*4){
+            totalHeight=totalHeight+Common_CCRowHeight;
+        }
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
         
@@ -584,7 +605,16 @@ NSString * bflag = @"flase";
 }
 - (void)cellBtnClicked:(id)sender event:(id)event
 {
-    
+    if(myData.count==1){//h至少有一条数据
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"出差地点至少保留一行数据"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     NSSet *touches =[event allTouches];
     
     UITouch *touch =[touches anyObject];
@@ -598,7 +628,9 @@ NSString * bflag = @"flase";
         // do something
         //totalcount--;
         [myData removeObjectAtIndex:indexPath.row];
-        totalHeight=totalHeight-Common_CCRowHeight;
+        if(myData.count<4){
+            totalHeight=totalHeight-Common_CCRowHeight;
+        }
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
     }
@@ -699,6 +731,9 @@ NSString * bflag = @"flase";
                 [myData addObject:[obj objectForKey:@"BusinessTripPlace"]];
             }
             totalHeight=totalHeight+Common_CCRowHeight*(resultDic.count-1);
+            if(totalHeight>Common_CCRowHeight*4){
+                totalHeight=Common_CCRowHeight*4;
+            }
             
             //解析图片数据
             resData = [[NSData alloc] initWithData:[array[2] dataUsingEncoding:NSUTF8StringEncoding]];

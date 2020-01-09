@@ -193,7 +193,7 @@ NSString * bflag = @"flase";
     [items addObject:_businessTripEnd];
     
     self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
-    self.businessNum.maxInputLength = 5;
+    self.businessNum.maxInputLength = 4;
     self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
     [items addObject:_businessNum];
     

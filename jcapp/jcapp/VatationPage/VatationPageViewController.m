@@ -217,26 +217,19 @@
 -(IBAction)onClickButtontest:(id)sender {
     
     // 定义一个JSON字符串
-    NSLog(@"%@", allString);
-    // JSON字符串转模型
-    //Vatcation *vatcation = [Vatcation mj_objectWithKeyValues:allString];
-    
-    vatcationArray = [Vatcation mj_objectArrayWithKeyValuesArray:allString];
-    
-    for (Vatcation *vatcation in vatcationArray) {
-        NSLog(@"name=%@",  vatcation.Name);
-    }
-    self.data = vatcationArray;
-    
-    tableview.rowHeight = 59;
-    NSLog(@"%@", @"1是否走到这里1");
-    
-    
-    //[tableview reloadData];
+  [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
     
 }
 
 -(IBAction)onClickButtonreturn:(id)sender {
+    
+    //点击返回的时候 把选择的数据清空
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    [defaults setObject:@"" forKey:@"vatcationname"];
+    
+    [defaults synchronize];//保存到磁盘
     
 NSLog(@"%@", @"return");
     [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面

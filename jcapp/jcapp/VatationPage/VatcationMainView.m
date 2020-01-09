@@ -296,14 +296,14 @@ NSString * boolflag = @"flase";
     }else{
         UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
         
-        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-        submitBtn.center = footer.center;
-        submitBtn.backgroundColor = [UIColor orangeColor];
-        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
-        
-        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
-        [footer addSubview:submitBtn];
+//        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+//        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+//        submitBtn.center = footer.center;
+//        submitBtn.backgroundColor = [UIColor orangeColor];
+//        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
+//        
+        [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:_btnProcess];
         
         return footer;
         

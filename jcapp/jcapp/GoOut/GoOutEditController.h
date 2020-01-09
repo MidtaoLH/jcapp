@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSMutableArray *listtask;
 
 @property (strong,nonatomic) NSMutableArray *listAnnex;
+@property (weak, nonatomic) IBOutlet UIButton *btnProcess;
 
 @end
 

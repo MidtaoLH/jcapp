@@ -73,7 +73,7 @@ NSString * bflag = @"flase";
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
@@ -521,7 +521,7 @@ NSString * bflag = @"flase";
 //        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
 //    }];
     [tableViewPlace reloadData];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //        make.left.mas_equalTo(0);

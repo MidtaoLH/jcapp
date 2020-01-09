@@ -87,7 +87,8 @@
     totalHeight=Common_CCRowHeight;
     
     [self datas];
-    self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
 }
 
 - (void)goBack {

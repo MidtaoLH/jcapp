@@ -97,7 +97,8 @@ NSString * boolflag = @"flase";
     totalHeight=Common_CCRowHeight;
 
     [self datas];
-   self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
 }
 
 - (void)goBack {
@@ -182,7 +183,7 @@ NSString * boolflag = @"flase";
     [items addObject:_VatcationType];
     
     
-    SWFormItem *timecount = SWFormItem_Info(@"假期余额", UserHour, SWFormItemTypeInput);
+    SWFormItem *timecount = SWFormItem_Info(@"年假余额", UserHour, SWFormItemTypeInput);
     timecount.keyboardType = UIReturnKeyDefault;
     [items addObject:timecount];
 

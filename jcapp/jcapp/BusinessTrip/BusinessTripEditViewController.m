@@ -392,6 +392,19 @@ NSString * bflag = @"flase";
             [alert show];
             return;
         }
+        // 字符串转float
+        float floatString = [self.businessNum.info floatValue];
+        if(floatString>365)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数不能大于365"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         self->operateType=@"0";
         
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
@@ -442,6 +455,19 @@ NSString * bflag = @"flase";
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
                                   message: @"出差天数必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        // 字符串转float
+        float floatString = [self.businessNum.info floatValue];
+        if(floatString>365)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数不能大于365"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];

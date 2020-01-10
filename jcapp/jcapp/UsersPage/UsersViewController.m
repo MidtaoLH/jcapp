@@ -21,8 +21,8 @@
 @implementation UsersViewController
 - (void)viewDidLoad {    
     [super viewDidLoad];
-    self.edgesForExtendedLayout=0;
-    self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
+    //self.edgesForExtendedLayout=0;
+    //self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
     //初始化一个UIImageView的对象
     self.myHeadPortrait.userInteractionEnabled = YES;//打开用户交互
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choseImage:)];

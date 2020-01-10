@@ -21,8 +21,8 @@
 @implementation UsersViewController
 - (void)viewDidLoad {    
     [super viewDidLoad];
-    self.edgesForExtendedLayout=0;
-    self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
+    //self.edgesForExtendedLayout=0;
+    //self.view.backgroundColor=[UIColor colorWithRed:(242.0/255.0) green:(242.0/255.0) blue:(242.0/255.0) alpha:(1)];
     //初始化一个UIImageView的对象
     self.myHeadPortrait.userInteractionEnabled = YES;//打开用户交互
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(choseImage:)];
@@ -141,6 +141,30 @@
                          @"打开照相机",@"从手机相册获取", nil];
     Alert.delegate=self;
     [Alert show ];
+     
+//     //显示弹出框列表选择
+//     UIAlertController *alert = [[UIAlertController alloc]init];
+//     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+//                                                          handler:^(UIAlertAction * action) {
+//                                                              //响应事件
+//                                                              NSLog(@"action = %@", action);
+//                                                          }];
+//     UIAlertAction* deleteAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive
+//                                                          handler:^(UIAlertAction * action) {
+//                                                              //响应事件
+//                                                              NSLog(@"action = %@", action);
+//                                                              [self getAvatatFormPhotoLibrary:self];//调用相册
+//                                                          }];
+//     UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault
+//                                                        handler:^(UIAlertAction * action) {
+//                                                            //响应事件
+//                                                            NSLog(@"action = %@", action);
+//                                                            [self getAvatatFormCamera:self];//调用相机
+//                                                        }];
+//     [alert addAction:saveAction];
+//     [alert addAction:cancelAction];
+//     [alert addAction:deleteAction];
+//     [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {

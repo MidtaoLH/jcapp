@@ -45,7 +45,7 @@ NSInteger barheight;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if([myDelegate.tabbarType isEqualToString:@"1"])
     {
         [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];

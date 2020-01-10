@@ -25,11 +25,9 @@
         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PCR-dI-NzF">
             <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-            <state key="normal" title="查看审批路径">
-                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            </state>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+            <state key="normal" title="查看审批路径"/>
         </button>
     </objects>
 </document>

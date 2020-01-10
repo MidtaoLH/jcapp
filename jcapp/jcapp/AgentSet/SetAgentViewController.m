@@ -41,7 +41,7 @@
  
 
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -51,15 +51,15 @@
     
 }
 - (void)loadData {
-      AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+      AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if ([myDelegate.agentType isEqualToString:@"info"]) {
-        self.tableView.hidden=YES;
-        self.applicationbtn.hidden=NO;
+        //self.tableView.hidden=YES;
+        //self.applicationbtn.hidden=NO;
         myDelegate.agentType=@"";
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *userID = [defaults objectForKey:@"userid"];
-        NSString *empID = [defaults objectForKey:@"EmpID"];
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        //NSString *empID = [defaults objectForKey:@"EmpID"];
+        //AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
         //设置需要访问的ws和传入参数
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@",userID,self.infoModel.agentID];
         NSURL *url = [NSURL URLWithString:strURL];
@@ -76,7 +76,6 @@
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         // 设置日期格式 为了转换成功
         format.dateFormat = @"yyyy-MM-dd";
-         self.savebtn.hidden=NO;
         self.infoModel.codeStr = myDelegate.way_empid;
         self.infoModel.nameStr = myDelegate.way_empname;
         self.infoModel.deptStr = myDelegate.way_groupname;
@@ -89,7 +88,7 @@
         [datePickere setDate:data animated:YES];
     }
     else{
-          self.savebtn.hidden=NO;
+        self.savebtn.hidden=NO;
         myDelegate.agentid=@"0";
         self.infoModel.agentID= @"0";
         self.infoModel.codeStr = @"";
@@ -119,15 +118,15 @@
             // 添加左
             make.left.mas_equalTo(Common_ColSize);
             // 添加大小约束
-            make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize*2,Common_BtnHeight));
+            make.size.mas_equalTo(CGSizeMake((kScreenWidth-Common_ColSize*3)/2,Common_BtnHeight));
         }];
         [self.applicationbtn mas_makeConstraints:^(MASConstraintMaker *make) {
             // 添加上
             make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableHeight+Common_RowSize);
             // 添加左
-            make.left.mas_equalTo(Common_ColSize);
+            make.left.mas_equalTo((kScreenWidth-Common_ColSize*3)/2+Common_ColSize*2);
             // 添加大小约束
-           make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_ColSize*2,Common_BtnHeight));
+           make.size.mas_equalTo(CGSizeMake((kScreenWidth-Common_ColSize*3)/2,Common_BtnHeight));
         }];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -137,15 +136,15 @@
         _tableView.estimatedSectionHeaderHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
     
-        _savebtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _savebtn.font = kFont_Lable_16;
-        _savebtn.titleLabel.textAlignment= NSTextAlignmentCenter;
-        _savebtn.titleLabel.text  = @"保存";
-    
-        _applicationbtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _applicationbtn.font =kFont_Lable_16;
-        _applicationbtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        _applicationbtn.titleLabel.text = @"应用";
+//        _savebtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//        _savebtn.font = kFont_Lable_16;
+//        _savebtn.titleLabel.textAlignment= NSTextAlignmentCenter;
+//        _savebtn.titleLabel.text  = @"保存";
+//
+//        _applicationbtn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//        _applicationbtn.font =kFont_Lable_16;
+//        _applicationbtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+//        _applicationbtn.titleLabel.text = @"应用";
 }
 - (UITextField *)getTextField:(CGRect)frame placeholder:(NSString *)placeholder {
     UITextField *textField = [[UITextField alloc]initWithFrame:frame];
@@ -270,6 +269,7 @@
                 textField.text = dateString;
                 AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
                 myDelegate.TimeStart=dateString;
+                [self.tableView reloadData];
                 [self.tableView beginUpdates];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                 [self.tableView endUpdates];
@@ -298,6 +298,7 @@
                 textField.text = dateString;
                 AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
                 myDelegate.TimeEnd=dateString;
+                [self.tableView reloadData];
                 [self.tableView beginUpdates];
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                 [self.tableView endUpdates];
@@ -366,7 +367,7 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [defaults objectForKey:@"userid"];
     NSString *empID = [defaults objectForKey:@"EmpID"];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if([self.infoModel.agentID containsString:@"0"])
     {
         //设置需要访问的ws和传入参数
@@ -448,7 +449,7 @@
         [datePickere setDate:data animated:YES];
         [self.tableView reloadData];
         [self.tableView layoutIfNeeded];
-        self.tableView.hidden = NO;
+        //self.tableView.hidden = NO;
     }
 }
 
@@ -465,9 +466,9 @@
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *userID = [defaults objectForKey:@"userid"];
         NSString *empID = [defaults objectForKey:@"EmpID"];
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&agentSetID=%@",userID,self.infoModel.agentID];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&agentSetID=%@",userID,empID,self.infoModel.codeStr,self.infoModel.startdayStr,self.infoModel.enddayStr,self.infoModel.agentID];
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];

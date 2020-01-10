@@ -307,7 +307,7 @@ NSString * boolflag = @"flase";
     if([self.edittype isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 60)];
         
 //        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
 //        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);

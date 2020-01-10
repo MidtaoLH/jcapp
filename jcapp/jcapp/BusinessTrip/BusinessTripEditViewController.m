@@ -244,7 +244,7 @@ NSString * bflag = @"flase";
     if([pageType isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width-50, 60)];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 60)];
 //        footer.backgroundColor=UIColor.cyanColor;
 //        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
 //        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 30);

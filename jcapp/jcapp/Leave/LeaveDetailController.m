@@ -68,7 +68,10 @@ static NSString *identifierImage =@"LeaveImageCell.h";
    
     
     [self setlblcolor];
- 
+    [self.btnEdit.layer setCornerRadius:12];
+    self.btnEdit.layer.masksToBounds=YES;
+    [self.btncancle.layer setCornerRadius:12];
+    self.btncancle.layer.masksToBounds=YES;
     [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
     [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
     

@@ -70,19 +70,11 @@ NSString *strtype;
     }else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    
-    
-    
-                
-
-    
-    
+     NSLog(@"%@",@"tableView1-begin");
     return cell;
-    
-    
-    
+ 
     ////////
-    NSLog(@"%@",@"tableView1-begin");
+
     
     /*
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
@@ -118,7 +110,7 @@ NSString *strtype;
     
     [defaults synchronize];//保存到磁盘
     
-    
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 //调用ws之后的方法

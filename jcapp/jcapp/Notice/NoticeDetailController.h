@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 添加数据源
 @property (nonatomic,strong) NoticeNews * noticeitem;
 
+-(IBAction)onClickButtonreturn:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END

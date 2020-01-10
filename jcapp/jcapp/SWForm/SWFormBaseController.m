@@ -183,12 +183,14 @@ static NSInteger rowHeight=50;
             //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
             btnAdd.frame = CGRectMake(cell.frame.size.width-50,cell.top+10, 30, 30);
-            [btnAdd setTitle:@"➕" forState:UIControlStateNormal];
+            [btnAdd setTitle:@"+" forState:UIControlStateNormal];
             [btnAdd setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
             //关键语句
             btnAdd.layer.cornerRadius = btnAdd.frame.size.width/2;
             btnAdd.clipsToBounds = YES;
-            btnAdd.backgroundColor =[UIColor greenColor];
+            btnAdd.backgroundColor =Color_ProcessStutasColor;
+            btnAdd.titleLabel.font = [UIFont systemFontOfSize: 38.0];
+            btnAdd.contentVerticalAlignment=UIControlContentVerticalAlignmentCenter;
             [btnAdd addTarget:self action:@selector(cellAddBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
             //btnAdd.backgroundColor=UIColor.blueColor;
             [btnAdd setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -198,12 +200,14 @@ static NSInteger rowHeight=50;
             
             btn.frame = CGRectMake(cell.frame.size.width-10,cell.top+10, 30, 30);
             [btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-            [btn setTitle:@"✖️" forState:UIControlStateNormal];
             //关键语句
             btn.layer.cornerRadius = btnAdd.frame.size.width/2;
             btn.clipsToBounds = YES;
             btn.backgroundColor =[UIColor redColor];
-            
+            [btn setTitle:@"×" forState:UIControlStateNormal];
+            btn.titleLabel.font = [UIFont systemFontOfSize: 38.0];
+            //btn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentFill;
+            btn.contentVerticalAlignment=UIControlContentVerticalAlignmentCenter;
             [btn addTarget:self action:@selector(cellBtnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
             
             //[btn3 addTarget:self action:@selector(onClick3:) forControlEvents:UIControlEventTouchUpInside];

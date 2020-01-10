@@ -29,7 +29,7 @@ static NSString * identifier = @"PendingListCell";
     
     //e注册自定义 cell
     [_NewTableView registerClass:[AgentListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight = 120;
     currentPageCount=[Common_PageSize intValue];
     [self LoadData];
     

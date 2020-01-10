@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *urltype;
 @property (nonatomic,copy) NSString *proCelReson;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnProcess;
 
 @end
 

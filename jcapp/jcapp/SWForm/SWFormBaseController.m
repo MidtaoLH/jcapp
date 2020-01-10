@@ -221,20 +221,23 @@ static NSInteger rowHeight=50;
 
 #pragma mark -- TableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SWFormSectionItem *sectionItem = self.mutableItems[indexPath.section];
-    SWFormItem *item = sectionItem.items[indexPath.row];
-    if (item.itemType == SWFormItemTypeTextViewInput) {
-        return [SWFormTextViewInputCell heightWithItem:item];
+    if(tableView==self.formTableView){
+        SWFormSectionItem *sectionItem = self.mutableItems[indexPath.section];
+        SWFormItem *item = sectionItem.items[indexPath.row];
+        if (item.itemType == SWFormItemTypeTextViewInput) {
+            return [SWFormTextViewInputCell heightWithItem:item];
+        }
+        else if (item.itemType == SWFormItemTypeSelect) {
+            return [SWFormSelectCell heightWithItem:item];
+        }
+        else if (item.itemType == SWFormItemTypeImage) {
+            return [SWFormImageCell heightWithItem:item];
+        }
+        else {
+            return [SWFormInputCell heightWithItem:item];
+        }
     }
-    else if (item.itemType == SWFormItemTypeSelect) {
-        return [SWFormSelectCell heightWithItem:item];
-    }
-    else if (item.itemType == SWFormItemTypeImage) {
-        return [SWFormImageCell heightWithItem:item];
-    }
-    else {
-        return [SWFormInputCell heightWithItem:item];
-    }
+    return Common_CCRowHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

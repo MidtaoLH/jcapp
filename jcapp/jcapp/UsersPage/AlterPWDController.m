@@ -47,14 +47,7 @@
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_UserTableHeight*2));
     }];
-    [self.btnUpdate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserTableHeight*2);
-        
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_BtnHeight));
-    }];
-
+    
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.dataSource = self;
@@ -62,15 +55,11 @@
     _tableView.estimatedRowHeight = 0;
     _tableView.estimatedSectionHeaderHeight = 0;
     _tableView.estimatedSectionFooterHeight = 0;
-    
-    _btnUpdate.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _btnUpdate.font = kFont_Lable_16;
-    _btnUpdate.titleLabel.textAlignment= NSTextAlignmentCenter;
-    _btnUpdate.titleLabel.text  = @"修改";
+ 
 }
 - (NSArray *)titleArr {
     if (!_titleArr) {
-        _titleArr = @[@"用户编号", @"* 旧密码", @"* 新密码", @"* 确认密码"];
+        _titleArr = @[@"用户编号", @"* 旧密码", @"* 新密码", @"* 确认密码",@"修改"];
         return _titleArr;
     }
     return _titleArr;
@@ -139,6 +128,10 @@
             cell.textField.text = self.infoModel.enterpwd;
             cell.textField.secureTextEntry = YES;
         }
+        case 4:
+        {
+            cell.btnUpdate.titleLabel.text=@"修改";
+        }
             break;
             
         default:
@@ -181,7 +174,8 @@
     if (textField.tag == 1|| textField.tag == 2|| textField.tag == 3) {
         [textField addTarget:self action:@selector(handlerTextFieldEndEdit:) forControlEvents:UIControlEventEditingDidEnd];
         return YES; // 当前 textField 可以编辑
-    } else {
+    }
+    else {
         [self.view endEditing:YES];
         [self handlerTextFieldSelect:textField];
         return NO; // 当前 textField 不可编辑，可以响应点击事件
@@ -204,13 +198,17 @@
         {
             self.infoModel.enterpwd = textField.text;
         }
+        case 4:
+        {
+            [self btnupdateClick];
+        }
             break;
         default:
             break;
     }
 }
 
--(IBAction)btnupdateClick:(id)sender {
+-(void)btnupdateClick{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *user = [defaults objectForKey:@"username"];
     NSString *version = [UIDevice currentDevice].systemVersion;

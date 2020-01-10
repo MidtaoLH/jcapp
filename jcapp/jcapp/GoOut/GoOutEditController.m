@@ -81,17 +81,18 @@
                                        delegate:self];
     }
     
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.AppRoveType = @"waichu";
     
     totalHeight=Common_CCRowHeight;
     
     [self datas];
-	
+    //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
 }
 
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -224,16 +225,16 @@
     if([self.edittype isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width-50, 60)];
         
-        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-        submitBtn.center = footer.center;
-        submitBtn.backgroundColor = [UIColor orangeColor];
-        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
-        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
-        [footer addSubview:submitBtn];
+//        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+//        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+//        submitBtn.center = footer.center;
+//        submitBtn.backgroundColor = [UIColor orangeColor];
+//        [_btnProcess setTitle:@"查看审批路径" forState:UIControlStateNormal];
+//        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+        [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:_btnProcess];
         
         return footer;
     }

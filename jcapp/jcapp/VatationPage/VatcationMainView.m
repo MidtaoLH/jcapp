@@ -97,7 +97,8 @@ NSString * boolflag = @"flase";
     totalHeight=Common_CCRowHeight;
 
     [self datas];
-   self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
 }
 
 - (void)goBack {
@@ -194,7 +195,7 @@ NSString * boolflag = @"flase";
     [items addObject:_VatcationType];
     
     
-    SWFormItem *timecount = SWFormItem_Info(@"假期余额", UserHour, SWFormItemTypeInput);
+    SWFormItem *timecount = SWFormItem_Info(@"年假余额", UserHour, SWFormItemTypeInput);
     timecount.keyboardType = UIReturnKeyDefault;
     [items addObject:timecount];
 
@@ -295,14 +296,14 @@ NSString * boolflag = @"flase";
     }else{
         UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
         
-        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-        submitBtn.center = footer.center;
-        submitBtn.backgroundColor = [UIColor orangeColor];
-        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
-        
-        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
-        [footer addSubview:submitBtn];
+//        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+//        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
+//        submitBtn.center = footer.center;
+//        submitBtn.backgroundColor = [UIColor orangeColor];
+//        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
+//        
+        [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:_btnProcess];
         
         return footer;
         

@@ -73,7 +73,7 @@ NSString * bflag = @"flase";
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
@@ -231,16 +231,16 @@ NSString * bflag = @"flase";
     if([pageType isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
-        
-        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-        submitBtn.center = footer.center;
-        submitBtn.backgroundColor = [UIColor orangeColor];
-        [submitBtn setTitle:@"查看审批路径" forState:UIControlStateNormal];
-        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-        [submitBtn addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
-        [footer addSubview:submitBtn];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width-50, 60)];
+//        footer.backgroundColor=UIColor.cyanColor;
+//        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+//        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 30);
+//        submitBtn.center = footer.center;
+//        //submitBtn.backgroundColor = [UIColor orangeColor];
+//        [_btnProcess setTitle:@"查看审批路径" forState:UIControlStateNormal];
+//        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+        [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
+        [footer addSubview:_btnProcess];
         
         return footer;
     }
@@ -380,6 +380,22 @@ NSString * bflag = @"flase";
     }
 }
 - (void)addAction {
+    NSMutableArray *myDataCopy=[[NSMutableArray alloc]init];
+    for (int i=0; i<myData.count; i++) {
+        NSString *ele=myData[i];
+        [myDataCopy addObject:ele];
+    }
+    [myDataCopy removeObject:@""];
+    if(myDataCopy.count==0){
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"请输入出差地点"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         if(![self isNumber:self.businessNum.info])
         {
@@ -392,9 +408,22 @@ NSString * bflag = @"flase";
             [alert show];
             return;
         }
+        // 字符串转float
+        float floatString = [self.businessNum.info floatValue];
+        if(floatString>365)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数不能大于365"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         self->operateType=@"0";
         
-        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
+        NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myDataCopy, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
         //print out the data contents
@@ -442,6 +471,19 @@ NSString * bflag = @"flase";
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
                                   message: @"出差天数必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        // 字符串转float
+        float floatString = [self.businessNum.info floatValue];
+        if(floatString>365)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数不能大于365"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -520,8 +562,11 @@ NSString * bflag = @"flase";
 //        // 添加大小约束
 //        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
 //    }];
-    [tableViewPlace reloadData];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, 500);
+    //[tableViewPlace reloadData];
+    [tableViewPlace beginUpdates];
+    [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+    [tableViewPlace endUpdates];
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //        make.left.mas_equalTo(0);
@@ -549,7 +594,9 @@ NSString * bflag = @"flase";
         // do something
         //totalcount++;
         [myData addObject:@""];
-        totalHeight=totalHeight+Common_CCRowHeight;
+        if(totalHeight<Common_CCRowHeight*4){
+            totalHeight=totalHeight+Common_CCRowHeight;
+        }
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
         
@@ -558,7 +605,16 @@ NSString * bflag = @"flase";
 }
 - (void)cellBtnClicked:(id)sender event:(id)event
 {
-    
+    if(myData.count==1){//h至少有一条数据
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"出差地点至少保留一行数据"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     NSSet *touches =[event allTouches];
     
     UITouch *touch =[touches anyObject];
@@ -572,7 +628,9 @@ NSString * bflag = @"flase";
         // do something
         //totalcount--;
         [myData removeObjectAtIndex:indexPath.row];
-        totalHeight=totalHeight-Common_CCRowHeight;
+        if(myData.count<4){
+            totalHeight=totalHeight-Common_CCRowHeight;
+        }
         [self LoadTableLocation];
         //NSLog(@"indexPath.row:%@;mydata:%@",indexPath.row,myData.count);
     }
@@ -673,6 +731,9 @@ NSString * bflag = @"flase";
                 [myData addObject:[obj objectForKey:@"BusinessTripPlace"]];
             }
             totalHeight=totalHeight+Common_CCRowHeight*(resultDic.count-1);
+            if(totalHeight>Common_CCRowHeight*4){
+                totalHeight=Common_CCRowHeight*4;
+            }
             
             //解析图片数据
             resData = [[NSData alloc] initWithData:[array[2] dataUsingEncoding:NSUTF8StringEncoding]];

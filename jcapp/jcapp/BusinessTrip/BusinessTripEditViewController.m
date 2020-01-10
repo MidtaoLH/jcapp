@@ -220,8 +220,9 @@ NSString * bflag = @"flase";
     };
     //[items addObject:_gender];
     
-    self.reason = SWFormItem_Add(@"出差事由", @"请输入出差事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
+    self.reason = SWFormItem_Add(@"出差事由", @"", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
     self.reason.showLength = YES;
+    self.reason.placeholder=@"请输入出差事由";
     [items addObject:_reason];
     
     self.image = SWFormItem_Add(@"图片", nil, SWFormItemTypeImage, YES, NO, UIKeyboardTypeDefault);

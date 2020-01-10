@@ -87,6 +87,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSLog(@"%@",@"viewDidLoad-end");
         //d根据不同单据类型 设置文字
     [self settsaktype];
+    [self.btntaskno.layer setCornerRadius:12];
+    self.btntaskno.layer.masksToBounds=YES;
+    [self.buttaskyes.layer setCornerRadius:12];
+    self.buttaskyes.layer.masksToBounds=YES;
     
      [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
      [_buttaskyes addTarget:self action:@selector(actionyes:)   forControlEvents:UIControlEventTouchUpInside];

@@ -7,6 +7,9 @@
 //
 
 #import "NoticeDetailController.h"
+#import "../MJRefresh/MJRefresh.h"
+#import "AppDelegate.h"
+#import "TabBarViewController.h"
 
 @interface NoticeDetailController ()
 
@@ -20,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     //设置换行
     self.lbltoncent.lineBreakMode = UILineBreakModeWordWrap;
     self.lbltoncent.numberOfLines = 0;
@@ -43,7 +46,19 @@
     
      NSLog(@"%@",@"viewDidLoad-detail-bgn");
 }
-
+- (void)goBack {
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+-(IBAction)onClickButtonreturn:(id)sender {
+ 
+    NSLog(@"%@", @"return");
+    [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+    //[tableview reloadData];
+    
+}
 /*
 #pragma mark - Navigation
 

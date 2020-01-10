@@ -12,10 +12,10 @@
 #import "NoticeCell.h"
 #import "NoticeDetailController.h"
 
+#import "../MJRefresh/MJRefresh.h"
 
-@interface NewViewController ()
-
-
+@interface NewViewController ()<UIActionSheetDelegate>
+ 
 @end
 
 @implementation NewViewController
@@ -27,20 +27,69 @@ static NSString *identifier =@"NoticeCell";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    NSLog(@"%@",@"viewDidLoad-bgn");
  
-   
+    NSLog(@"%@",@"viewDidLoad-bgn");
+
     //注册自定义 cell
     [_NewTableView registerClass:[NoticeCell class] forCellReuseIdentifier:identifier];
      _NewTableView.rowHeight = 100;
+    
+    currentPageCount=[Common_PageSize intValue];
+        [self LoadData];
+    
+    // 添加头部的下拉刷新
+    MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
+    [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
+    self.NewTableView.mj_header = header;
+    
+    // 添加底部的上拉加载
+    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
+    self.NewTableView.mj_footer = footer;
+    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    
+    NSLog(@"%@",@"viewDidLoad-end");
+}
+
+// 2.实现下拉刷新和上拉加载的事件。
+// 头部的下拉刷新触发事件
+- (void)headerClick {
+    // 可在此处实现下拉刷新时要执行的代码
+    // ......
+    //if(currentPageCount>1)
+    //currentPageCount--;
     [self LoadData];
-   NSLog(@"%@",@"viewDidLoad-end");
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_header endRefreshing];
+}
+// 底部的上拉加载触发事件
+- (void)footerClick {
+    // 可在此处实现上拉加载时要执行的代码
+    // ......
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
+    [self LoadData];
+    // 模拟延迟3秒
+    //[NSThread sleepForTimeInterval:3];
+    // 结束刷新
+    [self.NewTableView.mj_footer endRefreshing];
 }
 //设置需要访问的ws和传入参数
 -(void)LoadData
 {
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetNoticeNews"];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    empname = [defaults objectForKey:@"empname"];
+    groupid = [defaults objectForKey:@"Groupid"];
+    UserHour = [defaults objectForKey:@"UserHour"];
+    
+    
+    NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetNoticeNews?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@", @"1",currentPageCountstr,userID,groupid];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
 
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求

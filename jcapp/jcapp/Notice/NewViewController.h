@@ -16,9 +16,16 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary *info;
     NSString *currentTagName;
     NSString *currentValue;
-    NSString *resultString; 
+    NSString *resultString;
+ 
+    NSInteger currentPageCount;
+    
+    NSString *groupid;
+    NSString *empname;
+    NSString *empID;
+    NSString *userID;
+    NSString *UserHour;
 }
-
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 
 // 添加数据源

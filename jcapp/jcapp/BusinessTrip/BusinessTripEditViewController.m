@@ -73,14 +73,14 @@ NSString * bflag = @"flase";
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //
 //        make.left.mas_equalTo(0);
 //        // 添加大小约束
-//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight));
 //    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -579,7 +579,14 @@ NSString * bflag = @"flase";
     [tableViewPlace beginUpdates];
     [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [tableViewPlace endUpdates];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight));
+//    }];
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //        make.left.mas_equalTo(0);

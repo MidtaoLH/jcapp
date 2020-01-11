@@ -18,6 +18,8 @@
 #import "LeaveStatusModel.h"
 #import "TabBarViewController.h"
 #import "WayViewController.h"
+#import "Masonry.h"
+
 static NSInteger rowHeight=50;
 
 
@@ -91,18 +93,25 @@ NSString * boolflag = @"flase";
     datePickere = [[UIDatePicker alloc] init]; datePickere.datePickerMode = UIDatePickerModeDate;
     [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
 
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.AppRoveType = @"qingjia";
 
     totalHeight=Common_CCRowHeight;
 
     [self datas];
     //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
+    //self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
+    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight));
+    }];
 }
 
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];

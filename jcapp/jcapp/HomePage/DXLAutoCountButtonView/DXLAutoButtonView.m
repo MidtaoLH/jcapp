@@ -101,7 +101,6 @@
 {
     if(self = [super initWithFrame:frame])
     {
-        self.backgroundColor = [UIColor whiteColor];
         NSMutableArray *temp = [NSMutableArray new];
         for(int i=0;i<viewsArray.count;i++)
         {
@@ -109,9 +108,10 @@
             _autoLableView = lb;
             lb.title = viewsArray[i];
             lb.count = labelArray[i];
+            
             [self addSubview:lb];
             lb.sd_layout.heightIs(Common_HomeCellSize);
-            lb.sd_layout.widthIs(Common_HomeCellSize);
+            //lb.sd_layout.widthIs(Common_HomeCellSize);
             lb.tag = i;
             [temp addObject:lb];
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];

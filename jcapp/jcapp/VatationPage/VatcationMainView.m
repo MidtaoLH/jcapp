@@ -276,7 +276,8 @@ NSString * boolflag = @"flase";
     
     self.businessNum = SWFormItem_Add(@"请假时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 5;
-    self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
+    self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
+    self.businessNum.unit=@"小时";
     [items addObject:_businessNum];
     
     self.gender = SWFormItem_Add(@"性别", nil, SWFormItemTypeSelect, NO, YES, UIKeyboardTypeDefault);
@@ -373,7 +374,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"请假类型不能为空！"
+                                  message: @"请假类型不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -390,7 +391,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"开始时间不能为空！"
+                                  message: @"开始时间不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -407,7 +408,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"结束时间不能为空！"
+                                  message: @"结束时间不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -425,7 +426,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"时长不能为空！"
+                                  message: @"请假时长不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -443,7 +444,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"请假事由不能为空！"
+                                  message: @"请假事由不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -473,6 +474,17 @@ NSString * boolflag = @"flase";
         }
         // 字符串转float
         float floatString = [vatcationtime floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>9999)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -553,7 +565,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"请假类型不能为空！"
+                                  message: @"请假类型不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -570,7 +582,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"开始时间不能为空！"
+                                  message: @"开始时间不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -587,7 +599,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"结束时间不能为空！"
+                                  message: @"结束时间不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -605,7 +617,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"时长不能为空！"
+                                  message: @"请假时长不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -623,7 +635,7 @@ NSString * boolflag = @"flase";
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
-                                  message: @"请假事由不能为空！"
+                                  message: @"请假事由不能为空"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -652,6 +664,17 @@ NSString * boolflag = @"flase";
         }
         // 字符串转float
         float floatString = [vatcationtime floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>9999)
         {
             UIAlertView *alert = [[UIAlertView alloc]

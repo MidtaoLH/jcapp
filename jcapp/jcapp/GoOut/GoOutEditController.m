@@ -219,7 +219,8 @@
     
     self.businessNum = SWFormItem_Add(@"外出时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 5;
-    self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
+    self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
+    self.businessNum.unit=@"小时";
     [items addObject:_businessNum];
  
     self.reason = SWFormItem_Add(@"外出理由", @"", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
@@ -249,12 +250,12 @@
         UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, self.view.width-40, 60)];
 //        [footer  mas_makeConstraints:^(MASConstraintMaker *make) {
 //            make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-//            
+//
 //            make.left.mas_equalTo(20);
 //            // 添加大小约束
 //            make.size.mas_equalTo(CGSizeMake(kScreenWidth-40, 60));
 //        }];
-//        
+//
 //        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
 //        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
 //        submitBtn.center = footer.center;
@@ -355,6 +356,17 @@
         }
         // 字符串转float
         float floatString = [vatcationtime floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>9999)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -449,6 +461,17 @@
         }
         // 字符串转float
         float floatString = [vatcationtime floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>9999)
         {
             UIAlertView *alert = [[UIAlertView alloc]

@@ -206,7 +206,8 @@ NSString * bflag = @"flase";
     
     self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 4;
-    self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
+    self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
+    self.businessNum.unit=@"天";
     [items addObject:_businessNum];
     
     self.gender = SWFormItem_Add(@"性别", nil, SWFormItemTypeSelect, NO, YES, UIKeyboardTypeDefault);
@@ -423,6 +424,17 @@ NSString * bflag = @"flase";
         }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>365)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -492,6 +504,17 @@ NSString * bflag = @"flase";
         }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>365)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -510,7 +533,7 @@ NSString * bflag = @"flase";
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSLog(@"text字典里面的内容为--》%@", text );
+        //NSLog(@"text字典里面的内容为--》%@", text );
         if([self->pageType isEqual:@"1"]){
             self->pageType=@"4";
         }else if([self->pageType isEqual:@"2"]){

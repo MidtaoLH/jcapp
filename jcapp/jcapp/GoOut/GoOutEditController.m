@@ -214,7 +214,7 @@
     self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
     [items addObject:_businessNum];
  
-    self.reason = SWFormItem_Add(@"外出理由", @"请输入外出事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
+    self.reason = SWFormItem_Add(@"外出理由", @"", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
     self.reason.placeholder=@"请输入外出事由";
     self.reason.showLength = YES;
     [items addObject:_reason];

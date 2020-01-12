@@ -7,17 +7,6 @@
 #import "SetAgentViewController.h"
 #import "../TabBar/TabBarViewController.h"
 #import "Masonry.h"
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-// 414
-#define kScale kScreenWidth/375.0f
-
-#define kkScale kScreenWidth/414.0f
-
-#define khScale kScreenHeight/667.0f
-
-#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width) // 获取屏幕宽度
-#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height) // 获取屏幕高度
 @interface SelectUserViewController ()<SkyAssociationMenuViewDelegate>
 {
     NSArray *titleArr;
@@ -302,5 +291,4 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
 }
-
 @end

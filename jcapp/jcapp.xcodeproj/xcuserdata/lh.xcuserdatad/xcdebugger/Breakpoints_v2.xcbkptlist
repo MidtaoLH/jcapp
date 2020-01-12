@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/TabBar/TabBarViewController.m"
-            timestampString = "600526253.142833"
+            timestampString = "600528978.354318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "625"
-            endingLineNumber = "625"
+            startingLineNumber = "632"
+            endingLineNumber = "632"
             landmarkName = "TabBarViewController"
             landmarkType = "3">
          </BreakpointContent>

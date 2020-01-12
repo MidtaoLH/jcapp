@@ -68,7 +68,7 @@
         .widthRatioToView(self, 0.5)
         .topSpaceToView(_titlelb, 0)
         .leftEqualToView(_titlelb)
-        .rightEqualToView(_titlelb)
+        //.rightEqualToView(self)
         .bottomSpaceToView(self, 0);
         //_countlb.frame=CGRectMake(_titlelb.left,_titlelb.top+_titlelb.height+10.0, _countlb.width, _countlb.height);
    

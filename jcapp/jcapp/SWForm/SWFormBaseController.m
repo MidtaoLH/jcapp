@@ -142,26 +142,35 @@ static NSInteger rowHeight=50;
             UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
             cell.centerX=0.0;
-            cell.textLabel.text=[NSString stringWithFormat:@"*"];
+            cell.textLabel.text=[NSString stringWithFormat:@""];
             cell.textLabel.textColor=UIColor.redColor;
             //cell.backgroundColor=UIColor.redColor;
+            
+            UILabel *cell1=[[UILabel alloc]init];
+            cell1.text=[NSString stringWithFormat:@"*"];
+            cell1.textColor=UIColor.redColor;
+            cell1.frame = CGRectMake(10.0,5, 15, rowHeight);
+             cell1.font=kFont_Lable_16;
+            [cell.contentView addSubview:cell1];
             
             UILabel *cell0=[[UILabel alloc]init];
             cell0.text=[NSString stringWithFormat:@"出差地点"];
             //cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
             //cell0.left=40;
-            cell0.frame = CGRectMake(20.0,0, 80, rowHeight);
+            cell0.frame = CGRectMake(16.0,0, 75, rowHeight);
+            cell0.font=kFont_Lable_16;
             //cell0.backgroundColor=UIColor.greenColor;
             [cell.contentView addSubview:cell0];
             
-            CGRect textFieldRect = CGRectMake(cell0.centerX+35,cell.top+10, 150, 30.0);
+            CGRect textFieldRect = CGRectMake(cell0.width+25.0,cell.top+10, 150, 30.0);
             UITextField *theTextField = [[UITextField alloc] initWithFrame:textFieldRect];
             theTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
             //theTextField.frame = CGRectMake(cell0.centerX+33,0, 150, rowHeight);
             //theTextField.returnKeyType = UIReturnKeyDefault;
-            theTextField.borderStyle = UITextBorderStyleLine;
-            theTextField.layer.borderColor = [UIColor grayColor].CGColor;
-            theTextField.layer.borderWidth = 1.0f;
+            theTextField.borderStyle = UITextBorderStyleNone;
+            theTextField.placeholder=@"请输入";
+            //theTextField.layer.borderColor = [UIColor grayColor].CGColor;
+            //theTextField.layer.borderWidth = 1.0f;
             
             theTextField.tag = [indexPath row];
             theTextField.delegate = self;
@@ -182,7 +191,7 @@ static NSInteger rowHeight=50;
             
             //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
-            btnAdd.frame = CGRectMake(cell.frame.size.width-50,cell.top+10, 30, 30);
+            btnAdd.frame = CGRectMake(self.view.width-80,cell.top+10, 30, 30);
             [btnAdd setTitle:@"+" forState:UIControlStateNormal];
             [btnAdd setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
             //关键语句
@@ -198,7 +207,7 @@ static NSInteger rowHeight=50;
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             
-            btn.frame = CGRectMake(cell.frame.size.width-10,cell.top+10, 30, 30);
+            btn.frame = CGRectMake(self.view.width-40,cell.top+10, 30, 30);
             [btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
             //关键语句
             btn.layer.cornerRadius = btnAdd.frame.size.width/2;

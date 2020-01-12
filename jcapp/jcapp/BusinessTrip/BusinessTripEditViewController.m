@@ -73,14 +73,14 @@ NSString * bflag = @"flase";
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //
 //        make.left.mas_equalTo(0);
 //        // 添加大小约束
-//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight));
 //    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -206,7 +206,8 @@ NSString * bflag = @"flase";
     
     self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 4;
-    self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
+    self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
+    self.businessNum.unit=@"天";
     [items addObject:_businessNum];
     
     self.gender = SWFormItem_Add(@"性别", nil, SWFormItemTypeSelect, NO, YES, UIKeyboardTypeDefault);
@@ -423,6 +424,17 @@ NSString * bflag = @"flase";
         }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>365)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -492,6 +504,17 @@ NSString * bflag = @"flase";
         }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>365)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -510,7 +533,7 @@ NSString * bflag = @"flase";
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSLog(@"text字典里面的内容为--》%@", text );
+        //NSLog(@"text字典里面的内容为--》%@", text );
         if([self->pageType isEqual:@"1"]){
             self->pageType=@"4";
         }else if([self->pageType isEqual:@"2"]){
@@ -579,7 +602,14 @@ NSString * bflag = @"flase";
     [tableViewPlace beginUpdates];
     [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [tableViewPlace endUpdates];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight));
+//    }];
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //        make.left.mas_equalTo(0);

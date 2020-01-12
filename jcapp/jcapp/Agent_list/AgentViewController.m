@@ -203,7 +203,7 @@ static NSString * identifier = @"PendingListCell";
     if([status containsString:@"1"])
     {
         SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
-        VCCollect.infoModel.agentID=code;
+        VCCollect.agentID=code;
         AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
         myDelegate.agentType=@"info";
         [self.navigationController pushViewController:VCCollect animated:YES];

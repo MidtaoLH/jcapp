@@ -108,9 +108,6 @@
     myDelegate.way_empid =lbempid.text;
     myDelegate.way_empname =lbempname.text;
     myDelegate.agentType = @"true";
-    myDelegate.TimeStart=self.startTime;
-    myDelegate.TimeEnd=self.endTime;
-    myDelegate.agentid=self.agentID;
     SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
     [self.navigationController pushViewController:VCCollect animated:YES];
 }

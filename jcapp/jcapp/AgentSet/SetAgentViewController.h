@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "../Model/BRInfoModel.h"
-#import "BRPickerView.h"
+#import "../SWForm/SWFormBaseController.h"
 #import "BRInfoCell.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SetAgentViewController : UIViewController
+@interface SetAgentViewController : SWFormBaseController
 {
     UIDatePicker*datePickers;
     UIDatePicker*datePickere;
@@ -22,16 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
 }
-@property (nonatomic, strong) BRDatePickerView *datePickerView;
-@property (nonatomic, copy) NSArray *titleArr;
-@property (nonatomic, strong) BRInfoModel *infoModel;
-@property (nonatomic, assign) NSInteger nameSelectIndex;
-@property (nonatomic, strong) NSDate *startdaySelectDate;
-@property (nonatomic, strong) NSDate *enddaySelectDate;
-@property (weak, nonatomic) IBOutlet UIButton *savebtn;
-@property (weak, nonatomic) IBOutlet UIButton *applicationbtn;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (nonatomic,copy) NSString *agentID;
 
 @end
 

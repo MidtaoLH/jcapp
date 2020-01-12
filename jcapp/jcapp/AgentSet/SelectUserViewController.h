@@ -13,16 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SelectUserViewController : UIViewController{
     NSString *xmlString;
     NSString *stringflag;
-    
     NSMutableDictionary *info;
-    IBOutlet UILabel    *lbgroupname;
-    IBOutlet UILabel    *lbempname;
-    IBOutlet UILabel    *lbgroupid;
-    IBOutlet UILabel    *lbempid;
 }
-@property (nonatomic,copy) NSString *startTime;
-@property (nonatomic,copy) NSString *endTime;
-@property (nonatomic,copy) NSString *agentID;
 @property (nonatomic, retain)IBOutlet UIButton *chosebutton;
 @property (nonatomic, retain)IBOutlet UIButton *savebutton;
 @property (strong,nonatomic) NSMutableArray *listOfGroup;

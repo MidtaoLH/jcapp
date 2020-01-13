@@ -112,10 +112,10 @@
     UIToolbar *toolBar = [[UIToolbar alloc]init];
     [self.view addSubview:toolBar];
     [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(kScreenHeight-70);
+        make.top.mas_equalTo(kScreenHeight-TabbarHeight);
         
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 60));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, TabbarHeight));
     }];
     
     UIImage* itemImage= [UIImage imageNamed:@"save.png"];

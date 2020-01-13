@@ -84,20 +84,18 @@ static NSString *identifierImage =@"ImageCell.h";
     
     itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    UIBarButtonItem * addBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(TaskUpdate:)];
+    UIBarButtonItem * editBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(TaskUpdate:)];
     
-    //UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
-    addBtn.width=kScreenWidth/2;
+    editBtn.width=kScreenWidth/2;
     
     itemImage= [UIImage imageNamed:@"cancelApply.png"];
     
     itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    UIBarButtonItem * submitBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(TaskCancle:)];
+    UIBarButtonItem * cancelBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(TaskCancle:)];
+    cancelBtn.width=kScreenWidth/2;
     
-    //UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
-    NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
-    submitBtn.width=kScreenWidth/2;
+    NSArray *toolbarItems = [NSArray arrayWithObjects:cancelBtn,editBtn, nil];
     
     [toolBar setItems:toolbarItems animated:YES];
     [self loadstyle];

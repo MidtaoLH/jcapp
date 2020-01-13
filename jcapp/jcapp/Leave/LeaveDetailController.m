@@ -195,15 +195,16 @@ static NSString *identifierImage =@"LeaveImageCell.h";
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
+        //make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*7)-Common_BtnHeight*2));
         // 添加左
         make.left.mas_equalTo(0);
         
     }];
     
     [self.btncancle mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
+        // 添加上make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
+        make.top.mas_equalTo(kScreenHeight-Common_BtnHeight-Common_RowSize-Common_RowSize/2);
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
         // 添加大小约束
@@ -211,7 +212,8 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     }];
     [self.btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
+        //make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
+        make.top.mas_equalTo(kScreenHeight-Common_BtnHeight-Common_RowSize-Common_RowSize/2);
         // 添加左
         make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
         // 添加大小约束

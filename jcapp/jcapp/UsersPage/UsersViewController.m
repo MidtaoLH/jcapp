@@ -336,7 +336,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([infoString containsString:@"成功"])
+    if([infoString containsString:@"成功"]||[infoString containsString:@"NO"]||[infoString containsString:@"OK"])
     {
         
     }

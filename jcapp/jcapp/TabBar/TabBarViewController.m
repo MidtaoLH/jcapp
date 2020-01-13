@@ -109,9 +109,10 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"agent";
         [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerSetAgent(@"", @"increase_meituan", 1)];
-        [self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
+        //[self addChildViewController:childViewControllerSetAgent(@"", @"increase_meituan", 1)];
+        //[self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
         self.navigationItem.title=@"代理人列表";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"新增" style:UIBarButtonItemStylePlain target:self action:@selector(addAgent)];
     }
     else if([myDelegate.tabbarType isEqualToString:@"10"])
     {
@@ -132,6 +133,11 @@ NSInteger barheight;
    
     }
  
+}
+- (void)addAgent {
+    SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
+    VCCollect.agentID=@"0";
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
 UIViewController *childViewControllerHomePage (NSString *title, NSString *imgName, NSUInteger tag) {
     HomePageViewController *vc = [[HomePageViewController alloc] init];
@@ -573,6 +579,7 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
 
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerSelectUser (NSString *title, NSString *imgName, NSUInteger tag) {
+    
     SelectUserViewController *vc = [[SelectUserViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
@@ -699,6 +706,6 @@ NSArray *imgs (){
         VCCollect.agentID=@"0";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
-    
 }
+
 @end

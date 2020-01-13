@@ -120,9 +120,14 @@ NSString * boolflag = @"flase";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, self.view.height-50.0, self.view.width, 50.0)];
-    
+    UIToolbar *toolBar = [[UIToolbar alloc]init];
     [self.view addSubview:toolBar];
+    [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kScreenHeight-70);
+        
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 60));
+    }];
     
     UIImage* itemImage= [UIImage imageNamed:@"save.png"];
     
@@ -131,7 +136,7 @@ NSString * boolflag = @"flase";
     UIBarButtonItem * addBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
     
     //UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
-    addBtn.width=self.view.width/2;
+    addBtn.width=kScreenWidth/2;
     
     itemImage= [UIImage imageNamed:@"submit.png"];
     
@@ -141,7 +146,7 @@ NSString * boolflag = @"flase";
     
     //UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
     NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
-    submitBtn.width=self.view.width/2;
+    submitBtn.width=kScreenWidth/2;
     
     [toolBar setItems:toolbarItems animated:NO];
     

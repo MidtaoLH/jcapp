@@ -48,18 +48,14 @@ NSInteger barheight;
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if([myDelegate.tabbarType isEqualToString:@"1"])
     {
-        [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_icon_mine_default", 1)];
-//        self.navigationItem.title=@"北京中道益通软件技术有限公司";
-//        self.navigationItem.largeTitleDisplayMode=UINavigationItemLargeTitleDisplayModeAlways;
-        UIView *titleview=[[UIView alloc]init];
+        titleview=[[UIView alloc]init];
         [self.view addSubview:titleview];
         [titleview mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(0);
-        
-                make.left.mas_equalTo(0);
-                // 添加大小约束
-                make.size.mas_equalTo(CGSizeMake(kScreenWidth, StatusBarAndNavigationBarHeight));
+            make.top.mas_equalTo(0);
+            
+            make.left.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth, StatusBarAndNavigationBarHeight));
         }];
         UILabel *titlelabel=[[UILabel alloc]init];
         [titleview addSubview:titlelabel];
@@ -76,6 +72,8 @@ NSInteger barheight;
         //titleview.backgroundColor=UIColor.orangeColor;
         //titlelabel.centerY=titleview.centerY;
         self.navigationItem.titleView=titleview;
+        [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];
+        [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_icon_mine_default", 1)];
     }
     else if([myDelegate.tabbarType isEqualToString:@"2"])
     {
@@ -647,7 +645,7 @@ UIViewController *childViewControllerNewView (NSString *title, NSString *imgName
     return vc;
 }
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.tabbarType=@"1";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
@@ -706,10 +704,17 @@ NSArray *imgs (){
 
 // MARK: - UITabBarItemDelegate 监听TabBarItem点击事件
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
      self.navigationItem.title=item.title;
-    //NSUInteger tabIndex = [tabBar.items indexOfObject:item];
-    //myDelegate.tabbarIndex=tabIndex;
+    if([myDelegate.tabbarType isEqualToString:@"1"]){
+        if(tabBar.selectedIndex==0){
+            titleview.hidden=FALSE;
+        }
+        else{
+            titleview.hidden=TRUE;
+        }
+    }
+    
     if([myDelegate.tabbarType isEqualToString:@"6"]&&tabBar.selectedIndex==1)
     {
       

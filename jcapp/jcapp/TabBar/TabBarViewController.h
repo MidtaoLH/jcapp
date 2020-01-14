@@ -10,7 +10,9 @@
 #import "../TLAnimationTabBar/TLAnimationTabBar.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TabBarViewController : UITabBarController
+@interface TabBarViewController : UITabBarController{
+    UIView *titleview;
+}
 /**/
 @property (nonatomic,copy) NSString *type;
 @end

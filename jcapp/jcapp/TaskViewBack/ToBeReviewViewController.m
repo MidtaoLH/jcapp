@@ -22,7 +22,9 @@ static NSString * identifier = @"PendingListCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    //self.navigationItem.title=@"待回览";
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
@@ -198,7 +200,8 @@ static NSString * identifier = @"PendingListCell";
       VCCollect.pagetype=@"0";
     VCCollect.code=code;
     VCCollect.taskcode=taskcode;
-     VCCollect.title=@"回览事项明细"; 
+     VCCollect.title=@"回览事项明细";
+    VCCollect.titletype=@"0";
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 //解决tableview线不对的问题

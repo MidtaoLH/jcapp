@@ -17,6 +17,8 @@
 #import "../Model/ViewBackDetail.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "Masonry.h"
+#import "TabBarViewController.h"
+#import "AppDelegate.h"
 #define kCount 6  //图片总张数
 
 static long step = 0; //记录时钟动画调用次数
@@ -39,6 +41,14 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.navigationItem.title=self.title;
+    if([self.titletype isEqualToString:@"0"])
+    {
+          self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"待回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    }
+    else
+    {
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"已回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    }
     [self loadstyle];
     [self loadInfo];
     [self loadTaskInfo];
@@ -48,7 +58,29 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         [self updateStatus];
     }
 }
-
+- (void)goBack {
+   
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    if([self.titletype isEqualToString:@"0"])
+    {
+        myDelegate.tabbarIndex=@"0";
+    }
+    else
+    {
+        myDelegate.tabbarIndex=@"1";
+    }
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    if([self.titletype isEqualToString:@"0"])
+    {
+        tabBarCtrl.selectedIndex=0;
+    }
+    else
+    {
+        tabBarCtrl.selectedIndex=1;
+    }
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];

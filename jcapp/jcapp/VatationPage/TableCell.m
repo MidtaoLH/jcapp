@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UILabel *leaveCondition;
 @property (nonatomic, strong) AddButton *btnAdd;
 @property (nonatomic, strong) DelButton *btndel;
+@property (nonatomic, strong) UIButton *btnline;
 
 // (nonatomic, strong)   (nonatomic,weak)
 @end
@@ -50,7 +51,14 @@
     }
     return _btnAdd;
 }
-
+- (UIButton *)btnline {
+    
+    if (!_btnline) {
+        _btnline = [[AddButton alloc] init];
+        _btnline.backgroundColor = kColor_Gray;
+    }
+    return _btnline;
+}
 - (DelButton *)btndel {
     
     if (!_btndel) {
@@ -125,6 +133,7 @@
         [self.contentView  addSubview:self.leaveCondition];
         [self.contentView  addSubview:self.btnAdd];
         [self.contentView  addSubview:self.btndel];
+       [self.contentView  addSubview:self.btnline];
     }
     return self;
 }
@@ -188,6 +197,10 @@
     
     if([ Waylist.name isEqualToString:@"button"])
     {
+        CGFloat width = self.bounds.size.width;
+        CGFloat imageWH=width/6;
+        self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,Common_TableRowHeight);
+        
        self.btnAdd.hidden = NO;
         self.btndel.hidden = YES;
         self.textLabel.hidden = YES;
@@ -199,10 +212,35 @@
         self.btnAdd.multiParamDic= paramDic;
         self.btndel.multiParamDic= paramDic;
         self.backgroundColor =  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];;
+        if([Waylist.levelname isEqualToString:@"回览人"])
+        {
+            self.btnline.hidden = YES;
+        }
+        else
+        {
+            self.btnline.hidden = NO;
+        }
     }
     else
     {
         self.backgroundColor = kColor_White;
+        if(![Waylist.level isEqualToString:@"99"])
+        {
+            CGFloat width = self.bounds.size.width;
+            CGFloat imageWH=width/6;
+            if(self.index==0&&[Waylist.level isEqualToString:@"1"])
+            {
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, kMargin, 5,Common_TableRowHeight);
+            }
+            else
+            {
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,Common_TableRowHeight);
+            }
+            self.btnline.hidden = NO;
+        }else
+        {
+            self.btnline.hidden = YES;
+        }
         if([Waylist.editflag isEqualToString:@"0"])
         {
             NSLog(@"%@",@"setwayelse");
@@ -284,6 +322,9 @@
     self.btnAdd.layer.cornerRadius = SetButtonSize * 0.5;
     
     self.btndel.frame = CGRectMake(width-SetDelButtonSize*2-kMargin, 2*txtH+3*kMargin, SetDelButtonSize*2,SetDelButtonSize);
+    
+   
+    
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -113,19 +113,15 @@
 }
 
 -(IBAction)onClickButtonsave:(id)sender {
-    
-    
+    [_tagView dismiss];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.way_groupname =lbgroupname.text;
     myDelegate.way_groupid =lbgroupid.text;
-    
     myDelegate.way_empid =lbempid.text;
     myDelegate.way_empname =lbempname.text;
     myDelegate.way_empenglishname =lbempenglistname.text;
     myDelegate.way_refresh = @"true";
-    
-     [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
-    
+    [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
 }
 
 

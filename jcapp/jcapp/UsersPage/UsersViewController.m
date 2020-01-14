@@ -229,7 +229,7 @@
 //            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
             [[SDImageCache sharedImageCache] clearDisk];
             [[SDImageCache sharedImageCache] clearMemory];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                 myDelegate.userPhotoimageView=imageView;
             }];

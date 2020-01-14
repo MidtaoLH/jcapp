@@ -57,7 +57,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     [super viewDidLoad];
     [self loadstyle];
-   
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     
     edittype = 0;
  
@@ -123,7 +123,11 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [toolBar setItems:toolbarItems animated:YES];
    
 }
-
+- (void)goBack {
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];

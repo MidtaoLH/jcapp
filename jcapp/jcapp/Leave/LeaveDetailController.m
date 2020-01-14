@@ -50,6 +50,8 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     [super viewDidLoad];
     //设置子视图的f导航栏的返回按钮
     self.navigationItem.title=self.title;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     
@@ -105,7 +107,11 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     
     [self loadstyle];
 }
-
+- (void)goBack {
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];

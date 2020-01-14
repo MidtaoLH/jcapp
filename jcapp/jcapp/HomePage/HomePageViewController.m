@@ -259,6 +259,7 @@
             WebViewController *web=[[WebViewController alloc] init];
             //[web.webview loadRequest:request];
             //[self.webview loadHTMLString:html baseURL:nil];
+            
             [self.navigationController pushViewController:web animated:YES];
             //self.navigationItem.title=@"返回";
             web.request=request;

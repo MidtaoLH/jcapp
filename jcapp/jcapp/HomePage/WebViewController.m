@@ -18,8 +18,11 @@
     [super viewDidLoad];
     NSLog(@"request:-----%@",self.request);
     [self.webview loadRequest:self.request];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 }
-
+- (void)goBack {
+     [self.navigationController popViewControllerAnimated:YES];
+}
 /*
 #pragma mark - Navigation
 

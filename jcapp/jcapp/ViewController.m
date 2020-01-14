@@ -67,8 +67,8 @@
     {
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"提示信息！"
-                              message: @"用户名密码不能为空！"
+                              initWithTitle: @""
+                              message: @"用户名密码不能为空"
                               delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
@@ -178,7 +178,7 @@
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               message: @"服务器连接失败"
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
@@ -209,7 +209,7 @@
             message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"登录结果"
+                                  initWithTitle: @""
                                   message: message
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -265,7 +265,7 @@
         message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"登录结果"
+                              initWithTitle: @""
                               message: message
                               delegate:nil
                               cancelButtonTitle:@"OK"

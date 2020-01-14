@@ -225,9 +225,12 @@
 
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
-            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-            myDelegate.userPhotoimageView=imageView;
+//            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                myDelegate.userPhotoimageView=imageView;
+            }];
+            
         }
         UIGraphicsEndImageContext();
         //上传图片,以文件形式,还是base64在这调用就ok

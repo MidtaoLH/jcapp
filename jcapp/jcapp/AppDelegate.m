@@ -17,6 +17,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    
     CGRect rect=[[UIScreen mainScreen]bounds];
     //创建UIWindow
     self.window=[[UIWindow alloc] initWithFrame:rect];

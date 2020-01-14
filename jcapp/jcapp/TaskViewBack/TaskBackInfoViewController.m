@@ -40,14 +40,18 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 @synthesize  listdetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.navigationItem.title=self.title;
-    if([self.titletype isEqualToString:@"0"])
+    self.navigationItem.title=self.title;
+    if(self.titletype.length==0)
     {
-          self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"待回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+            
+    }
+    else  if([self.titletype isEqualToString:@"0"])
+    {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"待回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     }
     else
     {
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"已回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"已回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     }
     [self loadstyle];
     [self loadInfo];

@@ -26,41 +26,7 @@
 @synthesize lbgroupid;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.chosebutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(0);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
-    }];
-    [self.savebutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.75);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
-    }];
-    [self.lbgroupname mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.25);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
-    }];
-    [self.lbempname mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.5);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.25,Common_TxTHeight));
-    }];
-    lbempid.hidden = YES;
-    lbgroupid.hidden = YES;
-    
+    [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, 200)];
     self.view.backgroundColor = [UIColor  whiteColor];
     stringflag = @"group";
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGroup"];
@@ -72,11 +38,10 @@
                                    delegate:self];
     _tagView = [[SkyAssociationMenuView alloc] init];
     _tagView.delegate = self;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"代理人设定" style:UIBarButtonItemStylePlain target:self action:@selector(gotoback)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
 }
 -(void)show{
-    
-   
-    
     btn = [UIButton  buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(100, 200, 100, 20);
     btn.backgroundColor = [UIColor  redColor];
@@ -84,18 +49,25 @@
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(tan) forControlEvents:UIControlEventTouchUpInside];
 }
--(void)tan{
-    [_tagView showAsFrame:CGRectMake(24, 84, 335, 569)];
-}
--(IBAction)onClickButtonchose:(id)sender {
-    [_tagView showAsDrawDownView:sender];
-}
--(IBAction)onClickButtonsave:(id)sender {
+
+-(void)gotoback {
+    [_tagView dismiss];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_groupname =lbgroupname.text;
-    myDelegate.way_groupid =lbgroupid.text;
-    myDelegate.way_empid =lbempid.text;
-    myDelegate.way_empname =lbempname.text;
+    myDelegate.way_groupname =lbgroupname;
+    myDelegate.way_groupid =lbgroupid;
+    myDelegate.way_empid =lbempid;
+    myDelegate.way_empname =lbempname;
+    myDelegate.agentType = @"true";
+    SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+    [self.navigationController pushViewController:VCCollect animated:YES];
+}
+-(void)save {
+    [_tagView dismiss];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.way_groupname =lbgroupname;
+    myDelegate.way_groupid =lbgroupid;
+    myDelegate.way_empid =lbempid;
+    myDelegate.way_empname =lbempname;
     myDelegate.agentType = @"true";
     SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
     [self.navigationController pushViewController:VCCollect animated:YES];
@@ -164,8 +136,8 @@
         {
             Group *n =self.listOfGroup[idx_1];
             NSString *Gcode =n.Code;
-            lbgroupname.text = n.Name;
-            lbgroupid.text = n.Code;
+            lbgroupname = n.Name;
+            lbgroupid = n.Code;
             NSMutableArray *imageData = [[NSMutableArray alloc] init];
             for (NSInteger i = 0; i < listOfEmp.count; i++)
             {
@@ -201,8 +173,8 @@
             }
             NSString *empname =imageData[idx_2] ;
             NSString *empid =imageData2[idx_2] ;
-            lbempname.text =   empname ;
-            lbempid.text = empid;
+            lbempname =   empname ;
+            lbempid = empid;
             return NO;
         }
         return NO;
@@ -235,6 +207,7 @@
         if(listOfGroup.count > 0)
         {
             Group *m =self.listOfGroup[0];//取出数据元素
+            [_tagView showAsDrawDownView:_chosebutton];
         }
     }
     else

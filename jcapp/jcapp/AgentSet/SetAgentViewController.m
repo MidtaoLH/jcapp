@@ -324,6 +324,7 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)goBack {
+    
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];

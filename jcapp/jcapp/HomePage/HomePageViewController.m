@@ -199,7 +199,7 @@
             ScrollView *m =self.listOfMovies[i];
             //NSLog(@"img%@",m.ScrollImage);
             //加载网络图片
-            [imageView sd_setImageWithURL:[NSURL URLWithString:m.ScrollImage]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[Common_ScrollPhotoUrl stringByAppendingString: m.ScrollImage]]];
             
             imageView.userInteractionEnabled = YES;
             

@@ -169,7 +169,8 @@
 }
 -(IBAction)btnreturnClick:(id)sender {
     ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
-    
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
     //跳转
     [self presentModalViewController:valueView animated:YES];
 }
@@ -226,6 +227,8 @@
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
 //            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+            [[SDImageCache sharedImageCache] clearDisk];
+            [[SDImageCache sharedImageCache] clearMemory];
             [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                 myDelegate.userPhotoimageView=imageView;

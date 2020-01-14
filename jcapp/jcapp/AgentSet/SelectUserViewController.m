@@ -228,12 +228,13 @@
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
+    
 }
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {

@@ -177,8 +177,8 @@
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: @"服务器连接失败"
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];

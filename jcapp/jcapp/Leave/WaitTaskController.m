@@ -190,14 +190,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    NSLog(@"%@",@"connection2-end");
+    
 }
+
 
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {

@@ -583,6 +583,7 @@
 		8DB09DEB23A9BAB000CCFDD8 /* VatcationMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VatcationMainView.h; sourceTree = "<group>"; };
 		8DB09DEC23A9BAB000CCFDD8 /* VatcationMainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VatcationMainView.m; sourceTree = "<group>"; };
 		8DB09DED23A9BAB000CCFDD8 /* VatcationMainView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VatcationMainView.xib; sourceTree = "<group>"; };
+		AF02C23F23CDC44900CADED5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AF0ABC40238F5FCE00F46278 /* NoticeNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeNews.m; sourceTree = "<group>"; };
 		AF0ABC41238F5FCE00F46278 /* NoticeNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeNews.h; sourceTree = "<group>"; };
 		AF0ABE55238F85A900F46278 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -1387,6 +1388,7 @@
 		AF0ABE54238F85A900F46278 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AF02C23F23CDC44900CADED5 /* SystemConfiguration.framework */,
 				776DA10B23A32BF100DB9424 /* UIKit.framework */,
 				776DA10923A32BDF00DB9424 /* CoreGraphics.framework */,
 				776DA10723A32BC400DB9424 /* Foundation.framework */,

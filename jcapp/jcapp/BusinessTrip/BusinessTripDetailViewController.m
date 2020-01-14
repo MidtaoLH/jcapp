@@ -50,6 +50,7 @@ static NSString *identifierImage =@"ImageCell.h";
     //设置子视图的f导航栏的返回按钮
     self.navigationItem.title=self.title;
     edittype = 0;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -102,6 +103,11 @@ static NSString *identifierImage =@"ImageCell.h";
     [self loadstyle];
     
     
+}
+- (void)goBack {
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
@@ -531,14 +537,15 @@ static NSString *identifierImage =@"ImageCell.h";
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    NSLog(@"%@",@"connection2-end");
+    
 }
+
 
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {

@@ -154,7 +154,7 @@
     }
     else if ([myDelegate.agentType isEqualToString:@"true"]) {
         [self datas];
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         // 日期格式化类
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         // 设置日期格式 为了转换成功
@@ -180,7 +180,7 @@
         [self.formTableView layoutIfNeeded];
     }
     else{
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.way_empid=@"";
         myDelegate.way_empname=@"";
         myDelegate.way_groupname=@"";
@@ -190,6 +190,20 @@
         [self datas];
     }
 }
+
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    
+}
+
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
@@ -233,7 +247,7 @@
       
         AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
         
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.way_empid=agentInfo.EmpID;
         myDelegate.way_empname=agentInfo.EmpName;
         myDelegate.way_groupname=agentInfo.DeptName;
@@ -324,8 +338,6 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)goBack {
-    
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];

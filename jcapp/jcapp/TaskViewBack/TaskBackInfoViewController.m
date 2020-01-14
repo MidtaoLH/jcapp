@@ -56,35 +56,42 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [self loadstyle];
     [self loadInfo];
     [self loadTaskInfo];
-  
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    
     if([self.pagetype isEqualToString:@"0"] && self.taskcode.length!=0)
     {
         [self updateStatus];
     }
 }
 - (void)goBack {
-   
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    if([self.titletype isEqualToString:@"0"])
-    {
-        myDelegate.tabbarIndex=@"0";
-    }
-    else
-    {
-        myDelegate.tabbarIndex=@"1";
-    }
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    if([self.titletype isEqualToString:@"0"])
-    {
-        tabBarCtrl.selectedIndex=0;
-    }
-    else
-    {
-        tabBarCtrl.selectedIndex=1;
-    }
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
+//- (void)goBack {
+//
+//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//    if([self.titletype isEqualToString:@"0"])
+//    {
+//        myDelegate.tabbarIndex=@"0";
+//    }
+//    else
+//    {
+//        myDelegate.tabbarIndex=@"1";
+//    }
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    if([self.titletype isEqualToString:@"0"])
+//    {
+//        tabBarCtrl.selectedIndex=0;
+//    }
+//    else
+//    {
+//        tabBarCtrl.selectedIndex=1;
+//    }
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
+//}
+
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];
@@ -291,7 +298,18 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
 }
 
-
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    
+}
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];

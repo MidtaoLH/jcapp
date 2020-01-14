@@ -39,7 +39,8 @@
 /*列表下拉叠加行数*/
 #define Common_PageSizeAdd @"10"
 
-
+/*头像存储路径*/
+#define Common_NetErrMsg @"服务器连接失败"
 
 
 #define hexColor(hex) [UIColor colorWithHex:hex]

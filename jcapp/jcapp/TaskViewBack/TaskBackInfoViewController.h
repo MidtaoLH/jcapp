@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *code;
 @property (nonatomic,copy) NSString *taskcode;
 @property (nonatomic,copy) NSString *pagetype;
+@property (nonatomic,copy) NSString *titletype;
 @property (nonatomic,copy) NSString *title;
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 

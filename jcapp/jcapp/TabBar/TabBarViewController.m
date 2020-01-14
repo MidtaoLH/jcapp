@@ -95,7 +95,14 @@ NSInteger barheight;
     {
         [self addChildViewController:childViewControllerToBeReview(@"待回览", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerAlreadyEnd(@"已回览", @"drop", 1)];
-        self.navigationItem.title=@"待回览";
+        if([myDelegate.tabbarIndex isEqualToString:@"1"])
+        {
+            self.navigationItem.title=@"已回览";            
+        }
+        else
+        {
+            self.navigationItem.title=@"待回览";
+        }
     }
     else if([myDelegate.tabbarType isEqualToString:@"5"])
     {

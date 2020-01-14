@@ -63,14 +63,42 @@ static NSString *identifierImage =@"ImageCell.h";
                                    delegate:self];
  
      [self setlblcolor];
-    [self.btnEdit.layer setCornerRadius:12];
-    self.btnEdit.layer.masksToBounds=YES;
-    [self.btncancle.layer setCornerRadius:12];
-    self.btncancle.layer.masksToBounds=YES;
+//    [self.btnEdit.layer setCornerRadius:12];
+//    self.btnEdit.layer.masksToBounds=YES;
+//    [self.btncancle.layer setCornerRadius:12];
+//    self.btncancle.layer.masksToBounds=YES;
+//
+//    [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
+//    [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
     
-    [_btnEdit addTarget:self action:@selector(TaskUpdate:)   forControlEvents:UIControlEventTouchUpInside];
-     [_btncancle addTarget:self action:@selector(TaskCancle:)   forControlEvents:UIControlEventTouchUpInside];
-     [self loadstyle];
+    UIToolbar *toolBar = [[UIToolbar alloc]init];
+    [self.view addSubview:toolBar];
+    [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kScreenHeight-TabbarHeight);
+        
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, TabbarHeight));
+    }];
+    
+    UIImage* itemImage= [UIImage imageNamed:@"editApply.png"];
+    
+    itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UIBarButtonItem * editBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(TaskUpdate:)];
+    
+    editBtn.width=kScreenWidth/2;
+    
+    itemImage= [UIImage imageNamed:@"cancelApply.png"];
+    
+    itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UIBarButtonItem * cancelBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(TaskCancle:)];
+    cancelBtn.width=kScreenWidth/2;
+    
+    NSArray *toolbarItems = [NSArray arrayWithObjects:cancelBtn,editBtn, nil];
+    
+    [toolBar setItems:toolbarItems animated:YES];
+    [self loadstyle];
 }
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
@@ -190,28 +218,28 @@ static NSString *identifierImage =@"ImageCell.h";
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*5)-TabbarHeight));
         // 添加左
         make.left.mas_equalTo(0);
         
     }];
     
-    [self.btncancle mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
-        // 添加左
-        make.left.mas_equalTo(Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
-    [self.btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_EditTableHeight+Common_RowSize*6);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
+//    [self.btncancle mas_makeConstraints:^(MASConstraintMaker *make) {
+//        // 添加上
+//        make.top.mas_equalTo(kScreenHeight-Common_BtnHeight-Common_RowSize-Common_RowSize/2);
+//        // 添加左
+//        make.left.mas_equalTo(Common_ColSize);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+//    }];
+//    [self.btnEdit mas_makeConstraints:^(MASConstraintMaker *make) {
+//        // 添加上
+//        make.top.mas_equalTo(kScreenHeight-Common_BtnHeight-Common_RowSize-Common_RowSize/2);
+//        // 添加左
+//        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+//    }];
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = Common_UserImageSize * 0.5;
     

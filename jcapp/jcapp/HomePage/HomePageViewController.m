@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "DXLAutoButtonView.h"
 #import "WebViewController.h"
+#import "Masonry.h"
 
 @interface HomePageViewController ()
 {
@@ -38,6 +39,29 @@
                                    initWithRequest:request
                                    delegate:self];
     [super viewDidLoad];
+    self.scrollview.backgroundColor=Color_ScrollviewColor;
+    UIView *titleview=[[UIView alloc]init];
+    [self.view addSubview:titleview];
+    [titleview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_ScrollSize);
+        
+        make.left.mas_equalTo(Common_HomeLeft);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_HomeLeft, Common_CCRowHeight));
+    }];
+    UILabel *titlelabel=[[UILabel alloc]init];
+    [titleview addSubview:titlelabel];
+    [titlelabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_CCRowHeight));
+    }];
+    [titlelabel setFont:[UIFont systemFontOfSize:20]];//[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+    //[titlelabel setTextColor:[UIColor blackColor]];
+    titlelabel.text=@"应用";
+    //titleview.backgroundColor=UIColor.orangeColor;
     [self GetMsgCount];
     //[self setView1];
     [self setView2];
@@ -301,7 +325,7 @@
     //上面图片下面文字
     NSArray *count = @[@"我的申请",@"待我审批",@"待我回览"];
     NSArray *title = @[BLCount,DCLCount,HLCount];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autolabelItem:count withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_CCRowHeight, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autolabelItem:count withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setLabelClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -336,11 +360,11 @@
 }
 - (void)setView2
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"请假",@"出差",@"外出"];
     NSArray *image = @[@"app05.png",@"app06.png",@"app07.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_HomeCellSize+Common_HomeRowSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_CCRowHeight+Common_HomeCellSize+Common_HomeRowSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -376,11 +400,11 @@
 }
 - (void)setView3
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"考勤日历",@"代理人设置",@"公告"];
     NSArray *image = @[@"app08.png",@"app09.png",@"app10.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_HomeCellSize*2+Common_HomeRowSize*2, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_CCRowHeight+Common_HomeCellSize*2+Common_HomeRowSize*2, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:

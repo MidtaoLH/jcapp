@@ -50,7 +50,32 @@ NSInteger barheight;
     {
         [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_icon_mine_default", 1)];
-        self.navigationItem.title=@"首页";
+//        self.navigationItem.title=@"北京中道益通软件技术有限公司";
+//        self.navigationItem.largeTitleDisplayMode=UINavigationItemLargeTitleDisplayModeAlways;
+        UIView *titleview=[[UIView alloc]init];
+        [self.view addSubview:titleview];
+        [titleview mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(0);
+        
+                make.left.mas_equalTo(0);
+                // 添加大小约束
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth, StatusBarAndNavigationBarHeight));
+        }];
+        UILabel *titlelabel=[[UILabel alloc]init];
+        [titleview addSubview:titlelabel];
+        [titlelabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(0);
+            
+            make.left.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth, StatusBarAndNavigationBarHeight/2));
+        }];
+        [titlelabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+        [titlelabel setTextColor:[UIColor blueColor]];
+        titlelabel.text=@"北京中道益通软件技术有限公司";
+        //titleview.backgroundColor=UIColor.orangeColor;
+        //titlelabel.centerY=titleview.centerY;
+        self.navigationItem.titleView=titleview;
     }
     else if([myDelegate.tabbarType isEqualToString:@"2"])
     {
@@ -700,7 +725,7 @@ NSArray *imgs (){
     }
     else if([myDelegate.tabbarType isEqualToString:@"9"]&&tabBar.selectedIndex==1)
     {
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.agentType=@"false";
         SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
         VCCollect.agentID=@"0";

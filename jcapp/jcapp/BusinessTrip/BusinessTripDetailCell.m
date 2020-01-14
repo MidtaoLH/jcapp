@@ -31,7 +31,16 @@
     if (!_btnemail) {
         _btnemail = [[MultiParamButton alloc] init];
         [_btnemail setTitle:@"提醒他" forState:UIControlStateNormal];
-        _btnemail.backgroundColor = [UIColor orangeColor];
+        _btnemail.backgroundColor = [UIColor whiteColor];
+        //设置圆角的半径
+        [_btnemail.layer setCornerRadius:5];
+        //切割超出圆角范围的子视图
+        _btnemail.layer.masksToBounds = YES;
+        //设置边框的颜色
+        [_btnemail.layer setBorderColor:[UIColor colorWithRed:255/255.0 green:102/255.0 blue:0/255.0 alpha:1].CGColor];
+        //设置边框的粗细
+        [_btnemail.layer setBorderWidth:1.0];
+        [_btnemail setTitleColor:[UIColor colorWithRed:255/255.0 green:102/255.0 blue:0/255.0 alpha:1] forState:(UIControlStateNormal)];
         // 一行代码给按钮添加事件
         [_btnemail addTarget:self action:@selector(action:)   forControlEvents:UIControlEventTouchUpInside];
         

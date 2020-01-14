@@ -28,13 +28,14 @@ NSString *const IDENTIFIER = @"CELL";
 
 - (instancetype)init
 {
+
     self = [super init];
     if (self) {
         // 初始化选择项
         for(int i=0; i!=3; ++i) {
             sels[i] = -1;
         }
-        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        self.frame = CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth,kScreenHeight);
         self.userInteractionEnabled = YES;
         UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         cancelBtn.frame = self.frame;
@@ -77,11 +78,11 @@ NSString *const IDENTIFIER = @"CELL";
  *  调整表视图的位置、大小
  */
 - (void)adjustTableViews{
-    int w = SCREEN_WIDTH;
+    int w = kScreenWidth;
     int __block showTableCount = 0;
     [tables enumerateObjectsUsingBlock:^(UITableView *t, NSUInteger idx, BOOL *stop) {
         CGRect rect = t.frame;
-        rect.size.height = SCREEN_HEIGHT - bgView.frame.origin.y;
+        rect.size.height = kScreenHeight - bgView.frame.origin.y;
         t.frame = rect;
 
         if(t.superview)
@@ -166,8 +167,8 @@ NSString *const IDENTIFIER = @"CELL";
     showFrame = [view.superview convertRect:showFrame toView:window];
     CGFloat x = 0.f;
     CGFloat y = showFrame.origin.y+showFrame.size.height;
-    CGFloat w = SCREEN_WIDTH;
-    CGFloat h = SCREEN_HEIGHT-y;
+    CGFloat w = kScreenWidth;
+    CGFloat h = kScreenHeight-y;
     bgView.frame = CGRectMake(x, y, w, h);
     if(!bgView.superview) {
         [self addSubview:bgView];
@@ -273,7 +274,7 @@ NSString *const IDENTIFIER = @"CELL";
         }
         fIndex = indexPath.row;
         if(isNexClass) {
-            [t1 reloadData];
+             [t1 reloadData];
             if(!t1.superview) {
                 [bgView addSubview:t1];
             }
@@ -281,6 +282,12 @@ NSString *const IDENTIFIER = @"CELL";
                 [t2 removeFromSuperview];
             }
             [self adjustTableViews];
+            //[CATransaction begin];
+            //[CATransaction setCompletionBlock:^{
+            //    [t1 reloadData];
+            //}];
+            //[t1 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            //[CATransaction commit];
         }else{
             if(t1.superview) {
                 [t1 removeFromSuperview];
@@ -310,7 +317,13 @@ NSString *const IDENTIFIER = @"CELL";
                 [_delegate selectFindex:fIndex Tindex:tIndex];
             }
             [self saveSels];
-            [self dismiss];
+            
+            //[CATransaction begin];
+            //[CATransaction setCompletionBlock:^{
+            //    [t2 reloadData];
+           // }];
+            //[t2 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            //[CATransaction commit];
         }
     }else if(tableView == t2) {
         if([self.delegate respondsToSelector:@selector(assciationMenuView:idxChooseInClass1:class2:class3:)]) {
@@ -318,7 +331,6 @@ NSString *const IDENTIFIER = @"CELL";
         }
         if(isNexClass) {
             [self saveSels];
-            [self dismiss];
         }
     }
 }

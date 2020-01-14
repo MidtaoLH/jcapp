@@ -16,15 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableDictionary *info;
 }
 @property (nonatomic, retain)IBOutlet UIButton *chosebutton;
-@property (nonatomic, retain)IBOutlet UIButton *savebutton;
 @property (strong,nonatomic) NSMutableArray *listOfGroup;
 @property (strong,nonatomic) NSMutableArray *listOfEmp;
-@property (nonatomic, retain)IBOutlet UILabel *lbgroupname;
-@property (nonatomic, retain)IBOutlet UILabel *lbempname;
-@property (nonatomic, retain)IBOutlet UILabel *lbgroupid;
-@property (nonatomic, retain)IBOutlet UILabel *lbempid;
--(IBAction)onClickButtonchose:(id)sender;
--(IBAction)onClickButtonsave:(id)sender;
+@property (nonatomic, retain)IBOutlet NSString *lbgroupname;
+@property (nonatomic, retain)IBOutlet NSString *lbempname;
+@property (nonatomic, retain)IBOutlet NSString *lbgroupid;
+@property (nonatomic, retain)IBOutlet NSString *lbempid;
+
 @end
 
 NS_ASSUME_NONNULL_END

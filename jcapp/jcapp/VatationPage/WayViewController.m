@@ -13,7 +13,8 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "AddWayView.h"
 #import "AppDelegate.h"
-
+#import "Masonry.h"
+#import "VatcationMainView.h"
 
 static NSString * identifier = @"TableCell";
 
@@ -30,19 +31,33 @@ NSInteger currentPageCountwait_new;
 
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
-    NSLog(@"processid:%@",self.processid);
-    //processid = @"22772";
-    //e注册自定义 cell
+    [self loadstyle];
+    [self loadinfo];
+    self.navigationItem.title=@"路径确认";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];    
+}
+
+-(void)loadstyle{
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 100;
+    _NewTableView.rowHeight = Common_TableRowHeight;
+    
+    [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(0);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-SetTabbarHeight-StatusBarAndNavigationBarHeight));
+    }];
+}
+-(void)loadinfo
+{
     currentPageCountwait_new=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
-    
-     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.way_refresh =@"false";
     if(listOfWay.count > 0)
     {
@@ -50,19 +65,13 @@ NSInteger currentPageCountwait_new;
             myDelegate.way_post_delete = @"false";
             int *index = [myDelegate.way_post_index_delete intValue];
             
-           // [listOfWay insertObject:m atIndex:index];
+            // [listOfWay insertObject:m atIndex:index];
             [listOfWay removeObjectAtIndex:index];
-            
-            NSLog(@"%@", @"添加成功");
-            
             self.NewTableView.reloadData;
         }
         else
         {
-            //myDelegate.userPhotoimageView;
-            
             Way *m = [Way new] ;
-            
             m.levelname = myDelegate.way_post_level;
             m.name = myDelegate.way_empname;
             m.nameid= myDelegate.way_empid;
@@ -77,7 +86,6 @@ NSInteger currentPageCountwait_new;
             {
                 m.level =@"2";
             }
-            
             else if([m.levelname isEqualToString:@"三级审批人"])
             {
                 m.level =@"3";
@@ -106,18 +114,11 @@ NSInteger currentPageCountwait_new;
             {
                 m.level =@"1";
             }
-            
             m.editflag = @"1";
-            
             int *index = [myDelegate.way_post_index intValue];
-            
             [listOfWay insertObject:m atIndex:index];
-            NSLog(@"%@", @"添加成功");
-            
             self.NewTableView.reloadData;
         }
-       
-        
     }
     else
     {
@@ -127,25 +128,14 @@ NSInteger currentPageCountwait_new;
         MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
         [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
         self.NewTableView.mj_header = header;
-        
         // 添加底部的上拉加载
         MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
         [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
         self.NewTableView.mj_footer = footer;
-        
         _NewTableView.top=-_NewTableView.mj_header.size.height+100;
     }
-    
-    
-    NSLog(@"%@", @"刷新成功");
-   
 }
-
-
-
 - (void)viewWillAppear:(BOOL)animated{
-    
-    
     [super viewWillAppear:animated];
     
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
@@ -158,19 +148,20 @@ NSInteger currentPageCountwait_new;
         
         [self viewDidLoad];
     }
-    
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, kScreenHeight-TabbarHeight, kScreenWidth, SetTabbarHeight)];
+    [self.view addSubview:toolBar];
+    UIImage* itemImage= [UIImage imageNamed:@"save.png"];
+    itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem * addBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    addBtn.width=self.view.width;
+    NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn, nil];
+    [toolBar setItems:toolbarItems animated:NO];
 }
 
 
 
 -(void)LoadData
 {
-    //设置需要访问的ws和传入参数
-    // code, string userID, string menuID
-    //设置需要访问的ws和传入参数
-    //NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait];
-    //NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,userID,empID,@"2"];
-    
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -217,20 +208,12 @@ NSInteger currentPageCountwait_new;
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
-    
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"34443333kaishidayin");
-    NSLog(@"%@", xmlString);
-    
     // 字符串截取
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
     
     if([saveflag isEqualToString:@"false"])
     {
@@ -269,10 +252,6 @@ NSInteger currentPageCountwait_new;
             [alert show];
         }
     }
-    
-    
-    
-    NSLog(@"%@",@"connection1-end");
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -299,21 +278,15 @@ NSInteger currentPageCountwait_new;
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
-    NSLog(@"%@", @"kaishijiex");    //开始解析XML
-    
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
-    NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
     [self.NewTableView reloadData];
 }
 
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
     info = [[NSMutableDictionary alloc] initWithCapacity: 1];
-    
-    NSLog(@"%@",@"parserDidStartDocument-end");
 }
 
 //回调方法出错弹框
@@ -325,7 +298,6 @@ NSInteger currentPageCountwait_new;
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    NSLog(@"%@",@"parser-end");
 }
 
 //解析返回xml的节点elementName
@@ -333,17 +305,14 @@ NSInteger currentPageCountwait_new;
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qualifiedName
     attributes:(NSDictionary *)attributeDict  {
-    NSLog(@"value2: %@\n", elementName);
     //NSLog(@"%@", @"jiedian1");    //设置标记查看解析到哪个节点
     currentTagName = elementName;
     
-    NSLog(@"%@",@"parser2-end");
 }
 
 //取得我们需要的节点的数据
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
-    NSLog(@"%@",@"parser3-begin");
     
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
@@ -354,8 +323,6 @@ NSInteger currentPageCountwait_new;
 
 //循环解析d节点
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-    
-    NSLog(@"%@",@"parserDidEndDocument-begin");
     
     NSMutableString *outstring = [[NSMutableString alloc] initWithCapacity: 1];
     for (id key in info) {
@@ -370,7 +337,6 @@ NSInteger currentPageCountwait_new;
 //有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%@",@"numberOfSectionsInTableView-begin");
     // 默认有些行，请删除或注 释 #warning Potentially incomplete method implementation.
     // 这里是返回的节点数，如果是简单的一组数据，此处返回1，如果有多个节点，就返回节点 数
     return 1;
@@ -390,33 +356,29 @@ NSInteger currentPageCountwait_new;
 {
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    NSLog(@"%@",@"测试setway");
-    
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
-    NSLog(@"%@",@"测试setindex");
-    
     Way *w =self.listOfWay[indexPath.row];
     if([ w.name isEqualToString:@"button"])
     {
-         cell.height = 50;
+         cell.height = SetAddButtonRowSize;
     }
     cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
     return cell;
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   NSLog(@"%@",@"电视机删除");
 }
-
--(IBAction)onClickButtonreturn:(id)sender {
-  [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+- (void)goBack {
+    AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
+    //app.leaveid
+    VatcationMainView *order = [[VatcationMainView alloc] init];
+    order.vatcationid=self.vatcationid;
+    order.processInstanceID=self.processid;
+    order.edittype = @"2";
+    order.urltype =@"getdata";
+    [self.navigationController pushViewController:order animated:YES];
 }
-
-
--(IBAction)onClickButtonsave:(id)sender {
-    
-    NSLog(@"%@",@"测试josn发宋");
+-(void)save{
     saveflag = @"true";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
@@ -428,9 +390,6 @@ NSInteger currentPageCountwait_new;
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictArray options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",jsonString);
-    
     jsonString = [NSString stringWithFormat:@"%@",jsonString];
     
     //////////////////////////////////
@@ -448,16 +407,11 @@ NSInteger currentPageCountwait_new;
     } else {
         NSLog(@"Request submitted");
     }
-
-    
-   
 }
 
 
 - (void)cellAddBtnClicked:(id)sender event:(id)event
 {
-    
-   NSLog(@"%@",@"dianjishanchu");
     
 }
 //解决tableview线不对的问题

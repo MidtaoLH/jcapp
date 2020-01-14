@@ -155,3 +155,10 @@
 
 // 轮播图view颜色
 #define Color_ScrollviewColor  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1]
+
+//路径下方自定义按钮tabbar高度
+#define  SetTabbarHeight 50.0f
+#define  SetTableHeight 100.0f
+#define  SetButtonSize 30.0f
+#define  SetDelButtonSize 20.0f
+#define  SetAddButtonRowSize 50.0f

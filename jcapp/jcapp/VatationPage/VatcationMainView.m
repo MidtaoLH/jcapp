@@ -344,7 +344,8 @@ NSString * boolflag = @"flase";
 -(void)processAction{
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
     nextVc.processid=processid;
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    nextVc.vatcationid=vatcationid;
+    [self.navigationController pushViewController:nextVc animated:YES];
     if([ boolflag isEqualToString:@"flase"])
     {
         NSLog(@"%@", @"wybuttonclick flag");

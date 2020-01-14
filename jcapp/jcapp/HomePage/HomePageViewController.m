@@ -96,8 +96,11 @@
         page++;
     }
     //  滚动scrollview
+//    CGFloat x = page * self.scrollview.frame.size.width;
+//    self.scrollview.contentOffset = CGPointMake(x, StatusBarAndNavigationBarHeight);
+    //  滚动scrollview
     CGFloat x = page * self.scrollview.frame.size.width;
-    self.scrollview.contentOffset = CGPointMake(x, StatusBarAndNavigationBarHeight);
+    self.scrollview.contentOffset = CGPointMake(x, 0);
 }
 
 // scrollview滚动的时候调用
@@ -129,7 +132,7 @@
  *  开启定时器
  */
 - (void)addTimer{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
 }
 /**
  *  关闭定时器
@@ -187,6 +190,13 @@
         [self setView1];
     }else{
         listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
+        //    图片的宽
+        CGFloat imageW = self.scrollview.frame.size.width;
+        //    CGFloat imageW = 300;
+        //    图片高
+        CGFloat imageH = self.scrollview.frame.size.height;
+        //    图片的Y
+        CGFloat imageY = 0;
         //    图片中数
         NSInteger totalCount = listOfMovies.count;
         self.pageControl.numberOfPages=totalCount;
@@ -198,8 +208,9 @@
             
             ScrollView *m =self.listOfMovies[i];
             //NSLog(@"img%@",m.ScrollImage);
+            NSString *userurlString =[Common_ScrollPhotoUrl stringByAppendingString: m.ScrollImage];
             //加载网络图片
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[Common_ScrollPhotoUrl stringByAppendingString: m.ScrollImage]]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
             
             imageView.userInteractionEnabled = YES;
             
@@ -208,7 +219,7 @@
             //        隐藏指示条
             self.scrollview.showsHorizontalScrollIndicator = NO;
             //        设置frame
-            imageView.frame = CGRectMake(imageX, StatusBarAndNavigationBarHeight, kScreenWidth, Common_ScrollSize);
+            imageView.frame = CGRectMake(imageX, imageY, imageW, Common_ScrollSize);
             [self.scrollview addSubview:imageView];
         }
         
@@ -216,6 +227,7 @@
         CGFloat contentW = totalCount *kScreenWidth;
         //不允许在垂直方向上进行滚动
         self.scrollview.contentSize = CGSizeMake(contentW, 0);
+        //self.scrollview.contentOffset = CGPointMake( self.scrollview.frame.size.width, StatusBarAndNavigationBarHeight);
         // 3.设置分页
         self.scrollview.pagingEnabled = YES;
         //4.监听scrollview的滚动

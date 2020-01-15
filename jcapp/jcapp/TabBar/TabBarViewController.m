@@ -158,7 +158,7 @@ NSInteger barheight;
     self.tabBar.tintColor = kColor_tintColor;
     if(![myDelegate.tabbarType isEqualToString:@"1"])
     {
-       self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"首页" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+       self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     }
     else{
    

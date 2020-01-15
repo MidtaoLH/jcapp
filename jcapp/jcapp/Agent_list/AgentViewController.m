@@ -14,6 +14,9 @@
 #import "../AgentSet/AgentInfoViewController.h"
 #import "../AgentSet/SetAgentViewController.h"
 #import "AppDelegate.h"
+#import "Masonry.h"
+#import "TabBarViewController.h"
+
 static NSString * identifier = @"PendingListCell";
 
 @interface AgentViewController ()
@@ -43,6 +46,14 @@ static NSString * identifier = @"PendingListCell";
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    
+    self.navigationItem.title=@"代理人列表";
+}
+- (void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 -(void)LoadData
@@ -205,7 +216,7 @@ static NSString * identifier = @"PendingListCell";
     {
         SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
         VCCollect.agentID=code;
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.agentType=@"info";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }

@@ -31,6 +31,14 @@
     [self loadstyle];
     [self loadData];
     [self initUI];
+     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    self.navigationItem.title=@"代理人设定";
+}
+- (void)goBack {
+    //[self.navigationController popViewControllerAnimated:YES];
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 -(IBAction)savebtnClick:(id)sender {
 }
@@ -38,7 +46,7 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [defaults objectForKey:@"userid"];
     NSString *empID = [defaults objectForKey:@"EmpID"];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
    
     //设置需要访问的ws和传入参数
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSet?userID=%@&agentID=%@",userID,self.infoModel.agentID];

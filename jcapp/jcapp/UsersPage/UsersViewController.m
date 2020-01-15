@@ -136,35 +136,28 @@
 }
 //点击事件
  -(void)choseImage:(UITapGestureRecognizer*)sender{
-    UIAlertView * Alert=[[UIAlertView alloc]initWithTitle:@"请选择获取方式" message:@""
-                                                 delegate:self cancelButtonTitle:@"取消" otherButtonTitles:
-                         @"打开照相机",@"从手机相册获取", nil];
-    Alert.delegate=self;
-    [Alert show ];
-     
-//     //显示弹出框列表选择
-//     UIAlertController *alert = [[UIAlertController alloc]init];
-//     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
-//                                                          handler:^(UIAlertAction * action) {
-//                                                              //响应事件
-//                                                              NSLog(@"action = %@", action);
-//                                                          }];
-//     UIAlertAction* deleteAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive
-//                                                          handler:^(UIAlertAction * action) {
-//                                                              //响应事件
-//                                                              NSLog(@"action = %@", action);
-//                                                              [self getAvatatFormPhotoLibrary:self];//调用相册
-//                                                          }];
-//     UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault
-//                                                        handler:^(UIAlertAction * action) {
-//                                                            //响应事件
-//                                                            NSLog(@"action = %@", action);
-//                                                            [self getAvatatFormCamera:self];//调用相机
-//                                                        }];
-//     [alert addAction:saveAction];
-//     [alert addAction:cancelAction];
-//     [alert addAction:deleteAction];
-//     [self presentViewController:alert animated:YES completion:nil];
+    //显示弹出框列表选择
+    UIAlertController *alert = [[UIAlertController alloc]init];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+    handler:^(UIAlertAction * action) {
+           NSLog(@"action = %@", action);
+    }];
+    UIAlertAction* deleteAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive
+    handler:^(UIAlertAction * action) {
+    //响应事件
+    NSLog(@"action = %@", action);
+    [self getAvatatFormPhotoLibrary:self];//调用相册
+    }];
+     UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault
+     handler:^(UIAlertAction * action) {
+    //响应事件
+     NSLog(@"action = %@", action);
+     [self getAvatatFormCamera:self];//调用相机
+     }];
+    [alert addAction:saveAction];
+    [alert addAction:cancelAction];
+    [alert addAction:deleteAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
@@ -176,7 +169,8 @@
 }
 -(IBAction)btnreturnClick:(id)sender {
     ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
-    
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
     //跳转
     [self presentModalViewController:valueView animated:YES];
 }
@@ -232,9 +226,14 @@
 
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
-            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-            myDelegate.userPhotoimageView=imageView;
+//            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+            [[SDImageCache sharedImageCache] clearDisk];
+            [[SDImageCache sharedImageCache] clearMemory];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                myDelegate.userPhotoimageView=imageView;
+            }];
+            
         }
         UIGraphicsEndImageContext();
         //上传图片,以文件形式,还是base64在这调用就ok
@@ -336,7 +335,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([infoString containsString:@"成功"])
+    if([infoString containsString:@"成功"]||[infoString containsString:@"NO"]||[infoString containsString:@"OK"])
     {
         
     }

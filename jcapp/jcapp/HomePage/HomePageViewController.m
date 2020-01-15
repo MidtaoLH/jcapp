@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "DXLAutoButtonView.h"
 #import "WebViewController.h"
+#import "Masonry.h"
 
 @interface HomePageViewController ()
 {
@@ -38,6 +39,29 @@
                                    initWithRequest:request
                                    delegate:self];
     [super viewDidLoad];
+    self.scrollview.backgroundColor=Color_ScrollviewColor;
+    UIView *titleview=[[UIView alloc]init];
+    [self.view addSubview:titleview];
+    [titleview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_ScrollSize);
+        
+        make.left.mas_equalTo(Common_HomeLeft);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_HomeLeft, Common_CCRowHeight));
+    }];
+    UILabel *titlelabel=[[UILabel alloc]init];
+    [titleview addSubview:titlelabel];
+    [titlelabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_CCRowHeight));
+    }];
+    [titlelabel setFont:[UIFont systemFontOfSize:20]];//[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+    //[titlelabel setTextColor:[UIColor blackColor]];
+    titlelabel.text=@"应用";
+    //titleview.backgroundColor=UIColor.orangeColor;
     [self GetMsgCount];
     //[self setView1];
     [self setView2];
@@ -72,8 +96,11 @@
         page++;
     }
     //  滚动scrollview
+//    CGFloat x = page * self.scrollview.frame.size.width;
+//    self.scrollview.contentOffset = CGPointMake(x, StatusBarAndNavigationBarHeight);
+    //  滚动scrollview
     CGFloat x = page * self.scrollview.frame.size.width;
-    self.scrollview.contentOffset = CGPointMake(x, StatusBarAndNavigationBarHeight);
+    self.scrollview.contentOffset = CGPointMake(x, 0);
 }
 
 // scrollview滚动的时候调用
@@ -105,7 +132,7 @@
  *  开启定时器
  */
 - (void)addTimer{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(nextImage) userInfo:nil repeats:YES];
 }
 /**
  *  关闭定时器
@@ -163,6 +190,13 @@
         [self setView1];
     }else{
         listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
+        //    图片的宽
+        CGFloat imageW = self.scrollview.frame.size.width;
+        //    CGFloat imageW = 300;
+        //    图片高
+        CGFloat imageH = self.scrollview.frame.size.height;
+        //    图片的Y
+        CGFloat imageY = 0;
         //    图片中数
         NSInteger totalCount = listOfMovies.count;
         self.pageControl.numberOfPages=totalCount;
@@ -174,8 +208,9 @@
             
             ScrollView *m =self.listOfMovies[i];
             //NSLog(@"img%@",m.ScrollImage);
+            NSString *userurlString =[Common_ScrollPhotoUrl stringByAppendingString: m.ScrollImage];
             //加载网络图片
-            [imageView sd_setImageWithURL:[NSURL URLWithString:m.ScrollImage]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
             
             imageView.userInteractionEnabled = YES;
             
@@ -184,7 +219,7 @@
             //        隐藏指示条
             self.scrollview.showsHorizontalScrollIndicator = NO;
             //        设置frame
-            imageView.frame = CGRectMake(imageX, StatusBarAndNavigationBarHeight, kScreenWidth, Common_ScrollSize);
+            imageView.frame = CGRectMake(imageX, imageY, imageW, Common_ScrollSize);
             [self.scrollview addSubview:imageView];
         }
         
@@ -192,6 +227,7 @@
         CGFloat contentW = totalCount *kScreenWidth;
         //不允许在垂直方向上进行滚动
         self.scrollview.contentSize = CGSizeMake(contentW, 0);
+        //self.scrollview.contentOffset = CGPointMake( self.scrollview.frame.size.width, StatusBarAndNavigationBarHeight);
         // 3.设置分页
         self.scrollview.pagingEnabled = YES;
         //4.监听scrollview的滚动
@@ -223,6 +259,7 @@
             WebViewController *web=[[WebViewController alloc] init];
             //[web.webview loadRequest:request];
             //[self.webview loadHTMLString:html baseURL:nil];
+            
             [self.navigationController pushViewController:web animated:YES];
             //self.navigationItem.title=@"返回";
             web.request=request;
@@ -240,8 +277,8 @@
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
@@ -301,7 +338,7 @@
     //上面图片下面文字
     NSArray *count = @[@"我的申请",@"待我审批",@"待我回览"];
     NSArray *title = @[BLCount,DCLCount,HLCount];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autolabelItem:count withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:-30 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_CCRowHeight, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autolabelItem:count withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setLabelClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -336,11 +373,11 @@
 }
 - (void)setView2
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"请假",@"出差",@"外出"];
     NSArray *image = @[@"app05.png",@"app06.png",@"app07.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_HomeCellSize+Common_HomeRowSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_CCRowHeight+Common_HomeCellSize+Common_HomeRowSize, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -376,11 +413,11 @@
 }
 - (void)setView3
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     //上面图片下面文字
     NSArray *title = @[@"考勤日历",@"代理人设置",@"公告"];
     NSArray *image = @[@"app08.png",@"app09.png",@"app10.png"];
-    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_HomeCellSize*2+Common_HomeRowSize*2, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
+    DXLAutoButtonView *btn = [[DXLAutoButtonView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_ScrollSize+Common_CCRowHeight+Common_HomeCellSize*2+Common_HomeRowSize*2, kScreenWidth, Common_HomeCellSize) autoWidthFlowItems:title autoImageItem:image withPerRowItemsCount:3 widthRatioToView:0.55 heightRatioToView:0.55 imageTopWithView:3 verticalMargin:0 horizontalMargin:0 verticalEdgeInset:3 horizontalEdgeInset:3];
     [btn setBtnClickBlock:^(NSInteger index) {
         switch (index) {
             case 0:
@@ -424,4 +461,11 @@
                                    initWithRequest:request
                                    delegate:self];
 }
+
+
+
+
+
+
+
 @end

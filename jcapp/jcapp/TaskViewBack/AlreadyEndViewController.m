@@ -12,6 +12,7 @@
 #import "../PendingPage/PendingListCell.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
+#import "AppDelegate.h"
 static NSString * identifier = @"PendingsListCell";
 @interface AlreadyEndViewController ()
 
@@ -21,7 +22,8 @@ static NSString * identifier = @"PendingsListCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
-    [super viewDidLoad]; 
+    [super viewDidLoad];
+    //self.navigationItem.title=@"已回览";
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
@@ -37,6 +39,11 @@ static NSString * identifier = @"PendingsListCell";
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    if ([myDelegate.tabbarIndex isEqualToString:@"1"]) {
+        [self LoadData];
+    }
 }
 
 -(void)LoadData
@@ -106,12 +113,13 @@ static NSString * identifier = @"PendingsListCell";
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
+    
 }
 
 //解析返回的xml系统自带方法不需要h中声明
@@ -188,6 +196,7 @@ static NSString * identifier = @"PendingsListCell";
     VCCollect.pagetype=@"0";
     VCCollect.code=code;
     VCCollect.title=@"回览事项明细";
+     VCCollect.titletype=@"1";
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 //解决tableview线不对的问题

@@ -14,6 +14,9 @@
 #import "../AgentSet/AgentInfoViewController.h"
 #import "../AgentSet/SetAgentViewController.h"
 #import "AppDelegate.h"
+#import "Masonry.h"
+#import "TabBarViewController.h"
+
 static NSString * identifier = @"PendingListCell";
 
 @interface AgentViewController ()
@@ -43,6 +46,14 @@ static NSString * identifier = @"PendingListCell";
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    
+    self.navigationItem.title=@"代理人列表";
+}
+- (void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 -(void)LoadData
@@ -112,12 +123,13 @@ static NSString * identifier = @"PendingListCell";
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
+    
 }
 
 //解析返回的xml系统自带方法不需要h中声明
@@ -203,8 +215,8 @@ static NSString * identifier = @"PendingListCell";
     if([status containsString:@"1"])
     {
         SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
-        VCCollect.infoModel.agentID=code;
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        VCCollect.agentID=code;
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.agentType=@"info";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }

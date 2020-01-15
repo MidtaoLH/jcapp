@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy, nonatomic) NSString *editflag;
 
+@property (copy, nonatomic) NSString *Condition;
+
 @end
 
 NS_ASSUME_NONNULL_END

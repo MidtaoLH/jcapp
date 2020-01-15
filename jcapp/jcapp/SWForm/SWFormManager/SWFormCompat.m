@@ -34,7 +34,7 @@ NSInteger const SW_TitleShowType = SWTitleShowTypeRedStarFront;
 NSUInteger const SW_GlobalMaxInputLength = 200;
 
 // 表单选择图片附件数
-NSUInteger const SW_GlobalMaxImages = 6;
+NSUInteger const SW_GlobalMaxImages = 8;
 
 // 表单TextView字数提示文字大小
 CGFloat const SW_LengHintFont = 12;

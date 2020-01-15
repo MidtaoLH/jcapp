@@ -32,16 +32,9 @@ UITableViewDelegate>{
 
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfWay;
-
-@property (nonatomic, retain)IBOutlet UIButton *savebutton;
-
-@property (nonatomic, retain)IBOutlet UIButton *returnbutton;
-
 @property (nonatomic, copy) NSString *processid;
+@property (nonatomic, copy) NSString *vatcationid;
 
--(IBAction)onClickButtonsave:(id)sender;
-
--(IBAction)onClickButtonreturn:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END

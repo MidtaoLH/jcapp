@@ -73,22 +73,27 @@ NSString * bflag = @"flase";
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //
 //        make.left.mas_equalTo(0);
 //        // 添加大小约束
-//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, 500));
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight));
 //    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, self.view.height-50.0, self.view.width, 50.0)];
-
+    UIToolbar *toolBar = [[UIToolbar alloc]init];
     [self.view addSubview:toolBar];
+    [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kScreenHeight-TabbarHeight);
+
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, TabbarHeight));
+    }];
     
     UIImage* itemImage= [UIImage imageNamed:@"save.png"];
     
@@ -97,7 +102,7 @@ NSString * bflag = @"flase";
     UIBarButtonItem * addBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
 
     //UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
-    addBtn.width=self.view.width/2;
+    addBtn.width=kScreenWidth/2;
 
     itemImage= [UIImage imageNamed:@"submit.png"];
     
@@ -107,7 +112,7 @@ NSString * bflag = @"flase";
     
     //UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
     NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
-    submitBtn.width=self.view.width/2;
+    submitBtn.width=kScreenWidth/2;
 
     [toolBar setItems:toolbarItems animated:NO];
 
@@ -206,7 +211,8 @@ NSString * bflag = @"flase";
     
     self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 4;
-    self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
+    self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
+    self.businessNum.unit=@"天";
     [items addObject:_businessNum];
     
     self.gender = SWFormItem_Add(@"性别", nil, SWFormItemTypeSelect, NO, YES, UIKeyboardTypeDefault);
@@ -220,8 +226,9 @@ NSString * bflag = @"flase";
     };
     //[items addObject:_gender];
     
-    self.reason = SWFormItem_Add(@"出差事由", @"请输入出差事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
+    self.reason = SWFormItem_Add(@"出差事由", @"", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
     self.reason.showLength = YES;
+    self.reason.placeholder=@"请输入出差事由";
     [items addObject:_reason];
     
     self.image = SWFormItem_Add(@"图片", nil, SWFormItemTypeImage, YES, NO, UIKeyboardTypeDefault);
@@ -243,7 +250,7 @@ NSString * bflag = @"flase";
     if([pageType isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width-50, 60)];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 60)];
 //        footer.backgroundColor=UIColor.cyanColor;
 //        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
 //        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 30);
@@ -422,6 +429,17 @@ NSString * bflag = @"flase";
         }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>365)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -491,6 +509,17 @@ NSString * bflag = @"flase";
         }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>365)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -509,7 +538,7 @@ NSString * bflag = @"flase";
         //print out the data contents
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSLog(@"text字典里面的内容为--》%@", text );
+        //NSLog(@"text字典里面的内容为--》%@", text );
         if([self->pageType isEqual:@"1"]){
             self->pageType=@"4";
         }else if([self->pageType isEqual:@"2"]){
@@ -578,7 +607,14 @@ NSString * bflag = @"flase";
     [tableViewPlace beginUpdates];
     [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [tableViewPlace endUpdates];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+//    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
+//
+//        make.left.mas_equalTo(0);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight));
+//    }];
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //        make.left.mas_equalTo(0);
@@ -657,6 +693,19 @@ NSString * bflag = @"flase";
         [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    
+}
+
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if(![operateType isEqual:@"3"] ){

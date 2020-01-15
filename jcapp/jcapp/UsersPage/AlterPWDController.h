@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "../SWForm/SWFormBaseController.h"
 #import "../Model/pwdInfo.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AlterPWDController : UIViewController
+@interface AlterPWDController : SWFormBaseController
 {
     NSString *xmlString;
     NSMutableDictionary *info;
@@ -18,8 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
 }
-@property (nonatomic, copy) NSArray *titleArr;
-@property (nonatomic, strong) pwdInfo *infoModel;
+@property (nonatomic, copy) NSArray *titleArr; 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 

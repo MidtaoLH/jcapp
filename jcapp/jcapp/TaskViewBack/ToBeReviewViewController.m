@@ -22,7 +22,9 @@ static NSString * identifier = @"PendingListCell";
 @synthesize listOfMovies;
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    //self.navigationItem.title=@"待回览";
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
@@ -107,12 +109,13 @@ static NSString * identifier = @"PendingListCell";
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
+    
 }
 
 //解析返回的xml系统自带方法不需要h中声明
@@ -198,7 +201,8 @@ static NSString * identifier = @"PendingListCell";
       VCCollect.pagetype=@"0";
     VCCollect.code=code;
     VCCollect.taskcode=taskcode;
-     VCCollect.title=@"回览事项明细"; 
+     VCCollect.title=@"回览事项明细";
+    VCCollect.titletype=@"0";
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 //解决tableview线不对的问题

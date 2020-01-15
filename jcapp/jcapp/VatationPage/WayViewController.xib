@@ -12,8 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WayViewController">
             <connections>
                 <outlet property="NewTableView" destination="ocU-9d-kJP" id="EPz-jg-DKx"/>
-                <outlet property="returnbutton" destination="o5f-8d-Wev" id="m82-WH-cDy"/>
-                <outlet property="savebutton" destination="vuf-5Q-J8v" id="bqt-Df-P8R"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,22 +20,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuf-5Q-J8v">
-                    <rect key="frame" x="60" y="637" width="244" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="保存"/>
-                    <connections>
-                        <action selector="onClickButtonsave:" destination="-1" eventType="touchUpInside" id="zQj-Bk-A3e"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5f-8d-Wev">
-                    <rect key="frame" x="24" y="20" width="31" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="返回"/>
-                    <connections>
-                        <action selector="onClickButtonreturn:" destination="-1" eventType="touchUpInside" id="jlM-I2-hGl"/>
-                    </connections>
-                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ocU-9d-kJP">
                     <rect key="frame" x="0.0" y="65" width="375" height="555"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

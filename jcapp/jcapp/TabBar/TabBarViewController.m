@@ -31,6 +31,7 @@
 #import "AgentViewController.h"
 #import "SetAgentViewController.h"
 #import "NewViewController.h"
+#import "WayViewController.h"
 
 #import "SelectUserViewController.h"
 
@@ -48,9 +49,32 @@ NSInteger barheight;
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if([myDelegate.tabbarType isEqualToString:@"1"])
     {
+        titleview=[[UIView alloc]init];
+        [self.view addSubview:titleview];
+        [titleview mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(0);
+            
+            make.left.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth, StatusBarAndNavigationBarHeight));
+        }];
+        UILabel *titlelabel=[[UILabel alloc]init];
+        [titleview addSubview:titlelabel];
+        [titlelabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(0);
+            
+            make.left.mas_equalTo(0);
+            // 添加大小约束
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth, StatusBarAndNavigationBarHeight/2));
+        }];
+        [titlelabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+        [titlelabel setTextColor:[UIColor blueColor]];
+        titlelabel.text=@"北京中道益通软件技术有限公司";
+        //titleview.backgroundColor=UIColor.orangeColor;
+        //titlelabel.centerY=titleview.centerY;
+        self.navigationItem.titleView=titleview;
         [self addChildViewController:childViewControllerHomePage(@"首页", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerUsers(@"我的", @"tabBar_icon_mine_default", 1)];
-        self.navigationItem.title=@"首页";
     }
     else if([myDelegate.tabbarType isEqualToString:@"2"])
     {
@@ -70,7 +94,14 @@ NSInteger barheight;
     {
         [self addChildViewController:childViewControllerToBeReview(@"待回览", @"tabBar_essence_icon", 0)];
         [self addChildViewController:childViewControllerAlreadyEnd(@"已回览", @"drop", 1)];
-        self.navigationItem.title=@"待回览";
+        if([myDelegate.tabbarIndex isEqualToString:@"1"])
+        {
+            self.navigationItem.title=@"已回览";            
+        }
+        else
+        {
+            self.navigationItem.title=@"待回览";
+        }
     }
     else if([myDelegate.tabbarType isEqualToString:@"5"])
     {
@@ -109,9 +140,10 @@ NSInteger barheight;
     {
         myDelegate.AppRoveType =@"agent";
         [self addChildViewController:childViewControllerAgent(@"代理人列表", @"tabBar_essence_icon", 0)];
-        [self addChildViewController:childViewControllerSetAgent(@"", @"increase_meituan", 1)];
-        [self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
+        //[self addChildViewController:childViewControllerSetAgent(@"", @"increase_meituan", 1)];
+        //[self addChildViewController:childViewControllerSelectUser(@"", @"", 2)];
         self.navigationItem.title=@"代理人列表";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"新增" style:UIBarButtonItemStylePlain target:self action:@selector(addAgent)];
     }
     else if([myDelegate.tabbarType isEqualToString:@"10"])
     {
@@ -126,12 +158,19 @@ NSInteger barheight;
     self.tabBar.tintColor = kColor_tintColor;
     if(![myDelegate.tabbarType isEqualToString:@"1"])
     {
-       self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"首页" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+       self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     }
     else{
    
     }
  
+}
+- (void)addAgent {
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    myDelegate.agentType=@"false";
+    SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
+    VCCollect.agentID=@"0";
+    [self.navigationController pushViewController:VCCollect animated:YES];
 }
 UIViewController *childViewControllerHomePage (NSString *title, NSString *imgName, NSUInteger tag) {
     HomePageViewController *vc = [[HomePageViewController alloc] init];
@@ -573,7 +612,17 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
 
 /// 自定义样式UITabBarItem
 UIViewController *childViewControllerSelectUser (NSString *title, NSString *imgName, NSUInteger tag) {
+    
     SelectUserViewController *vc = [[SelectUserViewController alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    setAnimation(vc.tabBarItem, tag);
+    return vc;
+}
+/// 自定义样式UITabBarItem
+UIViewController *childViewControllerWay(NSString *title, NSString *imgName, NSUInteger tag) {
+    
+    WayViewController *vc = [[WayViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     setAnimation(vc.tabBarItem, tag);
@@ -608,7 +657,7 @@ UIViewController *childViewControllerNewView (NSString *title, NSString *imgName
     return vc;
 }
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.tabbarType=@"1";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
@@ -667,10 +716,17 @@ NSArray *imgs (){
 
 // MARK: - UITabBarItemDelegate 监听TabBarItem点击事件
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
      self.navigationItem.title=item.title;
-    //NSUInteger tabIndex = [tabBar.items indexOfObject:item];
-    //myDelegate.tabbarIndex=tabIndex;
+    if([myDelegate.tabbarType isEqualToString:@"1"]){
+        if(tabBar.selectedIndex==0){
+            titleview.hidden=FALSE;
+        }
+        else{
+            titleview.hidden=TRUE;
+        }
+    }
+    
     if([myDelegate.tabbarType isEqualToString:@"6"]&&tabBar.selectedIndex==1)
     {
       
@@ -693,12 +749,12 @@ NSArray *imgs (){
     }
     else if([myDelegate.tabbarType isEqualToString:@"9"]&&tabBar.selectedIndex==1)
     {
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.agentType=@"false";
         SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
-        VCCollect.infoModel.agentID=@"0";
+        VCCollect.agentID=@"0";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
-    
 }
+
 @end

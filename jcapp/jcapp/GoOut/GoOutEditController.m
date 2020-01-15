@@ -21,6 +21,7 @@
 #import "../Model/MdlAnnex.h"
 #import "TabBarViewController.h"
 #import "../VatationPage/WayViewController.h"
+#import "Masonry.h"
 
 @interface GoOutEditController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -88,7 +89,14 @@
     
     [self datas];
     //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
+//    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
+    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight));
+    }];
 }
 
 - (void)goBack {
@@ -101,9 +109,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0.0, self.view.height-50.0, self.view.width, 50.0)];
-    
+    UIToolbar *toolBar = [[UIToolbar alloc]init];
     [self.view addSubview:toolBar];
+    [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kScreenHeight-TabbarHeight);
+        
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, TabbarHeight));
+    }];
     
     UIImage* itemImage= [UIImage imageNamed:@"save.png"];
     
@@ -112,7 +125,7 @@
     UIBarButtonItem * addBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
     
     //UIBarButtonItem *addBtn=[[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(addAction)];
-    addBtn.width=self.view.width/2;
+    addBtn.width=kScreenWidth/2;
     
     itemImage= [UIImage imageNamed:@"submit.png"];
     
@@ -122,7 +135,7 @@
     
     //UIBarButtonItem *submitBtn=[[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(submitAction)];
     NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
-    submitBtn.width=self.view.width/2;
+    submitBtn.width=kScreenWidth/2;
     
     [toolBar setItems:toolbarItems animated:NO];
     
@@ -211,10 +224,12 @@
     
     self.businessNum = SWFormItem_Add(@"外出时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
     self.businessNum.maxInputLength = 5;
-    self.businessNum.itemUnitType = SWFormItemUnitTypeNone;
+    self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
+    self.businessNum.unit=@"小时";
     [items addObject:_businessNum];
  
-    self.reason = SWFormItem_Add(@"外出理由", @"请输入外出事由", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
+    self.reason = SWFormItem_Add(@"外出理由", @"", SWFormItemTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
+    self.reason.placeholder=@"请输入外出事由";
     self.reason.showLength = YES;
     [items addObject:_reason];
     
@@ -237,8 +252,15 @@
     if([self.edittype isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width-50, 60)];
-        
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, self.view.width-40, 60)];
+//        [footer  mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+//
+//            make.left.mas_equalTo(20);
+//            // 添加大小约束
+//            make.size.mas_equalTo(CGSizeMake(kScreenWidth-40, 60));
+//        }];
+//
 //        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
 //        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
 //        submitBtn.center = footer.center;
@@ -339,6 +361,17 @@
         }
         // 字符串转float
         float floatString = [vatcationtime floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>9999)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -433,6 +466,17 @@
         }
         // 字符串转float
         float floatString = [vatcationtime floatValue];
+        if(floatString<=0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长必须大于0"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         if(floatString>9999)
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -533,6 +577,18 @@
     [myData replaceObjectAtIndex:textField.tag withObject:textField.text];
 }
 
+//弹出消息框
+-(void) connection:(NSURLConnection *)connection
+  didFailWithError: (NSError *)error {
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
+                               delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+    [errorAlert show];
+    
+}
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

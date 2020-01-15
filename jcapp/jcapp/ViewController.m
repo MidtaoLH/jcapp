@@ -67,8 +67,8 @@
     {
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"提示信息！"
-                              message: @"用户名密码不能为空！"
+                              initWithTitle: @""
+                              message: @"用户名密码不能为空"
                               delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
@@ -177,8 +177,8 @@
 -(void) connection:(NSURLConnection *)connection
   didFailWithError: (NSError *)error {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: [error localizedDescription]
-                               message: [error localizedFailureReason]
+                               initWithTitle: @""
+                               message: Common_NetErrMsg
                                delegate:nil
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
@@ -186,7 +186,6 @@
     //[errorAlert release];
     
 }
-
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
@@ -209,7 +208,7 @@
             message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @"登录结果"
+                                  initWithTitle: @""
                                   message: message
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
@@ -219,12 +218,6 @@
         {
             //返回1为1显示登陆成功
             message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
-            //将当前用户的头像存到全局变量
-            UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
-            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-            myDelegate.userPhotoimageView=imageView;
             //保存用户名密码
             NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
             
@@ -248,13 +241,23 @@
             
             //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
             [defaults synchronize];//保存到磁盘
-            //跳转到首页
-            myDelegate.tabbarType=@"1";
-            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-            [self presentViewController:navigationController animated:YES completion:nil];
+            
+            //将当前用户的头像存到全局变量
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
+            //[imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+            [[SDImageCache sharedImageCache] clearDisk];
+            [[SDImageCache sharedImageCache] clearMemory];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                myDelegate.userPhotoimageView=imageView;
+                //跳转到首页
+                myDelegate.tabbarType=@"1";
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
+            }];
         }
-        
     }
     else
     {
@@ -263,7 +266,7 @@
         message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
         //显示信息。正式环境时改为跳转
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"登录结果"
+                              initWithTitle: @""
                               message: message
                               delegate:nil
                               cancelButtonTitle:@"OK"

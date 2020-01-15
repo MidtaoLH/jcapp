@@ -17,11 +17,14 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    
     CGRect rect=[[UIScreen mainScreen]bounds];
     //创建UIWindow
     self.window=[[UIWindow alloc] initWithFrame:rect];
     //设置背景颜色
-    self.window.backgroundColor=[UIColor greenColor];
+    self.window.backgroundColor=[UIColor whiteColor];
     //设置keyWindow，并使其可见
     [self.window makeKeyAndVisible];
     //添加主控制器

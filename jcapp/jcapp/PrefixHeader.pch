@@ -29,6 +29,9 @@
 #define Common_WSUrl @"http://47.94.85.101:8095/%@"
 /*头像存储路径*/
 #define Common_UserPhotoUrl @"http://47.94.85.101:8095/APP/Image/%@.png"
+/*轮播图存储路径*/
+#define Common_ScrollPhotoUrl @"http://47.94.85.101:8095/APP/Scroll/"
+
 /*列表申请状态的e颜色*/
 #define Color_ProcessStutasColor  [UIColor colorWithRed:0/255.0 green:204/255.0 blue:204/255.0 alpha:1]
 /*列表默认加载行数*/
@@ -36,7 +39,8 @@
 /*列表下拉叠加行数*/
 #define Common_PageSizeAdd @"10"
 
-
+/*头像存储路径*/
+#define Common_NetErrMsg @"服务器连接失败"
 
 
 #define hexColor(hex) [UIColor colorWithHex:hex]
@@ -133,7 +137,7 @@
 #define Common_UserTableRowHeight 50.f
 #endif /* PrefixHeader_pch */
 /*轮播图大小*/
-#define Common_ScrollSize 280.f
+#define Common_ScrollSize 220.f
 #define Common_HomeCellSize 80.f
 #define Common_HomeRowSize 10.f
 // 随机色
@@ -146,3 +150,15 @@
 /*出差地点*/
 #define Common_CCRowHeight 50.f
 #define Common_CCTotalHeight 150.f
+/*主页title和应用按钮距离右侧的距离*/
+#define Common_HomeLeft 20.f
+
+// 轮播图view颜色
+#define Color_ScrollviewColor  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1]
+
+//路径下方自定义按钮tabbar高度
+#define  SetTabbarHeight 50.0f
+#define  SetTableHeight 100.0f
+#define  SetButtonSize 30.0f
+#define  SetDelButtonSize 20.0f
+#define  SetAddButtonRowSize 30.0f

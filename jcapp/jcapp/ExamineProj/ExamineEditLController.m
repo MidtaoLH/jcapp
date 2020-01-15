@@ -57,7 +57,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     [super viewDidLoad];
     [self loadstyle];
-   
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     
     edittype = 0;
  
@@ -87,13 +87,47 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSLog(@"%@",@"viewDidLoad-end");
         //d根据不同单据类型 设置文字
     [self settsaktype];
+//    [self.btntaskno.layer setCornerRadius:12];
+//    self.btntaskno.layer.masksToBounds=YES;
+//    [self.buttaskyes.layer setCornerRadius:12];
+//    self.buttaskyes.layer.masksToBounds=YES;
+//    
+//     [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
+//     [_buttaskyes addTarget:self action:@selector(actionyes:)   forControlEvents:UIControlEventTouchUpInside];
+    UIToolbar *toolBar = [[UIToolbar alloc]init];
+    [self.view addSubview:toolBar];
+    [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kScreenHeight-TabbarHeight);
+        
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, TabbarHeight));
+    }];
     
-     [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
-     [_buttaskyes addTarget:self action:@selector(actionyes:)   forControlEvents:UIControlEventTouchUpInside];
+    UIImage* itemImage= [UIImage imageNamed:@"reject.png"];
     
+    itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UIBarButtonItem * rejectBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(actionno:)];
+    
+    rejectBtn.width=kScreenWidth/2;
+    
+    itemImage= [UIImage imageNamed:@"agree.png"];
+    
+    itemImage = [itemImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UIBarButtonItem * agreeBtn =[[UIBarButtonItem  alloc]initWithImage:itemImage style:UIBarButtonItemStylePlain target:self action:@selector(actionyes:)];
+    agreeBtn.width=kScreenWidth/2;
+    
+    NSArray *toolbarItems = [NSArray arrayWithObjects:rejectBtn,agreeBtn, nil];
+    
+    [toolBar setItems:toolbarItems animated:YES];
    
 }
-
+- (void)goBack {
+    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;
     _lblempgroup.textColor = [UIColor grayColor];
@@ -245,27 +279,27 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         // 添加上
     make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6)-TabbarHeight));
         // 添加左
         make.left.mas_equalTo(0);
         
     }];
-    [self.btntaskno mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6+Common_EditTableHeight);
-        // 添加左
-        make.left.mas_equalTo(Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
-    [self.buttaskyes mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 添加上
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6+Common_EditTableHeight);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
-    }];
+//    [self.btntaskno mas_makeConstraints:^(MASConstraintMaker *make) {
+//        // 添加上
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6+Common_EditTableHeight);
+//        // 添加左
+//        make.left.mas_equalTo(Common_ColSize);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+//    }];
+//    [self.buttaskyes mas_makeConstraints:^(MASConstraintMaker *make) {
+//        // 添加上
+//        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_EditImageTableHeight+Common_CRTableHeight+Common_RowSize*6+Common_EditTableHeight);
+//        // 添加左
+//        make.left.mas_equalTo(kScreenWidth/2+Common_ColSize);
+//        // 添加大小约束
+//        make.size.mas_equalTo(CGSizeMake(kScreenWidth/2-Common_ColSize*2,Common_BtnHeight));
+//    }];
     _imgvemp.layer.masksToBounds = YES;
     _imgvemp.layer.cornerRadius = Common_UserImageSize * 0.5;
     

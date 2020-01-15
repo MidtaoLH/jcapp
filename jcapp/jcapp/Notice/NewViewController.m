@@ -50,7 +50,12 @@ static NSString *identifier =@"NoticeCell";
     
     NSLog(@"%@",@"viewDidLoad-end");
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
+}
 // 2.实现下拉刷新和上拉加载的事件。
 // 头部的下拉刷新触发事件
 - (void)headerClick {

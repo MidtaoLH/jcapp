@@ -250,16 +250,13 @@ NSString * bflag = @"flase";
     if([pageType isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 60)];
-//        footer.backgroundColor=UIColor.cyanColor;
-//        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-//        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 30);
-//        submitBtn.center = footer.center;
-//        //submitBtn.backgroundColor = [UIColor orangeColor];
-//        [_btnProcess setTitle:@"查看审批路径" forState:UIControlStateNormal];
-//        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, 60)];
         [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
         [footer addSubview:_btnProcess];
+        [_btnProcess  mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(20);
+            make.width.mas_equalTo(kScreenWidth-40);
+        }];
         
         return footer;
     }
@@ -328,7 +325,7 @@ NSString * bflag = @"flase";
             NSDictionary *parameters = @{};
             
             //上传的接口
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler1.ashx"];
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
             //分界线的标识符
             NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
             //根据url初始化request

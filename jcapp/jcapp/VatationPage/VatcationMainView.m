@@ -99,14 +99,14 @@ NSString * boolflag = @"flase";
     totalHeight=Common_CCRowHeight;
 
     [self datas];
-    //self.formTableView.frame=CGRectMake(0,totalHeight-30, self.view.frame.size.width, 500);
-    //self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
+//    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight);
+    
     [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-        
+
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight));
     }];
 }
 
@@ -334,6 +334,10 @@ NSString * boolflag = @"flase";
         [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
         [footer addSubview:_btnProcess];
         
+        [_btnProcess  mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(20);
+            make.width.mas_equalTo(kScreenWidth-40);
+        }];
         return footer;
         
     }
@@ -797,11 +801,6 @@ NSString * boolflag = @"flase";
     // Dispose of any resources that can be recreated.
 }
 
--(void)LoadTableLocation
-{
-  
-    self.formTableView.frame=CGRectMake(0,totalHeight-20, self.view.frame.size.width, 500);
-}
 - (void)textFieldWithText:(UITextField *)textField
 {
     [myData replaceObjectAtIndex:textField.tag withObject:textField.text];
@@ -1017,7 +1016,7 @@ NSString * boolflag = @"flase";
             NSDictionary *parameters = @{};
             
             //上传的接口
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler1.ashx"];
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
             //分界线的标识符
             NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
             //根据url初始化request

@@ -161,4 +161,5 @@
 #define  SetTableHeight 100.0f
 #define  SetButtonSize 30.0f
 #define  SetDelButtonSize 20.0f
-#define  SetAddButtonRowSize 30.0f
+#define  SetAddButtonRowSize 35.0f
+#define  SetAddTableRowSize 60.0f

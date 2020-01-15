@@ -40,7 +40,7 @@ NSInteger currentPageCountwait_new;
 
 -(void)loadstyle{
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = Common_TableRowHeight;
+    _NewTableView.rowHeight = SetAddTableRowSize;
     
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -71,53 +71,56 @@ NSInteger currentPageCountwait_new;
         }
         else
         {
-            Way *m = [Way new] ;
-            m.levelname = myDelegate.way_post_level;
-            m.name = myDelegate.way_empname;
-            m.nameid= myDelegate.way_empid;
-            m.groupname = myDelegate.way_groupname;
-            m.groupid =myDelegate.way_groupid;
-            m.englishname =myDelegate.way_empenglishname;
-            if([m.levelname isEqualToString:@"一级审批人"])
+            if(myDelegate.way_empid.length!=0&&![myDelegate.way_empid isEqualToString:@"0"])
             {
-                m.level =@"1";
+                Way *m = [Way new] ;
+                m.levelname = myDelegate.way_post_level;
+                m.name = myDelegate.way_empname;
+                m.nameid= myDelegate.way_empid;
+                m.groupname = myDelegate.way_groupname;
+                m.groupid =myDelegate.way_groupid;
+                m.englishname =myDelegate.way_empenglishname;
+                if([m.levelname isEqualToString:@"一级审批人"])
+                {
+                    m.level =@"1";
+                }
+                else if([m.levelname isEqualToString:@"二级审批人"])
+                {
+                    m.level =@"2";
+                }
+                else if([m.levelname isEqualToString:@"三级审批人"])
+                {
+                    m.level =@"3";
+                }
+                else if([m.levelname isEqualToString:@"四级审批人"])
+                {
+                    m.level =@"4";
+                }
+                else if([m.levelname isEqualToString:@"五级审批人"])
+                {
+                    m.level =@"5";
+                }
+                else if([m.levelname isEqualToString:@"六级审批人"])
+                {
+                    m.level =@"6";
+                }
+                else if([m.levelname isEqualToString:@"七级审批人"])
+                {
+                    m.level =@"7";
+                }
+                else if([m.levelname isEqualToString:@"回览人"])
+                {
+                    m.level =@"99";
+                }
+                else
+                {
+                    m.level =@"1";
+                }
+                m.editflag = @"1";
+                int *index = [myDelegate.way_post_index intValue];
+                [listOfWay insertObject:m atIndex:index];
+                self.NewTableView.reloadData;
             }
-            else if([m.levelname isEqualToString:@"二级审批人"])
-            {
-                m.level =@"2";
-            }
-            else if([m.levelname isEqualToString:@"三级审批人"])
-            {
-                m.level =@"3";
-            }
-            else if([m.levelname isEqualToString:@"四级审批人"])
-            {
-                m.level =@"4";
-            }
-            else if([m.levelname isEqualToString:@"五级审批人"])
-            {
-                m.level =@"5";
-            }
-            else if([m.levelname isEqualToString:@"六级审批人"])
-            {
-                m.level =@"6";
-            }
-            else if([m.levelname isEqualToString:@"七级审批人"])
-            {
-                m.level =@"7";
-            }
-            else if([m.levelname isEqualToString:@"回览人"])
-            {
-                m.level =@"99";
-            }
-            else
-            {
-                m.level =@"1";
-            }
-            m.editflag = @"1";
-            int *index = [myDelegate.way_post_index intValue];
-            [listOfWay insertObject:m atIndex:index];
-            self.NewTableView.reloadData;
         }
     }
     else
@@ -223,6 +226,8 @@ NSInteger currentPageCountwait_new;
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.listOfWay=listOfWay;
     }
     else
     {
@@ -357,13 +362,20 @@ NSInteger currentPageCountwait_new;
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
+    cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     Way *w =self.listOfWay[indexPath.row];
     if([ w.name isEqualToString:@"button"])
     {
-         cell.height = SetAddButtonRowSize;
+        return SetAddButtonRowSize;
     }
-    cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
-    return cell;
+    else
+    {
+        return SetAddTableRowSize;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

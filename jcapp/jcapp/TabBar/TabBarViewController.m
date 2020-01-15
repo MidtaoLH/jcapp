@@ -32,6 +32,7 @@
 #import "SetAgentViewController.h"
 #import "NewViewController.h"
 #import "WayViewController.h"
+#import "AddWayView.h"
 
 #import "SelectUserViewController.h"
 
@@ -614,6 +615,15 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
 UIViewController *childViewControllerSelectUser (NSString *title, NSString *imgName, NSUInteger tag) {
     
     SelectUserViewController *vc = [[SelectUserViewController alloc] init];
+    vc.view.backgroundColor = [UIColor whiteColor];
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
+    setAnimation(vc.tabBarItem, tag);
+    return vc;
+}
+/// 自定义样式UITabBarItem
+UIViewController *childViewControllerAddWay (NSString *title, NSString *imgName, NSUInteger tag) {
+    
+    AddWayView *vc = [[AddWayView alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     setAnimation(vc.tabBarItem, tag);

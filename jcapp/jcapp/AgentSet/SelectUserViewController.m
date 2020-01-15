@@ -38,8 +38,9 @@
                                    delegate:self];
     _tagView = [[SkyAssociationMenuView alloc] init];
     _tagView.delegate = self;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"代理人设定" style:UIBarButtonItemStylePlain target:self action:@selector(gotoback)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(gotoback)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    self.navigationItem.title=@"选择员工";
 }
 -(void)show{
     btn = [UIButton  buttonWithType:UIButtonTypeCustom];

@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/Leave/LeaveDetailCell.m"
-            timestampString = "600078009.716146"
+            timestampString = "600767937.199894"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
             endingLineNumber = "89"
-            landmarkName = "-connection:didFailWithError:"
+            landmarkName = "-connection:didReceiveData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,13 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/Leave/LeaveDetailCell.m"
-            timestampString = "600078009.716223"
+            timestampString = "600767937.1999789"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
             endingLineNumber = "121"
-            landmarkName = "-parser:parseErrorOccurred:"
-            landmarkType = "7">
+            landmarkName = "LeaveDetailCell"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

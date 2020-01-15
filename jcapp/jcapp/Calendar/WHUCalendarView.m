@@ -6,6 +6,7 @@
 #import "WHUCalDrawView.h"
 #import "WHUCalendarYMSelectView.h"
 #import "WHUCalendarMarcro.h"
+#import "AppDelegate.h"
 #define WHUCalendarView_TopView_Height 35.0f
 #define WHUCalendarView_WeekView_Height 20.0f
 #define WHUCalendarView_ContentView_Height 250.0f
@@ -271,6 +272,8 @@ typedef NS_ENUM(NSUInteger, WHUCalendarViewMonthOption) {
 -(void)reloadData{
     _calDrawView.dataDic=_dataDic;
     _calDrawView.currentMonthDate=[_calDrawView.calcal dateFromMonthString:_dataDic[@"monthStr"]];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    myDelegate.acsavedatetime=_dataDic[@"monthStr"];
     NSLog(@"date:%@",_dataDic[@"monthStr"]);
     [_calDrawView reloadData];
 }
@@ -286,6 +289,7 @@ typedef NS_ENUM(NSUInteger, WHUCalendarViewMonthOption) {
 
 -(void)yearMonthSelectAction:(UIButton*)btn{
     if(btn.tag==4000){
+        
         [self toggleBtnState:^{
             WHUCalendarView_WeakSelf weakself=self;
             [_calDrawView.calcal getCalendarMapWith:_pickerView.selectdDateStr completion:^(NSDictionary* dic){

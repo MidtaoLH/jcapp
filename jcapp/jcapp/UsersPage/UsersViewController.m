@@ -236,15 +236,15 @@ NSString *unloadflag = @"";
             [self updateImage:img];
             
 
-            UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
+           // UIImageView *imageView = [[UIImageView alloc] init];
+            //NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
 //            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
-            [[SDImageCache sharedImageCache] clearDisk];
-            [[SDImageCache sharedImageCache] clearMemory];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-                myDelegate.userPhotoimageView=imageView;
-            }];
+            //[[SDImageCache sharedImageCache] clearDisk];
+           // [[SDImageCache sharedImageCache] clearMemory];
+           // [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+             //   AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+           //     myDelegate.userPhotoimageView=imageView;
+          //  }];
             
         }
         UIGraphicsEndImageContext();
@@ -347,9 +347,26 @@ NSString *unloadflag = @"";
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([infoString containsString:@"成功"]||[infoString containsString:@"NO"]||[infoString containsString:@"OK"])
+    if([infoString containsString:@"成功"])
     {
         
+    }
+    else if([infoString containsString:@"OK"])
+    {
+        [[SDImageCache sharedImageCache] clearDisk];
+        [[SDImageCache sharedImageCache] clearMemory];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.userPhotoimageView=self.myHeadPortrait;
+    }
+    else if([infoString containsString:@"NO"])
+    {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"头像上传失败，请重新上传！"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }
     else
     {

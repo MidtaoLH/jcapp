@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy,nonatomic) NSString *index;
 
+@property (strong,nonatomic) NSMutableArray *listOfWay;
 @end
 
 NS_ASSUME_NONNULL_END

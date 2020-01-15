@@ -872,8 +872,9 @@ NSString * boolflag = @"flase";
                     [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
                     
                     UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
-                    
-                    [imagepath addObject:imagetest];
+                    if (imagetest) {
+                        [imagepath addObject:imagetest];
+                    }
                 }
             }
            

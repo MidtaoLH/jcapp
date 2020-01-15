@@ -90,8 +90,6 @@
     self.pendingDateLable.text = _pendinglistitem.CaseDate;
      
     UIImageView *imageView = [[UIImageView alloc] init];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
     [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
     self.imageView.image=imageView.image;

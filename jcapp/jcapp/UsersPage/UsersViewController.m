@@ -341,6 +341,8 @@
     }
     else if([infoString containsString:@"OK"])
     {
+        [[SDImageCache sharedImageCache] clearDisk];
+        [[SDImageCache sharedImageCache] clearMemory];
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.userPhotoimageView=self.myHeadPortrait;
     }

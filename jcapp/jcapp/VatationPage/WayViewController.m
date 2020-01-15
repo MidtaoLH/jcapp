@@ -10,7 +10,6 @@
 #import "../Model/Way.h"
 #import "../MJExtension/MJExtension.h"
 #import "TableCell.h"
-#import "../MJRefresh/MJRefresh.h"
 #import "AddWayView.h"
 #import "AppDelegate.h"
 #import "Masonry.h"
@@ -127,15 +126,7 @@ NSInteger currentPageCountwait_new;
     {
         saveflag = @"false";
         [self LoadData];
-        // 添加头部的下拉刷新
-        MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
-        [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
-        self.NewTableView.mj_header = header;
-        // 添加底部的上拉加载
-        MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
-        [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
-        self.NewTableView.mj_footer = footer;
-        _NewTableView.top=-_NewTableView.mj_header.size.height+100;
+        
     }
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -182,33 +173,6 @@ NSInteger currentPageCountwait_new;
     
     
 }
-
-// 2.实现下拉刷新和上拉加载的事件。
-// 头部的下拉刷新触发事件
-- (void)headerClick {
-    // 可在此处实现下拉刷新时要执行的代码
-    // ......
-    //if(currentPageCount>1)
-    //currentPageCount--;
-    [self LoadData];
-    // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
-    // 结束刷新
-    [self.NewTableView.mj_header endRefreshing];
-}
-// 底部的上拉加载触发事件
-- (void)footerClick {
-    // 可在此处实现上拉加载时要执行的代码
-    // ......
-    currentPageCountwait_new=currentPageCountwait_new+[Common_PageSizeAdd intValue];
-    [self LoadData];
-    // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
-    // 结束刷新
-    [self.NewTableView.mj_footer endRefreshing];
-}
-
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -226,8 +190,7 @@ NSInteger currentPageCountwait_new;
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-        myDelegate.listOfWay=listOfWay;
+       
     }
     else
     {
@@ -261,9 +224,16 @@ NSInteger currentPageCountwait_new;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    if([suessflag isEqualToString:@"true"])
+    if([suessflag isEqualToString:@"true"])    
     {
-         [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
+        //app.leaveid
+        VatcationMainView *order = [[VatcationMainView alloc] init];
+        order.vatcationid=self.vatcationid;
+        order.processInstanceID=self.processid;
+        order.edittype = @"2";
+        order.urltype =@"getdata";
+        [self.navigationController pushViewController:order animated:YES];
     }
 }
 
@@ -363,6 +333,7 @@ NSInteger currentPageCountwait_new;
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
     cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
+    cell.listOfWay=self.listOfWay;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

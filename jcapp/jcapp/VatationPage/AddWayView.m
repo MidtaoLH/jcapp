@@ -59,6 +59,7 @@
 -(void)gotoback {
     [_tagView dismiss];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+
     myDelegate.way_empid =@"0";
     myDelegate.way_refresh = @"true";
     WayViewController  * VCCollect = [[WayViewController alloc] init];

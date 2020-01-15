@@ -413,9 +413,15 @@ static NSString *identifierImage =@"LeaveImageCell.h";
         
         //补充附件图片路径
         NSMutableArray *array1 = [[NSMutableArray alloc] init];
+        
+        NSUInteger countannex = 0;
+ 
         for (MdlAnnex *mdla in listAnnex) {
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
-            [array1 addObject:urlstring];
+           // if(countannex <= 4)
+           // {
+                NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
+                [array1 addObject:urlstring];
+          //  }
         }
         _srcStringArray =array1;
         

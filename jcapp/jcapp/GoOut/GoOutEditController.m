@@ -675,7 +675,9 @@
                 MdlAnnex *kl2 = self.listAnnex[i];
                 NSString *imagepath_s = [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.AnnexPath];
                 UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
-                [imagepath addObject:imagetest];
+                if (imagetest) {
+                    [imagepath addObject:imagetest];
+                }
             }
             self.image.images =imagepath;
             [self.formTableView reloadData];

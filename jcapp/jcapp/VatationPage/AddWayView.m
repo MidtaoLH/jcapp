@@ -68,18 +68,33 @@
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 -(void)save {
-    [_tagView dismiss];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_groupname =lbgroupname;
-    myDelegate.way_groupid =lbgroupid;
-    myDelegate.way_empid =lbempid;
-    myDelegate.way_empname =lbempname;
-    myDelegate.way_empenglishname =lbempenglistname;
-    myDelegate.way_refresh = @"true";
-    WayViewController  * VCCollect = [[WayViewController alloc] init];
-    VCCollect.listOfWay=myDelegate.listOfWay;
-    myDelegate.listOfWay=nil;
-    [self.navigationController pushViewController:VCCollect animated:YES];
+    if(lbempid.length > 0)
+    {
+        [_tagView dismiss];
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.way_groupname =lbgroupname;
+        myDelegate.way_groupid =lbgroupid;
+        myDelegate.way_empid =lbempid;
+        myDelegate.way_empname =lbempname;
+        myDelegate.way_empenglishname =lbempenglistname;
+        myDelegate.way_refresh = @"true";
+        WayViewController  * VCCollect = [[WayViewController alloc] init];
+        VCCollect.listOfWay=myDelegate.listOfWay;
+        myDelegate.listOfWay=nil;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息"
+                              message: @"必须选择一个员工！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 -(void)selectFindex:(NSInteger)f Tindex:(NSInteger)t {
     

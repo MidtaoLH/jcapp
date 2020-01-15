@@ -334,6 +334,8 @@ NSInteger currentPageCountwait_new;
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
     cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
     cell.listOfWay=self.listOfWay;
+    cell.processid=self.processid;
+    cell.vatcationid=self.vatcationid;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

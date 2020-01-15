@@ -162,6 +162,8 @@
     myDelegate.way_post_index = obj2;
     myDelegate.listOfWay=self.listOfWay;
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
+    nextVc.processid=self.processid;
+    nextVc.vatcationid=self.vatcationid;
     [[self viewController].navigationController pushViewController:nextVc animated:YES];
 }
 - (void)actiondel:(id)sender

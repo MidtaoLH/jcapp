@@ -62,9 +62,13 @@
     
     myDelegate.way_empid =@"0";
     myDelegate.way_refresh = @"true";
+
+    
     WayViewController  * VCCollect = [[WayViewController alloc] init];
     VCCollect.listOfWay=myDelegate.listOfWay;
     myDelegate.listOfWay=nil;
+    VCCollect.processid=self.processid;
+    VCCollect.vatcationid=self.vatcationid;
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 -(void)save {
@@ -80,6 +84,8 @@
         myDelegate.way_refresh = @"true";
         WayViewController  * VCCollect = [[WayViewController alloc] init];
         VCCollect.listOfWay=myDelegate.listOfWay;
+        VCCollect.processid=self.processid;
+        VCCollect.vatcationid=self.vatcationid;
         myDelegate.listOfWay=nil;
         [self.navigationController pushViewController:VCCollect animated:YES];
     }

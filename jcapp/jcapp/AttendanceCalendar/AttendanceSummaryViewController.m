@@ -25,15 +25,28 @@
     [super viewDidLoad];
  
     [self loadinfo];
-   
-    NSDate *newDate = [NSDate date];
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"yyyy年MM月"];
-    self.startDate = [format stringFromDate:newDate];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    if(myDelegate.acsavedatetime.length==0)
+    {
+        NSDate *newDate = [NSDate date];
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy年MM月"];
+        self.startDate = [format stringFromDate:newDate];
+    }
+    else
+    {
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy年MM月"];
+        self.startDate = [format stringFromDate:myDelegate.acsavedatetime];
+    }
     [self.btndate setTitle:self.startDate forState:UIControlStateNormal];
     
     [self loadacinfo:self.startDate];
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 -(void)loadinfo{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];

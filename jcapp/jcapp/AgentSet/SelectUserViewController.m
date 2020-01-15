@@ -38,8 +38,9 @@
                                    delegate:self];
     _tagView = [[SkyAssociationMenuView alloc] init];
     _tagView.delegate = self;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"代理人设定" style:UIBarButtonItemStylePlain target:self action:@selector(gotoback)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(gotoback)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    self.navigationItem.title=@"选择员工";
 }
 -(void)show{
     btn = [UIButton  buttonWithType:UIButtonTypeCustom];
@@ -62,15 +63,31 @@
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 -(void)save {
-    [_tagView dismiss];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_groupname =lbgroupname;
-    myDelegate.way_groupid =lbgroupid;
-    myDelegate.way_empid =lbempid;
-    myDelegate.way_empname =lbempname;
-    myDelegate.agentType = @"true";
-    SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
-    [self.navigationController pushViewController:VCCollect animated:YES];
+    if(lbempid.length > 0)
+    {
+        [_tagView dismiss];
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.way_groupname =lbgroupname;
+        myDelegate.way_groupid =lbgroupid;
+        myDelegate.way_empid =lbempid;
+        myDelegate.way_empname =lbempname;
+        myDelegate.agentType = @"true";
+        SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
+    }
+    else
+    {
+        
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息"
+                              message: @"必须选择一个员工！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+  
 }
 -(void)selectFindex:(NSInteger)f Tindex:(NSInteger)t {
     //这个方法 z暂时不管

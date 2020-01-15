@@ -39,11 +39,19 @@
 
 #import "TabBar/TabBarViewController.h"
 #import "BusinessTrip/BusinessTripEditViewController.h"
+#import <AdSupport/AdSupport.h>
 
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
 @end
+
+NSString *usercount_str = @"";
+int usercount_int = 0;
+NSString *urlflag = @"";
+NSString *Loginflag = @"false";
+NSString *adId = @"";
+NSString *adduserlistflag = @"true";
 
 @implementation ViewController
 @synthesize listOfUser;
@@ -54,7 +62,114 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.usernamelist.delegate=self;
+    self.usernamelist.dataSource=self;
+    self.usernamelist.hidden = true;
+    
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+     NSString *userID = [defaults objectForKey:@"username"];
+    usercount_str = [defaults objectForKey:@"usercount"];
+    
+    if(userID.length > 0)
+    {
+        
+         NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,userID];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+        UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+        // 保存文件的名称1
+        [self.myHeadPortrait setImage:userimage];
+        
+    }
+    else
+    {
+        NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,@"moren"];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+        UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+        // 保存文件的名称
+        [self.myHeadPortrait setImage:userimage];
+    }
+    
+    if(usercount_str.length > 0)
+    {
+       usercount_int =  [usercount_str intValue];
+    }
+    
+    txtuser.text = userID;
+    adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    [defaults setObject:adId forKey:@"adId"];
+    
+    if(userID.length > 0)
+    {
+        urlflag = @"GetLoginStatus";
+        adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        //设置需要访问的ws和传入参数
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLoginStatus?User=%@&macid=%@", txtuser.text,adId];
+        NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+    }
+
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(IBAction)onClickButtonChose:(id)sender
+{
+    self.usernamelist.hidden = false;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(usercount_int > 0)
+    {
+        return usercount_int;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *stringInt = [NSString stringWithFormat:@"%d",indexPath.row + 1];
+    NSString *keyname = [NSString stringWithFormat:@"%@-username",stringInt];
+    NSString *username = [defaults objectForKey:keyname];
+    
+    txtuser.text =username;
+    
+    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+    UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+    // 保存文件的名称
+    [self.myHeadPortrait setImage:userimage];
+    
+    self.usernamelist.hidden = true;
+    
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID=@"cellID";
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *stringInt = [NSString stringWithFormat:@"%d",indexPath.row + 1];
+    NSString *keyname = [NSString stringWithFormat:@"%@-username",stringInt];
+    NSString *username = [defaults objectForKey:keyname];
+    cell.textLabel.text = username;
+    
+    return cell;
 }
 
 
@@ -78,12 +193,12 @@
     }
     else
     {
-        
+        urlflag = @"CheckUser";
         //先输出一下控件的值作为断点确认数据
         NSLog(@"%@", txtuser.text);
         NSLog(@"%@", txtpassword.text);
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/CheckUser?User=%@&Password=%@", txtuser.text,txtpassword.text];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/CheckUser?User=%@&Password=%@&macid=%@", txtuser.text,txtpassword.text,adId];
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -98,29 +213,9 @@
 }
 
 -(IBAction)onClickButton:(id)sender {
-    
-    /*
-                 VatationPageViewController * valueView = [[VatationPageViewController alloc] initWithNibName:@"VatationPageViewController"bundle:[NSBundle mainBundle]];
-                 //从底部划入
-                 [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-                 //跳转
-                 [self presentModalViewController:valueView animated:YES];
-    */
-    
-    //AgentViewController * valueView = [[AgentViewController alloc] initWithNibName:@"AgentViewController"bundle:[NSBundle mainBundle]];
-    //从底部划入
-    //[valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-    //跳转
-    //[self presentModalViewController:valueView animated:YES];
 
     BusinessTripDetailViewController *nextVc = [[BusinessTripDetailViewController alloc]init];//初始化下一个界面
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
-    
-    
-   
-    //VatcationMainViewController *nextVc = [[VatcationMainViewController alloc]init];//初始化下一个界面
-    //[self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
-
 
 }
 
@@ -150,26 +245,41 @@
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    
-    NSLog(@"%@",@"connection1-begin");
+    if([urlflag isEqualToString:@"CheckUser"])
+    {
+        NSLog(@"%@",@"connection1-begin");
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSLog(@"%@", resultString);
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
+    }
+    else
+    {
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        if([resultString isEqualToString:@"1"])
+        {
+           Loginflag = @"true";
+        }
+        else
+        {
+            Loginflag = @"false";
+        }
+        
+       
+    }
 
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
 
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
     
 }
 
@@ -189,21 +299,108 @@
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
-    //NSLog(@"%@", listOfUser.count);
-    
-       //开始解析XML
-    
-    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    ipParser.delegate = self;
-    [ipParser parse];
-    NSString *message = @"";
-    
-    if(listOfUser.count > 0)
+    if([urlflag isEqualToString:@"CheckUser"])
     {
-        
-        UserLogin *m =self.listOfUser[0];//取出数据元素
-        
-        if (![ m.flag isEqualToString:@"1"]) {
+        NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+        ipParser.delegate = self;
+        [ipParser parse];
+        NSString *message = @"";
+        if(listOfUser.count > 0)
+        {
+            UserLogin *m =self.listOfUser[0];//取出数据元素
+            if (![ m.flag isEqualToString:@"1"]) {
+                //返回不为1显示登陆失败
+                message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
+                //显示信息。正式环境时改为跳转
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: message
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+            }else
+            {
+                //返回1为1显示登陆成功
+                message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
+                //保存用户名密码
+                NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+                
+                            if (![txtuser.text isEqualToString:[defaults objectForKey:@"username"]]||![txtpassword.text isEqualToString:[defaults objectForKey:@"password"]] ) {
+                    
+                                    [defaults setObject:txtuser.text forKey:@"username"];
+                    
+                                    [defaults setObject:txtpassword.text forKey:@"password"];
+                    
+                                   
+                                }
+                
+                [defaults setObject:m.id forKey:@"userid"];
+                [defaults setObject:m.EmpID forKey:@"EmpID"];
+                [defaults setObject:m.name forKey:@"empname"];
+                [defaults setObject:m.Groupid forKey:@"Groupid"];
+                [defaults setObject:m.GroupName forKey:@"GroupName"];
+                [defaults setObject:m.UserNO forKey:@"UserNO"];
+                [defaults setObject:m.UserHour forKey:@"UserHour"];
+                [defaults setObject:m.IsNotice forKey:@"IsNotice"];
+                
+                //shezhi xialakuang
+                 if(usercount_int > 0)
+                 {
+                     for(int i = 1; i<= 1;i++)
+                     {
+                         NSString *stringInt = [NSString stringWithFormat:@"%d",i];
+                        NSString *keyname = [NSString stringWithFormat:@"%@-username",stringInt];
+                         NSString *username = [defaults objectForKey:keyname];
+                         
+                         
+                         if([txtuser.text isEqualToString:username])
+                         {
+                             adduserlistflag = @"false";
+                         }
+                     }
+                 }
+                else
+                {
+                    [defaults setObject:@"1" forKey:@"usercount"];
+                    NSString *keyname = [NSString stringWithFormat:@"%@-username",@"1"];
+                    [defaults setObject:txtuser.text forKey:keyname];
+                }
+                
+                if([adduserlistflag isEqualToString:@"true"])
+                {
+                    usercount_int = usercount_int + 1;
+                    [defaults setObject:[NSString stringWithFormat:@"%d",usercount_int] forKey:@"usercount"];
+                    
+                    NSString *keyname = [NSString stringWithFormat:@"%@-username",[NSString stringWithFormat:@"%d",usercount_int]];
+                    [defaults setObject:txtuser.text forKey:keyname];
+                    
+                }
+                
+                
+                //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
+                [defaults synchronize];//保存到磁盘
+                
+                //将当前用户的头像存到全局变量
+                UIImageView *imageView = [[UIImageView alloc] init];
+                NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
+                //[imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+                [[SDImageCache sharedImageCache] clearDisk];
+                [[SDImageCache sharedImageCache] clearMemory];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                    myDelegate.userPhotoimageView=imageView;
+                    //跳转到首页
+                    myDelegate.tabbarType=@"1";
+                    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                    [self presentViewController:navigationController animated:YES completion:nil];
+                }];
+            }
+        }
+        else
+        {
+            NSLog(@"%@", @"123");
             //返回不为1显示登陆失败
             message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
             //显示信息。正式环境时改为跳转
@@ -214,34 +411,14 @@
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
             [alert show];
-        }else
+            
+        }
+    }
+    else
+    {
+        //zidong denglu
+        if([Loginflag isEqualToString:@"true"])
         {
-            //返回1为1显示登陆成功
-            message = [[NSString alloc] initWithFormat:@"%@", @"登录成功！"];
-            //保存用户名密码
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            
-                        if (![txtuser.text isEqualToString:[defaults objectForKey:@"username"]]||![txtpassword.text isEqualToString:[defaults objectForKey:@"password"]] ) {
-                
-                                [defaults setObject:txtuser.text forKey:@"username"];
-                
-                                [defaults setObject:txtpassword.text forKey:@"password"];
-                
-                               
-                            }
-            
-            [defaults setObject:m.id forKey:@"userid"];
-            [defaults setObject:m.EmpID forKey:@"EmpID"];
-            [defaults setObject:m.name forKey:@"empname"];
-            [defaults setObject:m.Groupid forKey:@"Groupid"];
-            [defaults setObject:m.GroupName forKey:@"GroupName"];
-            [defaults setObject:m.UserNO forKey:@"UserNO"];
-            [defaults setObject:m.UserHour forKey:@"UserHour"];
-            [defaults setObject:m.IsNotice forKey:@"IsNotice"];
-            
-            //如果需要追加其他字段，只需要修改实体，修改后台，然后存入磁盘就好
-            [defaults synchronize];//保存到磁盘
-            
             //将当前用户的头像存到全局变量
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
@@ -259,19 +436,8 @@
             }];
         }
     }
-    else
-    {
-        NSLog(@"%@", @"123");
-        //返回不为1显示登陆失败
-        message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
-        //显示信息。正式环境时改为跳转
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @""
-                              message: message
-                              delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];    }
+    
+
     
 }
 

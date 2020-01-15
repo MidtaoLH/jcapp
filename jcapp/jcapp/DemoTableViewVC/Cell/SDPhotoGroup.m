@@ -15,6 +15,8 @@
 
 @interface SDPhotoGroup () <SDPhotoBrowserDelegate>
 
+@property (nonatomic, strong) UILabel *lblcount;
+
 @end
 
 @implementation SDPhotoGroup 
@@ -28,7 +30,16 @@
     }
     return self;
 }
-
+ 
+- (UILabel *)lblcount {
+    
+    if (!_lblcount) {
+        _lblcount = [[UILabel alloc] init];
+        _lblcount.font = kFont_Lable_12;
+        _lblcount.textColor =kColor_Red;
+    }
+    return _lblcount;
+}
 
 - (void)setPhotoItemArray:(NSArray *)photoItemArray
 {
@@ -42,22 +53,36 @@
         btn.tag = idx;
         
         [btn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+
         [self addSubview:btn];
     }];
     
     //可以根据idx设置位置
     
     long imageCount = photoItemArray.count;
+    
+    if(imageCount>4)
+    {
+        imageCount = 4;
+        
+         [self addSubview:self.lblcount];
+        
+         self.lblcount.frame = CGRectMake(100, 50, 80, 50);
+        self.lblcount.text = @"123123";
+    }
+    
     int perRowImageCount = ((imageCount == 4) ? 2 : 3);
     CGFloat perRowImageCountF = (CGFloat)perRowImageCount;
-    int totalRowCount = ceil(imageCount / perRowImageCountF);
+  //  int totalRowCount = ceil(imageCount / perRowImageCountF);
     CGFloat h = 80;
-    self.frame = CGRectMake(10, 10, 300, totalRowCount * (SDPhotoGroupImageMargin + h));
+    //self.frame = CGRectMake(10, 10, 300, totalRowCount * (SDPhotoGroupImageMargin + h));
+    self.frame = CGRectMake(10, 10, 375,  (SDPhotoGroupImageMargin + h));
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     long imageCount = self.photoItemArray.count;
     int perRowImageCount = ((imageCount == 4) ? 2 : 3);
     CGFloat w = 80;
@@ -69,7 +94,10 @@
       //  int columnIndex = idx % perRowImageCount;
       //  CGFloat x = columnIndex * (w + SDPhotoGroupImageMargin);
       //  CGFloat y = rowIndex * (h + SDPhotoGroupImageMargin);
-        btn.frame = CGRectMake(idx*10 + idx*w, 0, w, h);
+        if(idx < 4)
+        {
+            btn.frame = CGRectMake(idx*10 + idx*w, 0, w, h);
+        }
     }];
 }
 

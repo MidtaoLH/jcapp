@@ -166,6 +166,8 @@ NSInteger barheight;
  
 }
 - (void)addAgent {
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    myDelegate.agentType=@"false";
     SetAgentViewController * VCCollect = [[SetAgentViewController alloc] init];
     VCCollect.agentID=@"0";
     [self.navigationController pushViewController:VCCollect animated:YES];

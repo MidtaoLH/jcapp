@@ -30,6 +30,9 @@
 
 @property (nonatomic, retain)IBOutlet UITextField *txttest;
 
+@property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
+@property (weak, nonatomic) IBOutlet UITableView *usernamelist;
+
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfUser;
 
@@ -39,6 +42,7 @@
 
 -(IBAction)onClickButtontest:(id)sender;
 
+-(IBAction)onClickButtonChose:(id)sender;
 
 -(IBAction)onClickButtonLeave:(id)sender;
 

@@ -121,7 +121,25 @@
     myDelegate.way_empname =lbempname.text;
     myDelegate.way_empenglishname =lbempenglistname.text;
     myDelegate.way_refresh = @"true";
-    [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+    
+    if(lbempname.text.length > 0)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+    }
+    else
+    {
+        
+        //显示信息。正式环境时改为跳转
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"提示信息"
+                              message: @"必须选择一个员工！"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    
 }
 
 

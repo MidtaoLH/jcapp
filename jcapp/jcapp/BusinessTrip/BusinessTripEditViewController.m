@@ -17,6 +17,7 @@
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "Masonry.h"
 #import "TabBarViewController.h"
+#import "LeaveStatusModel.h"
 
 NSString * bflag = @"flase";
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
@@ -29,7 +30,6 @@ NSString * bflag = @"flase";
 @property (nonatomic, strong) SWFormItem *image;
 @property (nonatomic, strong) NSMutableData *mResponseData;
 @end
-
 @implementation BusinessTripEditViewController
 
 - (void)viewDidLoad
@@ -732,23 +732,40 @@ NSString * bflag = @"flase";
         }
         //上传图片
         if([operateType isEqual:@"0"]){
-            //接收返回的起案番号
-            applyCode=requestTmp;
-            operateType=@"3";
-            [self uploadImg];
-            //保存成功 提交成功
-            NSString *message=@"提交成功";
-            if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
-                message=@"保存成功";
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            NSMutableArray *listbusiness = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
+            if(listbusiness.count > 0)
+            {
+                LeaveStatusModel *m =listbusiness[0];//取出数据元素
+                //接收返回的起案番号
+                applyCode=m.ApplyCode;
+                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                myDelegate.businessTripid=m.LeaveID;
+                myDelegate.processid=m.ProcessID;
+                myDelegate.pageType=@"2";
+                operateType=@"3";
+                if(self.image.images.count >0){
+                    [self uploadImg];
+                }
+                else{
+                    //保存成功 提交成功
+                    NSString *message=@"提交成功";
+                    if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                        message=@"保存成功";
+                    }
+                    alert=@"save";
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle: @""
+                                          message: message
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    [alert show];
+                }
             }
-            alert=@"save";
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: message
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+            
         }
         
         if([operateType isEqual:@"2"] && [isLoad isEqualToString:@"true"]){

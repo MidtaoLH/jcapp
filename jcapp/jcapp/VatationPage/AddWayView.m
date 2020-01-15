@@ -55,60 +55,11 @@
     [btn setTitle:@"弹框选择" forState:UIControlStateNormal];
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(tan) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-}
--(void)tan{
-    
-    
-    [_tagView showAsFrame:CGRectMake(24, 84, 335, 569)];
-    
-    
-}
-
--(IBAction)onClickButtonchose:(id)sender {
-    
-  
-     [_tagView showAsDrawDownView:sender];
-}
-
--(IBAction)onClickButtonsave:(id)sender {
-    [_tagView dismiss];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_groupname =lbgroupname.text;
-    myDelegate.way_groupid =lbgroupid.text;
-    myDelegate.way_empid =lbempid.text;
-    myDelegate.way_empname =lbempname.text;
-    myDelegate.way_empenglishname =lbempenglistname.text;
-    myDelegate.way_refresh = @"true";
-    
-    if(lbempname.text.length > 0)
-    {
-        [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
-    }
-    else
-    {
-        
-        //显示信息。正式环境时改为跳转
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"提示信息"
-                              message: @"必须选择一个员工！"
-                              delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    
-}
-
-
 }
 -(void)gotoback {
     [_tagView dismiss];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-
+    
     myDelegate.way_empid =@"0";
     myDelegate.way_refresh = @"true";
     WayViewController  * VCCollect = [[WayViewController alloc] init];
@@ -175,7 +126,7 @@
                 }
                 return imageData.count;
             }
-        
+            
         }
     }
     return 10;
@@ -194,7 +145,7 @@
 }
 
 - (NSString*)assciationMenuView:(SkyAssociationMenuView*)asView titleForClass_1:(NSInteger)idx_1 class_2:(NSInteger)idx_2 {
-
+    
     if(listOfGroup.count > 0)
     {
         if(listOfEmp.count > 0)
@@ -220,7 +171,7 @@
     //return datArr[idx_1][idx_2];
 }
 - (BOOL)assciationMenuView:(SkyAssociationMenuView*)asView idxChooseInClass1:(NSInteger)idx_1 class2:(NSInteger)idx_2 {
-   
+    
     if(listOfGroup.count > 0)
     {
         if(listOfEmp.count > 0)
@@ -237,7 +188,7 @@
                 {
                     [imageData addObject:m.Name];
                     [imageData2 addObject:m.Code];
-                     [imageData3 addObject:m.ENGLISHNAME];
+                    [imageData3 addObject:m.ENGLISHNAME];
                 }
             }
             NSString *empname =imageData[idx_2] ;
@@ -248,7 +199,7 @@
             lbempenglistname =empenglish;
             return NO;
         }
-       return NO;
+        return NO;
     }
     return NO;
 }

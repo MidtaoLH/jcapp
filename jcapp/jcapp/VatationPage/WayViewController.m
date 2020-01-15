@@ -66,7 +66,12 @@ NSInteger currentPageCountwait_new;
             
             // [listOfWay insertObject:m atIndex:index];
             [listOfWay removeObjectAtIndex:index];
-            self.NewTableView.reloadData;
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         else
         {

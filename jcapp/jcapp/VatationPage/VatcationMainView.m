@@ -814,8 +814,40 @@ NSString * boolflag = @"flase";
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
-    if([xmlString isEqualToString:@"OK"])
+    if(isUploadImg==1)
     {
+        if(rightImgCount+errImgCount==imgcount){
+            return;
+        }
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *message=@"";
+        if([xmlString isEqualToString:@"OK"]){
+            rightImgCount++;
+            if(imgcount==rightImgCount){
+                //保存成功 提交成功
+                message=@"提交成功";
+                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                    message=@"保存成功";
+                }
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+        else{
+            if(errImgCount==0){
+                message=@"图片上传失败，请重新提交";
+                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                    message=@"图片上传失败，请重新保存";
+                }
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+            errImgCount++;
+        }
+        //s已上传的图片+上传失败的图片=总图片数 说明所有图片已上传
+        if(rightImgCount+errImgCount==imgcount){
+            isUploadImg=0;
+        }
         return ;
     }
     
@@ -823,6 +855,20 @@ NSString * boolflag = @"flase";
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    if(reusltRagne.length==0){
+        //保存成功 提交成功
+        NSString *message=@"提交失败";
+        if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+            message=@"保存失败";
+        }
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: message
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
     
     NSLog(@"%@", resultString);
@@ -900,21 +946,25 @@ NSString * boolflag = @"flase";
             {
                 ApplyCode = m.ApplyCode;
                 processid = m.ProcessID;
-                //保存成功 提交成功
-                NSString *message=@"提交成功";
-                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
-                    message=@"保存成功";
-                }
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @""
-                                      message: message
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-                [alert show];
-                
-                
+                edittype = @"2"; //编辑
+                if(self.image.images.count >0){
                     [self uploadImg];
+                }
+                else{
+                    //保存成功 提交成功
+                    NSString *message=@"提交成功";
+                    if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                        message=@"保存成功";
+                    }
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle: @""
+                                          message: message
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+                
             }
             
         }
@@ -925,7 +975,6 @@ NSString * boolflag = @"flase";
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -955,8 +1004,12 @@ NSString * boolflag = @"flase";
 
 
 -(void)uploadImg{
+    imgcount=self.image.images.count;
+    rightImgCount=0;
+    errImgCount=0;
     if(self.image.images.count >0)
     {
+        isUploadImg=1;
         for(int i = 0;i<self.image.images.count;i++)
         {
             UIImage *image = self.image.images[i];
@@ -964,7 +1017,7 @@ NSString * boolflag = @"flase";
             NSDictionary *parameters = @{};
             
             //上传的接口
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler1.ashx"];
             //分界线的标识符
             NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
             //根据url初始化request

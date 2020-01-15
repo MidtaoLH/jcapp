@@ -316,6 +316,9 @@ NSString * bflag = @"flase";
 //    }
 }
 -(void)uploadImg{
+    imgcount=self.image.images.count;
+    errImgCount=0;
+    rightImgCount=0;
     if(self.image.images.count >0)
     {
         for(int i = 0;i<self.image.images.count;i++)
@@ -325,7 +328,7 @@ NSString * bflag = @"flase";
             NSDictionary *parameters = @{};
             
             //上传的接口
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler.ashx"];
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"UploadHandler1.ashx"];
             //分界线的标识符
             NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
             //根据url初始化request
@@ -687,7 +690,6 @@ NSString * bflag = @"flase";
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if([alert isEqual:@"save"]){
-        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
         [self presentViewController:navigationController animated:YES completion:nil];
@@ -741,19 +743,14 @@ NSString * bflag = @"flase";
                 LeaveStatusModel *m =listbusiness[0];//取出数据元素
                 //接收返回的起案番号
                 applyCode=m.ApplyCode;
-                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-                myDelegate.businessTripid=m.LeaveID;
-                myDelegate.processid=m.ProcessID;
-                myDelegate.pageType=@"2";
-                operateType=@"3";
-                if(self.image.images.count >0){
-                    [self uploadImg];
-                }
-                else{
+                businessTripid=m.LeaveID;
+                processid=m.ProcessID;
+                pageType=@"2";
+                if([m.ProcessID isEqualToString:@"0"]){
                     //保存成功 提交成功
-                    NSString *message=@"提交成功";
+                    NSString *message=@"提交失败";
                     if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
-                        message=@"保存成功";
+                        message=@"保存失败";
                     }
                     alert=@"save";
                     UIAlertView *alert = [[UIAlertView alloc]
@@ -763,6 +760,27 @@ NSString * bflag = @"flase";
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
                     [alert show];
+                }
+                else{
+                    if(self.image.images.count >0){
+                        operateType=@"3";
+                        [self uploadImg];
+                    }
+                    else{
+                        //保存成功 提交成功
+                        NSString *message=@"提交成功";
+                        if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                            message=@"保存成功";
+                        }
+                        alert=@"save";
+                        UIAlertView *alert = [[UIAlertView alloc]
+                                              initWithTitle: @""
+                                              message: message
+                                              delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+                        [alert show];
+                    }
                 }
             }
             
@@ -823,14 +841,49 @@ NSString * bflag = @"flase";
                 NSString *userurlString =[NSString stringWithFormat:Common_WSUrl,[obj objectForKey:@"AnnexPath"]];
                 
                 UIImage *imagetest = [self SaveImageToLocal:userurlString Keys: [NSString stringWithFormat:@"%@",[obj objectForKey:@"AnnexName"]]];
+                if (imagetest) {
+                    [imagepath addObject:imagetest];
+                }
                 
-                [imagepath addObject:imagetest];
             }
             self.image.images =imagepath;
             
             [self.formTableView reloadData];
             [self LoadTableLocation];
             isLoad=@"false";
+        }
+    }
+    else{
+        if(rightImgCount+errImgCount==imgcount){
+            return;
+        }
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *message=@"";
+        if([xmlString isEqualToString:@"OK"]){
+            rightImgCount++;
+            if(rightImgCount==imgcount){
+                //保存成功 提交成功
+                message=@"提交成功";
+                if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                    message=@"保存成功";
+                }
+                alert=@"save";
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message
+                                      delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+        else{
+            if(errImgCount==0){
+                message=@"图片上传失败，请重新提交";
+                if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                    message=@"图片上传失败，请重新保存";
+                }
+                alert=@"";
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+            errImgCount--;
         }
     }
 }

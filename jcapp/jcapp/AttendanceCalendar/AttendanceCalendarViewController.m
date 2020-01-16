@@ -13,8 +13,6 @@
 #import "../Model/AttendanceCalendarDetail.h"
 #import "../Model/AttendanceCalendar.h"
 #import "AttendanceListCell.h"
-
-static NSString *identifier = @"acInfoCell";
 @interface AttendanceCalendarViewController ()
 <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @end
@@ -23,10 +21,6 @@ static NSString *identifier = @"acInfoCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_tableView registerClass:[AttendanceListCell class] forCellReuseIdentifier:identifier];
-    _tableView.rowHeight = Common_TableRowHeight;
-    
-    [self loadinfo];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     self.calview.tagStringOfDate=^NSString*(NSArray* calm,NSArray* itemDateArray){
         NSString *datestr = [NSString stringWithFormat:@"%@-%@-%@",itemDateArray[0],itemDateArray[1],itemDateArray[2]];
@@ -41,12 +35,19 @@ static NSString *identifier = @"acInfoCell";
         return msg;
     };
     self.calview.onDateSelectBlk=^(NSDate* date){
+        self.listOfMoviesDetail = nil;
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
+        
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd"];
         NSString *dateString = [format stringFromDate:date];
         [self loadacdinfo:dateString];
+        
     };
-    
+    [self loadstyle];
+    [self loadinfo];
 }
 
 -(void)loadinfo{
@@ -57,8 +58,17 @@ static NSString *identifier = @"acInfoCell";
     groupname = [defaults objectForKey:@"GroupName"];
     self.lblname.text=empname;
     self.lbldept.text=groupname;
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
+}
+- (void)loadstyle {
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.estimatedRowHeight = 0;
+    _tableView.estimatedSectionHeaderHeight = 0;
+    _tableView.estimatedSectionFooterHeight = 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -68,15 +78,18 @@ static NSString *identifier = @"acInfoCell";
 {
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
-      return _listOfMoviesDetail.count;
+    return _listOfMoviesDetail.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    AttendanceListCell *cell  = [self.tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    static NSString *cellID = @"acInfoCell";
+    AttendanceListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[AttendanceListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
     AttendanceCalendarDetail *detail =self.listOfMoviesDetail[indexPath.row];//取出数据元素
-   
-         cell.attendanceCaseNameLable.text=detail.PlanType;
+    
+    cell.attendanceCaseNameLable.text=detail.PlanType;
     
     if(detail.PlanStartTime.length>0)
     {
@@ -121,19 +134,6 @@ static NSString *identifier = @"acInfoCell";
                                    initWithRequest:request
                                    delegate:self];
 }
-//弹出消息框
--(void) connection:(NSURLConnection *)connection
-  didFailWithError: (NSError *)error {
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: @""
-                               message: Common_NetErrMsg
-                               delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
-    [errorAlert show];
-    
-}
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
@@ -148,20 +148,17 @@ static NSString *identifier = @"acInfoCell";
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     
     _listOfMoviesDetail = [AttendanceCalendarDetail mj_objectArrayWithKeyValuesArray:resultDic];
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }];
-    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
-    //
-    [CATransaction commit];
+    for(int i=0;i<[_listOfMoviesDetail count];i++)
+    {
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:i] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

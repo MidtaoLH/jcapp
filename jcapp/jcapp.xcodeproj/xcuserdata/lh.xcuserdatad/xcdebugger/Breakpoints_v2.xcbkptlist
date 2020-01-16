@@ -93,8 +93,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "300"
             endingLineNumber = "300"
-            landmarkName = "BApprovedViewController"
-            landmarkType = "3">
+            landmarkName = "-viewDidLayoutSubviews"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -104,7 +104,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/TabBar/TabBarViewController.m"
-            timestampString = "600845112.297959"
+            timestampString = "600846054.173461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "651"
@@ -152,7 +152,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/VatationPage/SkyAssociationMenuView.m"
-            timestampString = "600845112.298064"
+            timestampString = "600846054.173564"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "271"
@@ -232,7 +232,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "jcapp/VatationPage/VatcationMainViewController.m"
-            timestampString = "600845112.298188"
+            timestampString = "600846054.1736881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "692"

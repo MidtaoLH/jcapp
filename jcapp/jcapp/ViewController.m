@@ -123,6 +123,12 @@ NSString *adduserlistflag = @"true";
     self.usernamelist.hidden = false;
 }
 
+//有多少组
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(usercount_int > 0)
@@ -347,7 +353,7 @@ NSString *adduserlistflag = @"true";
                 //shezhi xialakuang
                  if(usercount_int > 0)
                  {
-                     for(int i = 1; i<= 1;i++)
+                     for(int i = 1; i<= usercount_int;i++)
                      {
                          NSString *stringInt = [NSString stringWithFormat:@"%d",i];
                         NSString *keyname = [NSString stringWithFormat:@"%@-username",stringInt];
@@ -487,14 +493,8 @@ NSString *adduserlistflag = @"true";
     for (id key in info) {
         [outstring appendFormat: @"%@: %@\n", key, [info objectForKey:key]];
     }
-    
-    
-    
-    //[outstring release];
-    //[xmlString release];
+
 }
-
-
 
 //输入完成键盘退出
 -(IBAction)textFieldDoneEditing:(id)sender {

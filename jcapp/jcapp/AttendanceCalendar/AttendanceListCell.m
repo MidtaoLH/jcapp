@@ -21,8 +21,8 @@
 //自定义cell 需要重写的方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if ([super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
         [self.contentView addSubview:self.attendanceCaseNameLable];
         [self.contentView addSubview:self.attendanceDateLable];
         [self.contentView addSubview:self.attendanceDurationLable];

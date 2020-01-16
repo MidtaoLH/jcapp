@@ -67,8 +67,10 @@
     WayViewController  * VCCollect = [[WayViewController alloc] init];
     VCCollect.listOfWay=myDelegate.listOfWay;
     myDelegate.listOfWay=nil;
+    myDelegate.listOfWay=nil;
     VCCollect.processid=self.processid;
     VCCollect.vatcationid=self.vatcationid;
+    VCCollect.pageTypeID=self.pageTypeID;
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 -(void)save {
@@ -86,6 +88,7 @@
         VCCollect.listOfWay=myDelegate.listOfWay;
         VCCollect.processid=self.processid;
         VCCollect.vatcationid=self.vatcationid;
+        VCCollect.pageTypeID=self.pageTypeID;
         myDelegate.listOfWay=nil;
         [self.navigationController pushViewController:VCCollect animated:YES];
     }

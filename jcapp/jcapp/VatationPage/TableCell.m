@@ -164,6 +164,7 @@
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
     nextVc.processid=self.processid;
     nextVc.vatcationid=self.vatcationid;
+    nextVc.pageTypeID=self.pageTypeID;
     [[self viewController].navigationController pushViewController:nextVc animated:YES];
 }
 - (void)actiondel:(id)sender

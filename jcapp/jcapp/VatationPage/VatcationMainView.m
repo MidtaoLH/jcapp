@@ -345,6 +345,7 @@ NSString * boolflag = @"flase";
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
     nextVc.processid=processid;
     nextVc.vatcationid=vatcationid;
+    nextVc.pageTypeID=@"1";
     [self.navigationController pushViewController:nextVc animated:YES];
     if([ boolflag isEqualToString:@"flase"])
     {

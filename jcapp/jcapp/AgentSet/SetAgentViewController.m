@@ -12,7 +12,6 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "../MJExtension/MJExtension.h"
 #import "../AppDelegate.h"
-#import "../VatationPage/WayViewController.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 #import "Masonry.h"
 #import "TabBarViewController.h"

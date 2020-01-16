@@ -13,6 +13,8 @@
 #import "../Model/AttendanceCalendarDetail.h"
 #import "../Model/AttendanceCalendar.h"
 #import "AttendanceListCell.h"
+
+static NSString *identifier = @"acInfoCell";
 @interface AttendanceCalendarViewController ()
 <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @end
@@ -21,6 +23,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [_tableView registerClass:[AttendanceListCell class] forCellReuseIdentifier:identifier];
+    _tableView.rowHeight = Common_TableRowHeight;
+    
+    [self loadinfo];
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     self.calview.tagStringOfDate=^NSString*(NSArray* calm,NSArray* itemDateArray){
         NSString *datestr = [NSString stringWithFormat:@"%@-%@-%@",itemDateArray[0],itemDateArray[1],itemDateArray[2]];
@@ -35,18 +41,12 @@
         return msg;
     };
     self.calview.onDateSelectBlk=^(NSDate* date){
-        self.listOfMoviesDetail = nil;
-        [self.tableView beginUpdates];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
-        
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd"];
         NSString *dateString = [format stringFromDate:date];
         [self loadacdinfo:dateString];
     };
-    [self loadstyle];
-    [self loadinfo];
+    
 }
 
 -(void)loadinfo{
@@ -60,15 +60,6 @@
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
 }
-- (void)loadstyle {
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.estimatedRowHeight = 0;
-    _tableView.estimatedSectionHeaderHeight = 0;
-    _tableView.estimatedSectionFooterHeight = 0;
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -81,11 +72,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"acInfoCell";
-    AttendanceListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[AttendanceListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
+
+    AttendanceListCell *cell  = [self.tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     AttendanceCalendarDetail *detail =self.listOfMoviesDetail[indexPath.row];//取出数据元素
    
          cell.attendanceCaseNameLable.text=detail.PlanType;
@@ -160,12 +148,15 @@
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
     
     _listOfMoviesDetail = [AttendanceCalendarDetail mj_objectArrayWithKeyValuesArray:resultDic];
-    for(int i=0;i<[_listOfMoviesDetail count];i++)
-    {
-        [self.tableView beginUpdates];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:i] withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
-    }
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //[_tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //
+    [CATransaction commit];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

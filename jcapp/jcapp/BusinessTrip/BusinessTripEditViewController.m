@@ -41,9 +41,9 @@ NSString * bflag = @"flase";
     groupid = [defaults objectForKey:@"Groupid"];
     
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    businessTripid=myDelegate.businessTripid;
-    processid=myDelegate.processid;
-    pageType=myDelegate.pageType;
+    self.businessTripid=myDelegate.businessTripid;
+    self.processid=myDelegate.processid;
+    self.pageType=myDelegate.pageType;
     isLoad=@"true";
 
     [super viewDidLoad];
@@ -117,8 +117,8 @@ NSString * bflag = @"flase";
     [toolBar setItems:toolbarItems animated:NO];
 
     
-    if([pageType isEqualToString:@"2"] ||[pageType isEqualToString:@"3"]){
-        operateType=@"2";
+    if([_pageType isEqualToString:@"2"] ||[_pageType isEqualToString:@"3"]){
+        _operateType=@"2";
         //修改画面 加载数据
         [self LoadData];
         
@@ -131,7 +131,7 @@ NSString * bflag = @"flase";
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSearchByID?userID=%@&businessTripID=%@",userID,businessTripid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSearchByID?userID=%@&businessTripID=%@",userID,_businessTripid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -247,7 +247,7 @@ NSString * bflag = @"flase";
  创建footer
  */
 - (UIView *)footerView {
-    if([pageType isEqualToString:@"1"]){
+    if([_pageType isEqualToString:@"1"]){
         return nil;
     }else{
         UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, kScreenWidth-40, 60)];
@@ -284,8 +284,10 @@ NSString * bflag = @"flase";
 
 -(void)processAction{
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
-    nextVc.processid=processid;
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    nextVc.processid=_processid;
+    nextVc.vatcationid=_businessTripid;
+    nextVc.pageTypeID=@"2";
+        [self.navigationController pushViewController:nextVc animated:YES];
     if([ bflag isEqualToString:@"flase"])
     {
         NSLog(@"%@", @"wybuttonclick flag");
@@ -451,7 +453,7 @@ NSString * bflag = @"flase";
             [alert show];
             return;
         }
-        self->operateType=@"0";
+        self->_operateType=@"0";
         
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myDataCopy, @"json",nil];
         //convert object to data
@@ -462,7 +464,7 @@ NSString * bflag = @"flase";
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         NSLog(@"text字典里面的内容为--》%@", text );
         
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->_processid,self->_businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->_pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -531,7 +533,7 @@ NSString * bflag = @"flase";
             [alert show];
             return;
         }
-        self->operateType=@"0";
+        self->_operateType=@"0";
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      self->myData, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
@@ -539,14 +541,14 @@ NSString * bflag = @"flase";
         NSString* text =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         //NSLog(@"text字典里面的内容为--》%@", text );
-        if([self->pageType isEqual:@"1"]){
-            self->pageType=@"4";
-        }else if([self->pageType isEqual:@"2"]){
-            self->pageType=@"5";
+        if([self->_pageType isEqual:@"1"]){
+            self->_pageType=@"4";
+        }else if([self->_pageType isEqual:@"2"]){
+            self->_pageType=@"5";
         }else{
-            self->pageType=@"6";
+            self->_pageType=@"6";
         }
-        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->processid,self->businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
+        NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->_processid,self->_businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->_pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -708,7 +710,7 @@ NSString * bflag = @"flase";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    if(![operateType isEqual:@"3"] ){
+    if(![_operateType isEqual:@"3"] ){
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"xmlString:%@",xmlString);
         // 字符串截取
@@ -731,7 +733,7 @@ NSString * bflag = @"flase";
             return;
         }
         //上传图片
-        if([operateType isEqual:@"0"]){
+        if([_operateType isEqual:@"0"]){
             NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
             
             NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
@@ -745,14 +747,14 @@ NSString * bflag = @"flase";
                 myDelegate.businessTripid=m.LeaveID;
                 myDelegate.processid=m.ProcessID;
                 myDelegate.pageType=@"2";
-                operateType=@"3";
+                _operateType=@"3";
                 if(self.image.images.count >0){
                     [self uploadImg];
                 }
                 else{
                     //保存成功 提交成功
                     NSString *message=@"提交成功";
-                    if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                    if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                         message=@"保存成功";
                     }
                     alert=@"save";
@@ -768,7 +770,7 @@ NSString * bflag = @"flase";
             
         }
         
-        if([operateType isEqual:@"2"] && [isLoad isEqualToString:@"true"]){
+        if([_operateType isEqual:@"2"] && [isLoad isEqualToString:@"true"]){
             //将明细数据拆分，头表数据及出差地点数据
             NSArray *array = [requestTmp componentsSeparatedByString:@"+"];
             //解析头表数据

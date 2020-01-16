@@ -277,7 +277,10 @@
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
             [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            
+
             self.imageView.image=imageView.image;
+            self.imageView.hidden = false;
         }
         else
         {
@@ -305,7 +308,11 @@
                 UIImageView *imageView = [[UIImageView alloc] init];
                 NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
                 [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+
+                
                 self.imageView.image=imageView.image;
+                
+                self.imageView.hidden = false;
             }
         }
     }

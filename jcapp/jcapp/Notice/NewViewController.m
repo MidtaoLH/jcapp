@@ -248,14 +248,19 @@ static NSString *identifier =@"NoticeCell";
     
     NSLog(@"%d",indexPath.row);
 
-    NoticeDetailController * valueView = [[NoticeDetailController alloc] initWithNibName:@"NoticeDetailController"bundle:[NSBundle mainBundle]];
-    
+//    NoticeDetailController * valueView = [[NoticeDetailController alloc] initWithNibName:@"NoticeDetailController"bundle:[NSBundle mainBundle]];
+//
+//    valueView.noticeitem =self.listOfMovies[indexPath.row];
+//
+//    //从底部划入
+//    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+//    //跳转
+//    [self presentModalViewController:valueView animated:YES];
+//
+    NoticeDetailController *valueView = [[NoticeDetailController alloc] initWithNibName:@"NoticeDetailController"bundle:[NSBundle mainBundle]];
     valueView.noticeitem =self.listOfMovies[indexPath.row];
-        
-    //从底部划入
-    [valueView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-    //跳转
-    [self presentModalViewController:valueView animated:YES];
+    valueView.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:valueView animated:YES];
     
 }
 

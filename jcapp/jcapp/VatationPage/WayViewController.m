@@ -125,7 +125,14 @@ NSInteger currentPageCountwait_new;
                 m.editflag = @"1";
                 int *index = [myDelegate.way_post_index intValue];
                 [listOfWay insertObject:m atIndex:index];
-                self.NewTableView.reloadData;
+               
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [_NewTableView reloadData];
+                }];
+                [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
+                
             }
         }
     }

@@ -163,3 +163,5 @@
 #define  SetDelButtonSize 20.0f
 #define  SetAddButtonRowSize 35.0f
 #define  SetAddTableRowSize 60.0f
+//登陆页头像
+#define Common_LoginImage 100.f

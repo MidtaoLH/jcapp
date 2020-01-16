@@ -31,6 +31,13 @@
 }
 @property (nonatomic, strong) NSMutableArray *srcStringArray;
 @property (strong,nonatomic) MdlEvection *leavehead;
+
+@property(nonatomic,strong) UITextField *myTextField;
+@property(nonatomic,strong) UIAlertAction *okAction;
+
+@property(nonatomic,strong) UITextField *myTextFieldup;
+@property(nonatomic,strong) UIAlertAction *okActionup;
+
 @end
 
 @implementation GoOutDeatileController
@@ -297,14 +304,35 @@ static NSString *identifierImage =@"ImageCell.h";
                                                              NSLog(@"action = %@", alert.textFields);
                                                          }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+         self.myTextField = textField;
         textField.placeholder = @"取消修改理由必填";
+        
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
     }];
     
+    self.okAction = okAction;
+    okAction.enabled = NO;
+
     [alert addAction:okAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+- (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification {
 
+    if(self.myTextField.text.length > 0) {
+        self.okAction.enabled = YES;
+    } else {
+        self.okAction.enabled = NO;
+    }
+}
+- (void)handleTextFieldTextDidChangeNotificationup:(NSNotification *)notification {
+    
+    if(self.myTextFieldup.text.length > 0) {
+        self.okActionup.enabled = YES;
+    } else {
+        self.okActionup.enabled = NO;
+    }
+}
 -(void)TaskCancle:(id)sender{
  
     [self ShowMessage];
@@ -358,7 +386,12 @@ static NSString *identifierImage =@"ImageCell.h";
                                                              }];
         [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"取消修改理由必填";
+            self.myTextFieldup = textField;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotificationup:) name:UITextFieldTextDidChangeNotification object:textField];
         }];
+        
+        self.okActionup = okAction;
+        okAction.enabled = NO;
         
         [alert addAction:okAction];
         [alert addAction:cancelAction];

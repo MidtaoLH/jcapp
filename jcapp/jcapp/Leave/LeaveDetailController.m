@@ -28,7 +28,13 @@
     CGFloat scaleMax;
     //0 初始化 1 承认 2 驳回
     long edittype;
+    
 }
+@property(nonatomic,strong) UITextField *myTextFieldup;
+@property(nonatomic,strong) UIAlertAction *okActionup;
+
+@property(nonatomic,strong) UITextField *myTextField;
+@property(nonatomic,strong) UIAlertAction *okAction;
 
 @property (strong,nonatomic) LeaveHead *leavehead;
 @property (nonatomic, strong) NSMutableArray *srcStringArray;
@@ -271,16 +277,6 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                          //响应事件
                                                          //得到文本信息
                                                          for(UITextField *text in alert.textFields){
-                                                             
-                                                             NSLog(@"text = %@", text.text);
-                                                             
-                                                             if([text.text isEqualToString:@""])
-                                                             {
-                                                                 NSLog(@"text = %@", @"asdfsdfsdf");
-                                                                 [self ShowMessage];
-                                                                 return;
-                                                             }
-                                                             
                                                              edittype = 1;
                                                              
                                                              NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
@@ -302,13 +298,33 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                          }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"取消修改理由必填";
+        self.myTextField = textField;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
     }];
+    
+    self.okAction = okAction;
+    okAction.enabled = NO;
     
     [alert addAction:okAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
+- (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification {
+    
+    if(self.myTextField.text.length > 0) {
+        self.okAction.enabled = YES;
+    } else {
+        self.okAction.enabled = NO;
+    }
+}
+- (void)handleTextFieldTextDidChangeNotificationup:(NSNotification *)notification {
+    
+    if(self.myTextFieldup.text.length > 0) {
+        self.okActionup.enabled = YES;
+    } else {
+        self.okActionup.enabled = NO;
+    }
+}
 -(void)TaskCancle:(id)sender{
     
     [self ShowMessage];
@@ -364,7 +380,12 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                              }];
         [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"取消修改理由必填";
+            self.myTextFieldup = textField;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotificationup:) name:UITextFieldTextDidChangeNotification object:textField];
         }];
+        
+        self.okActionup = okAction;
+        okAction.enabled = NO;
         
         [alert addAction:okAction];
         [alert addAction:cancelAction];

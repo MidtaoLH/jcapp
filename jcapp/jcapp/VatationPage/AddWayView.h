@@ -22,8 +22,5 @@
 @property (nonatomic, retain)IBOutlet NSString *lbgroupid;
 @property (nonatomic, retain)IBOutlet NSString *lbempid;
 @property (nonatomic, retain)IBOutlet NSString *lbempenglistname;
-@property (nonatomic, copy) NSString *processid;
-@property (nonatomic, copy) NSString *vatcationid;
-@property (nonatomic, copy) NSString *pageTypeID;
 @end
 

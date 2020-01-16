@@ -298,7 +298,7 @@
     //[footer addSubview:submitBtn];
     
     return footer;
-}*/
+}
 - (BOOL)isNumber:(NSString *)strValue
 {
     if (strValue == nil || [strValue length] <= 0)
@@ -314,7 +314,20 @@
         return NO;
     }
     return YES;
+}*/
+- (BOOL) isNumber:(NSString *)str
+{
+    if (str.length == 0) {
+        return NO;
+    }
+    NSString *regex = @"^(\\-|\\+)?\\d+(\\.\\d+)?$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
 }
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIDatePicker *datePicker = (UIDatePicker *)[actionSheet viewWithTag:101];

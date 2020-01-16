@@ -262,21 +262,17 @@ NSString * bflag = @"flase";
     }
     
 }
-- (BOOL)isNumber:(NSString *)strValue
+- (BOOL) isNumber:(NSString *)str
 {
-    if (strValue == nil || [strValue length] <= 0)
-    {
+    if (str.length == 0) {
         return NO;
     }
-    
-    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-    NSString *filtered = [[strValue componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-    
-    if (![strValue isEqualToString:filtered])
-    {
-        return NO;
+    NSString *regex = @"^(\\-|\\+)?\\d+(\\.\\d+)?$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 -(void)processAction{

@@ -223,19 +223,17 @@ NSString *const IDENTIFIER = @"CELL";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     //tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:IDENTIFIER];
-    //cell.textLabel.textColor = kColorRGB(0x222222);
-    //cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = kColor_Green;
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     if(tableView == [tables objectAtIndex:0]){
         cell.textLabel.text = [_delegate assciationMenuView:self titleForClass_1:indexPath.row];
-        //cell.backgroundColor = kColorRGB(0xeff1f5);
-        //cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        //cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor =kColor_Blue;
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
     }else if(tableView == [tables objectAtIndex:1]){
         cell.textLabel.text = [_delegate assciationMenuView:self titleForClass_1:((UITableView*)tables[0]).indexPathForSelectedRow.row class_2:indexPath.row];
-        //        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        //        cell.selectedBackgroundView.backgroundColor = kColorRGB(0xeff1f5);
-    }else if(tableView == [tables objectAtIndex:2]){
-        cell.textLabel.text = [_delegate assciationMenuView:self titleForClass_1:((UITableView*)tables[0]).indexPathForSelectedRow.row class_2:((UITableView*)tables[1]).indexPathForSelectedRow.row class_3:indexPath.row];
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = kColor_Red;
     }
     //[self addBottomSubLayer:cell.contentView];
     return cell;
@@ -274,7 +272,13 @@ NSString *const IDENTIFIER = @"CELL";
         }
         fIndex = indexPath.row;
         if(isNexClass) {
-             [t1 reloadData];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [t1 reloadData];
+                [t1 layoutIfNeeded];
+            }];
+            [t1 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
             if(!t1.superview) {
                 [bgView addSubview:t1];
             }
@@ -282,12 +286,6 @@ NSString *const IDENTIFIER = @"CELL";
                 [t2 removeFromSuperview];
             }
             [self adjustTableViews];
-            //[CATransaction begin];
-            //[CATransaction setCompletionBlock:^{
-            //    [t1 reloadData];
-            //}];
-            //[t1 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            //[CATransaction commit];
         }else{
             if(t1.superview) {
                 [t1 removeFromSuperview];

@@ -32,9 +32,10 @@ UITableViewDelegate>{
 
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfWay;
+
 @property (nonatomic, copy) NSString *processid;
 @property (nonatomic, copy) NSString *vatcationid;
-
+@property (nonatomic, copy) NSString *pageTypeID;
 @end
 
 NS_ASSUME_NONNULL_END

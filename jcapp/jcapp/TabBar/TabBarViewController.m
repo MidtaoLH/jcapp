@@ -31,7 +31,6 @@
 #import "AgentViewController.h"
 #import "SetAgentViewController.h"
 #import "NewViewController.h"
-#import "WayViewController.h"
 #import "AddWayView.h"
 
 #import "SelectUserViewController.h"
@@ -534,7 +533,7 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.45));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.47));
     }];
     [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+kScreenHeight*0.45+Common_RowSize*2);
@@ -624,15 +623,6 @@ UIViewController *childViewControllerSelectUser (NSString *title, NSString *imgN
 UIViewController *childViewControllerAddWay (NSString *title, NSString *imgName, NSUInteger tag) {
     
     AddWayView *vc = [[AddWayView alloc] init];
-    vc.view.backgroundColor = [UIColor whiteColor];
-    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
-    setAnimation(vc.tabBarItem, tag);
-    return vc;
-}
-/// 自定义样式UITabBarItem
-UIViewController *childViewControllerWay(NSString *title, NSString *imgName, NSUInteger tag) {
-    
-    WayViewController *vc = [[WayViewController alloc] init];
     vc.view.backgroundColor = [UIColor whiteColor];
     vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imgName] tag:tag];
     setAnimation(vc.tabBarItem, tag);

@@ -267,7 +267,9 @@
     NSString *bflag = @"flase";
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
     nextVc.processid=processid;
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    nextVc.vatcationid=self.evectionID;
+    nextVc.pageTypeID=@"3";
+    [self.navigationController pushViewController:nextVc animated:YES];
     if([ bflag isEqualToString:@"flase"])
     {
         NSLog(@"%@", @"wybuttonclick flag");
@@ -598,10 +600,42 @@
     NSLog(@"%@",@"connection1-begin");
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    if([xmlString isEqualToString:@"OK"])
+    if(isUploadImg==1)
     {
+        if(rightImgCount+errImgCount==imgcount){
+            return;
+        }
+        NSString *message=@"";
+        if([xmlString isEqualToString:@"OK"]){
+            rightImgCount++;
+            if(imgcount==rightImgCount){
+                //保存成功 提交成功
+                message=@"提交成功";
+                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                    message=@"保存成功";
+                }
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+        else{
+            if(errImgCount==0){
+                message=@"图片上传失败，请重新提交";
+                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                    message=@"图片上传失败，请重新保存";
+                }
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+            errImgCount++;
+        }
+        //s已上传的图片+上传失败的图片=总图片数 说明所有图片已上传
+        if(rightImgCount+errImgCount==imgcount){
+            isUploadImg=0;
+        }
         return ;
     }
+    
     //从一览进入显示获取数据
     if([self.urltype isEqualToString:@"getdata"])
     {
@@ -706,20 +740,26 @@
             if ([ m.Status isEqualToString:@"0"])
             {
                 ApplyCode = m.ApplyCode;
-                [self uploadImg];
-                //保存成功 提交成功
-                NSString *message=@"提交成功";
-                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
-                    message=@"保存成功";
+                processid=m.ProcessID;
+                self.evectionID=m.LeaveID;
+                self.edittype = @"2"; //编辑
+                if(self.image.images.count >0){
+                    [self uploadImg];
                 }
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @""
-                                      message: message
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-                [alert show];
- 
+                else{
+                    //保存成功 提交成功
+                    NSString *message=@"提交成功";
+                    if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                        message=@"保存成功";
+                    }
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle: @""
+                                          message: message
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    [alert show];
+                }
             }
             else
             {
@@ -736,6 +776,7 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
+
 // 提示错误信息
 - (void)showError:(NSString *)errorMsg {
     // 1.弹框提醒
@@ -764,8 +805,12 @@
 }
 
 -(void)uploadImg{
+    imgcount=self.image.images.count;
+    rightImgCount=0;
+    errImgCount=0;
     if(self.image.images.count >0)
     {
+        isUploadImg=1;
         for(int i = 0;i<self.image.images.count;i++)
         {
             UIImage *image = self.image.images[i];

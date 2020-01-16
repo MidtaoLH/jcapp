@@ -37,7 +37,7 @@
 /*列表默认加载行数*/
 #define Common_PageSize @"5"
 /*列表下拉叠加行数*/
-#define Common_PageSizeAdd @"10"
+#define Common_PageSizeAdd @"5"
 
 /*头像存储路径*/
 #define Common_NetErrMsg @"服务器连接失败"

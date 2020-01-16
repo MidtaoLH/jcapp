@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *processid;
 @property (nonatomic, copy) NSString *vatcationid;
+@property (nonatomic, copy) NSString *pageTypeID;
+
 @property (strong, nonatomic) UIAlertAction *okAction;
 @property (strong, nonatomic) UIAlertAction *cancelAction;
 

@@ -764,7 +764,7 @@
             else
             {
                 // 弹出 对话框
-                [self showError:m.LeaveID];
+                [self showError:m.message];
             }
         }
     }

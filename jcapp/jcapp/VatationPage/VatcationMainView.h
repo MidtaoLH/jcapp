@@ -35,6 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
     
     UIDatePicker*datePickers;
     UIDatePicker*datePickere;
+    
+    NSUInteger imgcount;   //图片总数
+    NSUInteger isUploadImg;//是否正在上传图片 1:是 0:不是
+    NSUInteger errImgCount;//上传失败的图片个数
+    NSUInteger rightImgCount;//上传失败的图片个数
 }
 
 

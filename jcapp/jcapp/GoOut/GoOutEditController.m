@@ -95,7 +95,7 @@
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight));
     }];
 }
 
@@ -252,24 +252,13 @@
     if([self.edittype isEqualToString:@"1"]){
         return nil;
     }else{
-        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(20, 20, self.view.width-40, 60)];
-//        [footer  mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
-//
-//            make.left.mas_equalTo(20);
-//            // 添加大小约束
-//            make.size.mas_equalTo(CGSizeMake(kScreenWidth-40, 60));
-//        }];
-//
-//        UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-//        submitBtn.bounds = CGRectMake(0, 0, self.view.bounds.size.width-50, 40);
-//        submitBtn.center = footer.center;
-//        submitBtn.backgroundColor = [UIColor orangeColor];
-//        [_btnProcess setTitle:@"查看审批路径" forState:UIControlStateNormal];
-//        //[submitBtn setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 20, kScreenWidth, 60)];
         [_btnProcess addTarget:self action:@selector(processAction) forControlEvents:UIControlEventTouchUpInside];
         [footer addSubview:_btnProcess];
-        
+        [_btnProcess  mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(20);
+            make.width.mas_equalTo(kScreenWidth-40);
+        }];
         return footer;
     }
     

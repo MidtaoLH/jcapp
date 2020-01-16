@@ -162,19 +162,32 @@
     myDelegate.way_post_index = obj2;
     myDelegate.listOfWay=self.listOfWay;
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
+    nextVc.processid=self.processid;
+    nextVc.vatcationid=self.vatcationid;
     [[self viewController].navigationController pushViewController:nextVc animated:YES];
 }
 - (void)actiondel:(id)sender
 {
-    DelButton* multiParamButton = (DelButton* )sender;
-    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
-    NSString * obj2 = [multiParamButton.multiParamDicindex objectForKey:@"index"];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认删除？" preferredStyle:UIAlertControllerStyleAlert];
+    // 确定注销
+    _okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+        DelButton* multiParamButton = (DelButton* )sender;
+        NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
+        NSString * obj2 = [multiParamButton.multiParamDicindex objectForKey:@"index"];
+        
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.way_post_level =obj1;
+        myDelegate.way_post_index_delete = obj2;
+        myDelegate.way_post_delete = @"true";
+        [[self viewController] viewDidLoad];
+    }];
+    _cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_post_level =obj1;
-    myDelegate.way_post_index_delete = obj2;
-    myDelegate.way_post_delete = @"true";
-    [[self viewController] viewDidLoad];
+    [alert addAction:_okAction];
+    [alert addAction:_cancelAction];
+    // 弹出对话框
+    [[self viewController] presentViewController:alert animated:true completion:nil];
+   
 }
 
 

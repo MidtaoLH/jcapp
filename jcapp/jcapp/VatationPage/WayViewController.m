@@ -233,39 +233,7 @@ NSInteger currentPageCountwait_new;
     
     if([suessflag isEqualToString:@"true"])    
     {
-        if([self.pageTypeID isEqualToString:@"1"])
-        {
-            AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-            //app.leaveid
-            VatcationMainView *order = [[VatcationMainView alloc] init];
-            order.vatcationid=self.vatcationid;
-            order.processInstanceID=self.processid;
-            order.edittype = @"2";
-            order.urltype =@"getdata";
-            [self.navigationController pushViewController:order animated:YES];
-        }
-        else  if([self.pageTypeID isEqualToString:@"2"])
-        {
-            AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-            //app.leaveid
-            BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
-            order.businessTripid=self.vatcationid;
-            order.processid=self.processid;
-            order.pageType = @"2";
-            order.operateType =@"2";
-            [self.navigationController pushViewController:order animated:YES];
-        }
-        else  if([self.pageTypeID isEqualToString:@"3"])
-        {
-            AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-            //app.leaveid
-            GoOutEditController *order = [[GoOutEditController alloc] init];
-            order.evectionID=self.vatcationid;
-            order.processInstanceID=self.processid;
-            order.edittype = @"2";
-            order.urltype =@"getdata";
-            [self.navigationController pushViewController:order animated:YES];
-        }
+        [self.navigationController popViewControllerAnimated:YES];
     }
     
 }
@@ -389,39 +357,7 @@ NSInteger currentPageCountwait_new;
 {
 }
 - (void)goBack {
-    if([self.pageTypeID isEqualToString:@"1"])
-    {
-        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-        //app.leaveid
-        VatcationMainView *order = [[VatcationMainView alloc] init];
-        order.vatcationid=self.vatcationid;
-        order.processInstanceID=self.processid;
-        order.edittype = @"2";
-        order.urltype =@"getdata";
-        [self.navigationController pushViewController:order animated:YES];
-    }
-    else  if([self.pageTypeID isEqualToString:@"2"])
-    {
-        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-        //app.leaveid
-        BusinessTripEditViewController *order = [[BusinessTripEditViewController alloc] init];
-        order.businessTripid=self.vatcationid;
-        order.processid=self.processid;
-        order.pageType = @"2";
-        //order.urltype =@"getdata";
-        [self.navigationController pushViewController:order animated:YES];
-    }
-    else  if([self.pageTypeID isEqualToString:@"3"])
-    {
-        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-        //app.leaveid
-        GoOutEditController *order = [[GoOutEditController alloc] init];
-        order.evectionID=self.vatcationid;
-        order.processInstanceID=self.processid;
-        order.edittype = @"2";
-        order.urltype =@"getdata";
-        [self.navigationController pushViewController:order animated:YES];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)save{
     saveflag = @"true";

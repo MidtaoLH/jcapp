@@ -36,7 +36,9 @@
     if (!_lblcount) {
         _lblcount = [[UILabel alloc] init];
         _lblcount.font = kFont_Lable_12;
-        _lblcount.textColor =kColor_Red;
+        _lblcount.textColor =kColor_White;
+        _lblcount.backgroundColor = kColor_Gray;
+        _lblcount.textAlignment = NSTextAlignmentCenter;
     }
     return _lblcount;
 }
@@ -59,16 +61,19 @@
     
     //可以根据idx设置位置
     
-    long imageCount = photoItemArray.count;
+    NSInteger imageCount = photoItemArray.count;
     
-    if(imageCount>4)
+    if(imageCount>=4)
     {
         imageCount = 4;
         
          [self addSubview:self.lblcount];
         
-         self.lblcount.frame = CGRectMake(100, 50, 80, 50);
-        self.lblcount.text = @"123123";
+        //x 为 4个图片宽度 + 前面空白 + 3个间隔 - lbl宽度, y 为图片高度 - 文字高度
+  //       self.lblcount.frame = CGRectMake(20+15*3+80*4 - 60, 60, 60, 60);
+        self.lblcount.frame = CGRectMake(20+15*3+80*4 - 40, 80-22, 40, 22);
+        NSString *str_C = [[NSString alloc] initWithFormat:@"%@%d%@", @"共",photoItemArray.count,@"张" ];
+        self.lblcount.text = str_C;
     }
     
     int perRowImageCount = ((imageCount == 4) ? 2 : 3);
@@ -76,7 +81,7 @@
   //  int totalRowCount = ceil(imageCount / perRowImageCountF);
     CGFloat h = 80;
     //self.frame = CGRectMake(10, 10, 300, totalRowCount * (SDPhotoGroupImageMargin + h));
-    self.frame = CGRectMake(10, 10, 375,  (SDPhotoGroupImageMargin + h));
+    self.frame = CGRectMake(10, 10, kScreenWidth,  (SDPhotoGroupImageMargin + h));
 }
 
 - (void)layoutSubviews
@@ -96,7 +101,8 @@
       //  CGFloat y = rowIndex * (h + SDPhotoGroupImageMargin);
         if(idx < 4)
         {
-            btn.frame = CGRectMake(idx*10 + idx*w, 0, w, h);
+            //目前请假x为38
+            btn.frame = CGRectMake(idx*15 + idx*w + 20, 0, w, h);
         }
     }];
 }

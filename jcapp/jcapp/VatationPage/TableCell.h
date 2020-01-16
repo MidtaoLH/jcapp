@@ -19,10 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy,nonatomic) NSString *index;
 
-@property (strong,nonatomic) NSMutableArray *listOfWay;
-
-@property (nonatomic, copy) NSString *processid;
-@property (nonatomic, copy) NSString *vatcationid;
 @property (strong, nonatomic) UIAlertAction *okAction;
 @property (strong, nonatomic) UIAlertAction *cancelAction;
 

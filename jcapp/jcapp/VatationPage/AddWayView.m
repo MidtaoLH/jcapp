@@ -64,12 +64,7 @@
     myDelegate.way_refresh = @"true";
 
     
-    WayViewController  * VCCollect = [[WayViewController alloc] init];
-    VCCollect.listOfWay=myDelegate.listOfWay;
-    myDelegate.listOfWay=nil;
-    VCCollect.processid=self.processid;
-    VCCollect.vatcationid=self.vatcationid;
-    [self.navigationController pushViewController:VCCollect animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)save {
     if(lbempid.length > 0)
@@ -82,12 +77,7 @@
         myDelegate.way_empname =lbempname;
         myDelegate.way_empenglishname =lbempenglistname;
         myDelegate.way_refresh = @"true";
-        WayViewController  * VCCollect = [[WayViewController alloc] init];
-        VCCollect.listOfWay=myDelegate.listOfWay;
-        VCCollect.processid=self.processid;
-        VCCollect.vatcationid=self.vatcationid;
-        myDelegate.listOfWay=nil;
-        [self.navigationController pushViewController:VCCollect animated:YES];
+       [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {

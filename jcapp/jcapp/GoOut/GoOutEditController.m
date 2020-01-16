@@ -267,7 +267,9 @@
     NSString *bflag = @"flase";
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
     nextVc.processid=processid;
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    nextVc.vatcationid=self.evectionID;
+    nextVc.pageTypeID=@"3";
+    [self.navigationController pushViewController:nextVc animated:YES];
     if([ bflag isEqualToString:@"flase"])
     {
         NSLog(@"%@", @"wybuttonclick flag");
@@ -296,7 +298,7 @@
     //[footer addSubview:submitBtn];
     
     return footer;
-}*/
+}
 - (BOOL)isNumber:(NSString *)strValue
 {
     if (strValue == nil || [strValue length] <= 0)
@@ -312,7 +314,20 @@
         return NO;
     }
     return YES;
+}*/
+- (BOOL) isNumber:(NSString *)str
+{
+    if (str.length == 0) {
+        return NO;
+    }
+    NSString *regex = @"^(\\-|\\+)?\\d+(\\.\\d+)?$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
+    }
+    return NO;
 }
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIDatePicker *datePicker = (UIDatePicker *)[actionSheet viewWithTag:101];

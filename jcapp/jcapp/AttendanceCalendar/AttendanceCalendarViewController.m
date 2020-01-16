@@ -44,6 +44,7 @@
         [format setDateFormat:@"yyyy-MM-dd"];
         NSString *dateString = [format stringFromDate:date];
         [self loadacdinfo:dateString];
+        
     };
     [self loadstyle];
     [self loadinfo];
@@ -57,7 +58,7 @@
     groupname = [defaults objectForKey:@"GroupName"];
     self.lblname.text=empname;
     self.lbldept.text=groupname;
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
 }
 - (void)loadstyle {
@@ -77,7 +78,7 @@
 {
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
-      return _listOfMoviesDetail.count;
+    return _listOfMoviesDetail.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -87,8 +88,8 @@
         cell = [[AttendanceListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     AttendanceCalendarDetail *detail =self.listOfMoviesDetail[indexPath.row];//取出数据元素
-   
-         cell.attendanceCaseNameLable.text=detail.PlanType;
+    
+    cell.attendanceCaseNameLable.text=detail.PlanType;
     
     if(detail.PlanStartTime.length>0)
     {
@@ -133,19 +134,6 @@
                                    initWithRequest:request
                                    delegate:self];
 }
-//弹出消息框
--(void) connection:(NSURLConnection *)connection
-  didFailWithError: (NSError *)error {
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: @""
-                               message: Common_NetErrMsg
-                               delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
-    [errorAlert show];
-    
-}
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
@@ -170,7 +158,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

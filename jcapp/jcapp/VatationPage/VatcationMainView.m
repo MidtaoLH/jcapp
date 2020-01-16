@@ -349,6 +349,7 @@ NSString * boolflag = @"flase";
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
     nextVc.processid=processid;
     nextVc.vatcationid=vatcationid;
+    nextVc.pageTypeID=@"1";
     [self.navigationController pushViewController:nextVc animated:YES];
     if([ boolflag isEqualToString:@"flase"])
     {
@@ -662,6 +663,7 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
+        
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -673,6 +675,7 @@ NSString * boolflag = @"flase";
             [alert show];
             return;
         }
+        
         // 字符串转float
         float floatString = [vatcationtime floatValue];
         if(floatString<=0)
@@ -767,21 +770,17 @@ NSString * boolflag = @"flase";
     }];
 }
 
-- (BOOL)isNumber:(NSString *)strValue
+- (BOOL) isNumber:(NSString *)str
 {
-    if (strValue == nil || [strValue length] <= 0)
-    {
+    if (str.length == 0) {
         return NO;
     }
-    
-    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-    NSString *filtered = [[strValue componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-    
-    if (![strValue isEqualToString:filtered])
-    {
-        return NO;
+     NSString *regex = @"^(\\-|\\+)?\\d+(\\.\\d+)?$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if ([pred evaluateWithObject:str]) {
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 - (NSString*)CharacterStringMainString:(NSString*)MainString AddDigit:(int)AddDigit AddString:(NSString*)AddString

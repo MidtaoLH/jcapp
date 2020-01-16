@@ -28,10 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *empname;
     NSString *empID;
     NSString *userID;
-    NSString *businessTripid;
-    NSString *processid;
-    NSString *pageType;
-    NSString *operateType;
     NSString *applyCode;
     NSString *alert;
     NSString *isLoad;
@@ -40,5 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSUInteger rightImgCount;//上传失败的图片个数
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnProcess;
+@property (nonatomic,copy) NSString *processid;
+@property (nonatomic,copy) NSString *businessTripid;
+@property (nonatomic,copy) NSString *pageType;
+@property (nonatomic,copy) NSString *operateType;
 @end
 NS_ASSUME_NONNULL_END

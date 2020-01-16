@@ -160,7 +160,6 @@
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.way_post_level =obj1;
     myDelegate.way_post_index = obj2;
-    myDelegate.listOfWay=self.listOfWay;
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
     nextVc.processid=self.processid;
     nextVc.vatcationid=self.vatcationid;

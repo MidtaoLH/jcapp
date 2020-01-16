@@ -57,8 +57,6 @@
 @property (nonatomic, strong) NSString *tabbarType;
 @property (nonatomic, strong) NSString  *tabbarIndex;
 @property (strong,nonatomic) NSMutableArray *aclistOfMovies;
-// 添加数据源
-@property (strong,nonatomic) NSMutableArray *listOfWay;
 // n日历年月
 @property (strong,nonatomic) NSString *acsavedatetime;
 @end

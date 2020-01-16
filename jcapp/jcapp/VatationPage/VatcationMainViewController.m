@@ -689,10 +689,10 @@ NSString *reason = textviewreason1.text;
 
 -(IBAction)onClickButtonway:(id)sender {
     
-    
     WayViewController *nextVc = [[WayViewController alloc]init];//初始化下一个界面
-    [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
-    
+    //nextVc.processid=processid;
+    //nextVc.vatcationid=vatcationid;
+    nextVc.pageTypeID=@"4";
     
     if([ flag isEqualToString:@"flase"])
     {

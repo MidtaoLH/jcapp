@@ -14,6 +14,8 @@
 #import "AppDelegate.h"
 #import "Masonry.h"
 #import "VatcationMainView.h"
+#import "BusinessTripEditViewController.h"
+#import "GoOutEditController.h"
 
 static NSString * identifier = @"TableCell";
 
@@ -231,15 +233,9 @@ NSInteger currentPageCountwait_new;
     
     if([suessflag isEqualToString:@"true"])    
     {
-        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-        //app.leaveid
-        VatcationMainView *order = [[VatcationMainView alloc] init];
-        order.vatcationid=self.vatcationid;
-        order.processInstanceID=self.processid;
-        order.edittype = @"2";
-        order.urltype =@"getdata";
-        [self.navigationController pushViewController:order animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }
+    
 }
 
 //弹出消息框
@@ -338,9 +334,6 @@ NSInteger currentPageCountwait_new;
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
     cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
-    cell.listOfWay=self.listOfWay;
-    cell.processid=self.processid;
-    cell.vatcationid=self.vatcationid;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -360,14 +353,7 @@ NSInteger currentPageCountwait_new;
 {
 }
 - (void)goBack {
-    AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
-    //app.leaveid
-    VatcationMainView *order = [[VatcationMainView alloc] init];
-    order.vatcationid=self.vatcationid;
-    order.processInstanceID=self.processid;
-    order.edittype = @"2";
-    order.urltype =@"getdata";
-    [self.navigationController pushViewController:order animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)save{
     saveflag = @"true";

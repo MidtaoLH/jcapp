@@ -97,6 +97,7 @@
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight));
     }];
+    //self.formTableView.estimatedRowHeight = kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight;
 }
 
 - (void)goBack {
@@ -444,7 +445,15 @@
         {
             ApplyCode = @"";
         }
-        
+        if([self.edittype isEqual:@"4"]){ //申请 原单海没有申请
+            self.edittype=@"1";  
+        }
+        else if([self.edittype isEqual:@"5"]){ //申请 原单海没有申请
+            self.edittype=@"2";
+        }
+        else if([self.edittype isEqual:@"6"]){ //申请 原单海没有申请
+            self.edittype=@"3";
+        }
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
     
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -838,7 +847,8 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
     UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
  
-    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    //[preferences setObject:UIImageJPEGRepresentation(saveimage,0.5) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;
@@ -858,6 +868,8 @@
         for(int i = 0;i<self.image.images.count;i++)
         {
             UIImage *image = self.image.images[i];
+            //收缩图片 第二个参数取值 0.0~1.0，值越小表示图片质量越低，图片文件越小
+            NSData *data = UIImageJPEGRepresentation(image, 0.5);
             //字典里面装的是你要上传的内容
             NSDictionary *parameters = @{};
             
@@ -876,7 +888,7 @@
             //    //要上传的图片
             //    UIImage *image=[params objectForKey:@"pic"];
             //得到图片的data
-            NSData *data = UIImagePNGRepresentation(image);
+            //NSData *data = UIImagePNGRepresentation(image);
             //http body的字符串
             NSMutableString *body=[[NSMutableString alloc]init];
             //参数的集合的所有key的集合

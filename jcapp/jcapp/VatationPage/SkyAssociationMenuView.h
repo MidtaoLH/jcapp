@@ -44,17 +44,7 @@
  */
 - (NSString*)assciationMenuView:(SkyAssociationMenuView*)asView titleForClass_1:(NSInteger)idx_1 class_2:(NSInteger)idx_2;
 
-/**
- *  获取第三级菜单选项的title
- *
- *  @param asView 联想菜单
- *  @param idx_1  第一级
- *  @param idx_2  第二级
- *  @param idx_3  第三级
- *
- *  @return 标题
- */
-- (NSString*)assciationMenuView:(SkyAssociationMenuView*)asView titleForClass_1:(NSInteger)idx_1 class_2:(NSInteger)idx_2 class_3:(NSInteger)idx_3;
+
 @optional
 /**
  *  取消选择
@@ -80,17 +70,7 @@
  *  @return 是否展示下一级
  */
 - (BOOL)assciationMenuView:(SkyAssociationMenuView*)asView idxChooseInClass1:(NSInteger)idx_1 class2:(NSInteger)idx_2;
-/**
- *  选择第三级菜单
- *
- *  @param asView 联想菜单
- *  @param idx_1  第一级
- *  @param idx_2  第二级
- *  @param idx_3  第三级
- *
- *  @return 是否dismiss
- */
-- (BOOL)assciationMenuView:(SkyAssociationMenuView*)asView idxChooseInClass1:(NSInteger)idx_1 class2:(NSInteger)idx_2 class3:(NSInteger)idx_3;
+
 - (void)selectFindex:(NSInteger)f Tindex:(NSInteger)t;
 @end
 
@@ -99,7 +79,7 @@
  */
 @interface SkyAssociationMenuView : UIView{
 @private
-    NSInteger sels[3];
+    NSInteger sels[2];
 }
 extern __strong NSString *const IDENTIFIER;
 
@@ -114,7 +94,7 @@ extern __strong NSString *const IDENTIFIER;
  *  @param idx_2  第二级选中项
  *  @param idx_3  第三级选中项
  */
-- (void)setSelectIndexForClass1:(NSInteger)idx_1 class2:(NSInteger)idx_2 class3:(NSInteger)idx_3;
+- (void)setSelectIndexForClass1:(NSInteger)idx_1 class2:(NSInteger)idx_2;
 /**
  *  菜单显示在View的下面
  *

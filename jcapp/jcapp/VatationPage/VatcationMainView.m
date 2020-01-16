@@ -479,7 +479,15 @@ NSString * boolflag = @"flase";
             return;
         }
         self.urltype = @"keepsave";
-        
+        if([self.edittype isEqual:@"4"]){ //申请 原单海没有申请
+            self.edittype=@"1";
+        }
+        else if([self.edittype isEqual:@"5"]){ //申请 原单海没有申请
+            self.edittype=@"2";  
+        }
+        else if([self.edittype isEqual:@"6"]){ //申请 原单海没有申请
+            self.edittype=@"3";  //修改已申请进入
+        }
         //string edittype, string userid, string groupid, string empid, string vtype, string starttime, string endtime, string vatcationtime, string reason, string name, string leavleid, string processid, string imagecount, string applycode
         NSString *type = self.VatcationType.info;
         NSString *timestart = self.businessTripStart.info;
@@ -1049,7 +1057,7 @@ NSString * boolflag = @"flase";
     
     //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     
-    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;
@@ -1072,6 +1080,9 @@ NSString * boolflag = @"flase";
         for(int i = 0;i<self.image.images.count;i++)
         {
             UIImage *image = self.image.images[i];
+            //收缩图片 第二个参数取值 0.0~1.0，值越小表示图片质量越低，图片文件越小
+            NSData *data = UIImageJPEGRepresentation(image, 0.5);
+            
             //字典里面装的是你要上传的内容
             NSDictionary *parameters = @{};
             
@@ -1090,7 +1101,7 @@ NSString * boolflag = @"flase";
             //    //要上传的图片
             //    UIImage *image=[params objectForKey:@"pic"];
             //得到图片的data
-            NSData *data = UIImagePNGRepresentation(image);
+            //NSData *data = UIImagePNGRepresentation(image);
             //http body的字符串
             NSMutableString *body=[[NSMutableString alloc]init];
             //参数的集合的所有key的集合

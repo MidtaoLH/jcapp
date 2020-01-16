@@ -10,6 +10,7 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "AppDelegate.h"
 #import "TabBarViewController.h"
+#import "Masonry.h"
 
 @interface NoticeDetailController ()
 
@@ -24,11 +25,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+     self.navigationItem.title=@"公告查看";
     //设置换行
     self.lbltoncent.lineBreakMode = UILineBreakModeWordWrap;
     self.lbltoncent.numberOfLines = 0;
     
-    self.lblnoticedate.text = noticeitem.NewsDate;
+    self.lblnoticedate.text =  [@"发布时间：" stringByAppendingString: noticeitem.NewsDate];
     
     self.lblthem.text = noticeitem.NewsTheme;
     
@@ -43,14 +45,51 @@
     self.lblnoticedate.textColor = [UIColor grayColor];
     
     [self.lbltoncent sizeToFit];
-    
+    [self loadstyle];
      NSLog(@"%@",@"viewDidLoad-detail-bgn");
 }
 - (void)goBack {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+-(void)loadstyle{
+//    _lblthem.textColor = [UIColor grayColor];
+//    _lblthem.font=kFont_Lable_14;
+ 
+//    _lblthem.backgroundColor = kColor_Cyan;
+    //注册自定义 cell
+  
+    
+    [_lblthem mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_ColSize);
+        // 添加大小约束
+        //make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+    }];
+    [_lblgroup mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_ColSize+Common_RowSize-5);
+    }];
+    [_lblnoticedate mas_makeConstraints:^(MASConstraintMaker *make) {
+        // 添加左
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_ColSize+Common_RowSize*2-10);
+    }];
+    _lbltoncent.preferredMaxLayoutWidth = kScreenWidth-Common_ColSize*2;//宽度设置
+    [_lbltoncent setContentHuggingPriority:UILayoutPriorityRequired     forAxis:UILayoutConstraintAxisVertical];
+    _lbltoncent.numberOfLines = 0;
+    [_lbltoncent mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(Common_ColSize);
+        // 添加上
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_ColSize*2+Common_RowSize*3-15);    }];
+
 }
 -(IBAction)onClickButtonreturn:(id)sender {
  

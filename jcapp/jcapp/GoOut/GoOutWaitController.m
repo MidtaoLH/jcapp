@@ -255,6 +255,14 @@ static NSString *identifier =@"GoOutWaitCell";
     VCCollect.ProcessApplyCode=cell.MdlGoOutListItem.ProcessApplyCode;
     VCCollect.edittype = @"2"; //编辑
     VCCollect.urltype = @"getdata";
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        // presentedVC 为被弹出的控制器
+        VCCollect.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    } else {
+        // rootVC 为window的rootViewController
+        VCCollect.modalPresentationStyle = UIModalPresentationCurrentContext;
+    }
+    
     [self.navigationController pushViewController:VCCollect animated:YES];
 }
 - (void)viewDidAppear:(BOOL)animated {

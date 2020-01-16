@@ -464,7 +464,15 @@ NSString * boolflag = @"flase";
             return;
         }
         self.urltype = @"keepsave";
-        
+        if([self.edittype isEqual:@"4"]){ //申请 原单海没有申请
+            self.edittype=@"1";
+        }
+        else if([self.edittype isEqual:@"5"]){ //申请 原单海没有申请
+            self.edittype=@"2";  
+        }
+        else if([self.edittype isEqual:@"6"]){ //申请 原单海没有申请
+            self.edittype=@"3";  //修改已申请进入
+        }
         //string edittype, string userid, string groupid, string empid, string vtype, string starttime, string endtime, string vatcationtime, string reason, string name, string leavleid, string processid, string imagecount, string applycode
         NSString *type = self.VatcationType.info;
         NSString *timestart = self.businessTripStart.info;
@@ -998,7 +1006,7 @@ NSString * boolflag = @"flase";
     
     //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     
-    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;

@@ -455,6 +455,14 @@ NSString * bflag = @"flase";
         }
         self->_operateType=@"0";
         
+        if([self->_pageType isEqual:@"4"]){
+            self->_pageType=@"1";
+        }else if([self->_pageType isEqual:@"5"]){
+            self->_pageType=@"2";
+        }else{
+            self->_pageType=@"3";
+        }
+        
         NSDictionary *params3 = [NSDictionary dictionaryWithObjectsAndKeys:                                      myDataCopy, @"json",nil];
         //convert object to data
         NSData* jsonData =[NSJSONSerialization dataWithJSONObject:params3                                                              options:NSJSONWritingPrettyPrinted error:nil];
@@ -497,6 +505,22 @@ NSString * bflag = @"flase";
     }];
 }
 - (void)submitAction {
+    NSMutableArray *myDataCopy=[[NSMutableArray alloc]init];
+    for (int i=0; i<myData.count; i++) {
+        NSString *ele=myData[i];
+        [myDataCopy addObject:ele];
+    }
+    [myDataCopy removeObject:@""];
+    if(myDataCopy.count==0){
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"请输入出差地点"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         if(![self isNumber:self.businessNum.info])
         {
@@ -711,7 +735,7 @@ NSString * bflag = @"flase";
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if(![_operateType isEqual:@"3"] ){
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"xmlString:%@",xmlString);
+        //NSLog(@"xmlString:%@",xmlString);
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -719,18 +743,7 @@ NSString * bflag = @"flase";
         NSString *resultString = [xmlString substringWithRange:reusltRagne];
         NSString *requestTmp = [NSString stringWithString:resultString];
         NSLog(@"requestTmp:%@",requestTmp);
-        if([requestTmp isEqual:@"-1"]){
-            NSString *message = [[NSString alloc] initWithFormat:@"%@", @"出差日期已存在！"];
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: message
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-            return;
-        }
+        
         //上传图片
         if([_operateType isEqual:@"0"]){
             NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
@@ -742,9 +755,16 @@ NSString * bflag = @"flase";
                 LeaveStatusModel *m =listbusiness[0];//取出数据元素
                 //接收返回的起案番号
                 applyCode=m.ApplyCode;
-                _businessTripid=m.LeaveID;
-                _processid=m.ProcessID;
-                _pageType=@"2";
+                if([applyCode isEqualToString:@"-1"] || [applyCode isEqualToString:@"-2"]){
+                    NSString *message = [[NSString alloc] initWithFormat:@"%@", @"出差日期已存在！"];
+                    if([applyCode isEqualToString:@"-2"] ){
+                        message=@"返回日期必须大于出发日期";
+                    }
+                    //显示信息。正式环境时改为跳转
+                    UIAlertView *alert = [[UIAlertView alloc]  initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                    return;
+                }
                 if([m.ProcessID isEqualToString:@"0"]){
                     //保存成功 提交成功
                     NSString *message=@"提交失败";
@@ -752,35 +772,28 @@ NSString * bflag = @"flase";
                         message=@"保存失败";
                     }
                     alert=@"save";
-                    UIAlertView *alert = [[UIAlertView alloc]
-                                          initWithTitle: @""
-                                          message: message
-                                          delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
+                    return;
+                }
+                _businessTripid=m.LeaveID;
+                _processid=m.ProcessID;
+                _pageType=@"2";
+                if(self.image.images.count >0){
+                    _operateType=@"3";
+                    [self uploadImg];
                 }
                 else{
-                    if(self.image.images.count >0){
-                        _operateType=@"3";
-                        [self uploadImg];
+                    //保存成功 提交成功
+                    NSString *message=@"提交成功";
+                    if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
+                        message=@"保存成功";
                     }
-                    else{
-                        //保存成功 提交成功
-                        NSString *message=@"提交成功";
-                        if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
-                            message=@"保存成功";
-                        }
-                        alert=@"save";
-                        UIAlertView *alert = [[UIAlertView alloc]
-                                              initWithTitle: @""
-                                              message: message
-                                              delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-                        [alert show];
-                    }
+                    alert=@"save";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
                 }
+                
             }
             
         }
@@ -893,7 +906,7 @@ NSString * bflag = @"flase";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
     UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
     
-    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;

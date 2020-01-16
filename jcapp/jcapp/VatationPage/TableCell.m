@@ -15,7 +15,6 @@
 #import "WayViewController.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
 
-
 #define kMargin 10
 
 
@@ -161,20 +160,34 @@
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     myDelegate.way_post_level =obj1;
     myDelegate.way_post_index = obj2;
+    myDelegate.listOfWay=self.listOfWay;
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
-    [[self viewController] presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    nextVc.processid=self.processid;
+    nextVc.vatcationid=self.vatcationid;
+    [[self viewController].navigationController pushViewController:nextVc animated:YES];
 }
 - (void)actiondel:(id)sender
 {
-    DelButton* multiParamButton = (DelButton* )sender;
-    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
-    NSString * obj2 = [multiParamButton.multiParamDicindex objectForKey:@"index"];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确认删除？" preferredStyle:UIAlertControllerStyleAlert];
+    // 确定注销
+    _okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+        DelButton* multiParamButton = (DelButton* )sender;
+        NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"levelname"];
+        NSString * obj2 = [multiParamButton.multiParamDicindex objectForKey:@"index"];
+        
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.way_post_level =obj1;
+        myDelegate.way_post_index_delete = obj2;
+        myDelegate.way_post_delete = @"true";
+        [[self viewController] viewDidLoad];
+    }];
+    _cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_post_level =obj1;
-    myDelegate.way_post_index_delete = obj2;
-    myDelegate.way_post_delete = @"true";
-    [[self viewController] viewDidLoad];
+    [alert addAction:_okAction];
+    [alert addAction:_cancelAction];
+    // 弹出对话框
+    [[self viewController] presentViewController:alert animated:true completion:nil];
+   
 }
 
 
@@ -195,9 +208,9 @@
     
     if([ Waylist.name isEqualToString:@"button"])
     {
-        CGFloat width = kScreenWidth;
-        CGFloat imageWH=  width/6;
-        self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,Common_TableRowHeight);
+        CGFloat height = SetAddTableRowSize;
+        CGFloat imageWH=  height*0.8;
+        self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddButtonRowSize);
         
        self.btnAdd.hidden = NO;
         self.btndel.hidden = YES;
@@ -224,15 +237,15 @@
         self.backgroundColor = kColor_White;
         if(![Waylist.level isEqualToString:@"99"])
         {
-            CGFloat width = kScreenWidth;
-            CGFloat imageWH=  width/6;
+            CGFloat height = SetAddTableRowSize;
+            CGFloat imageWH=  height*0.8;
             if(self.index==0&&[Waylist.level isEqualToString:@"1"])
             {
-                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, kMargin, 5,Common_TableRowHeight);
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, height*0.1, 5,SetAddTableRowSize);
             }
             else
             {
-                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,Common_TableRowHeight);
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddTableRowSize);
             }
             self.btnline.hidden = NO;
         }else
@@ -295,26 +308,26 @@
 {
     [super layoutSubviews];
     CGFloat width = kScreenWidth;
-    CGFloat height = Common_TableRowHeight;
-    CGFloat imageWH=  width/6;
+    CGFloat height = SetAddTableRowSize;
+    CGFloat imageWH=  height*0.8;
     CGFloat leaveDateWidth = 80;
     //每行的文本的高度
-    CGFloat txtH = (height - 3*kMargin)/4;
+    CGFloat txtH = (height - 2*kMargin)/3;
     self.textLabel.frame = CGRectMake(2*kMargin+imageWH, kMargin, leaveDateWidth, txtH);
     self.leaveStatusLable.frame = CGRectMake(3*kMargin+imageWH+self.textLabel.width, kMargin, leaveDateWidth, txtH);
     //self.taskBackDateLable.frame =CGRectMake(4*kMargin+imageWH+self.taskBackEmpNameLable.width+self.taskBackTypeLable.width, kMargin, leaveDateWidth, txtH);
     self.leaveDateLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-   self.leaveCondition.frame=CGRectMake(3*kMargin+imageWH+self.textLabel.width, txtH+2*kMargin, width-(3*kMargin+imageWH+self.textLabel.width), txtH);
+   self.leaveCondition.frame=CGRectMake(3*kMargin+imageWH+self.textLabel.width, txtH+2*kMargin, width-(4*kMargin+imageWH+self.textLabel.width), txtH);
     
-    self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
+    self.imageView.frame = CGRectMake(kMargin,height*0.1, imageWH, imageWH );
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;
     
-    self.btnAdd.frame = CGRectMake(width/2-SetButtonSize/2,height/2-SetButtonSize/2, SetButtonSize,SetButtonSize);
+    self.btnAdd.frame = CGRectMake(width/2-SetButtonSize/2,SetAddButtonRowSize/2-SetButtonSize/2, SetButtonSize,SetButtonSize);
     self.btnAdd.layer.masksToBounds = YES;
     self.btnAdd.layer.cornerRadius = SetButtonSize * 0.5;
     
-    self.btndel.frame = CGRectMake(width-SetDelButtonSize*2-kMargin, 2*txtH+3*kMargin, SetDelButtonSize*2,SetDelButtonSize);
+    self.btndel.frame = CGRectMake(width-SetDelButtonSize*2-kMargin, txtH+kMargin, SetDelButtonSize*2,SetDelButtonSize);
     
    
     

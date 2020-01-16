@@ -17,7 +17,7 @@
 ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end
-
+NSString *unloadflag = @"";
 @implementation UsersViewController
 - (void)viewDidLoad {    
     [super viewDidLoad];
@@ -168,11 +168,23 @@
     }
 }
 -(IBAction)btnreturnClick:(id)sender {
-    ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
-    //跳转
-    [self presentModalViewController:valueView animated:YES];
+    
+    //gengxin denglu zhuangtai
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSString *user = [defaults objectForKey:@"username"];
+    NSString *adId = [defaults objectForKey:@"adId"];
+    unloadflag = @"UnloadUser";
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/UnloadUser?User=%@&macid=%@", user,adId];
+    NSURL *url = [NSURL URLWithString:strURL];
+    //进行请求
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self];
+    
+    
+   
 }
 - (void)getAvatatFormPhotoLibrary:(UIViewController *)controller
 {
@@ -224,15 +236,15 @@
             [self updateImage:img];
             
 
-            UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
+           // UIImageView *imageView = [[UIImageView alloc] init];
+            //NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,username];
 //            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
-            [[SDImageCache sharedImageCache] clearDisk];
-            [[SDImageCache sharedImageCache] clearMemory];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-                myDelegate.userPhotoimageView=imageView;
-            }];
+            //[[SDImageCache sharedImageCache] clearDisk];
+           // [[SDImageCache sharedImageCache] clearMemory];
+           // [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+             //   AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+           //     myDelegate.userPhotoimageView=imageView;
+          //  }];
             
         }
         UIGraphicsEndImageContext();
@@ -335,31 +347,75 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     infoString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([infoString containsString:@"成功"]||[infoString containsString:@"NO"]||[infoString containsString:@"OK"])
+    if([infoString containsString:@"成功"])
     {
         
     }
+    else if([infoString containsString:@"OK"])
+    {
+        [[SDImageCache sharedImageCache] clearDisk];
+        [[SDImageCache sharedImageCache] clearMemory];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.userPhotoimageView=self.myHeadPortrait;
+    }
+    else if([infoString containsString:@"NO"])
+    {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: @"头像上传失败，请重新上传！"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+    }
     else
     {
-        // 字符串截取
-        NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-        NSRange endRagne = [infoString rangeOfString:@"]</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [infoString substringWithRange:reusltRagne];
+        if([unloadflag isEqualToString: @"UnloadUser"])
+        {
+            unloadflag = @"";
+            
+          
+            NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [infoString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [infoString substringWithRange:reusltRagne];
+            
+            
+            NSLog(@"%@", resultString);
+            if([resultString isEqualToString:@"1"])
+            {
+                //tuichu denglu chenggong
+                ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+                [[SDImageCache sharedImageCache] clearDisk];
+                [[SDImageCache sharedImageCache] clearMemory];
+                //跳转
+                [self presentModalViewController:valueView animated:YES];
+            }
+        }
+        else
+        {
+            // 字符串截取
+            NSRange startRange = [infoString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+            NSRange endRagne = [infoString rangeOfString:@"]</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [infoString substringWithRange:reusltRagne];
+            
+            NSLog(@"%@", resultString);
+            
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            UserInfo *userinfo = [UserInfo mj_objectWithKeyValues:resultDic];
+            self.lblname.text=userinfo.name;
+            self.lblcode.text=userinfo.code;
+            self.lbldept.text=userinfo.dept;
+            
+            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+            [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
+        }
         
-        NSLog(@"%@", resultString);
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        UserInfo *userinfo = [UserInfo mj_objectWithKeyValues:resultDic];
-        self.lblname.text=userinfo.name;
-        self.lblcode.text=userinfo.code;
-        self.lbldept.text=userinfo.dept;
-        
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-        [self.myHeadPortrait setImage: myDelegate.userPhotoimageView.image];
+       
      
     }
 }

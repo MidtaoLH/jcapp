@@ -44,7 +44,6 @@
         [format setDateFormat:@"yyyy-MM-dd"];
         NSString *dateString = [format stringFromDate:date];
         [self loadacdinfo:dateString];
-      
     };
     [self loadstyle];
     [self loadinfo];

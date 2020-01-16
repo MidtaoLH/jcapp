@@ -10,7 +10,6 @@
 #import "../Model/Way.h"
 #import "../MJExtension/MJExtension.h"
 #import "TableCell.h"
-#import "../MJRefresh/MJRefresh.h"
 #import "AddWayView.h"
 #import "AppDelegate.h"
 #import "Masonry.h"
@@ -40,7 +39,7 @@ NSInteger currentPageCountwait_new;
 
 -(void)loadstyle{
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = Common_TableRowHeight;
+    _NewTableView.rowHeight = SetAddTableRowSize;
     
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
@@ -67,72 +66,72 @@ NSInteger currentPageCountwait_new;
             
             // [listOfWay insertObject:m atIndex:index];
             [listOfWay removeObjectAtIndex:index];
-            self.NewTableView.reloadData;
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         else
         {
-            Way *m = [Way new] ;
-            m.levelname = myDelegate.way_post_level;
-            m.name = myDelegate.way_empname;
-            m.nameid= myDelegate.way_empid;
-            m.groupname = myDelegate.way_groupname;
-            m.groupid =myDelegate.way_groupid;
-            m.englishname =myDelegate.way_empenglishname;
-            if([m.levelname isEqualToString:@"一级审批人"])
+            if(myDelegate.way_empid.length!=0&&![myDelegate.way_empid isEqualToString:@"0"])
             {
-                m.level =@"1";
+                Way *m = [Way new] ;
+                m.levelname = myDelegate.way_post_level;
+                m.name = myDelegate.way_empname;
+                m.nameid= myDelegate.way_empid;
+                m.groupname = myDelegate.way_groupname;
+                m.groupid =myDelegate.way_groupid;
+                m.englishname =myDelegate.way_empenglishname;
+                if([m.levelname isEqualToString:@"一级审批人"])
+                {
+                    m.level =@"1";
+                }
+                else if([m.levelname isEqualToString:@"二级审批人"])
+                {
+                    m.level =@"2";
+                }
+                else if([m.levelname isEqualToString:@"三级审批人"])
+                {
+                    m.level =@"3";
+                }
+                else if([m.levelname isEqualToString:@"四级审批人"])
+                {
+                    m.level =@"4";
+                }
+                else if([m.levelname isEqualToString:@"五级审批人"])
+                {
+                    m.level =@"5";
+                }
+                else if([m.levelname isEqualToString:@"六级审批人"])
+                {
+                    m.level =@"6";
+                }
+                else if([m.levelname isEqualToString:@"七级审批人"])
+                {
+                    m.level =@"7";
+                }
+                else if([m.levelname isEqualToString:@"回览人"])
+                {
+                    m.level =@"99";
+                }
+                else
+                {
+                    m.level =@"1";
+                }
+                m.editflag = @"1";
+                int *index = [myDelegate.way_post_index intValue];
+                [listOfWay insertObject:m atIndex:index];
+                self.NewTableView.reloadData;
             }
-            else if([m.levelname isEqualToString:@"二级审批人"])
-            {
-                m.level =@"2";
-            }
-            else if([m.levelname isEqualToString:@"三级审批人"])
-            {
-                m.level =@"3";
-            }
-            else if([m.levelname isEqualToString:@"四级审批人"])
-            {
-                m.level =@"4";
-            }
-            else if([m.levelname isEqualToString:@"五级审批人"])
-            {
-                m.level =@"5";
-            }
-            else if([m.levelname isEqualToString:@"六级审批人"])
-            {
-                m.level =@"6";
-            }
-            else if([m.levelname isEqualToString:@"七级审批人"])
-            {
-                m.level =@"7";
-            }
-            else if([m.levelname isEqualToString:@"回览人"])
-            {
-                m.level =@"99";
-            }
-            else
-            {
-                m.level =@"1";
-            }
-            m.editflag = @"1";
-            int *index = [myDelegate.way_post_index intValue];
-            [listOfWay insertObject:m atIndex:index];
-            self.NewTableView.reloadData;
         }
     }
     else
     {
         saveflag = @"false";
         [self LoadData];
-        // 添加头部的下拉刷新
-        MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
-        [header setRefreshingTarget:self refreshingAction:@selector(headerClick)];
-        self.NewTableView.mj_header = header;
-        // 添加底部的上拉加载
-        MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
-        [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
-        self.NewTableView.mj_footer = footer;
-        _NewTableView.top=-_NewTableView.mj_header.size.height+100;
+        
     }
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -179,33 +178,6 @@ NSInteger currentPageCountwait_new;
     
     
 }
-
-// 2.实现下拉刷新和上拉加载的事件。
-// 头部的下拉刷新触发事件
-- (void)headerClick {
-    // 可在此处实现下拉刷新时要执行的代码
-    // ......
-    //if(currentPageCount>1)
-    //currentPageCount--;
-    [self LoadData];
-    // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
-    // 结束刷新
-    [self.NewTableView.mj_header endRefreshing];
-}
-// 底部的上拉加载触发事件
-- (void)footerClick {
-    // 可在此处实现上拉加载时要执行的代码
-    // ......
-    currentPageCountwait_new=currentPageCountwait_new+[Common_PageSizeAdd intValue];
-    [self LoadData];
-    // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
-    // 结束刷新
-    [self.NewTableView.mj_footer endRefreshing];
-}
-
-
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -223,6 +195,7 @@ NSInteger currentPageCountwait_new;
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
+       
     }
     else
     {
@@ -256,9 +229,16 @@ NSInteger currentPageCountwait_new;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    if([suessflag isEqualToString:@"true"])
+    if([suessflag isEqualToString:@"true"])    
     {
-         [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
+        AppDelegate *app=(AppDelegate*)[[UIApplication sharedApplication] delegate];
+        //app.leaveid
+        VatcationMainView *order = [[VatcationMainView alloc] init];
+        order.vatcationid=self.vatcationid;
+        order.processInstanceID=self.processid;
+        order.edittype = @"2";
+        order.urltype =@"getdata";
+        [self.navigationController pushViewController:order animated:YES];
     }
 }
 
@@ -357,13 +337,23 @@ NSInteger currentPageCountwait_new;
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
+    cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
+    cell.listOfWay=self.listOfWay;
+    cell.processid=self.processid;
+    cell.vatcationid=self.vatcationid;
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     Way *w =self.listOfWay[indexPath.row];
     if([ w.name isEqualToString:@"button"])
     {
-         cell.height = SetAddButtonRowSize;
+        return SetAddButtonRowSize;
     }
-    cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
-    return cell;
+    else
+    {
+        return SetAddTableRowSize;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

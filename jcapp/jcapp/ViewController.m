@@ -77,9 +77,23 @@ NSString *adduserlistflag = @"true";
         
          NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,userID];
         NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
-        UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
-        // 保存文件的名称1
-        [self.myHeadPortrait setImage:userimage];
+      
+        
+        if(data.length > 0)
+        {
+            UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+            // 保存文件的名称1
+            [self.myHeadPortrait setImage:userimage];
+        }
+        else
+        {
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,@"moren"];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+            UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+            // 保存文件的名称
+            [self.myHeadPortrait setImage:userimage];
+        }
+            
         
     }
     else
@@ -151,12 +165,36 @@ NSString *adduserlistflag = @"true";
     
     txtuser.text =username;
     
-    NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
-    UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
-    // 保存文件的名称
-    [self.myHeadPortrait setImage:userimage];
-    
+    if( txtuser.text.length > 0)
+    {
+        NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+        
+        if(data.length > 0)
+        {
+            UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+            // 保存文件的名称1
+            [self.myHeadPortrait setImage:userimage];
+        }
+        else
+        {
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,@"moren"];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+            UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+            // 保存文件的名称
+            [self.myHeadPortrait setImage:userimage];
+        }
+
+    }
+    else
+    {
+        NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,@"moren"];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+        UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+        // 保存文件的名称
+        [self.myHeadPortrait setImage:userimage];
+    }
+
     self.usernamelist.hidden = true;
     
 }
@@ -503,7 +541,7 @@ NSString *adduserlistflag = @"true";
 //点击背景键盘退出
 -(IBAction)backgroundTap:(id)sender {
     [txtuser resignFirstResponder];
-    [txtuser resignFirstResponder];
+    self.usernamelist.hidden = true;
     
 }
 

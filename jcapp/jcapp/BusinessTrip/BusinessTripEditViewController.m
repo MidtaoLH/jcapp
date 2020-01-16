@@ -742,14 +742,17 @@ NSString * bflag = @"flase";
                 LeaveStatusModel *m =listbusiness[0];//取出数据元素
                 //接收返回的起案番号
                 applyCode=m.ApplyCode;
-                businessTripid=m.LeaveID;
-                processid=m.ProcessID;
-                pageType=@"2";
+                _businessTripid=m.LeaveID;
+                _processid=m.ProcessID;
+                _pageType=@"2";
                 if([m.ProcessID isEqualToString:@"0"]){
                     //保存成功 提交成功
                     NSString *message=@"提交失败";
-                    if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                    if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                         message=@"保存失败";
+                    }
+                    alert=@"save";
+                    UIAlertView *alert = [[UIAlertView alloc]
                                           initWithTitle: @""
                                           message: message
                                           delegate:self
@@ -759,13 +762,13 @@ NSString * bflag = @"flase";
                 }
                 else{
                     if(self.image.images.count >0){
-                        operateType=@"3";
+                        _operateType=@"3";
                         [self uploadImg];
                     }
                     else{
                         //保存成功 提交成功
                         NSString *message=@"提交成功";
-                        if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                        if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                             message=@"保存成功";
                         }
                         alert=@"save";
@@ -860,7 +863,7 @@ NSString * bflag = @"flase";
             if(rightImgCount==imgcount){
                 //保存成功 提交成功
                 message=@"提交成功";
-                if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                     message=@"保存成功";
                 }
                 alert=@"save";
@@ -872,7 +875,7 @@ NSString * bflag = @"flase";
         else{
             if(errImgCount==0){
                 message=@"图片上传失败，请重新提交";
-                if([self->pageType isEqual:@"1"] || [self->pageType isEqual:@"2"]||[self->pageType isEqual:@"3"]){
+                if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                     message=@"图片上传失败，请重新保存";
                 }
                 alert=@"";

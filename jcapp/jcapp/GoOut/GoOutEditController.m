@@ -97,6 +97,7 @@
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight));
     }];
+    //self.formTableView.estimatedRowHeight = kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight;
 }
 
 - (void)goBack {
@@ -814,6 +815,8 @@
         for(int i = 0;i<self.image.images.count;i++)
         {
             UIImage *image = self.image.images[i];
+            //收缩图片 第二个参数取值 0.0~1.0，值越小表示图片质量越低，图片文件越小
+            NSData *data = UIImageJPEGRepresentation(image, 0.3);
             //字典里面装的是你要上传的内容
             NSDictionary *parameters = @{};
             
@@ -832,7 +835,7 @@
             //    //要上传的图片
             //    UIImage *image=[params objectForKey:@"pic"];
             //得到图片的data
-            NSData *data = UIImagePNGRepresentation(image);
+            //NSData *data = UIImagePNGRepresentation(image);
             //http body的字符串
             NSMutableString *body=[[NSMutableString alloc]init];
             //参数的集合的所有key的集合

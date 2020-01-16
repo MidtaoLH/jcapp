@@ -26,7 +26,7 @@
 @synthesize lbgroupid;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, 200)];
+    [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight)];
     self.view.backgroundColor = [UIColor  whiteColor];
     stringflag = @"group";
     NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGroup"];
@@ -53,14 +53,7 @@
 
 -(void)gotoback {
     [_tagView dismiss];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    myDelegate.way_groupname =lbgroupname;
-    myDelegate.way_groupid =lbgroupid;
-    myDelegate.way_empid =lbempid;
-    myDelegate.way_empname =lbempname;
-    myDelegate.agentType = @"true";
-    SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
-    [self.navigationController pushViewController:VCCollect animated:YES];
+     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)save {
     if(lbempid.length > 0)

@@ -9,6 +9,7 @@
 #import "UIImageView+FormImage.h"
 #import "SWFormCompat.h"
 #import "UIImageView+EMWebCache.h"
+#import "../SDWebImage/UIImageView+WebCache.h"
 
 @implementation UIImageView (FormImage)
 
@@ -19,6 +20,7 @@
  */
 - (void)sw_setImageItemWithUrl:(NSURL *)url {
     [self sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:SW_PlaceholderImage]];
+//    [self sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRefreshCached];
 }
 
 @end

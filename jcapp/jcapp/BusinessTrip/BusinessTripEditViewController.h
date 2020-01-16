@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *applyCode;
     NSString *alert;
     NSString *isLoad;
+    NSUInteger imgcount;
+    NSUInteger errImgCount;//上传失败的图片个数
+    NSUInteger rightImgCount;//上传失败的图片个数
 }
 @property (weak, nonatomic) IBOutlet UIButton *btnProcess;
 @property (nonatomic,copy) NSString *processid;

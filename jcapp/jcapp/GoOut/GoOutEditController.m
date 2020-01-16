@@ -299,22 +299,7 @@
     
     return footer;
 }
-- (BOOL)isNumber:(NSString *)strValue
-{
-    if (strValue == nil || [strValue length] <= 0)
-    {
-        return NO;
-    }
-    
-    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-    NSString *filtered = [[strValue componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
-    
-    if (![strValue isEqualToString:filtered])
-    {
-        return NO;
-    }
-    return YES;
-}*/
+ */
 - (BOOL) isNumber:(NSString *)str
 {
     if (str.length == 0) {
@@ -327,6 +312,22 @@
     }
     return NO;
 }
+- (BOOL) isTwoFloat:(NSString *)str
+{
+    NSInteger flag = 0;
+     const NSInteger limited = 1;
+    for (NSInteger i = str.length - 1; i >= 0; i--) {
+       if ([str characterAtIndex:i] == '.') {
+        // 如果大于了限制的就提示
+           if (flag > limited) {
+            return NO;
+          }
+      }
+      flag++;
+    }
+     return YES;
+}
+
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -337,6 +338,21 @@
     self.businessTripStart.info =timesp;
     [self.formTableView reloadData];
     
+}
+// 清除特殊字符
+- (NSString *)cleanSpecialCharacters:(NSString *)text {
+    NSString *strResult = nil;
+    NSMutableString *originString = [text mutableCopy];
+    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"~@#$%^&*+={}':'[]\\.<>~￥%*（）+【】‘：”“’——"];
+    NSRange range2;
+    do {
+        range2=[originString rangeOfCharacterFromSet:cs options:NSLiteralSearch];
+        if (range2.location != NSNotFound) {
+            [originString deleteCharactersInRange:range2];// 删除range2代表的字符集
+        }
+    } while (range2.location != NSNotFound);
+    strResult = [[NSString alloc] initWithString:originString];
+    return strResult;
 }
 - (void)addAction {
     
@@ -352,6 +368,8 @@
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
+        reason = [self cleanSpecialCharacters:reason];
+        
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -363,6 +381,18 @@
              [alert show];
             return;
         }
+        if(![self isTwoFloat:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长只能保留1位小数"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
         // 字符串转float
         float floatString = [vatcationtime floatValue];
         if(floatString<=0)
@@ -387,6 +417,7 @@
             [alert show];
             return;
         }
+ 
         if(self.evectionID.length >0)
         {
             
@@ -457,11 +488,24 @@
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
+        reason = [self cleanSpecialCharacters:reason];
+        
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
                                   message: @"外出时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        if(![self isTwoFloat:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"外出时长只能保留1位小数"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];

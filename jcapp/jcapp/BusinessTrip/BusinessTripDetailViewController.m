@@ -33,6 +33,11 @@
 @property (nonatomic, strong) NSMutableArray *srcStringArray;
 @property (strong,nonatomic) MdlBusinessTrip *leavehead;
 
+@property(nonatomic,strong) UITextField *myTextFieldup;
+@property(nonatomic,strong) UIAlertAction *okActionup;
+
+@property(nonatomic,strong) UITextField *myTextField;
+@property(nonatomic,strong) UIAlertAction *okAction;
 @end
 
 @implementation BusinessTripDetailViewController
@@ -305,13 +310,33 @@ static NSString *identifierImage =@"ImageCell.h";
                                                          }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"取消修改理由必填";
+        self.myTextField = textField;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotification:) name:UITextFieldTextDidChangeNotification object:textField];
     }];
+    
+    self.okAction = okAction;
+    okAction.enabled = NO;
     
     [alert addAction:okAction];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
+- (void)handleTextFieldTextDidChangeNotification:(NSNotification *)notification {
+    
+    if(self.myTextField.text.length > 0) {
+        self.okAction.enabled = YES;
+    } else {
+        self.okAction.enabled = NO;
+    }
+}
+- (void)handleTextFieldTextDidChangeNotificationup:(NSNotification *)notification {
+    
+    if(self.myTextFieldup.text.length > 0) {
+        self.okActionup.enabled = YES;
+    } else {
+        self.okActionup.enabled = NO;
+    }
+}
 -(void)TaskCancle:(id)sender{
     
     [self ShowMessage];
@@ -343,13 +368,7 @@ static NSString *identifierImage =@"ImageCell.h";
                                                              for(UITextField *text in alert.textFields){
                                                                  
                                                                  NSLog(@"text = %@", text.text);
-                                                                 
-                                                                 if([text.text isEqualToString:@""])
-                                                                 {
-                                                                     NSLog(@"text = %@", @"asdfsdfsdf");
-                                                                     return;
-                                                                 }
-                                                                 
+   
                                                                  AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                                                                  myDelegate.businessTripid = self.awardID_FK;
                                                                  myDelegate.processid = self.processInstanceID;
@@ -369,8 +388,12 @@ static NSString *identifierImage =@"ImageCell.h";
                                                              }];
         [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = @"取消修改理由必填";
+            self.myTextFieldup = textField;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextDidChangeNotificationup:) name:UITextFieldTextDidChangeNotification object:textField];
         }];
         
+        self.okActionup = okAction;
+        okAction.enabled = NO;
         [alert addAction:okAction];
         [alert addAction:cancelAction];
         [self presentViewController:alert animated:YES completion:nil];

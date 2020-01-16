@@ -372,6 +372,21 @@ NSString * boolflag = @"flase";
     [self.formTableView reloadData];
    
 }
+// 清除特殊字符
+- (NSString *)cleanSpecialCharacters:(NSString *)text {
+    NSString *strResult = nil;
+    NSMutableString *originString = [text mutableCopy];
+    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"~@#$%^&*+={}':'[]\\.<>~￥%*（）+【】‘：”“’——"];
+    NSRange range2;
+    do {
+        range2=[originString rangeOfCharacterFromSet:cs options:NSLiteralSearch];
+        if (range2.location != NSNotFound) {
+            [originString deleteCharactersInRange:range2];// 删除range2代表的字符集
+        }
+    } while (range2.location != NSNotFound);
+    strResult = [[NSString alloc] initWithString:originString];
+    return strResult;
+}
 - (void)addAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
@@ -472,12 +487,23 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
-        
+        reason = [self cleanSpecialCharacters:reason];
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
                                   message: @"请假时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        if(![self isTwoFloat:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长只能保留1位小数"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -663,12 +689,23 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
-        
+        reason = [self cleanSpecialCharacters:reason];
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""
                                   message: @"请假时长必须为数字"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        if(![self isTwoFloat:vatcationtime])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"请假时长只能保留1位小数"
                                   delegate:nil
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -782,7 +819,21 @@ NSString * boolflag = @"flase";
     }
     return NO;
 }
-
+- (BOOL) isTwoFloat:(NSString *)str
+{
+    NSInteger flag = 0;
+    const NSInteger limited = 1;
+    for (NSInteger i = str.length - 1; i >= 0; i--) {
+        if ([str characterAtIndex:i] == '.') {
+            // 如果大于了限制的就提示
+            if (flag > limited) {
+                return NO;
+            }
+        }
+        flag++;
+    }
+    return YES;
+}
 - (NSString*)CharacterStringMainString:(NSString*)MainString AddDigit:(int)AddDigit AddString:(NSString*)AddString
 {
     NSString*ret = [[NSString alloc]init];

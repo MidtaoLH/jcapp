@@ -425,6 +425,17 @@ NSString * bflag = @"flase";
             [alert show];
             return;
         }
+        if(![self isTwoFloat:self.businessNum.info])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数只能保留1位小数"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
         if(floatString<=0)
@@ -505,6 +516,17 @@ NSString * bflag = @"flase";
             [alert show];
             return;
         }
+        if(![self isTwoFloat:self.businessNum.info])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: @"出差天数只能保留1位小数"
+                                  delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
         // 字符串转float
         float floatString = [self.businessNum.info floatValue];
         if(floatString<=0)
@@ -575,6 +597,21 @@ NSString * bflag = @"flase";
                               otherButtonTitles:nil];
         [alert show];
     }];
+}
+- (BOOL) isTwoFloat:(NSString *)str
+{
+    NSInteger flag = 0;
+    const NSInteger limited = 1;
+    for (NSInteger i = str.length - 1; i >= 0; i--) {
+        if ([str characterAtIndex:i] == '.') {
+            // 如果大于了限制的就提示
+            if (flag > limited) {
+                return NO;
+            }
+        }
+        flag++;
+    }
+    return YES;
 }
 - (NSString*)CharacterStringMainString:(NSString*)MainString AddDigit:(int)AddDigit AddString:(NSString*)AddString
 {

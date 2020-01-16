@@ -161,9 +161,6 @@
     myDelegate.way_post_level =obj1;
     myDelegate.way_post_index = obj2;
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
-    nextVc.processid=self.processid;
-    nextVc.vatcationid=self.vatcationid;
-    
     if([obj1 isEqualToString:@"回览人"])
     {
        nextVc.userflag = @"0";

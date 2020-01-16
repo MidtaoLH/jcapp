@@ -964,6 +964,16 @@ NSString * boolflag = @"flase";
                 }
                 
             }
+            else
+            {
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: m.message
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+            }
             
         }
         

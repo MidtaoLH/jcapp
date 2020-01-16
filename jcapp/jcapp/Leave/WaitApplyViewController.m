@@ -35,6 +35,7 @@ static NSString *identifier =@"LeaveWaitCell";
     [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
     currentPageCount=[Common_PageSize intValue];
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self LoadData];
     
     // 添加头部的下拉刷新

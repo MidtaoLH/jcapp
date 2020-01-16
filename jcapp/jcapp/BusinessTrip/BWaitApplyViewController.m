@@ -40,6 +40,7 @@ NSInteger currentPageCountbwait;
     //e注册自定义 cell
     [_NewTableView registerClass:[BusinessTripCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 120;
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     currentPageCountbwait=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];

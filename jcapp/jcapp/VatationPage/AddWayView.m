@@ -116,15 +116,32 @@
         //return titleArr.count;
         if(!listOfEmp.count > 0)
         {
-            stringflag = @"emp";
-            NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@",@"123"];
-            NSURL *url = [NSURL URLWithString:strURL];
-            //进行请求
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-            
-            NSURLConnection *connection = [[NSURLConnection alloc]
-                                           initWithRequest:request
-                                           delegate:self];
+            //需要有承认者权限
+            if([self.userflag isEqualToString:@"1"])
+            {
+                stringflag = @"emp";
+                NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
+                NSURL *url = [NSURL URLWithString:strURL];
+                //进行请求
+                NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+                
+                NSURLConnection *connection = [[NSURLConnection alloc]
+                                               initWithRequest:request
+                                               delegate:self];
+            }
+            else
+            {
+                stringflag = @"emp";
+                NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"0"];
+                NSURL *url = [NSURL URLWithString:strURL];
+                //进行请求
+                NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+                
+                NSURLConnection *connection = [[NSURLConnection alloc]
+                                               initWithRequest:request
+                                               delegate:self];
+            }
+           
         }
         return listOfGroup.count;;
         

@@ -164,6 +164,17 @@
     AddWayView *nextVc = [[AddWayView alloc]init];//初始化下一个界面
     nextVc.processid=self.processid;
     nextVc.vatcationid=self.vatcationid;
+    
+    if([obj1 isEqualToString:@"回览人"])
+    {
+       nextVc.userflag = @"0";
+    }
+    else
+    {
+        nextVc.userflag = @"1";
+    }
+    
+    
     [[self viewController].navigationController pushViewController:nextVc animated:YES];
 }
 - (void)actiondel:(id)sender

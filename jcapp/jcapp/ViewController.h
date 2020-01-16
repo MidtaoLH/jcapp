@@ -32,7 +32,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *myHeadPortrait;
 @property (weak, nonatomic) IBOutlet UITableView *usernamelist;
-
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic) IBOutlet UILabel *lbltitle;
+@property (weak, nonatomic) IBOutlet UIButton *selectBtn;
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfUser;
 

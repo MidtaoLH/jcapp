@@ -40,7 +40,7 @@
 #import "TabBar/TabBarViewController.h"
 #import "BusinessTrip/BusinessTripEditViewController.h"
 #import <AdSupport/AdSupport.h>
-
+#import "Masonry.h"
 @interface ViewController ()
 - (IBAction)Login:(id)sender;
 
@@ -75,9 +75,10 @@ NSString *adduserlistflag = @"true";
     if(userID.length > 0)
     {
         
-         NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,userID];
+        NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,userID];
         NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
-      
+        
+        
         
         if(data.length > 0)
         {
@@ -128,8 +129,93 @@ NSString *adduserlistflag = @"true";
                                        initWithRequest:request
                                        delegate:self];
     }
-
+    [self loadstyle];
     // Do any additional setup after loading the view, typically from a nib.
+    
+}
+-(void)loadstyle
+{
+    [self.myHeadPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kScreenHeight*0.2);
+        
+        make.left.mas_equalTo(kScreenWidth*0.5-Common_LoginImage*0.5);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(Common_LoginImage,Common_LoginImage));
+    }];
+    [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+      
+        // 添加上
+        make.top.mas_equalTo(kScreenHeight*0.8);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.15);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.7,kScreenHeight*0.05));
+    }];
+    [self.lbltitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        // 添加上
+        make.top.mas_equalTo(kScreenHeight*0.9);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.1);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+    }];
+    [self.txtuser mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        // 添加上
+        make.top.mas_equalTo(kScreenHeight*0.5);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.1);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+    }];
+    [self.txtpassword mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        // 添加上
+        make.top.mas_equalTo(kScreenHeight*0.6);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.1);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+    }];
+    [self.usernamelist mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        // 添加上
+        make.top.mas_equalTo(kScreenHeight*0.5+kScreenHeight*0.05);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.1);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.2));
+    }];
+    [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        // 添加上
+        make.top.mas_equalTo(kScreenHeight*0.5);
+        // 添加左
+        make.left.mas_equalTo(kScreenWidth*0.9);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.05,kScreenHeight*0.05));
+    }];
+    txtuser.layer.borderWidth= 1.0;
+    txtuser.borderStyle = UITextBorderStyleNone;
+    txtuser.layer.cornerRadius =15.0;
+    txtuser.layer.borderColor= [UIColor lightGrayColor].CGColor;
+    txtpassword.layer.borderWidth= 1.0;
+    txtpassword.borderStyle = UITextBorderStyleNone;
+    txtpassword.layer.cornerRadius =15.0;
+    txtpassword.layer.borderColor= [UIColor lightGrayColor].CGColor;
+    self.usernamelist.layer.borderWidth = 1;
+    self.usernamelist.layer.borderColor = [[UIColor blackColor] CGColor];//设置列表边框
+    self.myHeadPortrait.layer.masksToBounds = YES;
+    self.myHeadPortrait.layer.cornerRadius = Common_LoginImage * 0.5;
+    //设置圆角的半径
+    [_loginBtn.layer setCornerRadius:15];
+    //切割超出圆角范围的子视图
+    _loginBtn.layer.masksToBounds = YES;
+    //设置边框的颜色
+    [_loginBtn.layer setBorderColor:[UIColor colorWithRed:192.0/255.0 green:192.0/255.0 blue:192.0/255.0 alpha:1].CGColor];
+    //设置边框的粗细
+    [_loginBtn.layer setBorderWidth:1.0];
 }
 
 -(IBAction)onClickButtonChose:(id)sender
@@ -543,6 +629,26 @@ NSString *adduserlistflag = @"true";
     [txtuser resignFirstResponder];
     self.usernamelist.hidden = true;
     
+}
+//解决tableview线不对的问题
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+//解决tableview线不对的问题
+- (void)viewDidLayoutSubviews
+{
+    if ([_usernamelist respondsToSelector:@selector(setSeparatorInset:)]) {
+        [_usernamelist setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([_usernamelist respondsToSelector:@selector(setLayoutMargins:)]) {
+        [_usernamelist setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 @end

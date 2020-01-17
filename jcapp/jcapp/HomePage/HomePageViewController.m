@@ -360,6 +360,7 @@
             case 2:
             {
                 myDelegate.tabbarType=@"4";
+                myDelegate.tabbarIndex=@"0";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
                 [self presentViewController:navigationController animated:YES completion:nil];

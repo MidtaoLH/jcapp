@@ -175,9 +175,15 @@ NSInteger currentPageCountwait_new;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@&processid=%@", userid,self.processid];
-    //myDelegate.processid
+    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@",userid,self.processid];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetWay?id=%@&processid=%@", userid,self.processid];
+    //myDelegate.processid
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     

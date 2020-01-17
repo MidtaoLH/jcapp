@@ -34,31 +34,58 @@
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-}
+//void UncaughtExceptionHandler(NSException *exception) {
+//    UIAlertView *errorAlert = [[UIAlertView alloc]
+//                               initWithTitle: @""
+//                               message: @"程序出错了"
+//                               delegate:nil
+//                               cancelButtonTitle:@"OK"
+//                               otherButtonTitles:nil];
+//    [errorAlert show];
+//    /**
+//     *  获取异常崩溃信息
+//     */
+////    NSArray *callStack = [exception callStackSymbols];
+////    NSString *reason = [exception reason];
+////    NSString *name = [exception name];
+////    NSString *content = [NSString stringWithFormat:@"\n========异常错误报告========\n位置:%s\nname:%@\nreason:\n%@\ncallStackSymbols:\n%@\n", __FUNCTION__,name,reason,[callStack componentsJoinedByString:@"\n"]];
+////    NSLog(@"\n%@\n",content);
+////    /**
+////     *  把异常崩溃信息发送至开发者邮件
+////     */
+////    NSMutableString *mailUrl = [NSMutableString string];
+////    [mailUrl appendString:@"yangjl@midtao.com"];
+////    [mailUrl appendString:@"?subject=程序异常崩溃，请配合发送异常报告，谢谢合作！"];
+////    [mailUrl appendFormat:@"&body=%@", content];
+////    // 打开地址
+////    NSString *mailPath = [mailUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+////    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailPath]];
+//
+//}
 
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
 
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-}
 
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
 
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

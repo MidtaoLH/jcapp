@@ -38,7 +38,7 @@ NSInteger currentPageCountbapproved;
     //self.parentViewController.navigationItem.backBarButtonItem=temporaryBarButtonItem;
     //e注册自定义 cell
     [_NewTableView registerClass:[BusinessTripCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight =kScreenHeight/5;
     _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     currentPageCountbapproved=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
@@ -57,7 +57,7 @@ NSInteger currentPageCountbapproved;
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
 }
 -(void)LoadData
 {

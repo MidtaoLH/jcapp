@@ -299,7 +299,7 @@ UIViewController *childViewControllerPendingApproved (NSString *title, NSString 
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-StatusBarAndNavigationBarHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -315,7 +315,7 @@ UIViewController *childViewControllerWaitingApply(NSString *title, NSString *img
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-StatusBarAndNavigationBarHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;

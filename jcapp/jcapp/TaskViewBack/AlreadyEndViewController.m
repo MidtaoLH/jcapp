@@ -26,7 +26,7 @@ static NSString * identifier = @"PendingsListCell";
     //self.navigationItem.title=@"已回览";
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
     
     // 添加头部的下拉刷新
@@ -38,7 +38,7 @@ static NSString * identifier = @"PendingsListCell";
     MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
     
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if ([myDelegate.tabbarIndex isEqualToString:@"1"]) {

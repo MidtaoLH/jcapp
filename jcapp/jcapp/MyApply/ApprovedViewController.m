@@ -28,7 +28,7 @@ NSInteger currentPageCountwait2;
     [super viewDidLoad];
    
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCountwait2=[Common_PageSize intValue];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
@@ -44,7 +44,7 @@ NSInteger currentPageCountwait2;
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
 }
 
 -(void)LoadData

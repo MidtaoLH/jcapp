@@ -33,7 +33,7 @@ static NSString *identifier =@"LeaveWaitCell";
     
     //e注册自定义 cell
     [_NewTableView registerClass:[LeaveListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
     _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self LoadData];
@@ -47,7 +47,7 @@ static NSString *identifier =@"LeaveWaitCell";
     MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
     
     NSLog(@"%@",@"viewDidLoad-end");
 }

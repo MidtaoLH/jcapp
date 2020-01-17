@@ -25,7 +25,7 @@ static NSString * identifier = @"PendingListCell";
     [super viewDidLoad];
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight = kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
    
     // 添加头部的下拉刷新

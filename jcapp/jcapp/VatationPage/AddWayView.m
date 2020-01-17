@@ -6,7 +6,8 @@
 #import "../Model/Emp.h"
 #import "AppDelegate.h"
 #import "WayViewController.h"
-
+#import "../TabBar/TabBarViewController.h"
+#import "Masonry.h"
 @interface AddWayView ()<SkyAssociationMenuViewDelegate>
 {
     NSArray *titleArr;
@@ -106,7 +107,7 @@
 }
 
 #pragma mark SkyAssociationMenuViewDelegate
-- (NSInteger)updatedateupdatedate:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
+- (NSInteger)assciationMenuView:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
     
     if (idx == 0) {
         //return titleArr.count;

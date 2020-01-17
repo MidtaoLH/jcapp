@@ -167,5 +167,3 @@
 //登陆页头像
 #define Common_LoginImage 100.f
 
-
-#define MJRefreshLabelLeftInset 25

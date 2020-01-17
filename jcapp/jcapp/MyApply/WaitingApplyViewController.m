@@ -163,10 +163,8 @@ NSInteger currentPageCountwait;
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
     [self.NewTableView reloadData];
     [self.NewTableView layoutIfNeeded];
-    
 }
 
 //解析xml回调方法

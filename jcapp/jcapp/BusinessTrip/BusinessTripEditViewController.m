@@ -58,7 +58,7 @@ NSString * bflag = @"flase";
     //totalcount=1;
     totalHeight=Common_CCRowHeight;
     //tableViewPlace.backgroundColor=[UIColor colorWithRed:239.0 green:239.0 blue:240.0 alpha:1];
-    tableViewPlace.frame = CGRectMake(5,StatusBarAndNavigationBarHeight, kScreenWidth-10, totalHeight);
+    tableViewPlace.frame = CGRectMake(5,StatusBarAndNavigationBarHeight, kScreenWidth, totalHeight);
     
 //    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
@@ -77,7 +77,7 @@ NSString * bflag = @"flase";
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth-10, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
@@ -674,7 +674,7 @@ NSString * bflag = @"flase";
     [tableViewPlace beginUpdates];
     [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [tableViewPlace endUpdates];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth-10, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //

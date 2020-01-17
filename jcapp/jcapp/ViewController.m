@@ -62,9 +62,7 @@ NSString *adduserlistflag = @"true";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSSetUncaughtExceptionHandler(&UncaughtExceptionHandler);
-//    NSArray *arr = @[@(0),@(1)];
-//
+    //NSArray *arr = @[@(0),@(1)];
     //NSLog(@"%@",arr[2]);//模拟越界异常
     
     self.usernamelist.delegate=self;

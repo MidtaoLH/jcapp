@@ -1054,7 +1054,7 @@ NSString * boolflag = @"flase";
     
     //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     
-    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;

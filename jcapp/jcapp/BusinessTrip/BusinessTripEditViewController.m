@@ -595,7 +595,7 @@ NSString * bflag = @"flase";
             self->_pageType=@"4";
         }else if([self->_pageType isEqual:@"2"]){
             self->_pageType=@"5";
-        }else{
+        }else if([self->_pageType isEqual:@"3"]){
             self->_pageType=@"6";
         }
         NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->_processid,self->_businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->_pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];

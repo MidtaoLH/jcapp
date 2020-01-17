@@ -346,7 +346,23 @@ NSInteger currentPageCountwait_new;
     else
     {
         AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-        myDelegate.way_button_show_flag =@"true";
+        
+        if(self.listOfWay.count < 2)
+        {
+            myDelegate.way_button_show_flag =@"false";
+        }
+        else
+        {
+            Way * way=self.listOfWay[2];
+            if([way.level isEqualToString:@"99"])
+            {
+                 myDelegate.way_button_show_flag =@"false";
+            }
+            else
+            {
+                 myDelegate.way_button_show_flag =@"true";
+            }
+        }
     }
     
     

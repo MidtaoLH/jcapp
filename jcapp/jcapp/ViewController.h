@@ -38,6 +38,8 @@
 // 添加数据源
 @property (strong,nonatomic) NSMutableArray *listOfUser;
 
+//test
+@property (nonatomic,strong) NSThread *thread;
 
 //先在h文件写入相应方法
 -(IBAction)onClickButton:(id)sender;

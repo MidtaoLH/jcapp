@@ -105,6 +105,7 @@ static NSInteger const SW_RowImageCount = 4;
     [UIView performWithoutAnimation:^{
         [self.expandableTableView beginUpdates];
         [self.expandableTableView endUpdates];
+
     }];
 }
 

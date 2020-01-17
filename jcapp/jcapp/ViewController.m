@@ -204,8 +204,9 @@ NSString *adduserlistflag = @"true";
     txtpassword.borderStyle = UITextBorderStyleNone;
     txtpassword.layer.cornerRadius =15.0;
     txtpassword.layer.borderColor= [UIColor lightGrayColor].CGColor;
-    self.usernamelist.layer.borderWidth = 1;
+    self.usernamelist.layer.borderWidth = 0.5;
     self.usernamelist.layer.borderColor = [[UIColor blackColor] CGColor];//设置列表边框
+    self.usernamelist.layer.cornerRadius =15.0;
     self.myHeadPortrait.layer.masksToBounds = YES;
     self.myHeadPortrait.layer.cornerRadius = Common_LoginImage * 0.5;
     //设置圆角的半径

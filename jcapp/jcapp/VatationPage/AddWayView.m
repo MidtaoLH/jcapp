@@ -100,7 +100,7 @@
 }
 
 #pragma mark SkyAssociationMenuViewDelegate
-- (NSInteger)assciationMenuView:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
+- (NSInteger)updatedateupdatedate:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
     
     if (idx == 0) {
         //return titleArr.count;

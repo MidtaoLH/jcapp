@@ -266,13 +266,23 @@
    
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
      NSLog(xmlString);
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    
+    NSRange startRange = NSMakeRange(0, 0);
+
+     startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    
+    NSRange endRagne = NSMakeRange(0, 0);
+    
+    endRagne = [xmlString rangeOfString:@"</string>"];
+    
+    NSRange reusltRagne = NSMakeRange(0, 0);
+    
+    reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+
     if([stringflag isEqualToString:@"group"])
     {
         listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];

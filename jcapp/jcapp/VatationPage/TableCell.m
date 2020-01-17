@@ -55,6 +55,7 @@
     if (!_btnline) {
         _btnline = [[AddButton alloc] init];
         _btnline.backgroundColor = kColor_Gray;
+        _btnline.hidden = YES;
     }
     return _btnline;
 }
@@ -247,7 +248,7 @@
         }
         else
         {
-            self.btnline.hidden = NO;
+            //self.btnline.hidden = NO;
         }
     }
     else

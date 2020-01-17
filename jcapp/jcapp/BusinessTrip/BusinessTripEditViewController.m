@@ -952,7 +952,7 @@ NSString * bflag = @"flase";
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:url]];
     UIImage *saveimage = [UIImage imageWithData:data]; // 取得图片
     
-    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;

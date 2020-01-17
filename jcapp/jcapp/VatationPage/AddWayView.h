@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+NS_ASSUME_NONNULL_BEGIN
 @interface AddWayView : UIViewController{    
     NSString *xmlString;
     NSString *stringflag;
@@ -22,9 +22,6 @@
 @property (nonatomic, retain)IBOutlet NSString *lbgroupid;
 @property (nonatomic, retain)IBOutlet NSString *lbempid;
 @property (nonatomic, retain)IBOutlet NSString *lbempenglistname;
-@property (nonatomic, copy) NSString *processid;
-@property (nonatomic, copy) NSString *vatcationid;
-
 @property (nonatomic,copy) NSString *userflag;
 @end
-
+NS_ASSUME_NONNULL_END

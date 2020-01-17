@@ -52,7 +52,6 @@ NSString *strtype;
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     static NSString *cellId = @"cellid";
     
      Vatcation  *m =vatcationArray[indexPath.row];//取出数据元素
@@ -62,7 +61,7 @@ NSString *strtype;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
     
-     cell.textLabel.text =  [NSString stringWithFormat:@"%@",m.Name];
+    cell.textLabel.text =  [NSString stringWithFormat:@"%@",m.Name];
     
     //当上下拉动的时候，因为cell的复用性，我们需要重新判断一下哪一行是打勾的
     if (_selIndex == indexPath) {
@@ -70,12 +69,22 @@ NSString *strtype;
     }else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
+    //如果已经选择 类型 直接打勾
+    if(_selectindex != nil)
+    {
+        if([m.Name isEqual: _selectindex])
+        {
+             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            _selectindex = nil;
+            _selIndex = indexPath;
+        }
+    }
+    
      NSLog(@"%@",@"tableView1-begin");
     return cell;
  
     ////////
-
-    
     /*
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     if (cell == nil){

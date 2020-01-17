@@ -65,6 +65,7 @@ static NSInteger const SW_RowImageCount = 4;
         [self.mutableImages removeObjectAtIndex:indexPath.item];
         [self sw_reloadData];
     };
+    [self sw_reloadData];
     return cell;
 }
 
@@ -104,6 +105,7 @@ static NSInteger const SW_RowImageCount = 4;
     [UIView performWithoutAnimation:^{
         [self.expandableTableView beginUpdates];
         [self.expandableTableView endUpdates];
+
     }];
 }
 

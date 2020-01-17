@@ -62,6 +62,8 @@ NSString *adduserlistflag = @"true";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //NSArray *arr = @[@(0),@(1)];
+    //NSLog(@"%@",arr[2]);//模拟越界异常
     
     self.usernamelist.delegate=self;
     self.usernamelist.dataSource=self;

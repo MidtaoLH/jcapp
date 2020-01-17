@@ -206,14 +206,11 @@ NSString * boolflag = @"flase";
         
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         
-        
         [defaults setObject:@"tableviewtype" forKey:@"type"];
-        
-        
         [defaults synchronize];//保存到磁盘
         
         VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
-      
+        nextVc.selectindex =self.VatcationType.info;
         nextVc.delegate = self;
         [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
  
@@ -1057,7 +1054,7 @@ NSString * boolflag = @"flase";
     
     //UIImage *testimage = @"http://47.94.85.101:8095/APP/Annex/20191255QJ/1.png";
     
-    //[preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
+    [preferences setObject:UIImagePNGRepresentation(saveimage) forKey:key];
     
     NSData* imageData = [preferences objectForKey:key];
     UIImage* image;

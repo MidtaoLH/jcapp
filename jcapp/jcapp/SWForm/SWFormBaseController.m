@@ -128,7 +128,7 @@ static NSInteger rowHeight=50;
     }
     else{
         
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         //myDelegate.AppRoveType = @"qingjia";
         
         if([myDelegate.AppRoveType isEqualToString:@"qingjia"])
@@ -141,15 +141,19 @@ static NSInteger rowHeight=50;
             static NSString *ID=@"cellID";
             UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //cell.userInteractionEnabled = NO;
             cell.centerX=0.0;
             cell.textLabel.text=[NSString stringWithFormat:@""];
             cell.textLabel.textColor=UIColor.redColor;
+//            cell.layer.borderWidth= 1.0;
+//            cell.layer.borderColor=[[UIColor blackColor]CGColor];
             //cell.backgroundColor=UIColor.redColor;
             
             UILabel *cell1=[[UILabel alloc]init];
             cell1.text=[NSString stringWithFormat:@"*"];
             cell1.textColor=UIColor.redColor;
-            cell1.frame = CGRectMake(10.0,5, 15, rowHeight);
+            cell1.frame = CGRectMake(5.0,5, 15, rowHeight);
              cell1.font=kFont_Lable_16;
             [cell.contentView addSubview:cell1];
             
@@ -157,7 +161,7 @@ static NSInteger rowHeight=50;
             cell0.text=[NSString stringWithFormat:@"出差地点"];
             //cell0.textColor=[UIColor colorWithRed:((float)30/255.0f) green:((float)144/255.0f) blue:((float)255/255.0f) alpha:1];
             //cell0.left=40;
-            cell0.frame = CGRectMake(16.0,0, 75, rowHeight);
+            cell0.frame = CGRectMake(11.0,0, 75, rowHeight);
             cell0.font=kFont_Lable_16;
             //cell0.backgroundColor=UIColor.greenColor;
             [cell.contentView addSubview:cell0];
@@ -191,7 +195,7 @@ static NSInteger rowHeight=50;
             
             //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
-            btnAdd.frame = CGRectMake(self.view.width-80,cell.top+10, 30, 30);
+            btnAdd.frame = CGRectMake(self.view.width-100,cell.top+10, 30, 30);
             [btnAdd setTitle:@"+" forState:UIControlStateNormal];
             [btnAdd setTitleColor:[UIColor whiteColor]forState:UIControlStateNormal];
             //关键语句
@@ -207,7 +211,7 @@ static NSInteger rowHeight=50;
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             
-            btn.frame = CGRectMake(self.view.width-40,cell.top+10, 30, 30);
+            btn.frame = CGRectMake(self.view.width-60,cell.top+10, 30, 30);
             [btn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
             //关键语句
             btn.layer.cornerRadius = btnAdd.frame.size.width/2;
@@ -254,10 +258,12 @@ static NSInteger rowHeight=50;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SWFormSectionItem *sectionItem = self.mutableItems[indexPath.section];
-    SWFormItem *item = sectionItem.items[indexPath.row];
-    if (item.itemType == SWFormItemTypeSelect && item.itemSelectCompletion) {
-        item.itemSelectCompletion(item);
+    if(tableView==self.formTableView){
+        SWFormSectionItem *sectionItem = self.mutableItems[indexPath.section];
+        SWFormItem *item = sectionItem.items[indexPath.row];
+        if (item.itemType == SWFormItemTypeSelect && item.itemSelectCompletion) {
+            item.itemSelectCompletion(item);
+        }
     }
 }
 

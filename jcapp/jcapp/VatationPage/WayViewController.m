@@ -36,7 +36,7 @@ NSInteger currentPageCountwait_new;
     [self loadstyle];
     [self loadinfo];
     self.navigationItem.title=@"路径确认";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 }
 
 -(void)loadstyle{
@@ -125,7 +125,7 @@ NSInteger currentPageCountwait_new;
                 m.editflag = @"1";
                 int *index = [myDelegate.way_post_index intValue];
                 [listOfWay insertObject:m atIndex:index];
-               
+                
                 [CATransaction begin];
                 [CATransaction setCompletionBlock:^{
                     [_NewTableView reloadData];
@@ -210,7 +210,7 @@ NSInteger currentPageCountwait_new;
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
-       
+        
     }
     else
     {
@@ -226,8 +226,8 @@ NSInteger currentPageCountwait_new;
                                   otherButtonTitles:nil];
             [alert show];
             
-           
-           
+            
+            
         }
         else
         {
@@ -244,7 +244,7 @@ NSInteger currentPageCountwait_new;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    if([suessflag isEqualToString:@"true"])    
+    if([suessflag isEqualToString:@"true"])
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -337,6 +337,18 @@ NSInteger currentPageCountwait_new;
 {
     // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
     // 这里是返回节点的行数
+    if(self.listOfWay.count == 2)
+    {
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.way_button_show_flag =@"false";
+        
+    }
+    else
+    {
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        myDelegate.way_button_show_flag =@"true";
+    }
+    
     
     return self.listOfWay.count;
 }
@@ -376,7 +388,7 @@ NSInteger currentPageCountwait_new;
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     // Model array -> JSON array
     NSArray *dictArray = [Way mj_keyValuesArrayWithObjectArray:listOfWay];
-
+    
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictArray options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];

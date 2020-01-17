@@ -238,6 +238,17 @@
         {
             self.btnline.hidden = NO;
         }
+        
+        //qu diao xian
+        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        if([myDelegate.way_button_show_flag isEqualToString:@"false"])
+        {
+            self.btnline.hidden = YES;
+        }
+        else
+        {
+            self.btnline.hidden = NO;
+        }
     }
     else
     {
@@ -254,7 +265,17 @@
             {
                 self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddTableRowSize);
             }
-            self.btnline.hidden = NO;
+            //self.btnline.hidden = NO;
+            //qu diao xian
+            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+            if([myDelegate.way_button_show_flag isEqualToString:@"false"])
+            {
+                self.btnline.hidden = YES;
+            }
+            else
+            {
+                self.btnline.hidden = NO;
+            }
         }else
         {
             self.btnline.hidden = YES;

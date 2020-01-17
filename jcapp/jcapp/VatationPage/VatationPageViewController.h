@@ -37,6 +37,8 @@ UITableViewDelegate>{
 @property(retain,nonatomic) NSArray *data;
 @property (copy, nonatomic) NSArray *datas;
 
+@property (nonatomic,copy) NSString *selectindex;
+
 -(IBAction)onClickButtontest:(id)sender;
 -(IBAction)onClickButtonreturn:(id)sender;
 

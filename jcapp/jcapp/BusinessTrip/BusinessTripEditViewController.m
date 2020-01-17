@@ -57,8 +57,8 @@ NSString * bflag = @"flase";
     [datePickere setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh_Hans_CN"]];
     //totalcount=1;
     totalHeight=Common_CCRowHeight;
-    //tableViewPlace.backgroundColor=UIColor.blueColor;
-    tableViewPlace.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, kScreenWidth, totalHeight);
+    //tableViewPlace.backgroundColor=[UIColor colorWithRed:239.0 green:239.0 blue:240.0 alpha:1];
+    tableViewPlace.frame = CGRectMake(5,StatusBarAndNavigationBarHeight, kScreenWidth-10, totalHeight);
     
 //    [tableViewPlace mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
@@ -68,12 +68,16 @@ NSString * bflag = @"flase";
 //        make.size.mas_equalTo(CGSizeMake(kScreenWidth, totalHeight));
 //    }];
     tableViewPlace.rowHeight=Common_CCRowHeight;
+//    tableViewPlace.layer.borderWidth = 1;
+//    tableViewPlace.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//    tableViewPlace.layer.borderColor = [[UIColor colorWithRed:220 green:220 blue:220 alpha:1] CGColor];
+    
     myData = [[NSMutableArray alloc]initWithObjects:@"",nil];
     //[myData insertObject:@"f" atIndex:0];
 
     self.genders = @[@"男",@"女"];
     [self datas];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth-10, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight);
     
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
@@ -670,7 +674,7 @@ NSString * bflag = @"flase";
     [tableViewPlace beginUpdates];
     [tableViewPlace reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     [tableViewPlace endUpdates];
-    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, self.view.width, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
+    self.formTableView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight+totalHeight, kScreenWidth-10, kScreenHeight-StatusBarAndNavigationBarHeight-totalHeight-TabbarHeight);
 //    [self.formTableView  mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+totalHeight);
 //

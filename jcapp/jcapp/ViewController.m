@@ -120,8 +120,15 @@ NSString *adduserlistflag = @"true";
         urlflag = @"GetLoginStatus";
         adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLoginStatus?User=%@&macid=%@", txtuser.text,adId];
+        
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLoginStatus?User=%@&macid=%@", txtuser.text,adId];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
         NSURL *url = [NSURL URLWithString:strURL];
+        
+        
+        //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLoginStatus?User=%@&macid=%@", txtuser.text,adId];
+        //NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         
@@ -204,8 +211,9 @@ NSString *adduserlistflag = @"true";
     txtpassword.borderStyle = UITextBorderStyleNone;
     txtpassword.layer.cornerRadius =15.0;
     txtpassword.layer.borderColor= [UIColor lightGrayColor].CGColor;
-    self.usernamelist.layer.borderWidth = 1;
+    self.usernamelist.layer.borderWidth = 0.5;
     self.usernamelist.layer.borderColor = [[UIColor blackColor] CGColor];//设置列表边框
+    self.usernamelist.layer.cornerRadius =15.0;
     self.myHeadPortrait.layer.masksToBounds = YES;
     self.myHeadPortrait.layer.cornerRadius = Common_LoginImage * 0.5;
     //设置圆角的半径
@@ -328,8 +336,14 @@ NSString *adduserlistflag = @"true";
         NSLog(@"%@", txtuser.text);
         NSLog(@"%@", txtpassword.text);
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/CheckUser?User=%@&Password=%@&macid=%@", txtuser.text,txtpassword.text,adId];
+        
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/CheckUser?User=%@&Password=%@&macid=%@", txtuser.text,txtpassword.text,adId];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
         NSURL *url = [NSURL URLWithString:strURL];
+        
+        //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/CheckUser?User=%@&Password=%@&macid=%@", txtuser.text,txtpassword.text,adId];
+        //NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         
@@ -627,6 +641,7 @@ NSString *adduserlistflag = @"true";
 //点击背景键盘退出
 -(IBAction)backgroundTap:(id)sender {
     [txtuser resignFirstResponder];
+    [txtpassword resignFirstResponder];
     self.usernamelist.hidden = true;
     
 }

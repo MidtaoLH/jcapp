@@ -92,7 +92,8 @@
         if(!listOfEmp.count > 0)
         {
             stringflag = @"emp";
-             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@"];
+            NSString *strURL = [NSString stringWithFormat:urlstring,@"123",@"1"];
             NSURL *url = [NSURL URLWithString:strURL];
             //进行请求
             NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];

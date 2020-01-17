@@ -29,11 +29,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight)];
+    [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight)];
     self.view.backgroundColor = [UIColor  whiteColor];
     stringflag = @"group";
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGroup"];
+    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGroup"];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGroup"];
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
@@ -100,7 +106,7 @@
 }
 
 #pragma mark SkyAssociationMenuViewDelegate
-- (NSInteger)assciationMenuView:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
+- (NSInteger)updatedateupdatedate:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
     
     if (idx == 0) {
         //return titleArr.count;
@@ -110,8 +116,15 @@
             if([self.userflag isEqualToString:@"1"])
             {
                 stringflag = @"emp";
-                NSString *strURL = [NSString stringWithFormat:@"http:/z/47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
+                
+                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
+                
+                NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
                 NSURL *url = [NSURL URLWithString:strURL];
+                
+                
+                //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
+                //NSURL *url = [NSURL URLWithString:strURL];
                 //进行请求
                 NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
                 
@@ -122,8 +135,14 @@
             else
             {
                 stringflag = @"emp";
-                NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"0"];
+                
+                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"0"];
+                
+                NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
                 NSURL *url = [NSURL URLWithString:strURL];
+                
+                //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"0"];
+                //NSURL *url = [NSURL URLWithString:strURL];
                 //进行请求
                 NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
                 
@@ -243,7 +262,9 @@
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
+   
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+     NSLog(xmlString);
     NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
     NSRange endRagne = [xmlString rangeOfString:@"</string>"];
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);

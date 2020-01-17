@@ -35,6 +35,7 @@ static NSString *identifier =@"GoOutWaitCell";
     //e注册自定义 cell
     [_NewTableView registerClass:[GoOutWaitCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = 150;
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     currentPageCount=[Common_PageSize intValue]; 
     [self LoadData];
     

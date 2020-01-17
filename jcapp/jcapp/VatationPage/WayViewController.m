@@ -42,7 +42,7 @@ NSInteger currentPageCountwait_new;
 -(void)loadstyle{
     [_NewTableView registerClass:[TableCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = SetAddTableRowSize;
-    
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [_NewTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(0);

@@ -2113,7 +2113,6 @@
 				EB30A4AD2398CF7F00EEAE1E /* EditApprovalDetailsViewController.xib */,
 				EB30A4A62398CF7E00EEAE1E /* PendingApprovedViewController.h */,
 				EB30A4AC2398CF7F00EEAE1E /* PendingApprovedViewController.m */,
-				EB30A4A92398CF7E00EEAE1E /* PendingApprovedViewController.xib */,
 				EB30A4A32398CF7E00EEAE1E /* ReviewApprovalDetailsViewController.h */,
 				EB30A4A02398CF7E00EEAE1E /* ReviewApprovalDetailsViewController.m */,
 				EB30A4A22398CF7E00EEAE1E /* ReviewApprovalDetailsViewController.xib */,
@@ -2122,6 +2121,7 @@
 				EBCF6C0023974DE300893A02 /* PendingViewController.h */,
 				EBCF6BFE23974DE300893A02 /* PendingViewController.m */,
 				EBCF6BFF23974DE300893A02 /* PendingViewController.xib */,
+				EB30A4A92398CF7E00EEAE1E /* PendingApprovedViewController.xib */,
 			);
 			path = PendingPage;
 			sourceTree = "<group>";

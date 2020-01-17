@@ -335,37 +335,7 @@ NSInteger currentPageCountwait_new;
 //每组多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // 默认有此行，请删除或注 释 #warning Incomplete method implementation.
-    // 这里是返回节点的行数
-    if(self.listOfWay.count == 2)
-    {
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-        myDelegate.way_button_show_flag =@"false";
-        
-    }
-    else
-    {
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-        
-        if(self.listOfWay.count < 2)
-        {
-            myDelegate.way_button_show_flag =@"false";
-        }
-        else
-        {
-            Way * way=self.listOfWay[2];
-            if([way.level isEqualToString:@"99"])
-            {
-                 myDelegate.way_button_show_flag =@"false";
-            }
-            else
-            {
-                 myDelegate.way_button_show_flag =@"true";
-            }
-        }
-    }
-    
-    
+     
     return self.listOfWay.count;
 }
 
@@ -373,14 +343,35 @@ NSInteger currentPageCountwait_new;
 {
     // 大家还记得，之前让你们设置的Cell Identifier 的 值，一定要与前面设置的值一样，不然数据会显示不出来
     TableCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素
+    cell.indexPath = indexPath;
     cell.index =    [NSString stringWithFormat:@"%d",indexPath.row];
+    if(self.listOfWay.count>indexPath.row+1)
+    {
+        Way * w =self.listOfWay[indexPath.row+1];
+        cell.nextlevel=w.level;
+        cell.netxtype=w.name;
+    }
+    else
+    {
+        cell.nextlevel=@"100";
+        cell.netxtype=@"100";
+    }
+    if(indexPath.row>=1)
+    {
+         Way * w =self.listOfWay[indexPath.row-1];
+         cell.toptype=w.name;
+    }
+    else
+    {
+        cell.toptype=@"null";
+    }
+    cell.Waylist =self.listOfWay[indexPath.row];//取出数据元素    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Way *w =self.listOfWay[indexPath.row];
-    if([ w.name isEqualToString:@"button"])
+    if([w.name isEqualToString:@"button"]||[ w.name isEqualToString:@"null"])
     {
         return SetAddButtonRowSize;
     }

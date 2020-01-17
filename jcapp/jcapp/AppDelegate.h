@@ -46,8 +46,6 @@
 
 @property (nonatomic, strong) NSString *way_post_index_delete;
 
-@property (nonatomic, strong) NSString *way_button_show_flag;
-
 @property (nonatomic, strong) NSString *AppRoveType;
 
 @property (nonatomic, strong) NSString *TimeStart;

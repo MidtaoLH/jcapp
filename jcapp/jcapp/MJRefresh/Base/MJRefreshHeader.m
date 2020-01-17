@@ -37,7 +37,7 @@
     self.lastUpdatedTimeKey = MJRefreshHeaderLastUpdatedTimeKey;
     
     // 设置高度
-    self.mj_h = MJRefreshHeaderHeight;
+    self.mj_h = NavigationBarHeight;
 }
 
 - (void)placeSubviews

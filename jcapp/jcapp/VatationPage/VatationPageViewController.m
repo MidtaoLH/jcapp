@@ -9,6 +9,16 @@
 #import "VatationPageViewController.h"
 #import "../Model/Vatcation.h"
 #import "../MJExtension/MJExtension.h"
+#import "SelectUserViewController.h"
+#import "SkyAssociationMenuView.h"
+#import "../Model/Group.h"
+#import "../MJExtension/MJExtension.h"
+#import "../Model/Emp.h"
+#import "AppDelegate.h"
+#import "SetAgentViewController.h"
+#import "../TabBar/TabBarViewController.h"
+#import "Masonry.h"
+
 @interface VatationPageViewController ()
 
 @end
@@ -18,6 +28,8 @@
 NSString *strtype;
 
 - (void)viewDidLoad {
+    
+        [super viewDidLoad];
     
     allString = @"";
     //设置需要访问的ws和传入参数
@@ -29,15 +41,42 @@ NSString *strtype;
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    [super viewDidLoad];
+
     count = 1;
 
     tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     // Do any additional setup after loading the view, typically from a nib.
     //NSArray *provinces=[[NSArray alloc] initWithObjects:@"事假",@"病假",@"年假",@"调休",@"婚假",@"产假",@"陪产//假",@"计划生育假", nil];
-   
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(gotoback)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    self.navigationItem.title=@"请假类型";
     //行高
     
+  //  self.title = @"标题";
+    
+    // 添加账单按钮
+ //   UIBarButtonItem *bill = [[UIBarButtonItem alloc] initWithTitle:@"账单" style:UIBarButtonItemStylePlain target:nil action:nil];
+ //   self.navigationItem.rightBarButtonItem = bill;
+    
+}
+-(void)gotoback {
+    //点击返回的时候 把选择的数据清空
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"" forKey:@"vatcationname"];
+    [defaults synchronize];//保存到磁盘
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)save {
+ 
+    //当代理响应sendValue方法时，把_tx.text中的值传到VCA
+    if ([_delegate respondsToSelector:@selector(sendValue:)]) {
+        [_delegate sendValue:strtype];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    // 定义一个JSON字符串
+    [self dismissViewControllerAnimated:YES completion:nil];//返回上一页面
 }
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {

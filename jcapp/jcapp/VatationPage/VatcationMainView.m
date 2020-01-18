@@ -210,10 +210,16 @@ NSString * boolflag = @"flase";
         [defaults setObject:@"tableviewtype" forKey:@"type"];
         [defaults synchronize];//保存到磁盘
         
-        VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
-        nextVc.selectindex =self.VatcationType.info;
-        nextVc.delegate = self;
-        [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+    //    VatationPageViewController *nextVc = [[VatationPageViewController alloc]init];//初始化下一个界面
+   //     nextVc.selectindex =self.VatcationType.info;
+    //    nextVc.delegate = self;//
+   //     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
+        
+        VatationPageViewController  * VCCollect = [[VatationPageViewController alloc] init];
+        VCCollect.selectindex =self.VatcationType.info;
+        VCCollect.delegate = self;
+        [self.navigationController pushViewController:VCCollect animated:YES];
+        
  
     };
     [items addObject:_VatcationType];

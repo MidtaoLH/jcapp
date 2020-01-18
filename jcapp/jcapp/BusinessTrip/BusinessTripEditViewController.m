@@ -487,6 +487,10 @@ NSString * bflag = @"flase";
         text = [text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         NSLog(@"text字典里面的内容为--》%@", text );
         
+self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+//self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
+ 
         NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->_processid,self->_businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->_pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];
@@ -775,6 +779,9 @@ NSString * bflag = @"flase";
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
+      NSLog(@"_operateType:%@",_operateType);
+        NSLog(@"data:%@",data);
+        
         if(![_operateType isEqual:@"3"] ){
             xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             //NSLog(@"xmlString:%@",xmlString);
@@ -784,6 +791,13 @@ NSString * bflag = @"flase";
             NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
             NSString *resultString = [xmlString substringWithRange:reusltRagne];
             NSString *requestTmp = [NSString stringWithString:resultString];
+ 
+            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"&gt;"withString:@">" ];
+            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+            requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+ 
             NSLog(@"requestTmp:%@",requestTmp);
             
             //上传图片

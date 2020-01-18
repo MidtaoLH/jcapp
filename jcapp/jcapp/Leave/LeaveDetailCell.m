@@ -88,6 +88,23 @@
     NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
     
+    NSString *strMessage = @"";
+    if([resultString isEqual:@"0"])
+    {
+        strMessage =@"操作成功";
+    }
+    else
+    {
+        strMessage =@"操作失败";
+    }
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @""
+                          message: strMessage
+                          delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
+    
     NSLog(@"%@", resultString);
  
     NSLog(@"%@",@"connection1-end");

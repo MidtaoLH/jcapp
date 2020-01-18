@@ -31,6 +31,8 @@ NSString *strtype;
                                    delegate:self];
     [super viewDidLoad];
     count = 1;
+
+    tableview.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     // Do any additional setup after loading the view, typically from a nib.
     //NSArray *provinces=[[NSArray alloc] initWithObjects:@"事假",@"病假",@"年假",@"调休",@"婚假",@"产假",@"陪产//假",@"计划生育假", nil];
    

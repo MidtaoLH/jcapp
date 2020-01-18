@@ -81,7 +81,7 @@
   //  int totalRowCount = ceil(imageCount / perRowImageCountF);
     CGFloat h = 80;
     //self.frame = CGRectMake(10, 10, 300, totalRowCount * (SDPhotoGroupImageMargin + h));
-    self.frame = CGRectMake(10, 10, kScreenWidth,  (SDPhotoGroupImageMargin + h));
+    self.frame = CGRectMake(0, 0, kScreenWidth, h);
 }
 
 - (void)layoutSubviews

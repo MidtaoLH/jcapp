@@ -31,7 +31,7 @@ CGFloat const SW_DefaultTextViewItemHeight = 200.0f;
 NSInteger const SW_TitleShowType = SWTitleShowTypeRedStarFront;
 
 // 表单输入字数限制
-NSUInteger const SW_GlobalMaxInputLength = 200;
+NSUInteger const SW_GlobalMaxInputLength = 100;
 
 // 表单选择图片附件数
 NSUInteger const SW_GlobalMaxImages = 8;

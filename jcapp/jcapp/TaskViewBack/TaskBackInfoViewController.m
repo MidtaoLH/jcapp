@@ -69,27 +69,35 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 //    [self presentViewController:navigationController animated:YES completion:nil];
 //}
 - (void)goBack {
-
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    if([self.titletype isEqualToString:@"0"])
-    {
-        myDelegate.tabbarIndex=@"0";
+    //0是从待回览跳转进来 返回时需要刷新待回览列表
+    if([self.titletype isEqualToString:@"0"]){
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }else{//不需要刷新列表
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    else
-    {
-        myDelegate.tabbarIndex=@"1";
-    }
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    if([self.titletype isEqualToString:@"0"])
-    {
-        tabBarCtrl.selectedIndex=0;
-    }
-    else
-    {
-        tabBarCtrl.selectedIndex=1;
-    }
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    
+//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//    if([self.titletype isEqualToString:@"0"])
+//    {
+//        myDelegate.tabbarIndex=@"0";
+//    }
+//    else
+//    {
+//        myDelegate.tabbarIndex=@"1";
+//    }
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    if([self.titletype isEqualToString:@"0"])
+//    {
+//        tabBarCtrl.selectedIndex=0;
+//    }
+//    else
+//    {
+//        tabBarCtrl.selectedIndex=1;
+//    }
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 -(void)loadstyle{

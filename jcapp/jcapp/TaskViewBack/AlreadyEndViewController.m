@@ -28,6 +28,7 @@ static NSString * identifier = @"PendingsListCell";
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];

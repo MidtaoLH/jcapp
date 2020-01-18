@@ -34,6 +34,8 @@ static NSString * identifier = @"PendingListCell";
     [_NewTableView registerClass:[AgentListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     [self LoadData];
     
     // 添加头部的下拉刷新

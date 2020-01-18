@@ -35,6 +35,7 @@ static NSString *identifier =@"NoticeCell";
      _NewTableView.rowHeight = 100;
     
     currentPageCount=[Common_PageSize intValue];
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         [self LoadData];
     
     // 添加头部的下拉刷新

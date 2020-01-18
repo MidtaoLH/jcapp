@@ -34,6 +34,8 @@ NSInteger currentPageCountwait1;
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCountwait1=[Common_PageSize intValue];
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];

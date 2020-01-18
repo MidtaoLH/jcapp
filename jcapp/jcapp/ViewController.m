@@ -68,7 +68,7 @@ NSString *adduserlistflag = @"true";
     self.usernamelist.delegate=self;
     self.usernamelist.dataSource=self;
     self.usernamelist.hidden = true;
-    
+    self.usernamelist.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
      NSString *userID = [defaults objectForKey:@"username"];
@@ -151,71 +151,122 @@ NSString *adduserlistflag = @"true";
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_LoginImage,Common_LoginImage));
     }];
-    [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-      
-        // 添加上
-        make.top.mas_equalTo(kScreenHeight*0.8);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.15);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.7,kScreenHeight*0.05));
-    }];
+    
     [self.lbltitle mas_makeConstraints:^(MASConstraintMaker *make) {
         
         // 添加上
         make.top.mas_equalTo(kScreenHeight*0.9);
         // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.1);
+        //make.left.mas_equalTo(kScreenWidth*0.1);
+        make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.05));
     }];
     [self.txtuser mas_makeConstraints:^(MASConstraintMaker *make) {
         
         // 添加上
-        make.top.mas_equalTo(kScreenHeight*0.5);
+        make.top.mas_equalTo(kScreenHeight*0.4);
         // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.1);
+        //make.left.mas_equalTo(kScreenWidth*0.1);
+        make.left.mas_equalTo(Common_LoginLeft);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+        //make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_LoginLeft*2,kScreenHeight*0.05));
     }];
     [self.txtpassword mas_makeConstraints:^(MASConstraintMaker *make) {
         
         // 添加上
+        //make.top.mas_equalTo(kScreenHeight*0.5);
+        make.top.equalTo(self.txtuser).offset(self.txtpassword.height+Common_RowSize);
+        // 添加左
+        //make.left.mas_equalTo(kScreenWidth*0.1);
+        make.left.mas_equalTo(Common_LoginLeft);
+        // 添加大小约束
+        //make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_LoginLeft*2,kScreenHeight*0.05));
+    }];
+    [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        // 添加上
         make.top.mas_equalTo(kScreenHeight*0.6);
         // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.1);
+        make.left.equalTo(self.txtuser);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.05));
+        //make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.7,kScreenHeight*0.05));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_LoginLeft*2,kScreenHeight*0.05));
     }];
+    
+    [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+
+        // 添加上
+        //make.top.mas_equalTo(kScreenHeight*0.4);
+        make.right.equalTo(self.txtuser);
+        make.bottom.equalTo(self.txtuser).offset(-10);
+
+        // 添加左
+        //make.left.mas_equalTo(kScreenWidth*0.9);
+        //make.left.mas_equalTo(kScreenWidth-Common_LoginLeft-15);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(15,15));
+    }];
+    [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"pull.png"] forState:(UIControlStateNormal)];
+
+//    txtuser.layer.borderWidth= 1.0;
+//    txtuser.borderStyle = UITextBorderStyleNone;
+//    txtuser.layer.cornerRadius =15.0;
+//    txtuser.layer.borderColor= [UIColor lightGrayColor].CGColor;
+
+    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0,txtuser.height, kScreenWidth-Common_LoginLeft*2, 1)];
+    lineView.backgroundColor = [UIColor blackColor];
+    [txtuser addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.txtuser);
+        make.bottom.equalTo(self.txtuser);
+        make.right.equalTo(self.txtuser);
+        make.size.mas_equalTo(CGSizeMake(1,1));
+    }];
+    float usercout=[usercount_str floatValue]+1;
+    if(usercout>5){
+        usercout=6;
+    }
     [self.usernamelist mas_makeConstraints:^(MASConstraintMaker *make) {
         
         // 添加上
-        make.top.mas_equalTo(kScreenHeight*0.5+kScreenHeight*0.05);
+        make.top.equalTo(lineView);
         // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.1);
+        //make.left.mas_equalTo(kScreenWidth*0.1);
+        make.left.equalTo(self.txtuser);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.2));
+        //make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.8,kScreenHeight*0.2));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-Common_LoginLeft*2, usercout*kScreenHeight*0.05));
     }];
-    [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        // 添加上
-        make.top.mas_equalTo(kScreenHeight*0.5);
-        // 添加左
-        make.left.mas_equalTo(kScreenWidth*0.9);
-        // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth*0.05,kScreenHeight*0.05));
+//    txtpassword.layer.borderWidth= 1.0;
+//    txtpassword.borderStyle = UITextBorderStyleNone;
+//    txtpassword.layer.cornerRadius =15.0;
+//    txtpassword.layer.borderColor= [UIColor lightGrayColor].CGColor;
+    UIView *lineViewPW = [[UIView alloc]initWithFrame:CGRectMake(0,txtpassword.height, kScreenWidth-Common_LoginLeft*2, 1)];
+    lineViewPW.backgroundColor = [UIColor blackColor];
+    [txtpassword addSubview:lineViewPW];
+    [lineViewPW mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.txtpassword);
+        make.bottom.equalTo(self.txtpassword);
+        make.right.equalTo(self.txtpassword);
+        make.size.mas_equalTo(CGSizeMake(1,1));
     }];
-    txtuser.layer.borderWidth= 1.0;
-    txtuser.borderStyle = UITextBorderStyleNone;
-    txtuser.layer.cornerRadius =15.0;
-    txtuser.layer.borderColor= [UIColor lightGrayColor].CGColor;
-    txtpassword.layer.borderWidth= 1.0;
-    txtpassword.borderStyle = UITextBorderStyleNone;
-    txtpassword.layer.cornerRadius =15.0;
-    txtpassword.layer.borderColor= [UIColor lightGrayColor].CGColor;
+    
     self.usernamelist.layer.borderWidth = 0.5;
     self.usernamelist.layer.borderColor = [[UIColor blackColor] CGColor];//设置列表边框
-    self.usernamelist.layer.cornerRadius =15.0;
+    //self.usernamelist.layer.cornerRadius =15.0;
+//    UIView *lineViewUList = [[UIView alloc]initWithFrame:CGRectMake(0,kScreenHeight*0.05, kScreenWidth-Common_LoginLeft*2, 1)];
+//    lineViewUList.backgroundColor = [UIColor blackColor];
+//    [self.usernamelist addSubview:lineViewUList];
+//    [lineViewUList mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.usernamelist);
+//        make.bottom.equalTo(self.usernamelist);
+//        make.right.equalTo(self.usernamelist);
+//        make.size.mas_equalTo(CGSizeMake(1,1));
+//    }];
+    
     self.myHeadPortrait.layer.masksToBounds = YES;
     self.myHeadPortrait.layer.cornerRadius = Common_LoginImage * 0.5;
     //设置圆角的半径
@@ -231,6 +282,7 @@ NSString *adduserlistflag = @"true";
 -(IBAction)onClickButtonChose:(id)sender
 {
     self.usernamelist.hidden = false;
+    [self.view bringSubviewToFront:txtuser];
 }
 
 //有多少组
@@ -555,6 +607,18 @@ NSString *adduserlistflag = @"true";
                 UIImageView *imageView = [[UIImageView alloc] init];
                 NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
                 //[imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+//                //首先得拿到照片的路径，也就是下边的string参数，转换为NSData型。同步加载
+//                NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:userurlString]];
+//                //然后就是添加照片语句，记得使用imageWithData:方法，不是imageWithName:。
+//                UIImage* resultImage = [UIImage imageWithData: imageData];
+//                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//                myDelegate.userPhotoimageView=imageView;
+//                //跳转到首页
+//                myDelegate.tabbarType=@"1";
+//                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//                [self presentViewController:navigationController animated:YES completion:nil];
+//
                 [[SDImageCache sharedImageCache] clearDisk];
                 [[SDImageCache sharedImageCache] clearMemory];
                 [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

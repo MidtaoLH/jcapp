@@ -109,7 +109,10 @@ static NSString * identifier = @"PendingListCell";
         
     }
     @catch (NSException *exception) {
-        
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
     
 }

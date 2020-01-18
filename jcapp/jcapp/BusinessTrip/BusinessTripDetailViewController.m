@@ -401,142 +401,152 @@ static NSString *identifierImage =@"ImageCell.h";
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
-    
-    if(edittype == 0)
-    {
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
-        NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
+    @try {
         
-        NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
-        NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
+        NSLog(@"%@",@"connection1-begin");
         
-        NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
-        NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
-        //获取附件数据
-        NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
-        NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
+        NSLog(@"%@", @"kaishidayin");
+        NSLog(@"%@", xmlString);
         
-        NSString *requestTmp3 = [NSString stringWithString:resultString3];
-        NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
-        NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
-        listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
-        
-        //补充附件图片路径
-        NSMutableArray *array1 = [[NSMutableArray alloc] init];
-        for (MdlAnnex *mdla in listAnnex) {
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
-            [array1 addObject:urlstring];
-        }
-        _srcStringArray =array1;
-        
-        
-        //获取回览明细表数据
-        NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
-        NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
-        
-        NSString *requestTmp2 = [NSString stringWithString:resultString2];
-        NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
-        NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
-        listdetail = [MdlEvectionDetail mj_objectArrayWithKeyValuesArray:resultDic2];
-        
-        //获取头表数据
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        
-        NSLog(@"%@", resultString);
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        
-        listhead = [MdlBusinessTrip mj_objectArrayWithKeyValuesArray:resultDic];
-        for (MdlBusinessTrip *p1 in listhead) {
-            UIImageView *imageView = [[UIImageView alloc] init];
-            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,p1.ApplyMan];
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-            self.imgvemp.image=imageView.image;
-            
-            _lblleavestatus.text = p1.ProcessStutasTxt;
-            _emplbl.text = p1.EmpName;
-            _lblempgroup.text = p1.G_CName;
-            _lblapplydate.text=[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
-            NSString * strapplyplace =[[NSString alloc]initWithFormat:@"%@%@",@"出差地点：",p1.ApplyPlace];
-            
-            _lblleaveddr.text = strapplyplace;
-            
-            NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"出差时间：",p1.StartTime,p1.EndTime];
-            
-            _lblleavedate.text = strleavedate;
-            
-            _lblleavetype.text = @"";
-            
-            NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"出差天数：",p1.TimeNum];
-            
-            _lblleavecounts.text =strleavecounts;
-            
-            NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"出差事由：",p1.BusinessTripReason];
-            
-            _lblleaveremark.text = strleaveremark;
-        }
-    }
-    else if (edittype == 1)
-    {
-        // 字符串截取
-        NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
-        
-        NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
-        NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
-        
-        if(![resultStringtaskedit isEqualToString:@"0"])
+        if(edittype == 0)
         {
-            // 弹出 对话框
-            [self showError:resultStringtaskedit];
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
+            NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
+            
+            NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
+            NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
+            
+            NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
+            NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
+            
+            //获取附件数据
+            NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
+            NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
+            
+            NSString *requestTmp3 = [NSString stringWithString:resultString3];
+            NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
+            NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
+            listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
+            
+            //补充附件图片路径
+            NSMutableArray *array1 = [[NSMutableArray alloc] init];
+            for (MdlAnnex *mdla in listAnnex) {
+                NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,mdla.AnnexPath];
+                [array1 addObject:urlstring];
+            }
+            _srcStringArray =array1;
+            
+            
+            //获取回览明细表数据
+            NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
+            NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
+            
+            NSString *requestTmp2 = [NSString stringWithString:resultString2];
+            NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
+            NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
+            listdetail = [MdlEvectionDetail mj_objectArrayWithKeyValuesArray:resultDic2];
+            
+            //获取头表数据
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            
+            NSLog(@"%@", resultString);
+            
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            
+            listhead = [MdlBusinessTrip mj_objectArrayWithKeyValuesArray:resultDic];
+            for (MdlBusinessTrip *p1 in listhead) {
+                UIImageView *imageView = [[UIImageView alloc] init];
+                NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,p1.ApplyMan];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+                self.imgvemp.image=imageView.image;
+                
+                _lblleavestatus.text = p1.ProcessStutasTxt;
+                _emplbl.text = p1.EmpName;
+                _lblempgroup.text = p1.G_CName;
+                _lblapplydate.text=[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
+                NSString * strapplyplace =[[NSString alloc]initWithFormat:@"%@%@",@"出差地点：",p1.ApplyPlace];
+                
+                _lblleaveddr.text = strapplyplace;
+                
+                NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"出差时间：",p1.StartTime,p1.EndTime];
+                
+                _lblleavedate.text = strleavedate;
+                
+                _lblleavetype.text = @"";
+                
+                NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"出差天数：",p1.TimeNum];
+                
+                _lblleavecounts.text =strleavecounts;
+                
+                NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"出差事由：",p1.BusinessTripReason];
+                
+                _lblleaveremark.text = strleaveremark;
+            }
         }
-        else
+        else if (edittype == 1)
         {
-            // 弹出 对话框
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: @"操作成功！"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-           
+            // 字符串截取
+            NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
+            
+            NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
+            NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
+            
+            if(![resultStringtaskedit isEqualToString:@"0"])
+            {
+                // 弹出 对话框
+                [self showError:resultStringtaskedit];
+            }
+            else
+            {
+                // 弹出 对话框
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: @"操作成功！"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+                
+            }
         }
-    }
-    else if (edittype == 2)
-    {
-        // 字符串截取
-        NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
-        
-        NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
-        NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
-        
-        if(![resultStringtaskedit isEqualToString:@"0"])
+        else if (edittype == 2)
         {
-            // 弹出 对话框
-            [self showError:resultStringtaskedit];
+            // 字符串截取
+            NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
+            
+            NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
+            NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
+            
+            if(![resultStringtaskedit isEqualToString:@"0"])
+            {
+                // 弹出 对话框
+                [self showError:resultStringtaskedit];
+            }
+            else
+            {
+                // 弹出 对话框
+                [self showError:@"操作成功！"];
+            }
         }
-        else
-        {
-            // 弹出 对话框
-            [self showError:@"操作成功！"];
-        }
-    }
-    [self.ImageTableView reloadData];
-    [self.ImageTableView layoutIfNeeded];
+        [self.ImageTableView reloadData];
+        [self.ImageTableView layoutIfNeeded];
 
+    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
+    
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

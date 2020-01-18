@@ -119,35 +119,37 @@ NSInteger currentPageCountbwait;
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    @try {
+        
+        NSLog(@"%@",@"connection1-begin");
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if([xmlString containsString:@"DelteProcessInstance"])
+        {
+            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+            [self presentViewController:navigationController animated:YES completion:nil];
+        }
+        else{
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
+        }    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
     
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([xmlString containsString:@"DelteProcessInstance"])
-    {
-        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-        [self presentViewController:navigationController animated:YES completion:nil];
-    }
-    else{
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
-    }
 }
 
 //弹出消息框

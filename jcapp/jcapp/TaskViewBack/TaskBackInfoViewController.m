@@ -320,88 +320,98 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    @try {
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        if([xmlString containsString:@"ProcessInstanceID"])
+        {
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+            NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            ViewBackInfo *viewBackInfo = [ViewBackInfo mj_objectWithKeyValues:resultDic];
+            //设置子视图的f导航栏的返回按钮
+            // self.navigationItem.title= [NSString stringWithFormat:@"%@申请",viewBackInfo.DocumentName];
+            //self.navigationItem.title=viewBackInfo.DocumentName;
+            self.emplbl.text=viewBackInfo.ApplyManName;
+            self.lblempgroup.text=viewBackInfo.ApplyGroupName;
+            self.lblapplydate.text=[NSString stringWithFormat:@"申请时间:%@",viewBackInfo.ApplyDate];
+            
+            self.lblproctype.text=viewBackInfo.HistoryType;
+            self.lblprocdate.text=[NSString stringWithFormat:@"%@时间：%@～%@",viewBackInfo.DocumentName,viewBackInfo.strattime,viewBackInfo.endtime];
+            
+            if([viewBackInfo.DocumentName isEqual:@"出差"])
+            {
+                self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（天）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+                self.lblccdr.text=[NSString stringWithFormat:@"出差地点:%@",viewBackInfo.CCAddress];
+            }
+            else
+            {
+                self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+                self.lblccdr.text=@"";
+            }
+            
+            self.lblprocremark.text=[NSString stringWithFormat:@"%@事由：%@",viewBackInfo.DocumentName,viewBackInfo.ProcDescribe];
+            self.lblprocstatus.text=viewBackInfo.ProcStatus;
+            
+            UIImageView *imageView = [[UIImageView alloc] init];
+            NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,viewBackInfo.ApplyMan];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+            self.imgvemp.image=imageView.image;
+            [self loadImageInfo];
+            
+        }
+        else  if([xmlString containsString:@"AttachFilePath"])
+        {
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            listtask = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
+            
+            self.srcStringArray = [NSMutableArray arrayWithCapacity:listtask.count];
+            for(int i=0;i<[listtask count];i++)
+            {
+                ViewBackDetail *detail=listtask[i];
+                NSString *obj = [NSString stringWithFormat:Common_WSUrl,detail.AttachFilePath];
+                [_srcStringArray addObject:obj];
+            }
+            [self.ImageTableView reloadData];
+            [self.ImageTableView layoutIfNeeded];
+        }
+        else if([xmlString containsString:@"TaskNodeLevel"])
+        {
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            listdetail = [ViewBackTask mj_objectArrayWithKeyValuesArray:resultDic];
+            [self.NewTableView reloadData];
+            [self.NewTableView layoutIfNeeded];
+        }
+    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
     
-    if([xmlString containsString:@"ProcessInstanceID"])
-    {
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-        NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        ViewBackInfo *viewBackInfo = [ViewBackInfo mj_objectWithKeyValues:resultDic];
-        //设置子视图的f导航栏的返回按钮
-       // self.navigationItem.title= [NSString stringWithFormat:@"%@申请",viewBackInfo.DocumentName];
-        //self.navigationItem.title=viewBackInfo.DocumentName;
-        self.emplbl.text=viewBackInfo.ApplyManName;
-        self.lblempgroup.text=viewBackInfo.ApplyGroupName;
-        self.lblapplydate.text=[NSString stringWithFormat:@"申请时间:%@",viewBackInfo.ApplyDate];
-        
-        self.lblproctype.text=viewBackInfo.HistoryType;
-        self.lblprocdate.text=[NSString stringWithFormat:@"%@时间：%@～%@",viewBackInfo.DocumentName,viewBackInfo.strattime,viewBackInfo.endtime];
-       
-        if([viewBackInfo.DocumentName isEqual:@"出差"])
-        {
-             self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（天）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
-             self.lblccdr.text=[NSString stringWithFormat:@"出差地点:%@",viewBackInfo.CCAddress];
-        }
-        else
-        {
-             self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（h）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
-             self.lblccdr.text=@"";
-        }
-       
-        self.lblprocremark.text=[NSString stringWithFormat:@"%@事由：%@",viewBackInfo.DocumentName,viewBackInfo.ProcDescribe];
-        self.lblprocstatus.text=viewBackInfo.ProcStatus;
-        
-        UIImageView *imageView = [[UIImageView alloc] init];
-        NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,viewBackInfo.ApplyMan];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-        self.imgvemp.image=imageView.image;
-        [self loadImageInfo];
-
-    }
-    else  if([xmlString containsString:@"AttachFilePath"])
-    {
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        listtask = [ViewBackDetail mj_objectArrayWithKeyValuesArray:resultDic];
-        
-        self.srcStringArray = [NSMutableArray arrayWithCapacity:listtask.count];
-        for(int i=0;i<[listtask count];i++)
-        {
-            ViewBackDetail *detail=listtask[i];
-            NSString *obj = [NSString stringWithFormat:Common_WSUrl,detail.AttachFilePath];
-            [_srcStringArray addObject:obj];
-        }
-        [self.ImageTableView reloadData];
-        [self.ImageTableView layoutIfNeeded];
-    }
-    else if([xmlString containsString:@"TaskNodeLevel"])
-    {
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        listdetail = [ViewBackTask mj_objectArrayWithKeyValuesArray:resultDic];
-        [self.NewTableView reloadData];
-        [self.NewTableView layoutIfNeeded];
-    }
 }
 //解析返回的xml系统自带方法不需要h中声明
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {

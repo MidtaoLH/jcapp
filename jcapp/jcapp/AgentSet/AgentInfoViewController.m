@@ -248,47 +248,56 @@
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-    NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    if([xmlString containsString:@"msg"])
-    {
-        [self loadData];
-        MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @""
-                              message: messageInfo.msg
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
+    @try {
         
-    }else
-    {
-         _agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
-        if(![_agentInfo.AgentStatus containsString:@"终止"])
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+        NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSLog(@"%@", resultString);
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([xmlString containsString:@"msg"])
         {
-            self.stopbtn.hidden=NO;
+            [self loadData];
+            MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle: @""
+                                  message: messageInfo.msg
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+            
+        }else
+        {
+            _agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+            if(![_agentInfo.AgentStatus containsString:@"终止"])
+            {
+                self.stopbtn.hidden=NO;
+            }
+            [self.tableView reloadData];
+            [self.tableView layoutIfNeeded];
+            self.tableView.hidden = NO;
         }
-        [self.tableView reloadData];
-        [self.tableView layoutIfNeeded];        
-        self.tableView.hidden = NO;
     }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
+    
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];

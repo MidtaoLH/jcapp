@@ -113,40 +113,48 @@
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-   
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-  
-    if([xmlString containsString:@"acweek"])
-    {
-         listOfMoviesDetail = [AttendanceCalendarMonthDetail mj_objectArrayWithKeyValuesArray:resultDic];
-    }
-    else{
-         listOfMovies = [AttendanceCalendarMonth mj_objectArrayWithKeyValuesArray:resultDic];
-        if(listOfMovies.count>0)
+    @try {
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        
+        if([xmlString containsString:@"acweek"])
         {
-            [self loadacdinfo:self.startDate];            
+            listOfMoviesDetail = [AttendanceCalendarMonthDetail mj_objectArrayWithKeyValuesArray:resultDic];
         }
-        else
-        {
-            listOfMoviesDetail= [AttendanceCalendarMonthDetail mj_objectArrayWithKeyValuesArray:resultDic];
+        else{
+            listOfMovies = [AttendanceCalendarMonth mj_objectArrayWithKeyValuesArray:resultDic];
+            if(listOfMovies.count>0)
+            {
+                [self loadacdinfo:self.startDate];
+            }
+            else
+            {
+                listOfMoviesDetail= [AttendanceCalendarMonthDetail mj_objectArrayWithKeyValuesArray:resultDic];
+            }
+            [self.foldingTableView reloadData];
+            [self.foldingTableView layoutIfNeeded];
         }
-        [self.foldingTableView reloadData];
-        [self.foldingTableView layoutIfNeeded];
+        //[self.listOfMovies addObjectsFromArray:self.listMovies];
+        // 创建tableView
+        [self setupFoldingTableView];    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
-    //[self.listOfMovies addObjectsFromArray:self.listMovies];
-    // 创建tableView
-    [self setupFoldingTableView];
+    
+    
 }
 - (IBAction)startDateButtonOnClicked:(id)sender {
     MCDatePickerView *monthView = [[MCDatePickerView alloc] initWithFrame:CGRectZero type:XMGStyleTypeYearAndMonth];

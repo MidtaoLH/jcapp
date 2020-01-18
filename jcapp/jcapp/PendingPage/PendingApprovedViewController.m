@@ -105,7 +105,10 @@ static NSString * identifier = @"PendingListCell";
         //[self.listOfMovies addObjectsFromArray:self.listMovies];
     }
     @catch (NSException *exception) {
-        
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
 }
 

@@ -132,58 +132,68 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-    //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
-    
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"ds\":"];
-    NSRange endRagne = [xmlString rangeOfString:@",\"ds1\":"];
-    
-    NSRange startRange2 =[xmlString rangeOfString:@",\"ds1\":"];
-    NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
- 
-
-    //获取回览明细表数据
-    NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
-    NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
-    
-    NSString *requestTmp2 = [NSString stringWithString:resultString2];
-    NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
-    listdetail = [LeaveDeatil mj_objectArrayWithKeyValuesArray:resultDic2];
-    
-    //获取头表数据
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
- 
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    
-    listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
-    for (LeaveHead *p1 in listhead) {
-        _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
-
+    @try {
+        NSLog(@"%@",@"connection1-begin");
+        //upateData = [[NSData alloc] initWithData:data];
+        //默认对于中文的支持不好
+        //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
+        //如果是非UTF－8  NSXMLParser会报错。
+        //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
+        //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@", @"kaishidayin");
+        NSLog(@"%@", xmlString);
+        
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"ds\":"];
+        NSRange endRagne = [xmlString rangeOfString:@",\"ds1\":"];
+        
+        NSRange startRange2 =[xmlString rangeOfString:@",\"ds1\":"];
+        NSRange endRagne2 =[xmlString rangeOfString:@"}</string>"];
+        
+        
+        //获取回览明细表数据
+        NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
+        NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
+        
+        NSString *requestTmp2 = [NSString stringWithString:resultString2];
+        NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
+        listdetail = [LeaveDeatil mj_objectArrayWithKeyValuesArray:resultDic2];
+        
+        //获取头表数据
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSLog(@"%@", resultString);
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        
+        listhead = [LeaveHead mj_objectArrayWithKeyValuesArray:resultDic];
+        for (LeaveHead *p1 in listhead) {
+            _imgvemp.image =[UIImage imageNamed:@"01.jpg"];
+            
+        }
+        
+        
+        
+        NSLog(@"%@", resultString2);
+        
+        NSLog(@"%@",@"connection1-end");
+        
     }
-
-    
-    
-    NSLog(@"%@", resultString2);
-    
-    NSLog(@"%@",@"connection1-end");
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"\n%@\n%@\n%@",arr,reason,name);
+    }
+   
 }
 
 //弹出消息框

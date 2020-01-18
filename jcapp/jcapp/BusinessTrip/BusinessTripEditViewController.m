@@ -956,7 +956,10 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
         }
     }
     @catch (NSException *exception) {
-        
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
 }
 //将图片保存到本地并且从本地返回出来

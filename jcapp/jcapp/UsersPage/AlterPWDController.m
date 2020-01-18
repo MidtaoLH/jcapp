@@ -183,13 +183,20 @@
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    //upateData = [[NSData alloc] initWithData:data];
-    //默认对于中文的支持不好
-    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    //如果是非UTF－8  NSXMLParser会报错。
-    xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-                                                                                        withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    @try {
+        
+        //upateData = [[NSData alloc] initWithData:data];
+        //默认对于中文的支持不好
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
+        //如果是非UTF－8  NSXMLParser会报错。
+        xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
+                                                                                            withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
+    }
+    @catch (NSException *exception) {
+        
+    }
+    
 }
 
 //弹出消息框

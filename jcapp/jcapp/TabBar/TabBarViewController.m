@@ -283,7 +283,7 @@ UIViewController *childViewControllerPending (NSString *title, NSString *imgName
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -299,7 +299,7 @@ UIViewController *childViewControllerPendingApproved (NSString *title, NSString 
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -331,7 +331,7 @@ UIViewController *childViewControllerApproving(NSString *title, NSString *imgNam
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -347,7 +347,7 @@ UIViewController *childViewControllerApproved (NSString *title, NSString *imgNam
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -363,7 +363,7 @@ UIViewController *childViewControllerWaitHandle (NSString *title, NSString *imgN
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -379,7 +379,7 @@ UIViewController *childViewControllerWaitApply (NSString *title, NSString *imgNa
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -397,7 +397,7 @@ UIViewController *childViewControllerGoOutEdit (NSString *title, NSString *imgNa
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -413,7 +413,7 @@ UIViewController *childViewControllerLeave (NSString *title, NSString *imgName, 
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -429,7 +429,7 @@ UIViewController *childViewControllerBWaitApply (NSString *title, NSString *imgN
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -463,7 +463,7 @@ UIViewController *childViewControllerBApproved (NSString *title, NSString *imgNa
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -479,7 +479,7 @@ UIViewController *childViewControllerGoOutWait (NSString *title, NSString *imgNa
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -495,7 +495,7 @@ UIViewController *childViewControllerGoOut (NSString *title, NSString *imgName, 
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;
@@ -604,7 +604,7 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;

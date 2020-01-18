@@ -391,43 +391,48 @@ NSString *adduserlistflag = @"true";
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-     NSLog(@"%@",@"hellotest");
-    
-    if([urlflag isEqualToString:@"CheckUser"])
-    {
-       
-        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        NSLog(@"%@", resultString);
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
-    }
-    else
-    {
-        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+    @try {
+        NSLog(@"%@",@"hellotest");
         
-        if([resultString isEqualToString:@"1"])
+        if([urlflag isEqualToString:@"CheckUser"])
         {
             
-           Loginflag = @"true";
+            xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            NSLog(@"%@", resultString);
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            listOfUser = [UserLogin mj_objectArrayWithKeyValuesArray:resultDic];
         }
         else
         {
-            Loginflag = @"false";
+            xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            
+            if([resultString isEqualToString:@"1"])
+            {
+                
+                Loginflag = @"true";
+            }
+            else
+            {
+                Loginflag = @"false";
+            }
+            
+            
         }
         
-       
     }
-
+    @catch (NSException *exception) {
+        
+    }
 }
 
 //弹出消息框

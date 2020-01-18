@@ -6,7 +6,8 @@
 #import "../Model/Emp.h"
 #import "AppDelegate.h"
 #import "WayViewController.h"
-
+#import "../TabBar/TabBarViewController.h"
+#import "Masonry.h"
 @interface AddWayView ()<SkyAssociationMenuViewDelegate>
 {
     NSArray *titleArr;
@@ -106,7 +107,7 @@
 }
 
 #pragma mark SkyAssociationMenuViewDelegate
-- (NSInteger)updatedateupdatedate:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
+- (NSInteger)assciationMenuView:(SkyAssociationMenuView*)asView countForClass:(NSInteger)idx section:(NSInteger)section{
     
     if (idx == 0) {
         //return titleArr.count;
@@ -265,13 +266,23 @@
    
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
      NSLog(xmlString);
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+    
+    NSRange startRange = NSMakeRange(0, 0);
+
+     startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+    
+    NSRange endRagne = NSMakeRange(0, 0);
+    
+    endRagne = [xmlString rangeOfString:@"</string>"];
+    
+    NSRange reusltRagne = NSMakeRange(0, 0);
+    
+    reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
     NSString *resultString = [xmlString substringWithRange:reusltRagne];
     NSString *requestTmp = [NSString stringWithString:resultString];
     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
     NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+
     if([stringflag isEqualToString:@"group"])
     {
         listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];

@@ -34,7 +34,7 @@ static NSString *identifier =@"GoOutWaitCell";
     
     //e注册自定义 cell
     [_NewTableView registerClass:[GoOutWaitCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 150;
+    _NewTableView.rowHeight =kScreenHeight/5;
     _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     currentPageCount=[Common_PageSize intValue]; 
     [self LoadData];
@@ -48,7 +48,7 @@ static NSString *identifier =@"GoOutWaitCell";
     MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
     
     NSLog(@"%@",@"viewDidLoad-end");
 }

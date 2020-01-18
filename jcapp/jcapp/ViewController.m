@@ -391,9 +391,11 @@ NSString *adduserlistflag = @"true";
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
+     NSLog(@"%@",@"hellotest");
+    
     if([urlflag isEqualToString:@"CheckUser"])
     {
-        NSLog(@"%@",@"connection1-begin");
+       
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -415,6 +417,7 @@ NSString *adduserlistflag = @"true";
         
         if([resultString isEqualToString:@"1"])
         {
+            
            Loginflag = @"true";
         }
         else
@@ -425,8 +428,6 @@ NSString *adduserlistflag = @"true";
        
     }
 
-
-    
 }
 
 //弹出消息框
@@ -489,6 +490,24 @@ NSString *adduserlistflag = @"true";
                 [defaults setObject:m.UserNO forKey:@"UserNO"];
                 [defaults setObject:m.UserHour forKey:@"UserHour"];
                 [defaults setObject:m.IsNotice forKey:@"IsNotice"];
+                
+                //test
+                // fun1
+                //self.thread = [[NSThread alloc]initWithTarget:self selector:@selector(run) object:nil];
+                //[self.thread start];
+                
+                
+                //Loginflag = @"true";
+                
+                //fun2
+                //[self performSelectorInBackground:@selector(multithread) withObject:nil];
+                
+                //fun3
+                //NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(threadFunc) object:nil];
+                //[thread start];
+
+                //test
+                
                 
                 //shezhi xialakuang
                  if(usercount_int > 0)
@@ -565,6 +584,18 @@ NSString *adduserlistflag = @"true";
         //zidong denglu
         if([Loginflag isEqualToString:@"true"])
         {
+            //test
+            //self.thread = [[NSThread alloc]initWithTarget:self selector:@selector(run) object:nil];
+            //[self.thread start];
+            
+            
+            //[self performSelectorInBackground:@selector(multithread) withObject:nil];
+            
+            //NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(threadFunc) object:nil];
+            //[thread start];
+
+            //test
+            
             //将当前用户的头像存到全局变量
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
@@ -582,10 +613,93 @@ NSString *adduserlistflag = @"true";
             }];
         }
     }
+
+}
+
+//test
+
+- (void)run{
+
+    @autoreleasepool {
+        
+        //1、添加一个input source
+        //[[NSRunLoop currentRunLoop] addPort:[NSPort port] forMode:NSDefaultRunLoopMode];
+        //[[NSRunLoop currentRunLoop] run];
+        //2、添加一个定时器
+            NSTimer *timer = [NSTimer timerWithTimeInterval:10.0 target:self selector:@selector(timeAction) userInfo:nil repeats:YES];
+           [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+        [[NSRunLoop currentRunLoop] run];
+    }
+}
+
+-(void)multithread
+{
+    NSLog(@"HE");
+    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(timeAction) userInfo:nil repeats:YES];
+
+
+    [[NSRunLoop currentRunLoop]run];
     
+    //创建后需要手动加入到runloop中
+    //NSTimer * timer2 = [NSTimer timerWithTimeInterval:10 target:self selector:@selector(timeAction:) userInfo:@"hello world" repeats:YES];
+    //[[NSRunLoop currentRunLoop] addTimer:timer2 forMode:NSDefaultRunLoopMode];
+    
+}
+-(void)timeAction
+{
+    NSLog(@"HELLO");
+    
+    if( [Loginflag isEqualToString: @"false"])
+    {
+        //qiangzhi tuichu
+         NSLog(@"tuichu app");
+        
+        ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+       
+        //跳转
+        [self presentModalViewController:valueView animated:YES];
+        
+        //abort();
+    }
+    else
+    {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString *userID = [defaults objectForKey:@"username"];
+        
+        urlflag = @"GetLoginStatus";
+        adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        //设置需要访问的ws和传入参数
+        
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLoginStatus?User=%@&macid=%@", userID,adId];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *url = [NSURL URLWithString:strURL];
+        
+        
+        //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLoginStatus?User=%@&macid=%@", txtuser.text,adId];
+        //NSURL *url = [NSURL URLWithString:strURL];
+        //进行请求
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request
+                                       delegate:self];
+        
+        NSLog(@"yunxingzhong");
+    }
 
     
 }
+
+
+- (void)threadFunc
+{
+   
+    //NSTimer * timer1 = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
+}
+
+//test
+
 
 //解析xml回调方法
 - (void)parserDidStartDocument:(NSXMLParser *)parser {

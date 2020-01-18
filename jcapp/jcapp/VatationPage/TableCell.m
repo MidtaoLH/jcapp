@@ -55,6 +55,7 @@
     if (!_btnline) {
         _btnline = [[AddButton alloc] init];
         _btnline.backgroundColor = kColor_Gray;
+        _btnline.hidden = YES;
     }
     return _btnline;
 }
@@ -218,7 +219,6 @@
         CGFloat height = SetAddTableRowSize;
         CGFloat imageWH=  height*0.8;
         self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddButtonRowSize);
-        
        self.btnAdd.hidden = NO;
         self.btndel.hidden = YES;
         self.textLabel.hidden = YES;
@@ -229,7 +229,7 @@
         NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
         self.btnAdd.multiParamDic= paramDic;
         self.btndel.multiParamDic= paramDic;
-        self.backgroundColor =  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];;
+        self.backgroundColor =  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         if([Waylist.levelname isEqualToString:@"回览人"])
         {
             self.btnline.hidden = YES;
@@ -238,27 +238,63 @@
         {
             self.btnline.hidden = NO;
         }
+        
+       
+    }
+    else if([ Waylist.name isEqualToString:@"null"])
+    {
+        self.btnAdd.hidden = YES;
+        self.btndel.hidden = YES;
+        self.textLabel.hidden = YES;
+        self.leaveStatusLable.hidden = YES;
+        self.leaveDateLable.hidden = YES;
+        self.leaveCondition.hidden = YES;
+        self.imageView.hidden =YES;
+        self.backgroundColor =  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+        self.btnline.hidden = YES;
     }
     else
     {
         self.backgroundColor = kColor_White;
-        if(![Waylist.level isEqualToString:@"99"])
+        CGFloat height = SetAddTableRowSize;
+        CGFloat imageWH=  height*0.8;
+        self.btnline.hidden = NO;
+        if(self.indexPath.row==0&&[Waylist.level isEqualToString:@"1"])
         {
-            CGFloat height = SetAddTableRowSize;
-            CGFloat imageWH=  height*0.8;
-            if(self.index==0&&[Waylist.level isEqualToString:@"1"])
+            if([self.toptype isEqualToString:@"null"]&&[self.netxtype isEqualToString:@"null"])
             {
-                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, height*0.1, 5,SetAddTableRowSize);
+                 self.btnline.hidden = YES;
             }
             else
             {
-                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddTableRowSize);
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, height*0.1, 5,SetAddTableRowSize-height*0.1);
             }
-            self.btnline.hidden = NO;
-        }else
-        {
-            self.btnline.hidden = YES;
         }
+        else
+        {
+            if([self.netxtype isEqualToString:@"null"])
+            {
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddTableRowSize-kMargin);
+            }
+            else if([self.toptype isEqualToString:@"null"])
+            {
+                self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, kMargin, 5,SetAddTableRowSize-kMargin);
+            }
+            else
+            {
+                 self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddTableRowSize);
+            }
+            
+            if([self.toptype isEqualToString:@"null"]&&[self.netxtype isEqualToString:@"button"])
+            {
+                self.btnline.hidden = YES;
+            }
+            if(![self.toptype isEqualToString:@"null"]&&[self.netxtype isEqualToString:@"button"]&&[Waylist.level isEqualToString:@"99"])
+            {
+                 self.btnline.frame = CGRectMake(kMargin+imageWH/2-2.5, 0, 5,SetAddTableRowSize-kMargin);
+            }
+        }
+        
         if([Waylist.editflag isEqualToString:@"0"])
         {
             self.btnAdd.hidden = YES;
@@ -277,10 +313,9 @@
             UIImageView *imageView = [[UIImageView alloc] init];
             NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
             [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-            
-
             self.imageView.image=imageView.image;
             self.imageView.hidden = false;
+           
         }
         else
         {
@@ -293,12 +328,11 @@
             NSDictionary* paramDic = @{@"levelname":Waylist.levelname};
             self.btnAdd.multiParamDic= paramDic;
             self.btndel.multiParamDic= paramDic;
-            
             self.textLabel.text = Waylist.name;
             self.leaveStatusLable.text = Waylist.levelname;;
             self.leaveDateLable.text = Waylist.groupname;;
              self.leaveCondition.text=Waylist.Condition;
-            if([Waylist.englishname isEqualToString:@"button"])
+            if([Waylist.englishname isEqualToString:@"button"]||[Waylist.name isEqualToString:@"null"])
             {
                 UIImageView *imageView = [[UIImageView alloc] init];
                 self.imageView.image=nil;
@@ -308,14 +342,11 @@
                 UIImageView *imageView = [[UIImageView alloc] init];
                 NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,Waylist.englishname];
                 [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-
-                
                 self.imageView.image=imageView.image;
-                
                 self.imageView.hidden = false;
             }
         }
-    }
+    } 
 }
 
 -(void)layoutSubviews

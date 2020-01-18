@@ -35,7 +35,7 @@
     [super prepare];
     
     // 设置自己的高度
-    self.mj_h = 100;
+    self.mj_h = MJRefreshFooterHeight;
     
     // 默认不会自动隐藏
 //    self.automaticallyHidden = NO;

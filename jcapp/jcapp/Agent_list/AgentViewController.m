@@ -32,7 +32,7 @@ static NSString * identifier = @"PendingListCell";
     
     //e注册自定义 cell
     [_NewTableView registerClass:[AgentListCell class] forCellReuseIdentifier:identifier];
-    _NewTableView.rowHeight = 120;
+    _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
     [self LoadData];
     
@@ -45,7 +45,7 @@ static NSString * identifier = @"PendingListCell";
     MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
-    _NewTableView.top=-_NewTableView.mj_header.size.height+5;
+    //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
     
     self.navigationItem.title=@"代理人列表";
 }

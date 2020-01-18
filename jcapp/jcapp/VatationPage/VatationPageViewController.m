@@ -167,18 +167,24 @@ NSString *strtype;
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
+    @try {
+        NSLog(@"%@", data);
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        //NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        //NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
+        
+        NSLog(@"%@", xmlString);
+        
+        //NSLog(@"%@", utf8NSString);
+        //下边为手动释放内存需要进行设置MRC 和 ARC
+        //[gbkNSString release];
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
     
-    NSLog(@"%@", data);
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    //NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    //NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-    
-    NSLog(@"%@", xmlString);
-    
-    //NSLog(@"%@", utf8NSString);
-    //下边为手动释放内存需要进行设置MRC 和 ARC
-    //[gbkNSString release];
     
 }
 

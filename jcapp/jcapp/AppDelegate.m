@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     
-    NSSetUncaughtExceptionHandler(&UncaughtExceptionHandler);
+    //NSSetUncaughtExceptionHandler(&UncaughtExceptionHandler);
     CGRect rect=[[UIScreen mainScreen]bounds];
     //创建UIWindow
     self.window=[[UIWindow alloc] initWithFrame:rect];

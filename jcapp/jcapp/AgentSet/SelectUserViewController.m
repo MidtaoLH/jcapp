@@ -204,32 +204,41 @@
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+    @try {
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        
+        if([stringflag isEqualToString:@"group"])
+        {
+            listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];
+            if(listOfGroup.count > 0)
+            {
+                Group *m =self.listOfGroup[0];//取出数据元素
+                [_tagView showAsDrawDownView:_chosebutton];
+            }
+        }
+        else
+        {
+            listOfEmp = [Emp mj_objectArrayWithKeyValuesArray:resultDic];
+            if(listOfEmp.count > 0)
+            {
+                Emp *m =self.listOfEmp[0];//取出数据元素
+            }
+        }    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
     
-    if([stringflag isEqualToString:@"group"])
-    {
-        listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];
-        if(listOfGroup.count > 0)
-        {
-            Group *m =self.listOfGroup[0];//取出数据元素
-            [_tagView showAsDrawDownView:_chosebutton];
-        }
-    }
-    else
-    {
-        listOfEmp = [Emp mj_objectArrayWithKeyValuesArray:resultDic];
-        if(listOfEmp.count > 0)
-        {
-            Emp *m =self.listOfEmp[0];//取出数据元素
-        }
-    }
 }
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];

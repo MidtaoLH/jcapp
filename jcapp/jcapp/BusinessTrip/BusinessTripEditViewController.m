@@ -956,7 +956,10 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
         }
     }
     @catch (NSException *exception) {
-        
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
 }
 //将图片保存到本地并且从本地返回出来
@@ -977,9 +980,10 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
     
 }
 - (void)goBack {
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 @end

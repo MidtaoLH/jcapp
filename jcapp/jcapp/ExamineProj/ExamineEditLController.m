@@ -124,9 +124,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
    
 }
 - (void)goBack {
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 -(void)loadstyle{
     _emplbl.font=kFont_Lable_15;

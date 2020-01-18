@@ -101,26 +101,36 @@ static NSString * identifier = @"LeaveListCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    @try {
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@", @"kaishidayin");
+        NSLog(@"%@", xmlString);
+        
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSLog(@"%@", resultString);
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+        
+        NSLog(@"%@",@"connection1-end");
+        
+    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"\n%@\n%@\n%@",arr,reason,name);
+    }
     
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
-    
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
-    
-    NSLog(@"%@",@"connection1-end");
 }
 
 //弹出消息框

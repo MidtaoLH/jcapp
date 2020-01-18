@@ -195,51 +195,58 @@ NSInteger currentPageCountwait_new;
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    if([saveflag isEqualToString:@"false"])
-    {
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+    @try {
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
         
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
-        
-    }
-    else
-    {
-        if([resultString isEqualToString:@"suess"])
+        if([saveflag isEqualToString:@"false"])
         {
-            suessflag = @"true";
-            //显示信息。正式环境时改为跳转
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: @"保存成功"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
             
             
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
             
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: resultString
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+            if([resultString isEqualToString:@"suess"])
+            {
+                suessflag = @"true";
+                //显示信息。正式环境时改为跳转
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: @"保存成功"
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+                
+                
+                
+            }
+            else
+            {
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: resultString
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+            }
         }
+        
     }
+    @catch (NSException *exception) {
+        
+    }
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

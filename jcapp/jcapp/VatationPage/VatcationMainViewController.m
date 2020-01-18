@@ -713,55 +713,54 @@ NSString *reason = textviewreason1.text;
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
-    
-    NSLog(@"%@",@"connection1-begin");
-    
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", data);
-    
-    NSLog(@"%@", xmlString);
-    
-    
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSLog(@"%@", resultString);
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
-    
-    if(listOfLeave.count > 0)
-    {
+    @try {
         
-        LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
+        NSLog(@"%@",@"connection1-begin");
         
-
-        if ([ m.Status isEqualToString:@"suess"])
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"%@", data);
+        
+        NSLog(@"%@", xmlString);
+        
+        
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSLog(@"%@", resultString);
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
+        
+        if(listOfLeave.count > 0)
         {
             
-            AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-            myDelegate.leaveid =m.LeaveID;
-            myDelegate.processid =m.ProcessID;
-            flag = @"true";
+            LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
+            
+            
+            if ([ m.Status isEqualToString:@"suess"])
+            {
+                
+                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                myDelegate.leaveid =m.LeaveID;
+                myDelegate.processid =m.ProcessID;
+                flag = @"true";
+            }
+            
         }
         
     }
-   
-    
-    
-    
-    //NSString *test = [[NSString alloc] initWithData:resData encoding:NSUTF8StringEncoding];
-    //NSLog(@"%@",test);
-    
+    @catch (NSException *exception) {
+        
+    }
     
 }
 

@@ -159,81 +159,88 @@
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    
-    if([xmlString containsString:@"AttendanceCalendarTime"])
-    {
-        AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
-        myDelegate.aclistOfMovies = [AttendanceCalendar mj_objectArrayWithKeyValuesArray:resultDic];
-        //[self.calview reloadInputViews];
-        myDelegate.tabbarType=@"8";
-        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-        [self presentViewController:navigationController animated:YES completion:nil];
-    }//解析案件数量
-    else if([xmlString containsString:@"BLCount"]){
-        NSDictionary *resultDic0;
-        for (NSDictionary *obj in resultDic) {
-            resultDic0=obj;
-        }
-        BLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"BLCount"]];
-        DCLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"DCLCount"]];//[resultDic0 objectForKey:@"DCLCount"];
-        HLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"HLCount"]];//[resultDic0 objectForKey:@"HLCount"];
-        [self setView1];
-    }else{
-        listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
-        //    图片的宽
-        CGFloat imageW = self.scrollview.frame.size.width;
-        //    CGFloat imageW = 300;
-        //    图片高
-        CGFloat imageH = self.scrollview.frame.size.height;
-        //    图片的Y
-        CGFloat imageY = 0;
-        //    图片中数
-        NSInteger totalCount = listOfMovies.count;
-        self.pageControl.numberOfPages=totalCount;
-        for (int i = 0; i < totalCount; i++) {
-            index=i;
-            UIImageView *imageView = [[UIImageView alloc] init];
-            //        图片X
-            CGFloat imageX = i * kScreenWidth;
+    @try {
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        
+        if([xmlString containsString:@"AttendanceCalendarTime"])
+        {
+            AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
+            myDelegate.aclistOfMovies = [AttendanceCalendar mj_objectArrayWithKeyValuesArray:resultDic];
+            //[self.calview reloadInputViews];
+            myDelegate.tabbarType=@"8";
+            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+            [self presentViewController:navigationController animated:YES completion:nil];
+        }//解析案件数量
+        else if([xmlString containsString:@"BLCount"]){
+            NSDictionary *resultDic0;
+            for (NSDictionary *obj in resultDic) {
+                resultDic0=obj;
+            }
+            BLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"BLCount"]];
+            DCLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"DCLCount"]];//[resultDic0 objectForKey:@"DCLCount"];
+            HLCount=[NSString stringWithFormat:@"%@",[resultDic0 objectForKey:@"HLCount"]];//[resultDic0 objectForKey:@"HLCount"];
+            [self setView1];
+        }else{
+            listOfMovies = [ScrollView mj_objectArrayWithKeyValuesArray:resultDic];
+            //    图片的宽
+            CGFloat imageW = self.scrollview.frame.size.width;
+            //    CGFloat imageW = 300;
+            //    图片高
+            CGFloat imageH = self.scrollview.frame.size.height;
+            //    图片的Y
+            CGFloat imageY = 0;
+            //    图片中数
+            NSInteger totalCount = listOfMovies.count;
+            self.pageControl.numberOfPages=totalCount;
+            for (int i = 0; i < totalCount; i++) {
+                index=i;
+                UIImageView *imageView = [[UIImageView alloc] init];
+                //        图片X
+                CGFloat imageX = i * kScreenWidth;
+                
+                ScrollView *m =self.listOfMovies[i];
+                //NSLog(@"img%@",m.ScrollImage);
+                NSString *userurlString =[Common_ScrollPhotoUrl stringByAppendingString: m.ScrollImage];
+                //加载网络图片
+                [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
+                
+                imageView.userInteractionEnabled = YES;
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
+                [imageView addGestureRecognizer:tap];
+                //        隐藏指示条
+                self.scrollview.showsHorizontalScrollIndicator = NO;
+                //        设置frame
+                imageView.frame = CGRectMake(imageX, imageY, imageW, Common_ScrollSize);
+                [self.scrollview addSubview:imageView];
+            }
             
-            ScrollView *m =self.listOfMovies[i];
-            //NSLog(@"img%@",m.ScrollImage);
-            NSString *userurlString =[Common_ScrollPhotoUrl stringByAppendingString: m.ScrollImage];
-            //加载网络图片
-            [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached];
-            
-            imageView.userInteractionEnabled = YES;
-            
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapAction:)];
-            [imageView addGestureRecognizer:tap];
-            //        隐藏指示条
-            self.scrollview.showsHorizontalScrollIndicator = NO;
-            //        设置frame
-            imageView.frame = CGRectMake(imageX, imageY, imageW, Common_ScrollSize);
-            [self.scrollview addSubview:imageView];
+            // 2.设置scrollview的滚动范围-----
+            CGFloat contentW = totalCount *kScreenWidth;
+            //不允许在垂直方向上进行滚动
+            self.scrollview.contentSize = CGSizeMake(contentW, 0);
+            //self.scrollview.contentOffset = CGPointMake( self.scrollview.frame.size.width, StatusBarAndNavigationBarHeight);
+            // 3.设置分页
+            self.scrollview.pagingEnabled = YES;
+            //4.监听scrollview的滚动
+            self.scrollview.delegate = self;
+            [self addTimer];
         }
         
-        // 2.设置scrollview的滚动范围-----
-        CGFloat contentW = totalCount *kScreenWidth;
-        //不允许在垂直方向上进行滚动
-        self.scrollview.contentSize = CGSizeMake(contentW, 0);
-        //self.scrollview.contentOffset = CGPointMake( self.scrollview.frame.size.width, StatusBarAndNavigationBarHeight);
-        // 3.设置分页
-        self.scrollview.pagingEnabled = YES;
-        //4.监听scrollview的滚动
-        self.scrollview.delegate = self;
-        [self addTimer];
-     }
+    }
+    @catch (NSException *exception) {
+        
+    }
+    
     //    for (ScrollView *user in listOfMovies) {
     //        NSLog(@"img=%@, imgUrl=%@", user.ScrollImage, user.ScrollURL);
     //    }

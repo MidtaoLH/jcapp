@@ -205,80 +205,89 @@
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-    NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-    if([xmlString containsString:@"msg"])
-    {
-        MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
-        if([messageInfo.msg containsString:@"成功"])
+    @try {
+        
+        xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+        NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([xmlString containsString:@"msg"])
         {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: messageInfo.msg
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+            MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
+            if([messageInfo.msg containsString:@"成功"])
+            {
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: messageInfo.msg
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            else
+            {
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: messageInfo.msg
+                                      delegate:nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+            }
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: messageInfo.msg
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+            
+            AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+            
+            AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            myDelegate.way_empid=agentInfo.EmpID;
+            myDelegate.way_empname=agentInfo.EmpName;
+            myDelegate.way_groupname=agentInfo.DeptName;
+            myDelegate.TimeStart=agentInfo.AgentStartDate;
+            myDelegate.TimeEnd=agentInfo.AgentEndDate;
+            myDelegate.agentid=agentInfo.AgentSetID;
+            [self datas];
+            // 日期格式化类
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            // 设置日期格式 为了转换成功
+            format.dateFormat = @"yyyy-MM-dd";
+            self.agentname.info=myDelegate.way_empname;
+            self.businessTripStart.info=myDelegate.TimeStart;
+            self.businessTripEnd.info=myDelegate.TimeEnd;
+            self.agentID=myDelegate.agentid;
+            NSString *string = self.businessTripStart.info;
+            if(string.length>0)
+            {
+                NSDate *data = [format dateFromString: string];
+                [datePickers setDate:data animated:YES];
+            }
+            // 时间字符串
+            string = self.businessTripEnd.info;
+            if(string.length>0)
+            {
+                NSDate *data = [format dateFromString:string];
+                [datePickere setDate:data animated:YES];
+            }
+            [self.formTableView reloadData];
+            [self.formTableView layoutIfNeeded];
+            
         }
     }
-    else
-    {
-      
-        AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
-        
-        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        myDelegate.way_empid=agentInfo.EmpID;
-        myDelegate.way_empname=agentInfo.EmpName;
-        myDelegate.way_groupname=agentInfo.DeptName;
-        myDelegate.TimeStart=agentInfo.AgentStartDate;
-        myDelegate.TimeEnd=agentInfo.AgentEndDate;
-        myDelegate.agentid=agentInfo.AgentSetID;
-        [self datas];
-        // 日期格式化类
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        // 设置日期格式 为了转换成功
-        format.dateFormat = @"yyyy-MM-dd";
-        self.agentname.info=myDelegate.way_empname;
-        self.businessTripStart.info=myDelegate.TimeStart;
-        self.businessTripEnd.info=myDelegate.TimeEnd;
-        self.agentID=myDelegate.agentid;
-        NSString *string = self.businessTripStart.info;
-        if(string.length>0)
-        {
-            NSDate *data = [format dateFromString: string];
-            [datePickers setDate:data animated:YES];
-        }
-        // 时间字符串
-        string = self.businessTripEnd.info;
-        if(string.length>0)
-        {
-            NSDate *data = [format dateFromString:string];
-            [datePickere setDate:data animated:YES];
-        }
-        [self.formTableView reloadData];
-        [self.formTableView layoutIfNeeded];
-        
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
+    
 }
 
 - (void)addAction {

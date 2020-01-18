@@ -980,9 +980,10 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
     
 }
 - (void)goBack {
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 @end

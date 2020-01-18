@@ -49,10 +49,11 @@
      NSLog(@"%@",@"viewDidLoad-detail-bgn");
 }
 - (void)goBack {
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 -(void)loadstyle{
 //    _lblthem.textColor = [UIColor grayColor];

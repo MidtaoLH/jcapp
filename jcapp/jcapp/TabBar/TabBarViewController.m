@@ -739,6 +739,8 @@ NSArray *imgs (){
     {
       
         BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.pageType=@"1";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)

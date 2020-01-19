@@ -285,7 +285,6 @@ NSString *adduserlistflag = @"true";
 -(IBAction)onClickButtonChose:(id)sender
 {
     self.usernamelist.hidden = false;
-    [self.view bringSubviewToFront:txtuser];
 }
 
 //有多少组

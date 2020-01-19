@@ -994,10 +994,13 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
     
 }
 - (void)goBack {
-    [self.navigationController popViewControllerAnimated:YES];
-//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-//    [self presentViewController:navigationController animated:YES completion:nil];
+    if([_pageType isEqualToString:@"1"]){
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

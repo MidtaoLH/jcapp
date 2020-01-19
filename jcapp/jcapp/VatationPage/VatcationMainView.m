@@ -1027,7 +1027,12 @@ NSString * boolflag = @"flase";
                 
                 self.image.images =imagepath;
                 
-                [self.formTableView reloadData];
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [self.formTableView reloadData];
+                }];
+                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
             }
         }
         else if([self.urltype isEqualToString:@"keepsave"] )

@@ -153,6 +153,8 @@
 #define Common_CCTotalHeight 150.f
 /*主页title和应用按钮距离右侧的距离*/
 #define Common_HomeLeft 20.f
+/*登录也用户名密码距离屏幕两侧的距离*/
+#define Common_LoginLeft 40.f
 
 // 轮播图view颜色
 #define Color_ScrollviewColor  [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1]

@@ -123,6 +123,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+    _ImageTableView.scrollEnabled=NO;
     [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
@@ -387,8 +388,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
                 NSString *obj = [NSString stringWithFormat:Common_WSUrl,detail.AttachFilePath];
                 [_srcStringArray addObject:obj];
             }
-            [self.ImageTableView reloadData];
-            [self.ImageTableView layoutIfNeeded];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_ImageTableView reloadData];
+                [_ImageTableView layoutIfNeeded];
+            }];
+            [_ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         else if([xmlString containsString:@"TaskNodeLevel"])
         {
@@ -401,8 +407,12 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             
             NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
             listdetail = [ViewBackTask mj_objectArrayWithKeyValuesArray:resultDic];
-            [self.NewTableView reloadData];
-            [self.NewTableView layoutIfNeeded];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
     }
     @catch (NSException *exception) {
@@ -459,6 +469,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 {
     if ([tableView isEqual:self.NewTableView]) {
         TaskBackListCell * wcell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+        //去掉行选择
+        wcell.selectionStyle = UITableViewCellSelectionStyleNone;   
         wcell.taskBacklistitem =self.listdetail[indexPath.row];//取出数据元素
         return wcell;
     } else if ([tableView isEqual:self.ImageTableView]) {

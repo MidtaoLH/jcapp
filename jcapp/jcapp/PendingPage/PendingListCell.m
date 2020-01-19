@@ -91,17 +91,17 @@
      
     UIImageView *imageView = [[UIImageView alloc] init];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
-    //[imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        [self performSelectorOnMainThread:@selector(updateUIImage:) withObject:imageView.image waitUntilDone:YES];
-//    }];
-//    self.imageView.image=imageView.image;
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [self performSelectorOnMainThread:@selector(updateUIImage:) withObject:imageView.image waitUntilDone:YES];
+    }];
+    self.imageView.image=imageView.image;
     
     //首先得拿到照片的路径，也就是下边的string参数，转换为NSData型。同步加载
-    NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:userurlString]];
+    //NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:userurlString]];
     //然后就是添加照片语句，记得使用imageWithData:方法，不是imageWithName:。
-    UIImage* resultImage = [UIImage imageWithData: imageData];
-    self.imageView.image=resultImage;
+    //UIImage* resultImage = [UIImage imageWithData: imageData];
+    //self.imageView.image=resultImage;
     
     self.beignDateLable.text = _pendinglistitem.BeignDate;
     self.endDateLable.text = _pendinglistitem.EndDate;

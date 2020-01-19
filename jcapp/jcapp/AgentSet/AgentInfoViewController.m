@@ -282,12 +282,8 @@
             {
                 self.stopbtn.hidden=NO;
             }
-            [CATransaction begin];
-            [CATransaction setCompletionBlock:^{
-                [_tableView reloadData];
-            }];
-            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [CATransaction commit];
+            [self.tableView reloadData];
+            [self.tableView layoutIfNeeded];
             self.tableView.hidden = NO;
         }
     }

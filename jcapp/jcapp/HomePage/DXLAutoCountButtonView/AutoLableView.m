@@ -67,9 +67,10 @@
         _countlb.sd_layout
         .widthRatioToView(self, 0.5)
         .topSpaceToView(_titlelb, 0)
-        .leftEqualToView(_titlelb)
+        //.leftEqualToView(_titlelb)
         //.rightEqualToView(self)
-        .bottomSpaceToView(self, 0);
+        .bottomSpaceToView(self, 0)
+        .centerXEqualToView(_titlelb);
         //_countlb.frame=CGRectMake(_titlelb.left,_titlelb.top+_titlelb.height+10.0, _countlb.width, _countlb.height);
    
         

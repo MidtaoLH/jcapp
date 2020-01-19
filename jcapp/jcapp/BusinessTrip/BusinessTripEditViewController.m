@@ -602,6 +602,9 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
         }else if([self->_pageType isEqual:@"3"]){
             self->_pageType=@"6";
         }
+        self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
         NSString *post = [NSString stringWithFormat:@"userID=%@&processid=%@&businessTripID=%@&empID=%@&groupID=%@&starttime=%@&endtime=%@&businessTripNum=%@&reson=%@&operateType=%@&imageCount=%@&strdetail=%@", self->userID,self->_processid,self->_businessTripid,self->empID,self->groupid,self.businessTripStart.info,self.businessTripEnd.info,self.businessNum.info,self.reason.info,self->_pageType,[NSString stringWithFormat:@"%lu",self.image.images.count],text];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/BusinessTripSave?"];

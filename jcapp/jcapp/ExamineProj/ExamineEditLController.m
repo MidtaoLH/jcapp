@@ -82,7 +82,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
    
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
-    _ImageTableView.rowHeight = Common_EditImageTableHeight;
+    //_ImageTableView.rowHeight = Common_EditImageTableHeight;
     
     NSLog(@"%@",@"viewDidLoad-end");
         //d根据不同单据类型 设置文字

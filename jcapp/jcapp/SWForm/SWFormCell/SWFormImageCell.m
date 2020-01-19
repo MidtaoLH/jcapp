@@ -65,9 +65,9 @@ static NSInteger const SW_RowImageCount = 4;
     cell.editable = self.item.editable;
     cell.deleteImageCompletion = ^{
         [self.mutableImages removeObjectAtIndex:indexPath.item];
-        [self sw_reloadData];
+        //[self sw_reloadData];
     };
-    //[self sw_reloadData];
+    [self sw_reloadData];
     return cell;
 }
 

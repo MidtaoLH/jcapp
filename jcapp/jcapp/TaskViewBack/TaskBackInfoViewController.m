@@ -350,7 +350,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             
             if([viewBackInfo.DocumentName isEqual:@"出差"])
             {
-                self.lblproccounts.text=[NSString stringWithFormat:@"%@时长（天）：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
+                self.lblproccounts.text=[NSString stringWithFormat:@"%@天数：%@",viewBackInfo.DocumentName,viewBackInfo.ApplyAmount];
                 self.lblccdr.text=[NSString stringWithFormat:@"出差地点:%@",viewBackInfo.CCAddress];
             }
             else

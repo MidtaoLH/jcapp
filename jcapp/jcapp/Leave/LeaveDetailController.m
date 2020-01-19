@@ -683,7 +683,8 @@ static NSString *identifierImage =@"LeaveImageCell.h";
 {
     if ([tableView isEqual:self.NewTableView]) {
         LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-        
+        //去掉行选择
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;   
         cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
         
         return cell;

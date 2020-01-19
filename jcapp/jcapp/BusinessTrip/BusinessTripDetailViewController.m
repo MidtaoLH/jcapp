@@ -694,8 +694,8 @@ static NSString *identifierImage =@"ImageCell.h";
 
     if ([tableView isEqual:self.NewTableView]) {
         BusinessTripDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-        
-        cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
+        //去掉行选择
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;       cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
         
         return cell;
     } else if ([tableView isEqual:self.ImageTableView]) {

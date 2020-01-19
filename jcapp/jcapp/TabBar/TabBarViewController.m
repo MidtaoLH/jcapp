@@ -540,7 +540,7 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.3));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.2));
     }]; 
     vc.myHeadPortrait.layer.masksToBounds = YES;
     vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;

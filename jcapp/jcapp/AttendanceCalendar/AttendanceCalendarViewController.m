@@ -35,10 +35,7 @@
         return msg;
     };
     self.calview.onDateSelectBlk=^(NSDate* date){
-        self.listOfMoviesDetail = nil;
-        [self.tableView beginUpdates];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
+	
         
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd"];
@@ -169,7 +166,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return Common_AttendanceTxTHeight;
+    return Common_AttendanceTxTHeight*4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

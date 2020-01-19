@@ -128,16 +128,7 @@ static NSInteger rowHeight=50;
     }
     else{
         
-        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        //myDelegate.AppRoveType = @"qingjia";
-        
-        if([myDelegate.AppRoveType isEqualToString:@"qingjia"])
-        {
 
-            return nil;
-        }
-        else
-        {
             static NSString *ID=@"cellID";
             UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:ID];
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
@@ -230,7 +221,6 @@ static NSInteger rowHeight=50;
             [cell.contentView addSubview:btn];
             
             return cell;
-        }
         
        
     }

@@ -35,10 +35,7 @@
         return msg;
     };
     self.calview.onDateSelectBlk=^(NSDate* date){
-        self.listOfMoviesDetail = nil;
-        [self.tableView beginUpdates];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
+	
         
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd"];
@@ -150,12 +147,9 @@
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         
         _listOfMoviesDetail = [AttendanceCalendarDetail mj_objectArrayWithKeyValuesArray:resultDic];
-        for(int i=0;i<[_listOfMoviesDetail count];i++)
-        {
-            [self.tableView beginUpdates];
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:i] withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableView endUpdates];
-        }
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
     }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];
@@ -172,7 +166,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return Common_AttendanceTxTHeight;
+    return Common_AttendanceTxTHeight*4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -304,7 +304,14 @@ NSString * bflag = @"flase";
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *timesp = [formatter stringFromDate:datePicker.date];
     self.businessTripStart.info =timesp;
-    [self.formTableView reloadData];
+    //[self.formTableView reloadData];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.formTableView reloadData];
+    }];
+    [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
+    
     //[actionSheet release];
     
 //    if (actionSheet.tag == 10) {
@@ -918,8 +925,12 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                     
                 }
                 self.image.images =imagepath;
-                
-                [self.formTableView reloadData];
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [self.formTableView reloadData];
+                }];
+                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
                 [self LoadTableLocation];
                 isLoad=@"false";
             }

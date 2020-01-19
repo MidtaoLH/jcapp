@@ -108,7 +108,14 @@
     if (actionSheet.tag == 10) {
         if (buttonIndex != 0) {
             self.gender.info = self.genders[buttonIndex-1];
-            [self.formTableView reloadData];
+            //[self.formTableView reloadData];
+            
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [self.formTableView reloadData];
+            }];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
     }
 }

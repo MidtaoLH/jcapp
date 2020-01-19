@@ -180,7 +180,12 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             
         }
         
-        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self.NewTableView reloadData];
+        }];
+        [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [CATransaction commit];
         
         NSLog(@"%@", resultString2);
         
@@ -219,8 +224,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
-    [self.NewTableView reloadData];
 }
 
 //解析xml回调方法

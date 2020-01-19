@@ -125,7 +125,12 @@ static NSString * identifier = @"PendingListCell";
             [footer setState:MJRefreshStateNoMoreData];
         }
         listOfMovies = [Agent mj_objectArrayWithKeyValuesArray:resultDic];
-        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self.NewTableView reloadData];
+        }];
+        [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [CATransaction commit];
         //[self.listOfMovies addObjectsFromArray:self.listMovies];
     }
     @catch (NSException *exception) {
@@ -156,12 +161,7 @@ static NSString * identifier = @"PendingListCell";
     ipParser.delegate = self;
     [ipParser parse];
    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [self.NewTableView reloadData];
-    }];
-    [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [CATransaction commit];
+  
 }
 
 //解析xml回调方法

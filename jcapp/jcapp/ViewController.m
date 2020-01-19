@@ -284,7 +284,13 @@ NSString *adduserlistflag = @"true";
 
 -(IBAction)onClickButtonChose:(id)sender
 {
-    self.usernamelist.hidden = false;
+    if(self.usernamelist.hidden){
+        [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"up.png"] forState:(UIControlStateNormal)];
+        self.usernamelist.hidden = false;
+    }else{
+        [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"pull.png"] forState:(UIControlStateNormal)];
+        self.usernamelist.hidden=true;
+    }
 }
 
 //有多少组

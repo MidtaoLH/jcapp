@@ -674,15 +674,20 @@ void setAnimation(UITabBarItem *item, NSInteger index) {
 
 
 // MARK: - 创建动画函数
-TLBounceAnimation *bounceAnimation(){
-    TLBounceAnimation *anm = [TLBounceAnimation new];
-    anm.isPlayFireworksAnimation = YES;
+TLTransitionAniamtion *bounceAnimation(){
+    TLTransitionAniamtion *anm = [TLTransitionAniamtion new];
+    anm.direction = 1; // 1~6
+    anm.disableDeselectAnimation = NO;
     return anm;
+
 }
 
-TLRotationAnimation *rotationAnimation(){
-    TLRotationAnimation *anm = [TLRotationAnimation new];
+TLTransitionAniamtion *rotationAnimation(){
+    TLTransitionAniamtion *anm = [TLTransitionAniamtion new];
+    anm.direction = 1; // 1~6
+    anm.disableDeselectAnimation = NO;
     return anm;
+
 }
 
 TLTransitionAniamtion *transitionAniamtion(){
@@ -692,15 +697,18 @@ TLTransitionAniamtion *transitionAniamtion(){
     return anm;
 }
 
-TLFumeAnimation *fumeAnimation(){
-    TLFumeAnimation *anm = [TLFumeAnimation new];
+TLTransitionAniamtion *fumeAnimation(){
+    TLTransitionAniamtion *anm = [TLTransitionAniamtion new];
+    anm.direction = 1; // 1~6
+    anm.disableDeselectAnimation = NO;
     return anm;
+
 }
 
-TLFrameAnimation *frameAnimation(){
-    TLFrameAnimation *anm = [TLFrameAnimation new];
-    anm.images = imgs();
-    anm.isPlayFireworksAnimation = YES;
+TLTransitionAniamtion *frameAnimation(){
+    TLTransitionAniamtion *anm = [TLTransitionAniamtion new];
+    anm.direction =1; // 1~6
+    anm.disableDeselectAnimation = NO;
     return anm;
 }
 

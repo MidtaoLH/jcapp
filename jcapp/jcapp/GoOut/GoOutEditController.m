@@ -158,7 +158,12 @@
             self.VatcationType.info = vatcationname;
             //赋值完毕后清空
             [defaults setObject:@"" forKey:@"vatcationname"];
-            [self.formTableView reloadData];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [self.formTableView reloadData];
+            }];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
     }
 }
@@ -338,8 +343,12 @@
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *timesp = [formatter stringFromDate:datePicker.date];
     self.businessTripStart.info =timesp;
-    [self.formTableView reloadData];
-    
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.formTableView reloadData];
+    }];
+    [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
 }
 // 清除特殊字符
 - (NSString *)cleanSpecialCharacters:(NSString *)text {
@@ -771,7 +780,12 @@
                     }
                 }
                 self.image.images =imagepath;
-                [self.formTableView reloadData];
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [self.formTableView reloadData];
+                }];
+                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
             }
         }
         //保存 提交操作    但是要区分追加还是修改保存

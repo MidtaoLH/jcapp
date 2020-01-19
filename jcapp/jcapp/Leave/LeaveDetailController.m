@@ -142,6 +142,7 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+    _ImageTableView.scrollEnabled=NO;
     [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
@@ -682,7 +683,8 @@ static NSString *identifierImage =@"LeaveImageCell.h";
 {
     if ([tableView isEqual:self.NewTableView]) {
         LeaveDetailCell * cell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-        
+        //去掉行选择
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;   
         cell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
         
         return cell;

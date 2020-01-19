@@ -391,6 +391,7 @@ NSString * boolflag = @"flase";
     strResult = [[NSString alloc] initWithString:originString];
     return strResult;
 }
+
 - (void)addAction {
     [SWFormHandler sw_checkFormNullDataWithWithDatas:self.mutableItems success:^{
         
@@ -499,7 +500,7 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
-        reason = [self cleanSpecialCharacters:reason];
+ //       reason = [self cleanSpecialCharacters:reason];
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -572,20 +573,36 @@ NSString * boolflag = @"flase";
         {
             ApplyCode = @"";
         }
-        
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave_new?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
+ 
+        /*
+         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave_new?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
+         
+         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+         NSLog(@"%@", strURL);
+         NSURL *url = [NSURL URLWithString:urlStringUTF8];
+         //进行请求
+         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+         
+         NSURLConnection *connection = [[NSURLConnection alloc]
+         initWithRequest:request
+         delegate:self];
+         */
 
-        NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"%@", strURL);
-        NSURL *url = [NSURL URLWithString:urlStringUTF8];
-        //进行请求
-        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-        
-        NSURLConnection *connection = [[NSURLConnection alloc]
-                                       initWithRequest:request
-                                       delegate:self];
         ////
+        reason = [reason stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        reason = [reason stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
+        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/btnsave_new?"];
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *webServiceURL = [NSURL URLWithString:strURL];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request delegate:self];
         
         
     } failure:^(NSString *error) {
@@ -701,7 +718,7 @@ NSString * boolflag = @"flase";
         NSString *vatcationtime = self.businessNum.info;
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
-        reason = [self cleanSpecialCharacters:reason];
+//        reason = [self cleanSpecialCharacters:reason];
         if(![self isNumber:vatcationtime])
         {
             UIAlertView *alert = [[UIAlertView alloc]
@@ -789,10 +806,9 @@ NSString * boolflag = @"flase";
         
         //操作类型：1.新增-保存 4.新增-申请 2.修改-保存 5.修改-申请 3再申请-保存 6.再申请-申请
  
+        /*
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/btnsave_new?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
-        
-        
-        
+ 
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);
         NSURL *url = [NSURL URLWithString:urlStringUTF8];
@@ -802,7 +818,22 @@ NSString * boolflag = @"flase";
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request
                                        delegate:self];
-    
+    */
+        reason = [reason stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        reason = [reason stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@",self.ProcessApplyCode, self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.vatcationid,processid,imagecount,ApplyCode,self.proCelReson];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/btnsave_new?"];
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *webServiceURL = [NSURL URLWithString:strURL];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request delegate:self];
+        
     
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -947,12 +978,19 @@ NSString * boolflag = @"flase";
             if(listOfKeepLeave.count > 0)
             {
                 KeepLeave *kl = self.listOfKeepLeave[0];
+                
+                kl.vatcationreason= [kl.vatcationreason stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                kl.vatcationreason = [kl.vatcationreason stringByReplacingOccurrencesOfString:@"&gt;"withString:@">" ];
+                kl.vatcationreason = [kl.vatcationreason stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                kl.vatcationreason = [kl.vatcationreason stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+                kl.vatcationreason = [kl.vatcationreason stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+                
                 self.VatcationType.info = kl.vatcationtrpe;
                 self.businessTripStart.info = kl.timestart;
                 self.businessTripEnd.info = kl.timesend;
                 self.businessNum.info = kl.timesum;
                 self.reason.info = kl.vatcationreason;
-                
+          
                 // 日期格式化类
                 NSDateFormatter *format = [[NSDateFormatter alloc] init];
                 // 设置日期格式 为了转换成功
@@ -989,7 +1027,12 @@ NSString * boolflag = @"flase";
                 
                 self.image.images =imagepath;
                 
-                [self.formTableView reloadData];
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [self.formTableView reloadData];
+                }];
+                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
             }
         }
         else if([self.urltype isEqualToString:@"keepsave"] )

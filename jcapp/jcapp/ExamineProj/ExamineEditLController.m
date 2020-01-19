@@ -161,6 +161,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+    _ImageTableView.scrollEnabled=NO;
     [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
@@ -446,7 +447,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     }
     else
     {
- 
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
         NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
@@ -666,6 +666,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     
     if ([tableView isEqual:self.NewTableView]) {
         ExamineEditCell * wcell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+        //去掉行选择
+        wcell.selectionStyle = UITableViewCellSelectionStyleNone;   
         wcell.leavedetail =self.listdetail[indexPath.row];//取出数据元素
         
         return wcell;

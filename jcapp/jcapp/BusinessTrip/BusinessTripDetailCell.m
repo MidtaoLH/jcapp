@@ -358,7 +358,15 @@
     //级别名称和 员工名
     self.lbllevelname.frame = CGRectMake(2*kMargin+imageWH + 80,  kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
-    self.lblremark.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    self.lblremark.numberOfLines = 0;//根据最大行数需求来设置
+    self.lblremark.lineBreakMode = NSLineBreakByTruncatingTail;
+    CGSize maximumLabelSize = CGSizeMake(width - (2*kMargin+imageWH + 80)-kMargin, 9999);//labelsize的最大值
+    
+    //关键语句
+    CGSize expectSize = [self.lblremark sizeThatFits:maximumLabelSize];
+    self.lblremark.frame = CGRectMake(2*kMargin+imageWH + 80, txtH+2*kMargin, expectSize.width, expectSize.height);
+    
+    //self.lblremark.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
     
     self.btnemail.frame = CGRectMake(width-leaveDateWidth-kMargin,4*kMargin, leaveDateWidth, txtH*2);
 }

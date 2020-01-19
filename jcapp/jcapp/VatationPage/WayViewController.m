@@ -211,7 +211,13 @@ NSInteger currentPageCountwait_new;
             
             NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
             listOfWay = [Way mj_objectArrayWithKeyValuesArray:resultDic];
-            
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+                [_NewTableView layoutIfNeeded];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         else
         {
@@ -277,7 +283,6 @@ NSInteger currentPageCountwait_new;
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
-    [self.NewTableView reloadData];
 }
 
 //解析xml回调方法

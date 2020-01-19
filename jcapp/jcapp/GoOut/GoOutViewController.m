@@ -88,7 +88,7 @@ static NSString * identifier = @"GoOutViewCell";
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",@"2",@"",@"1"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",groupid,@"",@"1"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

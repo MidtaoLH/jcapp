@@ -57,13 +57,15 @@ static NSInteger const SW_RowImageCount = 4;
     return self.mutableImages.count;
 }
 
+
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SWImageCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:image_cell_id forIndexPath:indexPath];
     cell.image = self.mutableImages[indexPath.item];
     cell.editable = self.item.editable;
     cell.deleteImageCompletion = ^{
         [self.mutableImages removeObjectAtIndex:indexPath.item];
-        [self sw_reloadData];
+        //[self sw_reloadData];
     };
     [self sw_reloadData];
     return cell;
@@ -96,17 +98,34 @@ static NSInteger const SW_RowImageCount = 4;
         [strongSelf sw_reloadData];
     }];
 }
-
+//获取控制器
+- (UIViewController *)viewController{
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
+}
 #pragma mark -- 刷新当前图片数据
 - (void)sw_reloadData {
     if (self.imageCompletion) {
         self.imageCompletion(self.mutableImages);
     }
-    [UIView performWithoutAnimation:^{
-        [self.expandableTableView beginUpdates];
-        [self.expandableTableView endUpdates];
-
-    }];
+   // [UIView performWithoutAnimation:^{
+       // [self.expandableTableView beginUpdates];
+       // [self.expandableTableView endUpdates];
+        
+   // }];
+   
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.expandableTableView reloadData];
+         }];
+    [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
+   
 }
 
 + (CGFloat)heightWithItem:(SWFormItem *)item {

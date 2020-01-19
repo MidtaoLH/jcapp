@@ -37,15 +37,15 @@ void UncaughtExceptionHandler(NSException *exception) {
     NSArray *arr = [exception callStackSymbols];
     NSString *reason = [exception reason];
     NSString *name = [exception name];
-    NSLog(@"\n%@\n%@\n%@",arr,reason,name);
+    NSLog(@"appdelegate:\n%@\n%@\n%@",arr,reason,name);
     
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle: @""
-                               message: @"程序出错了"
-                               delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
-    [errorAlert show];
+//    UIAlertView *errorAlert = [[UIAlertView alloc]
+//                               initWithTitle: @""
+//                               message: @"程序出错了"
+//                               delegate:nil
+//                               cancelButtonTitle:@"OK"
+//                               otherButtonTitles:nil];
+//    [errorAlert show];
     /**
      *  获取异常崩溃信息
      */

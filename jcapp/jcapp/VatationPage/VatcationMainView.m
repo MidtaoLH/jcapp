@@ -175,8 +175,12 @@ NSString * boolflag = @"flase";
             self.VatcationType.info = vatcationname;
             //赋值完毕后清空
             [defaults setObject:@"" forKey:@"vatcationname"];
-            [self.formTableView reloadData];
-            [self.formTableView layoutIfNeeded];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [self.formTableView reloadData];
+            }];
+            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
        
     }
@@ -375,7 +379,12 @@ NSString * boolflag = @"flase";
     formatter.dateFormat = @"yyyy-MM-dd";
     NSString *timesp = [formatter stringFromDate:datePicker.date];
     self.businessTripStart.info =timesp;
-    [self.formTableView reloadData];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.formTableView reloadData];
+    }];
+    [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
    
 }
 // 清除特殊字符

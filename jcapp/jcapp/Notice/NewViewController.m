@@ -14,7 +14,9 @@
 
 #import "../MJRefresh/MJRefresh.h"
 
-@interface NewViewController ()<UIActionSheetDelegate>
+@interface NewViewController ()<UIActionSheetDelegate>{
+    MJRefreshBackNormalFooter *footer ;
+}
  
 @end
 
@@ -44,7 +46,7 @@ static NSString *identifier =@"NoticeCell";
     self.NewTableView.mj_header = header;
     
     // 添加底部的上拉加载
-    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
@@ -130,6 +132,10 @@ static NSString *identifier =@"NoticeCell";
         
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([NoticeNews mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+            // 设置状态
+            [footer setState:MJRefreshStateNoMoreData];
+        }
         listOfMovies = [NoticeNews mj_objectArrayWithKeyValuesArray:resultDic];
         
         NSLog(@"%@",@"connection1-end");

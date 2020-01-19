@@ -536,8 +536,12 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             _lblleaveremark.text = strleaveremark;
         }
     }
-    [self.ImageTableView reloadData];
-    [self.ImageTableView layoutIfNeeded];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.ImageTableView reloadData];
+    }];
+    [self.ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
     NSLog(@"%@",@"connection1-end");
 }
 
@@ -572,7 +576,12 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
-    [self.NewTableView reloadData];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [_NewTableView reloadData];
+    }];
+    [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
 }
 
 //解析xml回调方法

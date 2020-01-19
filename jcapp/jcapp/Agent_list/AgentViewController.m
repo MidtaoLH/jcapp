@@ -155,9 +155,13 @@ static NSString * identifier = @"PendingListCell";
     NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     ipParser.delegate = self;
     [ipParser parse];
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
-
+   
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.NewTableView reloadData];
+    }];
+    [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
 }
 
 //解析xml回调方法

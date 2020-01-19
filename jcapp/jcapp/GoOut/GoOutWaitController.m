@@ -133,6 +133,12 @@ static NSString *identifier =@"GoOutWaitCell";
                 [footer setState:MJRefreshStateNoMoreData];
             }
             listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [self.NewTableView reloadData];
+            }];
+            [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
     }
     @catch (NSException *exception) {
@@ -166,9 +172,6 @@ static NSString *identifier =@"GoOutWaitCell";
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法

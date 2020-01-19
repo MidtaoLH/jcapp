@@ -130,7 +130,12 @@ static NSString * identifier = @"GoOutViewCell";
             [footer setState:MJRefreshStateNoMoreData];
         }
         listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
-        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self.NewTableView reloadData];
+        }];
+        [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [CATransaction commit];
         NSLog(@"%@",@"connection1-end");
         
     }
@@ -165,9 +170,8 @@ static NSString * identifier = @"GoOutViewCell";
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
+
+   
 }
 
 //解析xml回调方法

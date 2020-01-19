@@ -140,6 +140,10 @@ static NSString *identifierImage =@"ImageCell.h";
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+    _ImageTableView.scrollEnabled=NO;
+//     _ImageTableView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+//    _ImageTableView.showsVerticalScrollIndicator=NO;
+    
     [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);
@@ -234,7 +238,8 @@ static NSString *identifierImage =@"ImageCell.h";
         // 添加上
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*5);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth, Common_EditImageTableHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth-10, Common_EditImageTableHeight));
+//        make.size.mas_equalTo(CGSizeMake(Common_EditImageTableHeight,kScreenWidth-10));
     }];
     
     // 审批列表view添加约束
@@ -697,6 +702,8 @@ static NSString *identifierImage =@"ImageCell.h";
         
         SDDemoCell *sdcell =[self.ImageTableView dequeueReusableCellWithIdentifier:identifierImage forIndexPath:indexPath];
         sdcell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        sdcell.contentView.transform = CGAffineTransformMakeRotation(M_PI_2);
+        
         NSMutableArray *temp = [NSMutableArray array];
         [_srcStringArray enumerateObjectsUsingBlock:^(NSString *src, NSUInteger idx, BOOL *stop) {
             SDPhotoItem *item = [[SDPhotoItem alloc] init];

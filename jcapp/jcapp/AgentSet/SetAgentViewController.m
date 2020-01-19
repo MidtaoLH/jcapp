@@ -175,12 +175,8 @@
             NSDate *data = [format dateFromString:string];
             [datePickere setDate:data animated:YES];
         }
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            [self.formTableView reloadData];
-        }];
-        [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [CATransaction commit];
+        [self.formTableView reloadData];
+        [self.formTableView layoutIfNeeded];
     }
     else{
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -280,13 +276,8 @@
                 NSDate *data = [format dateFromString:string];
                 [datePickere setDate:data animated:YES];
             }
-          
-            [CATransaction begin];
-            [CATransaction setCompletionBlock:^{
-                [self.formTableView reloadData];
-            }];
-            [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [CATransaction commit];
+            [self.formTableView reloadData];
+            [self.formTableView layoutIfNeeded];
         }
     }
     @catch (NSException *exception) {

@@ -142,6 +142,7 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
+    _ImageTableView.scrollEnabled=NO;
     [_imgvemp mas_makeConstraints:^(MASConstraintMaker *make) {
         // 添加左
         make.left.mas_equalTo(Common_ColSize);

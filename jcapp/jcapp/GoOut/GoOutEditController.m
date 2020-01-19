@@ -379,7 +379,7 @@
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
-        reason = [self cleanSpecialCharacters:reason];
+   //     reason = [self cleanSpecialCharacters:reason];
         
         if(![self isNumber:vatcationtime])
         {
@@ -464,6 +464,7 @@
         else if([self.edittype isEqual:@"6"]){ //申请 原单海没有申请
             self.edittype=@"3";
         }
+        /*
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
     
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -475,8 +476,21 @@
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request
                                        delegate:self];
-        ////
+         */
+        reason = [reason stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        reason = [reason stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
+        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GoOutSave?"];
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *webServiceURL = [NSURL URLWithString:strURL];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request delegate:self];
         
         
     } failure:^(NSString *error) {
@@ -507,7 +521,7 @@
         NSString *reason = self.reason.info;
         NSString *imagecount = [NSString stringWithFormat:@"%d",self.image.images.count];
         
-        reason = [self cleanSpecialCharacters:reason];
+//        reason = [self cleanSpecialCharacters:reason];
         
         if(![self isNumber:vatcationtime])
         {
@@ -592,6 +606,7 @@
         else if([self.edittype isEqual:@"3"]){ //修改已申请进入
             self.edittype=@"6";  //申请 原单海没有申请
         }
+        /*
         NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GoOutSave?ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
         
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -603,6 +618,22 @@
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request
                                        delegate:self];
+         */
+        reason = [reason stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        reason = [reason stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
+        
+        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
+        NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GoOutSave?"];
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        NSURL *webServiceURL = [NSURL URLWithString:strURL];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc]
+                                       initWithRequest:request delegate:self];
+        
 
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -743,6 +774,12 @@
             
             listhead = [MdlEvection mj_objectArrayWithKeyValuesArray:resultDic];
             for (MdlEvection *p1 in listhead) {
+                
+                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&gt;"withString:@">" ];
+                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
                 
                 NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
                 NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"外出时间：",p1.PlanStartTime,p1.PlanEndTime];

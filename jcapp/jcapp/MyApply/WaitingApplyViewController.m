@@ -21,7 +21,9 @@
 
 static NSString * identifier = @"PendingListCell";
 
-@interface WaitingApplyViewController ()
+@interface WaitingApplyViewController (){
+    MJRefreshBackNormalFooter *footer;
+}
 @end
 
 @implementation WaitingApplyViewController
@@ -56,7 +58,7 @@ NSInteger currentPageCountwait;
     self.NewTableView.mj_header = header;
 
     // 添加底部的上拉加载
-    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     
@@ -139,8 +141,10 @@ NSInteger currentPageCountwait;
             
             
             NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-            
-            listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
+            if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+                // 设置状态
+                [footer setState:MJRefreshStateNoMoreData];
+            }            listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
         }
         
     }

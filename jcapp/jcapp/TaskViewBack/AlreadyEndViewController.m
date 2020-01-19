@@ -14,7 +14,9 @@
 #import "TaskBackInfoViewController.h"
 #import "AppDelegate.h"
 static NSString * identifier = @"PendingsListCell";
-@interface AlreadyEndViewController ()
+@interface AlreadyEndViewController (){
+    MJRefreshBackNormalFooter *footer;
+}
 
 @end
 
@@ -36,7 +38,7 @@ static NSString * identifier = @"PendingsListCell";
     self.NewTableView.mj_header = header;
     
     // 添加底部的上拉加载
-    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
@@ -107,6 +109,10 @@ static NSString * identifier = @"PendingsListCell";
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+            // 设置状态
+            [footer setState:MJRefreshStateNoMoreData];
+        }
         listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
         //[self.listOfMovies addObjectsFromArray:self.listMovies];
         [CATransaction begin];

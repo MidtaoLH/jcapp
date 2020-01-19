@@ -16,7 +16,9 @@
 #import "../MJRefresh/MJRefresh.h"
 static NSString * identifier = @"GoOutViewCell";
 
-@interface GoOutViewController ()
+@interface GoOutViewController (){
+    MJRefreshBackNormalFooter *footer;
+}
 
 @end
 
@@ -44,7 +46,7 @@ static NSString * identifier = @"GoOutViewCell";
     self.NewTableView.mj_header = header;
     
     // 添加底部的上拉加载
-    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    footer = [[MJRefreshBackNormalFooter alloc] init];
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
@@ -88,7 +90,7 @@ static NSString * identifier = @"GoOutViewCell";
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",@"2",@"",@"1"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",groupid,@"",@"1"];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -123,6 +125,10 @@ static NSString * identifier = @"GoOutViewCell";
         
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic].count==listDatas.count){
+            // 设置状态
+            [footer setState:MJRefreshStateNoMoreData];
+        }
         listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{

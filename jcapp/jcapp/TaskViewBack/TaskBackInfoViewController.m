@@ -469,6 +469,8 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 {
     if ([tableView isEqual:self.NewTableView]) {
         TaskBackListCell * wcell = [self.NewTableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+        //去掉行选择
+        wcell.selectionStyle = UITableViewCellSelectionStyleNone;   
         wcell.taskBacklistitem =self.listdetail[indexPath.row];//取出数据元素
         return wcell;
     } else if ([tableView isEqual:self.ImageTableView]) {

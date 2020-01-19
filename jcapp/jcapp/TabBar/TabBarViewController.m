@@ -604,7 +604,7 @@ UIViewController *childViewControllerAgent (NSString *title, NSString *imgName, 
         // 添加左
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-TabbarHeight));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
     }];
     setAnimation(vc.tabBarItem, tag);
     return vc;

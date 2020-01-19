@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
     NSInteger currentPageCount;
+    NSInteger loadFinish;//是否已加载所有数据 1:是 
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 

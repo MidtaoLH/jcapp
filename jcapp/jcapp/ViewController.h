@@ -54,5 +54,8 @@
 
 -(IBAction)backgroundTap:(id)sender;
 
+-(IBAction)losefocus:(id)sender;
+
+
 @end
 

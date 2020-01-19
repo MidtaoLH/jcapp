@@ -16,8 +16,9 @@
 
 static NSString * identifier = @"PendingListCell";
 
-@interface PendingViewController ()
-
+@interface PendingViewController (){
+MJRefreshBackNormalFooter *footer;
+}
 @end
 
 @implementation PendingViewController
@@ -30,7 +31,7 @@ static NSString * identifier = @"PendingListCell";
     _NewTableView.rowHeight =kScreenHeight/5;
     currentPageCount=[Common_PageSize intValue];
     _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+    loadFinish=0;
     [self LoadData];
     
     // 添加头部的下拉刷新
@@ -39,7 +40,8 @@ static NSString * identifier = @"PendingListCell";
     self.NewTableView.mj_header = header;
     
     // 添加底部的上拉加载
-    MJRefreshBackNormalFooter *footer = [[MJRefreshBackNormalFooter alloc] init];
+    footer = [[MJRefreshBackNormalFooter alloc] init];
+    
     [footer setRefreshingTarget:self refreshingAction:@selector(footerClick)];
     self.NewTableView.mj_footer = footer;
     //_NewTableView.top=-_NewTableView.mj_header.size.height+5;
@@ -82,7 +84,8 @@ static NSString * identifier = @"PendingListCell";
 - (void)footerClick {
     // 可在此处实现上拉加载时要执行的代码
     // ......
-    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
+    
+    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue];
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];
@@ -93,7 +96,7 @@ static NSString * identifier = @"PendingListCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    @try {
+//    @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
@@ -104,6 +107,10 @@ static NSString * identifier = @"PendingListCell";
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
         
         NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+            // 设置状态
+            [footer setState:MJRefreshStateNoMoreData];
+        }
         listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
         //[self.listOfMovies addObjectsFromArray:self.listMovies];
         [CATransaction begin];
@@ -112,13 +119,13 @@ static NSString * identifier = @"PendingListCell";
         }];
         [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         [CATransaction commit];
-    }
-    @catch (NSException *exception) {
-        NSArray *arr = [exception callStackSymbols];
-        NSString *reason = [exception reason];
-        NSString *name = [exception name];
-        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
-    }
+//    }
+//    @catch (NSException *exception) {
+//        NSArray *arr = [exception callStackSymbols];
+//        NSString *reason = [exception reason];
+//        NSString *name = [exception name];
+//        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+//    }
     
 }
 

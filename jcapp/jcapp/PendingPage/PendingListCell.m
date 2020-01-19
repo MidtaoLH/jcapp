@@ -92,9 +92,9 @@
     UIImageView *imageView = [[UIImageView alloc] init];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_pendinglistitem.ApplyManPhoto];
     [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString]];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [self performSelectorOnMainThread:@selector(updateUIImage:) withObject:imageView.image waitUntilDone:YES];
-    }];
+//    [imageView sd_setImageWithURL:[NSURL URLWithString:userurlString] placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        [self performSelectorOnMainThread:@selector(updateUIImage:) withObject:imageView.image waitUntilDone:YES];
+//    }];
     self.imageView.image=imageView.image;
     
     //首先得拿到照片的路径，也就是下边的string参数，转换为NSData型。同步加载

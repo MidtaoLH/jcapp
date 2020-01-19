@@ -57,6 +57,8 @@ static NSInteger const SW_RowImageCount = 4;
     return self.mutableImages.count;
 }
 
+
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SWImageCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:image_cell_id forIndexPath:indexPath];
     cell.image = self.mutableImages[indexPath.item];
@@ -65,7 +67,7 @@ static NSInteger const SW_RowImageCount = 4;
         [self.mutableImages removeObjectAtIndex:indexPath.item];
         [self sw_reloadData];
     };
-    [self sw_reloadData];
+    //[self sw_reloadData];
     return cell;
 }
 
@@ -96,17 +98,24 @@ static NSInteger const SW_RowImageCount = 4;
         [strongSelf sw_reloadData];
     }];
 }
-
 #pragma mark -- 刷新当前图片数据
 - (void)sw_reloadData {
     if (self.imageCompletion) {
         self.imageCompletion(self.mutableImages);
     }
-    [UIView performWithoutAnimation:^{
-        [self.expandableTableView beginUpdates];
-        [self.expandableTableView endUpdates];
-
+   // [UIView performWithoutAnimation:^{
+       // [self.expandableTableView beginUpdates];
+       // [self.expandableTableView endUpdates];
+        
+   // }];
+   
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.expandableTableView reloadData];
     }];
+    [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
+   
 }
 
 + (CGFloat)heightWithItem:(SWFormItem *)item {

@@ -278,7 +278,6 @@
             }
             [self.formTableView reloadData];
             [self.formTableView layoutIfNeeded];
-            
         }
     }
     @catch (NSException *exception) {

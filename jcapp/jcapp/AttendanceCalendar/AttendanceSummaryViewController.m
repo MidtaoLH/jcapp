@@ -25,20 +25,10 @@
     [super viewDidLoad];
  
     [self loadinfo];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    if(myDelegate.acsavedatetime.length==0)
-    {
-        NSDate *newDate = [NSDate date];
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy年MM月"];
-        self.startDate = [format stringFromDate:newDate];
-    }
-    else
-    {
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy年MM月"];
-        self.startDate = [format stringFromDate:myDelegate.acsavedatetime];
-    }
+    NSDate *newDate = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy年MM月"];
+    self.startDate = [format stringFromDate:newDate];
     [self.btndate setTitle:self.startDate forState:UIControlStateNormal];
     
     [self loadacinfo:self.startDate];

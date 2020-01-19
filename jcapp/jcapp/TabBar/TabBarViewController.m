@@ -747,6 +747,7 @@ NSArray *imgs (){
     {
        
         VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+        VCCollect.edittype=@"1";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)

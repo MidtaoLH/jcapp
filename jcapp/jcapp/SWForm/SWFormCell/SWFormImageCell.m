@@ -64,15 +64,8 @@ static NSInteger const SW_RowImageCount = 4;
     cell.image = self.mutableImages[indexPath.item];
     cell.editable = self.item.editable;
     cell.deleteImageCompletion = ^{
-        
         [self.mutableImages removeObjectAtIndex:indexPath.item];
-        [self sw_reloadData];
-        //[CATransaction begin];
-        //[CATransaction setCompletionBlock:^{
-        //    [self.imageCompletion reloadData];
-        //}];
-        //[self.imageCompletion reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        //[CATransaction commit];        
+        //[self sw_reloadData];
     };
     [self sw_reloadData];
     return cell;
@@ -120,11 +113,18 @@ static NSInteger const SW_RowImageCount = 4;
     if (self.imageCompletion) {
         self.imageCompletion(self.mutableImages);
     }
-    [UIView performWithoutAnimation:^{
-        [self.expandableTableView beginUpdates];
-        [self.expandableTableView endUpdates];
+   // [UIView performWithoutAnimation:^{
+       // [self.expandableTableView beginUpdates];
+       // [self.expandableTableView endUpdates];
         
-    }];
+   // }];
+   
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [self.expandableTableView reloadData];
+         }];
+    [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
    
 }
 

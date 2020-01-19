@@ -65,9 +65,9 @@ static NSInteger const SW_RowImageCount = 4;
     cell.editable = self.item.editable;
     cell.deleteImageCompletion = ^{
         [self.mutableImages removeObjectAtIndex:indexPath.item];
-        //[self sw_reloadData];
+        [self sw_reloadData];
     };
-    [self sw_reloadData];
+    //[self sw_reloadData];
     return cell;
 }
 
@@ -98,16 +98,6 @@ static NSInteger const SW_RowImageCount = 4;
         [strongSelf sw_reloadData];
     }];
 }
-//获取控制器
-- (UIViewController *)viewController{
-    for (UIView* next = [self superview]; next; next = next.superview) {
-        UIResponder *nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController class]]) {
-            return (UIViewController *)nextResponder;
-        }
-    }
-    return nil;
-}
 #pragma mark -- 刷新当前图片数据
 - (void)sw_reloadData {
     if (self.imageCompletion) {
@@ -122,7 +112,7 @@ static NSInteger const SW_RowImageCount = 4;
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
         [self.expandableTableView reloadData];
-         }];
+    }];
     [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     [CATransaction commit];
    

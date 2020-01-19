@@ -387,8 +387,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
                 NSString *obj = [NSString stringWithFormat:Common_WSUrl,detail.AttachFilePath];
                 [_srcStringArray addObject:obj];
             }
-            [self.ImageTableView reloadData];
-            [self.ImageTableView layoutIfNeeded];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_ImageTableView reloadData];
+                [_ImageTableView layoutIfNeeded];
+            }];
+            [_ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         else if([xmlString containsString:@"TaskNodeLevel"])
         {
@@ -401,8 +406,12 @@ static NSString *identifierImage =@"WaitTaskImageCell";
             
             NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
             listdetail = [ViewBackTask mj_objectArrayWithKeyValuesArray:resultDic];
-            [self.NewTableView reloadData];
-            [self.NewTableView layoutIfNeeded];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
     }
     @catch (NSException *exception) {

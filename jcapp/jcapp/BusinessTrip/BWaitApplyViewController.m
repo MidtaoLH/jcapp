@@ -68,7 +68,7 @@ NSInteger currentPageCountbwait;
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
      [self LoadData];
-    [self.NewTableView reloadData];
+    
 }
 //-(void)viewDidAppear:(BOOL)animated{
 //    [self LoadData];//这里是刷新当前tableview
@@ -148,7 +148,15 @@ NSInteger currentPageCountbwait;
                 [footer setState:MJRefreshStateNoMoreData];
             }
             listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
-        }    }
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
+        }
+        
+    }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];
         NSString *reason = [exception reason];
@@ -182,8 +190,6 @@ NSInteger currentPageCountbwait;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法

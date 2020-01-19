@@ -67,7 +67,8 @@
         myDelegate.way_empid =lbempid;
         myDelegate.way_empname =lbempname;
         myDelegate.agentType = @"true";
-        [self.navigationController popViewControllerAnimated:YES];
+        SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
+        [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else
     {

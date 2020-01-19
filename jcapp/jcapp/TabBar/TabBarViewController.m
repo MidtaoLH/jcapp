@@ -540,7 +540,7 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.3));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.2));
     }]; 
     vc.myHeadPortrait.layer.masksToBounds = YES;
     vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
@@ -739,12 +739,15 @@ NSArray *imgs (){
     {
       
         BusinessTripEditViewController * VCCollect = [[BusinessTripEditViewController alloc] init];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        myDelegate.pageType=@"1";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else if([myDelegate.tabbarType isEqualToString:@"5"]&&tabBar.selectedIndex==1)
     {
        
         VatcationMainView * VCCollect = [[VatcationMainView alloc] init];
+        VCCollect.edittype=@"1";
         [self.navigationController pushViewController:VCCollect animated:YES];
     }
     else if([myDelegate.tabbarType isEqualToString:@"7"]&&tabBar.selectedIndex==1)

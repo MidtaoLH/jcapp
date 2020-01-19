@@ -78,7 +78,13 @@ typedef void(^EditCompletion)(void);
             NSLog(@"====完成编辑====");
         }
         
-        [weakSelf.formTableView reloadData];
+        //[weakSelf.formTableView reloadData];
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [weakSelf.formTableView reloadData];
+        }];
+        [weakSelf.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [CATransaction commit];
     };
 }
 

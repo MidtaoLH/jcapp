@@ -113,11 +113,13 @@ NSString * boolflag = @"flase";
 }
 
 - (void)goBack {
-    [self.navigationController popViewControllerAnimated:YES];
-//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-//    [self presentViewController:navigationController animated:YES completion:nil];
+    if([self.edittype isEqualToString:@"1"]){
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{

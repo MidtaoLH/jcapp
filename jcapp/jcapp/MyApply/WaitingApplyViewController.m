@@ -145,6 +145,12 @@ NSInteger currentPageCountwait;
                 // 设置状态
                 [footer setState:MJRefreshStateNoMoreData];
             }            listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         
     }
@@ -179,8 +185,6 @@ NSInteger currentPageCountwait;
     ipParser.delegate = self;
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
-    [self.NewTableView reloadData];
-    [self.NewTableView layoutIfNeeded];
 }
 
 //解析xml回调方法

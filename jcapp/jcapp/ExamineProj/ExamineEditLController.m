@@ -542,6 +542,13 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     }];
     [self.ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     [CATransaction commit];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        [_NewTableView reloadData];
+    }];
+    [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
+
     NSLog(@"%@",@"connection1-end");
 }
 
@@ -576,12 +583,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [_NewTableView reloadData];
-    }];
-    [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [CATransaction commit];
+  
 }
 
 //解析xml回调方法

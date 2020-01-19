@@ -45,7 +45,12 @@ static NSInteger const SW_RowImageCount = 4;
     if (self.mutableImages.count > 0) {
         self.imageCollection.frame = CGRectMake(0, self.item.defaultHeight, self.frame.size.width, self.frame.size.height - self.item.defaultHeight);
         self.imageCollection.hidden = NO;
-        [self.imageCollection reloadData];
+        //[self.imageCollection reloadData];
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self.imageCollection reloadData];
+        }];
+        [CATransaction commit];
     }
     else {
         self.imageCollection.frame = CGRectZero;

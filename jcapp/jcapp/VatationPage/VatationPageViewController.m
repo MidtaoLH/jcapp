@@ -215,7 +215,6 @@ NSString *strtype;
     
     vatcationArray = [Vatcation mj_objectArrayWithKeyValuesArray:allString];
     [tableview reloadData];
-    
 }
 
 //解析xml回调方法

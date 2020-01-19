@@ -41,7 +41,7 @@
 #import "BusinessTrip/BusinessTripEditViewController.h"
 #import <AdSupport/AdSupport.h>
 #import "Masonry.h"
-@interface ViewController ()
+@interface ViewController () <UITextFieldDelegate>
 - (IBAction)Login:(id)sender;
 
 @end
@@ -69,6 +69,9 @@ NSString *adduserlistflag = @"true";
     self.usernamelist.dataSource=self;
     self.usernamelist.hidden = true;
     self.usernamelist.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.txtuser.delegate = self;
+    
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
      NSString *userID = [defaults objectForKey:@"username"];
@@ -365,6 +368,50 @@ NSString *adduserlistflag = @"true";
 }
 
 
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    //是否显示默认图片，一开始显示默认
+    NSString *showflag = @"true";
+    
+    for(int i=1;i<=usercount_int;i++)
+    {
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString *stringInt = [NSString stringWithFormat:@"%d",i];
+        NSString *keyname = [NSString stringWithFormat:@"%@-username",stringInt];
+        NSString *username = [defaults objectForKey:keyname];
+       if([username isEqualToString: txtuser.text])
+       {
+           showflag = @"false";
+           NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,txtuser.text];
+           NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+           
+           if(data.length > 0)
+           {
+               UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+               // 保存文件的名称1
+               [self.myHeadPortrait setImage:userimage];
+           }
+           else
+           {
+               NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,@"moren"];
+               NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+               UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+               // 保存文件的名称
+               [self.myHeadPortrait setImage:userimage];
+           }
+       }
+    }
+    
+    if([showflag isEqualToString:@"true"])
+    {
+        NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,@"moren"];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:userurlString]];
+        UIImage *userimage = [UIImage imageWithData:data]; // 取得图片
+        // 保存文件的名称
+        [self.myHeadPortrait setImage:userimage];
+    }
+}
+
 - (IBAction)Login:(id)sender {
 
 
@@ -444,7 +491,7 @@ NSString *adduserlistflag = @"true";
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     
     @try {
-        NSLog(@"%@",@"hellotest");
+       // NSLog(@"%@",@"hellotest");
         
         if([urlflag isEqualToString:@"CheckUser"])
         {
@@ -514,7 +561,7 @@ NSString *adduserlistflag = @"true";
             UserLogin *m =self.listOfUser[0];//取出数据元素
             if (![ m.flag isEqualToString:@"1"]) {
                 //返回不为1显示登陆失败
-                message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
+                message = [[NSString alloc] initWithFormat:@"%@", @"用户名不存在或密码错误，登录失败"];
                 //显示信息。正式环境时改为跳转
                 UIAlertView *alert = [[UIAlertView alloc]
                                       initWithTitle: @""
@@ -636,7 +683,7 @@ NSString *adduserlistflag = @"true";
         {
             NSLog(@"%@", @"123");
             //返回不为1显示登陆失败
-            message = [[NSString alloc] initWithFormat:@"%@", @"登录失败"];
+            message = [[NSString alloc] initWithFormat:@"%@", @"用户名不存在或密码错误，登录失败"];
             //显示信息。正式环境时改为跳转
             UIAlertView *alert = [[UIAlertView alloc]
                                   initWithTitle: @""

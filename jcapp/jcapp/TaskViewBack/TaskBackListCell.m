@@ -132,7 +132,17 @@
     self.taskBackTypeLable.frame = CGRectMake(3*kMargin+imageWH+self.taskBackEmpNameLable.width, kMargin, leaveDateWidth, txtH);
     self.taskBackDateLable.frame =CGRectMake(4*kMargin+imageWH+self.taskBackEmpNameLable.width+self.taskBackTypeLable.width, kMargin, leaveDateWidth, txtH);
     self.taskBackGroupNameLable.frame = CGRectMake(2*kMargin+imageWH, txtH+2*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
-    self.taskBackRemarkLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
+    self.taskBackRemarkLable.numberOfLines = 0;//根据最大行数需求来设置
+    self.taskBackRemarkLable.lineBreakMode = NSLineBreakByTruncatingTail;
+    CGSize maximumLabelSize = CGSizeMake(width - (2*kMargin+imageWH + 80)-kMargin, 9999);//labelsize的最大值
+    
+    //关键语句
+    CGSize expectSize = [self.taskBackRemarkLable sizeThatFits:maximumLabelSize];
+    self.taskBackRemarkLable.frame = CGRectMake(3*kMargin+imageWH+self.taskBackEmpNameLable.width, txtH+2*kMargin, expectSize.width, expectSize.height);
+    
+    //self.taskBackRemarkLable.frame = CGRectMake(2*kMargin+imageWH, 2*txtH+3*kMargin, width - leaveDateWidth - kMargin - imageWH, txtH);
+    
     self.imageView.frame = CGRectMake(kMargin,(height -kMargin-imageWH)/2, imageWH, imageWH );
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = imageWH * 0.5;

@@ -447,7 +447,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     }
     else
     {
- 
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
         NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];

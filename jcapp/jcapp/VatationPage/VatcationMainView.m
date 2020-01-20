@@ -921,7 +921,7 @@ NSString * boolflag = @"flase";
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
-        if([xmlString containsString: @"unlogin"])
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];

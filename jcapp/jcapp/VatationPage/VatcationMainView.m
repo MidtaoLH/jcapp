@@ -957,6 +957,8 @@ NSString * boolflag = @"flase";
                         if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
                             message=@"图片上传失败，请重新保存";
                         }
+                        self.edittype = @"2"; //编辑
+                        
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
                     }
@@ -1076,7 +1078,7 @@ NSString * boolflag = @"flase";
                     {
                         ApplyCode = m.ApplyCode;
                         processid = m.ProcessID;
-                        edittype = @"2"; //编辑
+                        //edittype = @"2"; //编辑
                         if(self.image.images.count >0){
                             [self uploadImg];
                         }

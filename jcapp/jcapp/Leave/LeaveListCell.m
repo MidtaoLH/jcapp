@@ -97,10 +97,10 @@
     self.leaveDateLable.text = _leavelistitem.ApplyDate;
  
     self.leaveStatusLable.text = _leavelistitem.ProcessStutasName;
-    if([_leavelistitem.ProcessStutasName  isEqualToString:  @"已驳回"])
-    {
-        _leaveStatusLable.textColor = [UIColor redColor];
-    }
+//    if([_leavelistitem.ProcessStutasName  isEqualToString:  @"已驳回"])
+ //   {
+//        _leaveStatusLable.textColor = [UIColor redColor];
+//    }
  
     UIImageView *imageView = [[UIImageView alloc] init];
     NSString *userurlString =[NSString stringWithFormat:Common_UserPhotoUrl,_leavelistitem.U_LoginName];

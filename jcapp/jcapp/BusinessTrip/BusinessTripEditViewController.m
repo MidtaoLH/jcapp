@@ -837,6 +837,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                         if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                             message=@"保存失败";
                         }
+                        
                         alert=@"save";
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
@@ -844,7 +845,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                     }
                     _businessTripid=m.LeaveID;
                     _processid=m.ProcessID;
-                    _pageType=@"2";
+                    
                     if(self.image.images.count >0){
                         _operateType=@"3";
                         [self uploadImg];
@@ -961,6 +962,8 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                     if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                         message=@"图片上传失败，请重新保存";
                     }
+                     _pageType = @"2"; //编辑
+                    
                     alert=@"";
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
@@ -994,10 +997,13 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
     
 }
 - (void)goBack {
-    [self.navigationController popViewControllerAnimated:YES];
-//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-//    [self presentViewController:navigationController animated:YES completion:nil];
+    if([_pageType isEqualToString:@"1"]){
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

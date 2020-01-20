@@ -113,11 +113,13 @@ NSString * boolflag = @"flase";
 }
 
 - (void)goBack {
-    [self.navigationController popViewControllerAnimated:YES];
-//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-//    [self presentViewController:navigationController animated:YES completion:nil];
+    if([self.edittype isEqualToString:@"1"]){
+        UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -921,7 +923,7 @@ NSString * boolflag = @"flase";
         
         if([xmlString containsString: @"unlogin"])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: @"其他人已登录，请您进行确认！" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
@@ -955,6 +957,8 @@ NSString * boolflag = @"flase";
                         if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
                             message=@"图片上传失败，请重新保存";
                         }
+                        self.edittype = @"2"; //编辑
+                        
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
                     }
@@ -1074,7 +1078,7 @@ NSString * boolflag = @"flase";
                     {
                         ApplyCode = m.ApplyCode;
                         processid = m.ProcessID;
-                        edittype = @"2"; //编辑
+                        //edittype = @"2"; //编辑
                         if(self.image.images.count >0){
                             [self uploadImg];
                         }

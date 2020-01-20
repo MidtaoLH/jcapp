@@ -923,7 +923,7 @@ NSString * boolflag = @"flase";
         
         if([xmlString containsString: @"unlogin"])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: @"其他人已登录，请您进行确认！" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];

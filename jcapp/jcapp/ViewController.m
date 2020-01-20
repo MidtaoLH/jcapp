@@ -65,6 +65,8 @@ NSString *adduserlistflag = @"true";
     //NSArray *arr = @[@(0),@(1)];
     //NSLog(@"%@",arr[2]);//模拟越界异常
     
+    adduserlistflag = @"true";
+    
     self.usernamelist.delegate=self;
     self.usernamelist.dataSource=self;
     self.usernamelist.hidden = true;
@@ -346,8 +348,8 @@ NSString *adduserlistflag = @"true";
         [self.myHeadPortrait setImage:userimage];
     }
 
-    self.usernamelist.hidden = true;
-    
+    tableView.hidden = true;
+    //tableView.show
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

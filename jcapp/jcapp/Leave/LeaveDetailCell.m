@@ -55,7 +55,10 @@
  
     NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"taskid"];
  
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", @"1",obj1 ];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+     NSString *userID  = [defaults objectForKey:@"userid"];
+    
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", userID,obj1 ];
     NSLog(@"%@", strURL);
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求

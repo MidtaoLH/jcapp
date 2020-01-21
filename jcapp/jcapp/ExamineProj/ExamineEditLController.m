@@ -71,7 +71,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
  //   self.taskType =@"13";
     
     //设置需要访问的ws和传入参数
-    NSString *strPara = [NSString stringWithFormat:@"ppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@&iosid=%@",userid,self.strTaskid,self.taskType,iosid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@&iosid=%@",userid,self.strTaskid,self.taskType,iosid];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     
     NSURL *url = [NSURL URLWithString:strURL];

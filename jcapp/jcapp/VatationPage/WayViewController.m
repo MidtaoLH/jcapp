@@ -181,7 +181,7 @@ NSInteger currentPageCountwait_new;
 //    NSString *userid = [defaults objectForKey:@"userid"];
 //    
     
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",userid,self.processid ,iosid,userID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",self.processid ,iosid,userID];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *xmlString;
     NSString *stringflag;
     NSMutableDictionary *info;
+     NSString *iosid;
+    NSString *userid;
 }
 @property (nonatomic, retain)IBOutlet UIButton *chosebutton;
 @property (strong,nonatomic) NSMutableArray *listOfGroup;

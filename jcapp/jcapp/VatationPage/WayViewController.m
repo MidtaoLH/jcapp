@@ -16,7 +16,7 @@
 #import "VatcationMainView.h"
 #import "BusinessTripEditViewController.h"
 #import "GoOutEditController.h"
-
+#import "ViewController.h"
 static NSString * identifier = @"TableCell";
 
 NSString * saveflag = @"flase";
@@ -35,6 +35,8 @@ NSInteger currentPageCountwait_new;
     [super viewDidLoad];
     [self loadstyle];
     [self loadinfo];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
     self.navigationItem.title=@"路径确认";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 }
@@ -176,7 +178,7 @@ NSInteger currentPageCountwait_new;
     NSString *userid = [defaults objectForKey:@"userid"];
     
     
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@",userid,self.processid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",userid,self.processid ,iosid,userID];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -197,6 +199,18 @@ NSInteger currentPageCountwait_new;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+        }
+        else
+        {
+            
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -247,7 +261,7 @@ NSInteger currentPageCountwait_new;
                 [alert show];
             }
         }
-        
+        }
     }
     @catch (NSException *exception) {
         

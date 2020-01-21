@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+     NSString *iosid;
 }
 @property (nonatomic, strong) BRDatePickerView *datePickerView;
 @property (nonatomic, copy) NSArray *titleArr;

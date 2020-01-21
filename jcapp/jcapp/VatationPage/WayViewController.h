@@ -20,7 +20,7 @@ UITableViewDelegate>{
     NSString *resultString;
     NSString *userID;
     NSString *empID;
-    
+     NSString *iosid;
     NSMutableArray *array;
     NSMutableArray *array2;
     NSInteger _page;

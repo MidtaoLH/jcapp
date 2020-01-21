@@ -111,7 +111,7 @@ static NSString *identifier =@"LeaveWaitCell";
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
@@ -287,7 +287,12 @@ qualifiedName:(NSString *)qName {
     VCCollect.ProcessApplyCode=cell.leavelistitem.ProcessApplyCode;
     VCCollect.edittype = @"2"; //编辑
     VCCollect.urltype = @"getdata";
+    VCCollect.hidesBottomBarWhenPushed= YES;
     [self.navigationController pushViewController:VCCollect animated:YES];
+    
+    
+   
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

@@ -929,7 +929,7 @@ NSString * boolflag = @"flase";
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
@@ -1047,8 +1047,10 @@ NSString * boolflag = @"flase";
                         
                         if(kl2.imagepath != nil)
                         {
-                            NSString *imagepath_s =
-                            [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
+                            //NSString *imagepath_s =
+                            //[@"http://47.94.85.101:8095/" stringByAppendingString: kl2.imagepath];
+                            
+                            NSString *imagepath_s =[NSString stringWithFormat:Common_WSUrl, kl2.imagepath];
                             
                             UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
                             if (imagetest) {
@@ -1134,6 +1136,7 @@ NSString * boolflag = @"flase";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
+    
 }
 
 //将图片保存到本地并且从本地返回出来

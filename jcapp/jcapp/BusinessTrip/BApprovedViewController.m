@@ -116,7 +116,7 @@ NSInteger currentPageCountbapproved;
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];

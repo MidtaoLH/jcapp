@@ -273,6 +273,7 @@
 		EB41A3FA239E40FE00DA623A /* WHUCalendarPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F1239E40FD00DA623A /* WHUCalendarPopView.m */; };
 		EB41A3FB239E40FE00DA623A /* WHUCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F3239E40FD00DA623A /* WHUCalendarView.m */; };
 		EB41A3FC239E40FE00DA623A /* WHUCalendarYMSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB41A3F5239E40FD00DA623A /* WHUCalendarYMSelectView.m */; };
+		EB422D4723D7197B009576CC /* NotiInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB422D4623D7197B009576CC /* NotiInfoCell.m */; };
 		EB4315E2237FB413007D1213 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4315E1237FB413007D1213 /* AppDelegate.m */; };
 		EB4315E5237FB413007D1213 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4315E4237FB413007D1213 /* ViewController.m */; };
 		EB4315EA237FB414007D1213 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB4315E9237FB414007D1213 /* Assets.xcassets */; };
@@ -870,6 +871,8 @@
 		EB41A3F3239E40FD00DA623A /* WHUCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarView.m; sourceTree = "<group>"; };
 		EB41A3F4239E40FD00DA623A /* WHUCalendarYMSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHUCalendarYMSelectView.h; sourceTree = "<group>"; };
 		EB41A3F5239E40FD00DA623A /* WHUCalendarYMSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WHUCalendarYMSelectView.m; sourceTree = "<group>"; };
+		EB422D4523D7197A009576CC /* NotiInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotiInfoCell.h; sourceTree = "<group>"; };
+		EB422D4623D7197B009576CC /* NotiInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotiInfoCell.m; sourceTree = "<group>"; };
 		EB4315DD237FB413007D1213 /* jcapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jcapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4315E0237FB413007D1213 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EB4315E1237FB413007D1213 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1101,6 +1104,8 @@
 		77A4C0E02387B04D00D9F1B4 /* Notice */ = {
 			isa = PBXGroup;
 			children = (
+				EB422D4523D7197A009576CC /* NotiInfoCell.h */,
+				EB422D4623D7197B009576CC /* NotiInfoCell.m */,
 				770EAAA623A35A7300986A89 /* SDNavigationController.h */,
 				770EAAA523A35A7300986A89 /* SDNavigationController.m */,
 				7702DB3423A096F000483CF1 /* NoticeDetailController.h */,
@@ -2517,6 +2522,7 @@
 				8D88D48B23A0EB3200C5AD8F /* Group.m in Sources */,
 				AF9B0F4923A36555008138EB /* PSTCollectionViewFlowLayout.m in Sources */,
 				EB30A4912398CECE00EEAE1E /* MJRefreshConst.m in Sources */,
+				EB422D4723D7197B009576CC /* NotiInfoCell.m in Sources */,
 				AF9B0F4623A36555008138EB /* PSTCollectionViewCell.m in Sources */,
 				AF9B0F3423A36555008138EB /* EMSDImageCache.m in Sources */,
 				7708A4CF23A8D3530098A450 /* GoOutViewCell.m in Sources */,

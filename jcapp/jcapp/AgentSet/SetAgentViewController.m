@@ -25,6 +25,7 @@
 @property (nonatomic, strong) SWFormItem *businessTripStart;
 @property (nonatomic, strong) SWFormItem *businessTripEnd;
 @property (nonatomic, strong) SWFormItem *agentname;
+@property (nonatomic, strong) SWFormItem *dept;
 @end
 
 @implementation SetAgentViewController
@@ -74,9 +75,9 @@
         [self.navigationController pushViewController:VCCollect animated:YES];
     };
     [items addObject:_agentname];
-    SWFormItem *dept = SWFormItem_Info(@"代理人部门",  myDelegate.way_groupname, SWFormItemTypeInput);
-    dept.keyboardType = UIReturnKeyDefault;
-    [items addObject:dept];
+    self.dept = SWFormItem_Info(@"代理人部门",  myDelegate.way_groupname, SWFormItemTypeInput);
+    self.dept.keyboardType = UIReturnKeyDefault;
+    [items addObject:self.dept];
     self.businessTripStart = SWFormItem_Add(@"开始日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
@@ -156,7 +157,7 @@
         
     }
     else if ([myDelegate.agentType isEqualToString:@"true"]) {
-        [self datas];
+        
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         // 日期格式化类
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -166,6 +167,7 @@
         self.businessTripStart.info=myDelegate.TimeStart;
         self.businessTripEnd.info=myDelegate.TimeEnd;
         self.agentID=myDelegate.agentid;
+        self.dept.info= myDelegate.way_groupname;
         NSString *string = self.businessTripStart.info;
         if(string.length>0)
         {
@@ -179,8 +181,11 @@
             NSDate *data = [format dateFromString:string];
             [datePickere setDate:data animated:YES];
         }
-        [self.formTableView reloadData];
-        [self.formTableView layoutIfNeeded];
+        
+        [self.formTableView beginUpdates];
+        [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [self.formTableView endUpdates];
+        //[self datas];
     }
     else{
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -215,7 +220,7 @@
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
@@ -369,6 +374,13 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    if ([myDelegate.agent_refresh isEqualToString:@"true"]) {
+        myDelegate.agent_refresh = @"false";
+        [self viewDidLoad];
+    }
+    
+    
     UIToolbar *toolBar = [[UIToolbar alloc]init];
     [self.view addSubview:toolBar];
     [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -387,6 +399,7 @@
     NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
     submitBtn.width=kScreenWidth/2;
     [toolBar setItems:toolbarItems animated:NO];
+   
 }
 
 - (void)textFieldWithText:(UITextField *)textField

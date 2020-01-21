@@ -60,7 +60,7 @@
 
 -(void)gotoback {
     [_tagView dismiss];
-     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)save {
     if(lbempid.length > 0)
@@ -72,8 +72,8 @@
         myDelegate.way_empid =lbempid;
         myDelegate.way_empname =lbempname;
         myDelegate.agentType = @"true";
-        SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
-        [self.navigationController pushViewController:VCCollect animated:YES];
+        myDelegate.agent_refresh = @"true";
+        [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {

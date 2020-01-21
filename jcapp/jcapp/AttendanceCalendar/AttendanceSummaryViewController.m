@@ -13,6 +13,8 @@
 #import "MCDatePickerView.h"
 #import "../Model/AttendanceCalendarMonth.h"
 #import "../Model/AttendanceCalendarMonthDetail.h"
+#import "ViewController.h"
+
 @interface AttendanceSummaryViewController ()<MCDatePickerViewDelegate>
 
 - (IBAction)startDateButtonOnClicked:(id)sender;
@@ -23,7 +25,8 @@
 @synthesize listOfMoviesDetail;
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
     [self loadinfo];
     NSDate *newDate = [NSDate date];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -57,7 +60,7 @@
     
     dateStr = [dateStr stringByReplacingOccurrencesOfString:@"年" withString:@"-"];
     
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceMonth?empid=%@&actime=%@",empID,dateStr];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceMonth?empid=%@&actime=%@&iosid=%@&iosid=%@",empID,dateStr ,iosid,userID];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

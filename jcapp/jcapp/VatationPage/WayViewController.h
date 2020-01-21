@@ -20,12 +20,11 @@ UITableViewDelegate>{
     NSString *resultString;
     NSString *userID;
     NSString *empID;
-    
+     NSString *iosid;
     NSMutableArray *array;
     NSMutableArray *array2;
     NSInteger _page;
     NSInteger _pageSize;
-    NSString *iosid;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;

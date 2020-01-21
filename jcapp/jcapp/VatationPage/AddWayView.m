@@ -8,6 +8,8 @@
 #import "WayViewController.h"
 #import "../TabBar/TabBarViewController.h"
 #import "Masonry.h"
+#import "ViewController.h"
+
 @interface AddWayView ()<SkyAssociationMenuViewDelegate>
 {
     NSArray *titleArr;
@@ -33,6 +35,10 @@
     [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight)];
     self.view.backgroundColor = [UIColor  whiteColor];
     stringflag = @"group";
+    
+
+     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
     
     NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGroup"];
     
@@ -113,12 +119,14 @@
         //return titleArr.count;
         if(!listOfEmp.count > 0)
         {
+
+            
             //需要有承认者权限
             if([self.userflag isEqualToString:@"1"])
             {
                 stringflag = @"emp";
                 
-                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
+                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@ &iosid=%@",@"123",@"1" ,iosid];
                 
                 NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
                 NSURL *url = [NSURL URLWithString:strURL];
@@ -137,7 +145,7 @@
             {
                 stringflag = @"emp";
                 
-                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"0"];
+                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@&iosid=%@",@"123",@"0" ,iosid];
                 
                 NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
                 NSURL *url = [NSURL URLWithString:strURL];
@@ -262,42 +270,53 @@
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-   
+ 
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-     NSLog(xmlString);
-    
-    NSRange startRange = NSMakeRange(0, 0);
-
-     startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    
-    NSRange endRagne = NSMakeRange(0, 0);
-    
-    endRagne = [xmlString rangeOfString:@"</string>"];
-    
-    NSRange reusltRagne = NSMakeRange(0, 0);
-    
-    reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    NSString *requestTmp = [NSString stringWithString:resultString];
-    NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-    NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-
-    if([stringflag isEqualToString:@"group"])
+    if([xmlString containsString: Common_MoreDeviceLoginFlag])
     {
-        listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];
-        if(listOfGroup.count > 0)
-        {
-            Group *m =self.listOfGroup[0];//取出数据元素
-            [_tagView showAsDrawDownView:_chosebutton];
-        }
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+        //跳转
+        [self presentModalViewController:valueView animated:YES];
     }
     else
     {
-        listOfEmp = [Emp mj_objectArrayWithKeyValuesArray:resultDic];
-        if(listOfEmp.count > 0)
+         NSLog(xmlString);
+        
+        NSRange startRange = NSMakeRange(0, 0);
+
+         startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        
+        NSRange endRagne = NSMakeRange(0, 0);
+        
+        endRagne = [xmlString rangeOfString:@"</string>"];
+        
+        NSRange reusltRagne = NSMakeRange(0, 0);
+        
+        reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+
+        if([stringflag isEqualToString:@"group"])
         {
-            Emp *m =self.listOfEmp[0];//取出数据元素
+            listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];
+            if(listOfGroup.count > 0)
+            {
+                Group *m =self.listOfGroup[0];//取出数据元素
+                [_tagView showAsDrawDownView:_chosebutton];
+            }
+        }
+        else
+        {
+            listOfEmp = [Emp mj_objectArrayWithKeyValuesArray:resultDic];
+            if(listOfEmp.count > 0)
+            {
+                Emp *m =self.listOfEmp[0];//取出数据元素
+            }
         }
     }
 }

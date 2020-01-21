@@ -36,6 +36,8 @@ NSInteger currentPageCountwait_new;
     [super viewDidLoad];
     [self loadstyle];
     [self loadinfo];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
     self.navigationItem.title=@"路径确认";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 }
@@ -179,7 +181,7 @@ NSInteger currentPageCountwait_new;
 //    NSString *userid = [defaults objectForKey:@"userid"];
 //    
     
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@",userID,self.processid,iosid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",self.processid ,iosid,userID];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -205,13 +207,15 @@ NSInteger currentPageCountwait_new;
         {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
-
+            
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
             //跳转
             [self presentModalViewController:valueView animated:YES];
             return;
         }
-        
+        else
+        {
+            
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -262,7 +266,7 @@ NSInteger currentPageCountwait_new;
                 [alert show];
             }
         }
-        
+        }
     }
     @catch (NSException *exception) {
         

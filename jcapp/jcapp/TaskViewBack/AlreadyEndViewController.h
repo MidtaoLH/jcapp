@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
     NSInteger currentPageCount;
+    NSString *iosid;
+    NSString *empID;
+    NSString *userid;
+    NSString *user;
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 

@@ -14,6 +14,8 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "GoOutDeatileController.h"
 #import "../TabBar/TabBarViewController.h"
+ #import "ViewController.h"
+
 @interface GoOutWaitController (){
     MJRefreshBackNormalFooter *footer;
 }
@@ -30,6 +32,11 @@ static NSString *identifier =@"GoOutWaitCell";
     
     [super viewDidLoad];
 
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    //userID = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
+    
+    
     CGFloat headimageW = self.view.frame.size.width;
     CGFloat headimageH =  self.view.frame.size.height;
     self.NewTableView.frame = CGRectMake(0, 0, headimageW, headimageH);
@@ -96,7 +103,7 @@ static NSString *identifier =@"GoOutWaitCell";
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",groupid,@"",@"0"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@&iosid=%@", @"1",currentPageCountstr,userID,groupid,@"",groupid,@"",@"0",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -113,33 +120,47 @@ static NSString *identifier =@"GoOutWaitCell";
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
-        if([xmlString containsString:@"DelteProcessInstance"])
+        if([xmlString containsString: Common_MoreDeviceLoginFlag  ])
         {
-            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-            [self presentViewController:navigationController animated:YES completion:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
-        else{
-            // 字符串截取
-            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-            NSString *resultString = [xmlString substringWithRange:reusltRagne];
-            NSString *requestTmp = [NSString stringWithString:resultString];
-            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-            if([MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic].count==listDatas.count){
-                // 设置状态
-                [footer setState:MJRefreshStateNoMoreData];
+        else
+        {
+            if([xmlString containsString:@"DelteProcessInstance"])
+            {
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
-            listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
-            [CATransaction begin];
-            [CATransaction setCompletionBlock:^{
-                [self.NewTableView reloadData];
-            }];
-            [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [CATransaction commit];
+            else{
+                // 字符串截取
+                NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+                NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+                NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+                NSString *resultString = [xmlString substringWithRange:reusltRagne];
+                NSString *requestTmp = [NSString stringWithString:resultString];
+                NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+                NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+                if([MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic].count==listDatas.count){
+                    // 设置状态
+                    [footer setState:MJRefreshStateNoMoreData];
+                }
+                listDatas = [MdlGoOutList mj_objectArrayWithKeyValuesArray:resultDic];
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [self.NewTableView reloadData];
+                }];
+                [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
+            }
         }
+        
+       
     }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];
@@ -336,9 +357,15 @@ static NSString *identifier =@"GoOutWaitCell";
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@",userid,deleteID];
     
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@&iosid=%@",userid,deleteID,iosid];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@&iosid=%@",userid,deleteID,iosid];
+    
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    NSString *iosid;
+    NSString *userID;
 }
 @property (nonatomic,strong) MdlEvectionDetail * leavedetail;
 

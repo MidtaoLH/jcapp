@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
     NSString *userID;
-    NSString *empID; 
+    NSString *empID;
+    NSString *iosid;
     NSMutableArray *array;
     NSMutableArray *array2;
     NSInteger _page;

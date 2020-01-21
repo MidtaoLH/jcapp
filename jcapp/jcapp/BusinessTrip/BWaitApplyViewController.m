@@ -15,6 +15,7 @@
 #import "../AppDelegate.h"
 #import "../BusinessTrip/BusinessTripEditViewController.h"
 #import "../TabBar/TabBarViewController.h"
+#import "ViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -47,6 +48,7 @@ NSInteger currentPageCountbwait;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
     
     [self LoadData];
     
@@ -81,7 +83,7 @@ NSInteger currentPageCountbwait;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountbwait];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"0"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userID,@"0",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -126,35 +128,50 @@ NSInteger currentPageCountbwait;
         NSLog(@"%@",@"connection1-begin");
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if([xmlString containsString:@"DelteProcessInstance"])
+        
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-            [self presentViewController:navigationController animated:YES completion:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
-        else{
-            // 字符串截取
-            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-            NSString *resultString = [xmlString substringWithRange:reusltRagne];
-            NSString *requestTmp = [NSString stringWithString:resultString];
-            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            
-            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-            if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
-                // 设置状态
-                [footer setState:MJRefreshStateNoMoreData];
+        else
+        {
+            if([xmlString containsString:@"DelteProcessInstance"])
+            {
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                [self presentViewController:navigationController animated:YES completion:nil];
             }
-            listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
-            [CATransaction begin];
-            [CATransaction setCompletionBlock:^{
-                [_NewTableView reloadData];
-            }];
-            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [CATransaction commit];
+            else{
+                // 字符串截取
+                NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+                NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+                NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+                NSString *resultString = [xmlString substringWithRange:reusltRagne];
+                NSString *requestTmp = [NSString stringWithString:resultString];
+                NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+                
+                
+                NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+                if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+                    // 设置状态
+                    [footer setState:MJRefreshStateNoMoreData];
+                }
+                listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [_NewTableView reloadData];
+                }];
+                [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [CATransaction commit];
+            }
         }
+        
+       
         
     }
     @catch (NSException *exception) {
@@ -341,10 +358,17 @@ NSInteger currentPageCountbwait;
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid= [defaults objectForKey:@"userid"];
-    //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@",userid,deleteID];
+    iosid = [defaults objectForKey:@"adId"];
     
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@&iosid=%@",userid,deleteID,iosid];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    //设置需要访问的ws和传入参数
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@",userid,deleteID];
+    
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     

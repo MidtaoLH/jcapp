@@ -18,6 +18,7 @@
 #import "../GoOut/GoOutEditController.h"
 #import "../AppDelegate.h"
 #import "../TabBar/TabBarViewController.h"
+#import "../ViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -50,6 +51,7 @@ NSInteger currentPageCountwait;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
+    iosid=[defaults objectForKey:@"adId"];
     [self LoadData];
     
     // 添加头部的下拉刷新
@@ -71,7 +73,7 @@ NSInteger currentPageCountwait;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"2"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userID,@"2",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -113,14 +115,19 @@ NSInteger currentPageCountwait;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
         NSLog(@"%@",@"connection1-begin");
-        //upateData = [[NSData alloc] initWithData:data];
-        //默认对于中文的支持不好
-        //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-        //如果是非UTF－8  NSXMLParser会报错。
-        //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-        //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
+        
         if([xmlString containsString:@"DelteProcessInstance"])
         {
             UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
@@ -355,10 +362,9 @@ NSInteger currentPageCountwait;
 }
 - (void)deleteData:(NSString*)deleteID
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@",userid,deleteID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/DelteProcessInstance?userID=%@&processInstanceID=%@&iosid=%@",userID,deleteID,iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求

@@ -14,6 +14,7 @@
 #import "../BusinessTrip/BusinessTripDetailViewController.h"
 #import "../TaskViewBack/TaskBackInfoViewController.h"
 #import "../AppDelegate.h"
+#import "ViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -46,6 +47,7 @@ NSInteger currentPageCountbapproved;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
     
     //[self LoadData];
     
@@ -67,7 +69,7 @@ NSInteger currentPageCountbapproved;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountbapproved];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"1"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetBusinessTripInfo?pasgeIndex=%@&pageSize=%@&empID=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userID,@"1",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -112,30 +114,44 @@ NSInteger currentPageCountbapproved;
         NSLog(@"%@",@"connection1-begin");
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        NSLog(@"%@", @"34443333kaishidayin");
-        NSLog(@"%@", xmlString);
-        
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        
-        NSLog(@"%@", resultString);
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
-            // 设置状态
-            [footer setState:MJRefreshStateNoMoreData];
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
-        listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
+        else
+        {
+            NSLog(@"%@", @"34443333kaishidayin");
+            NSLog(@"%@", xmlString);
+            
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            
+            NSLog(@"%@", resultString);
+            
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+                // 设置状态
+                [footer setState:MJRefreshStateNoMoreData];
+            }
+            listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
+            
+            NSLog(@"%@",@"connection1-end");
+        }
+
         
-        NSLog(@"%@",@"connection1-end");
+       
     }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];

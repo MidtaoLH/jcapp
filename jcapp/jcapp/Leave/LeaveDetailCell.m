@@ -10,6 +10,8 @@
 #import "MultiParamButton.h"
 #import "MJExtension.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
+#import "ViewController.h"
+
 #define kMargin 10
 
 @interface LeaveDetailCell()
@@ -51,13 +53,22 @@
 -(void)action:(id)sender{
     MultiParamButton* multiParamButton = (MultiParamButton* )sender;
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
+    
     NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
  
     NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"taskid"];
  
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", @"1",obj1 ];
-    NSLog(@"%@", strURL);
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@&iosid=%@", @"1",obj1,iosid ];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", @"1",obj1 ];
+    //NSLog(@"%@", strURL);
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
@@ -65,6 +76,17 @@
                                    initWithRequest:request
                                    delegate:self];
 
+}
+
+//获取控制器
+- (UIViewController *)viewController{
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8 一
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -79,35 +101,49 @@
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
-    
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
-    
-    NSString *strMessage = @"";
-    if([resultString isEqual:@"0"])
+    if([xmlString containsString: Common_MoreDeviceLoginFlag])
     {
-        strMessage =@"操作成功";
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        ViewController *nextVc = [[ViewController alloc]init];//初始化下一个界面
+        [[self viewController].navigationController pushViewController:nextVc animated:YES];
     }
     else
     {
-        strMessage =@"操作失败";
+        NSLog(@"%@", @"kaishidayin");
+        NSLog(@"%@", xmlString);
+        
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSString *strMessage = @"";
+        if([resultString isEqual:@"0"])
+        {
+            strMessage =@"操作成功";
+        }
+        else
+        {
+            strMessage =@"操作失败";
+        }
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @""
+                              message: strMessage
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        
+        NSLog(@"%@", resultString);
+        
+        NSLog(@"%@",@"connection1-end");
     }
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle: @""
-                          message: strMessage
-                          delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    [alert show];
+
     
-    NSLog(@"%@", resultString);
- 
-    NSLog(@"%@",@"connection1-end");
+   
 }
 
 //弹出消息框

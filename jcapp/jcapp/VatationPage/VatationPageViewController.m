@@ -18,6 +18,7 @@
 #import "SetAgentViewController.h"
 #import "../TabBar/TabBarViewController.h"
 #import "Masonry.h"
+#import "ViewController.h"
 
 @interface VatationPageViewController ()
 
@@ -33,8 +34,19 @@ NSString *strtype;
     
     allString = @"";
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetVacation?data=%@", @"1"];
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
+    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetVacation?data=%@&userID=%@&iosid=%@", @"1",userID,iosid];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetVacation?data=%@", @"1"];
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
@@ -174,11 +186,25 @@ NSString *strtype;
         //NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
         //NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
         
-        NSLog(@"%@", xmlString);
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+        }
+        else
+        {
+            NSLog(@"%@", xmlString);
+            
+            //NSLog(@"%@", utf8NSString);
+            //下边为手动释放内存需要进行设置MRC 和 ARC
+            //[gbkNSString release];
+        }
         
-        //NSLog(@"%@", utf8NSString);
-        //下边为手动释放内存需要进行设置MRC 和 ARC
-        //[gbkNSString release];
+       
         
     }
     @catch (NSException *exception) {

@@ -26,11 +26,11 @@
 #endif
 
 /**十六进制色值*/
-#define Common_WSUrl @"http://47.94.85.101:8095/%@"
+#define Common_WSUrl @"http://47.94.85.101:8096/%@"
 /*头像存储路径*/
-#define Common_UserPhotoUrl @"http://47.94.85.101:8095/APP/Image/%@.png"
+#define Common_UserPhotoUrl @"http://47.94.85.101:8096/APP/Image/%@.png"
 /*轮播图存储路径*/
-#define Common_ScrollPhotoUrl @"http://47.94.85.101:8095/APP/Scroll/"
+#define Common_ScrollPhotoUrl @"http://47.94.85.101:8096/APP/Scroll/"
 
 /*列表申请状态的e颜色*/
 #define Color_ProcessStutasColor  [UIColor colorWithRed:0/255.0 green:204/255.0 blue:204/255.0 alpha:1]

@@ -13,6 +13,8 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
 #import "AppDelegate.h"
+#import "../ViewController.h"
+
 static NSString * identifier = @"PendingsListCell";
 @interface AlreadyEndViewController (){
     MJRefreshBackNormalFooter *footer;
@@ -25,6 +27,12 @@ static NSString * identifier = @"PendingsListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    user = [defaults objectForKey:@"username"];
+    userid = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
+    
     //self.navigationItem.title=@"已回览";
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
@@ -51,14 +59,10 @@ static NSString * identifier = @"PendingsListCell";
 
 -(void)LoadData
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *user = [defaults objectForKey:@"username"];
-    NSString *userid = [defaults objectForKey:@"userid"];
-    NSString *empID = [defaults objectForKey:@"EmpID"];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetViewBackList?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userid,@"8"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetViewBackList?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userid,@"8",iosid];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -100,6 +104,18 @@ static NSString * identifier = @"PendingsListCell";
     @try {
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
+        
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];

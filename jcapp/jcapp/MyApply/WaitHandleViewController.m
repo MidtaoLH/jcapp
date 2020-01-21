@@ -15,6 +15,7 @@
 #import "../AppDelegate.h"
 #import "../BusinessTrip/BusinessTripDetailViewController.h"
 #import "../GoOut/GoOutDeatileController.h"
+#import "../ViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -48,6 +49,7 @@ NSInteger currentPageCountwait3;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
     
 
     
@@ -70,7 +72,7 @@ NSInteger currentPageCountwait3;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait3];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"33"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userID,@"33",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -113,6 +115,18 @@ NSInteger currentPageCountwait3;
 {
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
+        
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];

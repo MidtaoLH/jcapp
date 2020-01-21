@@ -7,6 +7,8 @@
 #import "SetAgentViewController.h"
 #import "../TabBar/TabBarViewController.h"
 #import "Masonry.h"
+#import "../ViewController.h"
+
 @interface SelectUserViewController ()<SkyAssociationMenuViewDelegate>
 {
     NSArray *titleArr;
@@ -26,6 +28,9 @@
 @synthesize lbgroupid;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
+    userid = [defaults objectForKey:@"userid"];
     [_tagView showAsFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, kScreenWidth, kScreenHeight)];
     self.view.backgroundColor = [UIColor  whiteColor];
     stringflag = @"group";
@@ -55,20 +60,20 @@
 
 -(void)gotoback {
     [_tagView dismiss];
-     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)save {
     if(lbempid.length > 0)
     {
         [_tagView dismiss];
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.way_groupname =lbgroupname;
         myDelegate.way_groupid =lbgroupid;
         myDelegate.way_empid =lbempid;
         myDelegate.way_empname =lbempname;
         myDelegate.agentType = @"true";
-        SetAgentViewController  * VCCollect = [[SetAgentViewController alloc] init];
-        [self.navigationController pushViewController:VCCollect animated:YES];
+        myDelegate.agent_refresh = @"true";
+        [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {
@@ -94,8 +99,8 @@
         if(!listOfEmp.count > 0)
         {
             stringflag = @"emp";
-            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@"];
-            NSString *strURL = [NSString stringWithFormat:urlstring,@"123",@"1"];
+            NSString *urlstring = [NSString stringWithFormat:Common_WSUrl,@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@&iosid=%@&userid=%@"];
+            NSString *strURL = [NSString stringWithFormat:urlstring,@"123",@"1" ,iosid,userid];
             NSURL *url = [NSURL URLWithString:strURL];
             //进行请求
             NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -208,31 +213,45 @@
     @try {
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
         
-        if([stringflag isEqualToString:@"group"])
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];
-            if(listOfGroup.count > 0)
-            {
-                Group *m =self.listOfGroup[0];//取出数据元素
-                [_tagView showAsDrawDownView:_chosebutton];
-            }
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
         else
         {
-            listOfEmp = [Emp mj_objectArrayWithKeyValuesArray:resultDic];
-            if(listOfEmp.count > 0)
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            
+            if([stringflag isEqualToString:@"group"])
             {
-                Emp *m =self.listOfEmp[0];//取出数据元素
+                listOfGroup = [Group mj_objectArrayWithKeyValuesArray:resultDic];
+                if(listOfGroup.count > 0)
+                {
+                    Group *m =self.listOfGroup[0];//取出数据元素
+                    [_tagView showAsDrawDownView:_chosebutton];
+                }
             }
-        }    }
+            else
+            {
+                listOfEmp = [Emp mj_objectArrayWithKeyValuesArray:resultDic];
+                if(listOfEmp.count > 0)
+                {
+                    Emp *m =self.listOfEmp[0];//取出数据元素
+                }
+            }
+       }
+    }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];
         NSString *reason = [exception reason];

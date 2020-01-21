@@ -13,6 +13,7 @@
 #import "../MJRefresh/MJRefresh.h"
 #import "TaskBackInfoViewController.h"
 #import "ExamineEditLController.h"
+#import "../ViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -26,6 +27,12 @@ MJRefreshBackNormalFooter *footer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    user = [defaults objectForKey:@"username"];
+    userid = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
+    
     //e注册自定义 cell
     [_NewTableView registerClass:[PendingListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight =kScreenHeight/5;
@@ -49,14 +56,10 @@ MJRefreshBackNormalFooter *footer;
 
 -(void)LoadData
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *user = [defaults objectForKey:@"username"];
-    NSString *userid = [defaults objectForKey:@"userid"];
-    NSString *empID = [defaults objectForKey:@"EmpID"];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userid,@"4"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userid,@"4",iosid];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -96,8 +99,19 @@ MJRefreshBackNormalFooter *footer;
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//    @try {
+    @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -119,13 +133,13 @@ MJRefreshBackNormalFooter *footer;
         }];
         [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         [CATransaction commit];
-//    }
-//    @catch (NSException *exception) {
-//        NSArray *arr = [exception callStackSymbols];
-//        NSString *reason = [exception reason];
-//        NSString *name = [exception name];
-//        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
-//    }
+    }
+    @catch (NSException *exception) {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
     
 }
 

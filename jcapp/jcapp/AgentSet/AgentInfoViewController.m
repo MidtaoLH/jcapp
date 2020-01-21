@@ -31,15 +31,17 @@
     [self loadstyle];
     [self loadData];
     [self initUI];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.title=@"代理人设定";
     self.tableView.scrollEnabled  = NO;
 }
 - (void)goBack {
-    //[self.navigationController popViewControllerAnimated:YES];
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+     [self.navigationController popViewControllerAnimated:YES];
+//    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 -(IBAction)savebtnClick:(id)sender {
 }
@@ -50,7 +52,7 @@
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
    
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSet?userID=%@&agentID=%@",userID,self.infoModel.agentID];
+    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSet?userID=%@&agentID=%@&iosid=%@",userID,self.infoModel.agentID ,iosid];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -252,40 +254,53 @@
     @try {
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-        NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
         
-        NSLog(@"%@", resultString);
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        if([xmlString containsString:@"msg"])
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            [self loadData];
-            MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: messageInfo.msg
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
-        }else
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+        }
+        else
         {
-            _agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
-            if(![_agentInfo.AgentStatus containsString:@"终止"])
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+            NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            
+            NSLog(@"%@", resultString);
+            
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            if([xmlString containsString:@"msg"])
             {
-                self.stopbtn.hidden=NO;
+                [self loadData];
+                MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: messageInfo.msg
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+                
+            }else
+            {
+                _agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+                if(![_agentInfo.AgentStatus containsString:@"终止"])
+                {
+                    self.stopbtn.hidden=NO;
+                }
+                [self.tableView reloadData];
+                [self.tableView layoutIfNeeded];
+                self.tableView.hidden = NO;
             }
-            [self.tableView reloadData];
-            [self.tableView layoutIfNeeded];
-            self.tableView.hidden = NO;
         }
     }
     @catch (NSException *exception) {
@@ -298,7 +313,6 @@
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];

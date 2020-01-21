@@ -16,7 +16,7 @@
 #import "../GoOut/GoOutDeatileController.h"
 #import "../AppDelegate.h"
 #import "../BusinessTrip/BusinessTripDetailViewController.h"
-
+#import "../ViewController.h"
 
 static NSString * identifier = @"PendingListCell";
 
@@ -41,6 +41,7 @@ NSInteger currentPageCountwait1;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
     
     // 添加头部的下拉刷新
     MJRefreshNormalHeader *header = [[MJRefreshNormalHeader alloc] init];
@@ -61,7 +62,7 @@ NSInteger currentPageCountwait1;
     // code, string userID, string menuID
     //设置需要访问的ws和传入参数
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCountwait1];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@",@"1",currentPageCountstr,empID,userID,@"31"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetPendingInfo?pasgeIndex=%@&pageSize=%@&code=%@&userID=%@&menuID=%@&iosid=%@",@"1",currentPageCountstr,empID,userID,@"31",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -102,19 +103,18 @@ NSInteger currentPageCountwait1;
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
-        NSLog(@"%@",@"connection1-begin");
-        //upateData = [[NSData alloc] initWithData:data];
-        //默认对于中文的支持不好
-        //   NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        //   NSString *gbkNSString = [[NSString alloc] initWithData:data encoding: enc];
-        //如果是非UTF－8  NSXMLParser会报错。
-        //   xmlString = [[NSString alloc] initWithString:[gbkNSString stringByReplacingOccurrencesOfString:@"<?xml version=\"1.0\" encoding=\"gbk\"?>"
-        //                                                                                       withString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?>"]];
-        
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        NSLog(@"%@", @"34443333kaishidayin");
-        NSLog(@"%@", xmlString);
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
         
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];

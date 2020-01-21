@@ -20,6 +20,7 @@
 #import "TabBarViewController.h"
 #import "AppDelegate.h"
 #import "Masonry.h"
+#import "../ViewController.h"
 #define kCount 4  //图片总张数
  
 @interface ExamineEditLController ()
@@ -63,13 +64,15 @@ static NSString *identifierImage =@"WaitTaskImageCell";
  
     //当前登陆者
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid = [defaults objectForKey:@"userid"];
+    userid = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
  
   //  self.strTaskid = @"23184";
  //   self.taskType =@"13";
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@",userid,self.strTaskid,self.taskType];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetExamineEditData?userID=%@&taskID=%@&TaskType=%@&iosid=%@",userid,self.strTaskid,self.taskType,iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -339,8 +342,9 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     id objremark = mutableDic0[@"remark"];
     
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@",@"1",self.strTaskid,objremark,objtasktype,@"1"];
-    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@&iosid=%@",userid,self.strTaskid,objremark,objtasktype,@"1",iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+
     NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@", strURL);
     NSURL *url = [NSURL URLWithString:urlStringUTF8];
@@ -393,11 +397,19 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"%@",@"connection1-begin");
- 
+
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@", @"kaishidayin");
+    //判断账号是否总其他设备登录
+    if([xmlString containsString: Common_MoreDeviceLoginFlag])
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+        //跳转
+        [self presentModalViewController:valueView animated:YES];
+        return;
+    }
     
     // 字符串截取
     NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];

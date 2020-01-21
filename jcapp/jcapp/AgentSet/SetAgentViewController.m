@@ -25,12 +25,15 @@
 @property (nonatomic, strong) SWFormItem *businessTripStart;
 @property (nonatomic, strong) SWFormItem *businessTripEnd;
 @property (nonatomic, strong) SWFormItem *agentname;
+@property (nonatomic, strong) SWFormItem *dept;
 @end
 
 @implementation SetAgentViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.title=@"代理人设定";
     
@@ -72,9 +75,9 @@
         [self.navigationController pushViewController:VCCollect animated:YES];
     };
     [items addObject:_agentname];
-    SWFormItem *dept = SWFormItem_Info(@"代理人部门",  myDelegate.way_groupname, SWFormItemTypeInput);
-    dept.keyboardType = UIReturnKeyDefault;
-    [items addObject:dept];
+    self.dept = SWFormItem_Info(@"代理人部门",  myDelegate.way_groupname, SWFormItemTypeInput);
+    self.dept.keyboardType = UIReturnKeyDefault;
+    [items addObject:self.dept];
     self.businessTripStart = SWFormItem_Add(@"开始日期", nil, SWFormItemTypeSelect, YES, YES, UIKeyboardTypeDefault);
     //self.name.showLength = YES;
     self.businessTripStart.maxInputLength = 30;
@@ -143,7 +146,7 @@
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *userID = [defaults objectForKey:@"userid"];
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@",userID,self.agentID];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@&iosid=%@",userID,self.agentID ,iosid];
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -154,7 +157,7 @@
         
     }
     else if ([myDelegate.agentType isEqualToString:@"true"]) {
-        [self datas];
+        
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         // 日期格式化类
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -164,6 +167,7 @@
         self.businessTripStart.info=myDelegate.TimeStart;
         self.businessTripEnd.info=myDelegate.TimeEnd;
         self.agentID=myDelegate.agentid;
+        self.dept.info= myDelegate.way_groupname;
         NSString *string = self.businessTripStart.info;
         if(string.length>0)
         {
@@ -177,8 +181,11 @@
             NSDate *data = [format dateFromString:string];
             [datePickere setDate:data animated:YES];
         }
-        [self.formTableView reloadData];
-        [self.formTableView layoutIfNeeded];
+        
+        [self.formTableView beginUpdates];
+        [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [self.formTableView endUpdates];
+        //[self datas];
     }
     else{
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -210,76 +217,89 @@
     @try {
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
-        NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
         
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        if([xmlString containsString:@"msg"])
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
-            if([messageInfo.msg containsString:@"成功"])
-            {
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @""
-                                      message: messageInfo.msg
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-                [alert show];
-            }
-            else
-            {
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @""
-                                      message: messageInfo.msg
-                                      delegate:nil
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-                [alert show];
-            }
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
         else
         {
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">["];
+            NSRange endRagne = [xmlString rangeOfString:@"]</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
             
-            AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
             
-            AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-            myDelegate.way_empid=agentInfo.EmpID;
-            myDelegate.way_empname=agentInfo.EmpName;
-            myDelegate.way_groupname=agentInfo.DeptName;
-            myDelegate.TimeStart=agentInfo.AgentStartDate;
-            myDelegate.TimeEnd=agentInfo.AgentEndDate;
-            myDelegate.agentid=agentInfo.AgentSetID;
-            [self datas];
-            // 日期格式化类
-            NSDateFormatter *format = [[NSDateFormatter alloc] init];
-            // 设置日期格式 为了转换成功
-            format.dateFormat = @"yyyy-MM-dd";
-            self.agentname.info=myDelegate.way_empname;
-            self.businessTripStart.info=myDelegate.TimeStart;
-            self.businessTripEnd.info=myDelegate.TimeEnd;
-            self.agentID=myDelegate.agentid;
-            NSString *string = self.businessTripStart.info;
-            if(string.length>0)
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            if([xmlString containsString:@"msg"])
             {
-                NSDate *data = [format dateFromString: string];
-                [datePickers setDate:data animated:YES];
+                MessageInfo *messageInfo = [MessageInfo mj_objectWithKeyValues:resultDic];
+                if([messageInfo.msg containsString:@"成功"])
+                {
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle: @""
+                                          message: messageInfo.msg
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+                else
+                {
+                    UIAlertView *alert = [[UIAlertView alloc]
+                                          initWithTitle: @""
+                                          message: messageInfo.msg
+                                          delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    [alert show];
+                }
             }
-            // 时间字符串
-            string = self.businessTripEnd.info;
-            if(string.length>0)
+            else
             {
-                NSDate *data = [format dateFromString:string];
-                [datePickere setDate:data animated:YES];
+                
+                AgentInfo *agentInfo = [AgentInfo mj_objectWithKeyValues:resultDic];
+                
+                AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                myDelegate.way_empid=agentInfo.EmpID;
+                myDelegate.way_empname=agentInfo.EmpName;
+                myDelegate.way_groupname=agentInfo.DeptName;
+                myDelegate.TimeStart=agentInfo.AgentStartDate;
+                myDelegate.TimeEnd=agentInfo.AgentEndDate;
+                myDelegate.agentid=agentInfo.AgentSetID;
+                [self datas];
+                // 日期格式化类
+                NSDateFormatter *format = [[NSDateFormatter alloc] init];
+                // 设置日期格式 为了转换成功
+                format.dateFormat = @"yyyy-MM-dd";
+                self.agentname.info=myDelegate.way_empname;
+                self.businessTripStart.info=myDelegate.TimeStart;
+                self.businessTripEnd.info=myDelegate.TimeEnd;
+                self.agentID=myDelegate.agentid;
+                NSString *string = self.businessTripStart.info;
+                if(string.length>0)
+                {
+                    NSDate *data = [format dateFromString: string];
+                    [datePickers setDate:data animated:YES];
+                }
+                // 时间字符串
+                string = self.businessTripEnd.info;
+                if(string.length>0)
+                {
+                    NSDate *data = [format dateFromString:string];
+                    [datePickere setDate:data animated:YES];
+                }
+                [self.formTableView reloadData];
+                [self.formTableView layoutIfNeeded];
             }
-            [self.formTableView reloadData];
-            [self.formTableView layoutIfNeeded];
         }
     }
     @catch (NSException *exception) {
@@ -347,12 +367,20 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)goBack {
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+     [self.navigationController popViewControllerAnimated:YES];
+    //    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    if ([myDelegate.agent_refresh isEqualToString:@"true"]) {
+        myDelegate.agent_refresh = @"false";
+        [self viewDidLoad];
+    }
+    
+    
     UIToolbar *toolBar = [[UIToolbar alloc]init];
     [self.view addSubview:toolBar];
     [toolBar  mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -371,6 +399,7 @@
     NSArray *toolbarItems = [NSArray arrayWithObjects:addBtn,submitBtn, nil];
     submitBtn.width=kScreenWidth/2;
     [toolBar setItems:toolbarItems animated:NO];
+   
 }
 
 - (void)textFieldWithText:(UITextField *)textField

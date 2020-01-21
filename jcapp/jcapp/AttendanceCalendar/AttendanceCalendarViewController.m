@@ -13,6 +13,8 @@
 #import "../Model/AttendanceCalendarDetail.h"
 #import "../Model/AttendanceCalendar.h"
 #import "AttendanceListCell.h"
+#import "ViewController.h"
+
 @interface AttendanceCalendarViewController ()
 <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @end
@@ -21,6 +23,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
+    
     AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
     self.calview.tagStringOfDate=^NSString*(NSArray* calm,NSArray* itemDateArray){
         NSString *datestr = [NSString stringWithFormat:@"%@-%@-%@",itemDateArray[0],itemDateArray[1],itemDateArray[2]];
@@ -122,7 +127,7 @@
 
 -(void)loadacdinfo:(NSString *)acdate
 {
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceDetail?empid=%@&attime=%@",empID,acdate];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceDetail?empid=%@&attime=%@&iosid=%@&userid=%@",empID,acdate ,iosid,userID];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -137,6 +142,17 @@
     @try {
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+        }
+        else
+        {
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -150,6 +166,7 @@
         [self.tableView beginUpdates];
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView endUpdates];
+        }
     }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];

@@ -19,6 +19,7 @@
 #import "Masonry.h"
 #import "TabBarViewController.h"
 #import "AppDelegate.h"
+#import "../ViewController.h"
 #define kCount 6  //图片总张数
 
 static long step = 0; //记录时钟动画调用次数
@@ -53,6 +54,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"已回览" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     }
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userid = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
+    
     [self loadstyle];
     [self loadInfo];
     [self loadTaskInfo];
@@ -245,11 +250,9 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 -(void)updateStatus
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    // code, string userID, string menuID
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/UpdateTaskViewStatus?userID=%@&processInstanceID=%@",userid,self.taskcode];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/UpdateTaskViewStatus?userID=%@&processInstanceID=%@&iosid=%@",userid,self.taskcode,iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -261,10 +264,9 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 -(void)loadInfo
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetProcInfo?userID=%@&processInstanceID=%@&pageType=%@",userid,self.code,self.pagetype];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetProcInfo?userID=%@&processInstanceID=%@&pageType=%@&iosid=%@",userid,self.code,self.pagetype,iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -277,11 +279,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 -(void)loadImageInfo
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetProcFile?userID=%@&processInstanceID=%@&pageType=%@",userid,self.code,self.pagetype];
-    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetProcFile?userID=%@&processInstanceID=%@&pageType=%@&iosid=%@",userid,self.code,self.pagetype,iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+   
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -292,10 +293,9 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 }
 -(void)loadTaskInfo
 {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    userid= [defaults objectForKey:@"userid"];
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetProcTaskInstance?userID=%@&processInstanceID=%@&pageType=%@",userid,self.code,self.pagetype];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetProcTaskInstance?userID=%@&processInstanceID=%@&pageType=%@&iosid=%@",userid,self.code,self.pagetype,iosid];
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
@@ -324,6 +324,17 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     @try {
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
         
         if([xmlString containsString:@"ProcessInstanceID"])
         {

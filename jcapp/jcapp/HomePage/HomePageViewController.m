@@ -16,6 +16,7 @@
 #import "DXLAutoButtonView.h"
 #import "WebViewController.h"
 #import "Masonry.h"
+#import "../ViewController.h"
 
 @interface HomePageViewController ()
 {
@@ -30,8 +31,14 @@
 - (void)viewDidLoad {
     //调用webservice
     //设置需要访问的ws和传入参数
-    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,@"AppWebService.asmx/GetScrollviewList"];
-    //[NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetScrollviewList"];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetScrollviewList?iosid=%@&UserID=%@",iosid,userID];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -71,10 +78,7 @@
 -(void)GetMsgCount
 {
     //设置需要访问的ws和传入参数
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *empID = [defaults objectForKey:@"EmpID"];
-    //设置需要访问的ws和传入参数
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetMsgCount?User=%@",empID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetMsgCount?UserID=%@&EmpID=%@&iosid=%@",userID,empID,iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -161,6 +165,18 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
+        
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
         NSRange endRagne = [xmlString rangeOfString:@"</string>"];
@@ -458,9 +474,7 @@
 }
 -(void)loadacinfo{
     //设置需要访问的ws和传入参数
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *empID = [defaults objectForKey:@"EmpID"];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendance?empid=%@",empID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendance?empid=%@&UserID=%@&iosid=%@",empID,userID,iosid];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
     //进行请求

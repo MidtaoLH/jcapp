@@ -53,7 +53,7 @@
 @property (nonatomic, strong) NSString *TimeEnd;
 
 @property (nonatomic, strong) NSString *agentType;
-
+@property (nonatomic, strong) NSString *agent_refresh;
 @property (nonatomic, strong) NSString *tabbarType;
 @property (nonatomic, strong) NSString  *tabbarIndex;
 @property (strong,nonatomic) NSMutableArray *aclistOfMovies;

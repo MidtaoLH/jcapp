@@ -165,17 +165,17 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        //判断账号是否总其他设备登录
-//        if([xmlString containsString: Common_MoreDeviceLoginFlag])
-//        {
-//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//            [alert show];
-//
-//            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
-//            //跳转
-//            [self presentModalViewController:valueView animated:YES];
-//            return;
-//        }
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
         
         // 字符串截取
         NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];

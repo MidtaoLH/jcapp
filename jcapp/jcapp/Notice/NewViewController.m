@@ -11,6 +11,7 @@
 #import "../Model/NoticeNews.h"
 #import "NoticeCell.h"
 #import "NoticeDetailController.h"
+#import "../ViewController.h"
 
 #import "../MJRefresh/MJRefresh.h"
 
@@ -92,10 +93,10 @@ static NSString *identifier =@"NoticeCell";
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
-    
+    iosid = [defaults objectForKey:@"adId"];
     
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetNoticeNews?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@", @"1",currentPageCountstr,userID,groupid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetNoticeNews?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&iosid=%@", @"1",currentPageCountstr,userID,groupid,iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
 
@@ -115,7 +116,17 @@ static NSString *identifier =@"NoticeCell";
         NSLog(@"%@",@"connection1-begin");
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
         NSLog(@"%@", @"kaishidayin");
         NSLog(@"%@", xmlString);
         

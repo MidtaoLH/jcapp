@@ -33,6 +33,7 @@
     [self initUI];
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.title=@"代理人设定";
+    self.tableView.scrollEnabled  = NO;
 }
 - (void)goBack {
     //[self.navigationController popViewControllerAnimated:YES];

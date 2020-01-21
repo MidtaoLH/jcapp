@@ -43,6 +43,7 @@
 #define Common_NetErrMsg @"服务器连接失败"
 
 #define Common_MoreDeviceLoginErrMsg @"您的账号在其他设备登录，需要重新登录"
+#define Common_MoreDeviceLoginFlag @"unlogin"
 
 #define Common_MoreDeviceLoginFlag @"unlogin"
 

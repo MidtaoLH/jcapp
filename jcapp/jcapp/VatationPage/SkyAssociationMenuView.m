@@ -52,12 +52,11 @@ NSString *const IDENTIFIER = @"CELL";
             table.showsVerticalScrollIndicator = YES;
             table.estimatedRowHeight = 0;
             table.estimatedSectionHeaderHeight = 0;
-            table.estimatedSectionFooterHeight = 0;
+            table.estimatedSectionFooterHeight = 0.1;
         }];
         bgView = [[UIView alloc] init];
-        
-        bgView.backgroundColor = [UIColor colorWithRed:.0f green:.0f blue:.0f alpha:.3f];
         bgView.userInteractionEnabled = YES;
+       
         [bgView addSubview:[tables objectAtIndex:0] ];
     }
     return self;
@@ -117,7 +116,6 @@ NSString *const IDENTIFIER = @"CELL";
         }
     }];
 }
-
 #pragma mark public
 - (void)setSelectIndexForClass1:(NSInteger)idx_1 class2:(NSInteger)idx_2 {
     sels[0] = idx_1;
@@ -191,7 +189,15 @@ NSString *const IDENTIFIER = @"CELL";
         cell.textLabel.text = [_delegate assciationMenuView:self titleForClass_1:indexPath.row];
     }else if(tableView == [tables objectAtIndex:1]){
         cell.textLabel.text = [_delegate assciationMenuView:self titleForClass_1:((UITableView*)tables[0]).indexPathForSelectedRow.row class_2:indexPath.row];
+        if (tIndex == indexPath.row) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
     }
+    UIView *selectionColor = [[UIView alloc] init];
+    selectionColor.backgroundColor = kColor_White;
+    cell.selectedBackgroundView = selectionColor;
     //[self addBottomSubLayer:cell.contentView];
     return cell;
 }
@@ -220,43 +226,41 @@ NSString *const IDENTIFIER = @"CELL";
     UITableView *t0 = [tables objectAtIndex:0];
     UITableView *t1 = [tables objectAtIndex:1];
     BOOL isNexClass = true;
-   
     //showCount = YES;
     if(tableView == t0){
+        tIndex = -1;
+        fIndex = indexPath.row;
         if([self.delegate respondsToSelector:@selector(assciationMenuView:idxChooseInClass1:)]) {
             isNexClass = [_delegate assciationMenuView:self idxChooseInClass1:indexPath.row];
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
                 [[tables objectAtIndex:0] reloadData];
-                [[tables objectAtIndex:0] layoutIfNeeded];
             }];
             [[tables objectAtIndex:0] reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             [CATransaction commit];
-            
         }
-        fIndex = indexPath.row;
         if(isNexClass) {
+            if(!t1.superview) {
+                [bgView addSubview:t1];
+            }
+            [self adjustTableViews];
             [CATransaction begin];
             [CATransaction setCompletionBlock:^{
                 [t1 reloadData];
                 [t1 layoutIfNeeded];
             }];
+            
             [t1 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
             [CATransaction commit];
-            if(!t1.superview) {
-                [bgView addSubview:t1];
-            }
-            [self adjustTableViews];
         }
     }else if(tableView == t1) {
         isNexClass = [_delegate assciationMenuView:self idxChooseInClass1:fIndex class2:indexPath.row];
         tIndex = indexPath.row;
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
-            [t0 reloadData];
-            [t0 layoutIfNeeded];
+            [t1 reloadData];
         }];
-        [t0 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [t1 reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         [CATransaction commit];
         if([self.delegate respondsToSelector:@selector(selectFindex:Tindex:)]) {
             [_delegate selectFindex:fIndex Tindex:tIndex];

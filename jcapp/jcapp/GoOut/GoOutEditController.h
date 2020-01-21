@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSUInteger isUploadImg;//是否正在上传图片 1:是 0:不是
     NSUInteger errImgCount;//上传失败的图片个数
     NSUInteger rightImgCount;//上传失败的图片个数
+    
+    NSString *iosid;
 } 
 @property (nonatomic,copy) NSString *processInstanceID;
 @property (nonatomic,copy) NSString *evectionID;

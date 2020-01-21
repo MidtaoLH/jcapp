@@ -34,6 +34,7 @@ NSString *unloadflag = @"";
     self.userslist.dataSource=self;
     self.userslist.bounces = NO;
     [self loadinfo];
+    self.userslist.scrollEnabled  = NO;
 }
 //解决tableview线不对的问题
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

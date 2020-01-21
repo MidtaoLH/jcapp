@@ -879,8 +879,8 @@ NSString *adduserlistflag = @"true";
 }
 //点击背景键盘退出
 -(IBAction)backgroundTap:(id)sender {
-    [txtuser resignFirstResponder];
-    [txtpassword resignFirstResponder];
+    //[txtuser resignFirstResponder];
+    //[txtpassword resignFirstResponder];
     self.usernamelist.hidden = true;
     
 }

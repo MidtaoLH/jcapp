@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *resultString;
     
     NSString *userID;
+    NSString *iosid;
 }
  @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *awardID_FK;

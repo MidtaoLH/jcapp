@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *array2;
     NSInteger _page;
     NSInteger _pageSize;
+    NSString *iosid;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;

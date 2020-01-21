@@ -49,6 +49,8 @@
     }];
     
     [self loadData];
+    self.formTableView.scrollEnabled  = NO;
+    //self.formTableView.scrollEnabled = YES;
 }
 /**
  数据源处理

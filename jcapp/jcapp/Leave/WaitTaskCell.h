@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "../Model/LeaveDeatil.h"
 
 
@@ -19,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    NSString *iosid;
 }
 @property (nonatomic,strong) LeaveDeatil * leavedetail;
 

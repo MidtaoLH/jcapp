@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    NSString *userID;
+    NSString *iosid;
 }
 @property (nonatomic,strong) LeaveDeatil * leavedetail;
 

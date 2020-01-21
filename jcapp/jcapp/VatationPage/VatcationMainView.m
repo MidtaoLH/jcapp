@@ -75,7 +75,13 @@ NSString * boolflag = @"flase";
         //vatcationid = @"10673";
        // urltype = @"getdata";
         //processid = @"22783";
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@&iosid=%@", userID,vatcationid,processid,iosid];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@&iosid=%@", userID,vatcationid,processid,iosid];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        //NSURL *url = [NSURL URLWithString:strURL];
+        
+        
+       // NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@&iosid=%@", userID,vatcationid,processid,iosid];
         
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);

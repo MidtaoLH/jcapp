@@ -13,7 +13,7 @@
 #import "WaitTaskImageCell.h"
 #import "../Model/LeaveTask.h"
 #import "WaitTaskCell.h"
-
+#import "ViewController.h"
 
 #define kCount 6  //图片总张数
 
@@ -46,12 +46,20 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     [super viewDidLoad];
     
     self.title = @"请假";
-    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
     //设置需要访问的ws和传入参数
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveDetail"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLeaveDetail?userID=%@&iosid=%@", userID,iosid];
     
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetLeaveDetail?"];
+    
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     

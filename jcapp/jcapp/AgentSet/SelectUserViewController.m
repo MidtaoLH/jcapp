@@ -66,7 +66,7 @@
     if(lbempid.length > 0)
     {
         [_tagView dismiss];
-        AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         myDelegate.way_groupname =lbgroupname;
         myDelegate.way_groupid =lbgroupid;
         myDelegate.way_empid =lbempid;

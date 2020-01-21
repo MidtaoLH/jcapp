@@ -30,6 +30,9 @@ UITableViewDelegate>{
     NSMutableDictionary *info;
     NSMutableArray *vatcationArray;
     NSMutableArray *listOfMovies;
+    
+    NSString *userID;
+    NSString *iosid;
  
 }
 @property (nonatomic, weak)id<VcBDelegate> delegate; //声明协议变量

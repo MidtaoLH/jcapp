@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    NSString *userid;
+    NSString *iosid;
 }
 @property (weak, nonatomic) IBOutlet UITableView *NewTableView;
 @property (weak, nonatomic) IBOutlet UITableView *ImageTableView;

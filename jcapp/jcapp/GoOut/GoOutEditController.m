@@ -22,6 +22,7 @@
 #import "TabBarViewController.h"
 #import "../VatationPage/WayViewController.h"
 #import "Masonry.h"
+#import "ViewController.h"
 
 @interface GoOutEditController ()<UIActionSheetDelegate>
 @property (nonatomic, strong) NSArray *genders;
@@ -56,6 +57,7 @@
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
+    iosid = [defaults objectForKey:@"adId"];
     
     // 任务id复植
     processid = self.processInstanceID;
@@ -69,7 +71,13 @@
     if([self.edittype isEqualToString:@"2"] || [self.edittype isEqualToString:@"3"])
     {
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGoOutDataByID?userID=%@&EvectionID=%@&ProcessInstanceID=%@", userID,self.evectionID,self.processInstanceID ];
+        
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGoOutDataByID?userID=%@&EvectionID=%@&ProcessInstanceID=%@&iosid=%@", userID,self.evectionID,self.processInstanceID,iosid ];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+        //NSURL *url = [NSURL URLWithString:strURL];
+        
+        //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetGoOutDataByID?userID=%@&EvectionID=%@&ProcessInstanceID=%@&iosid=%@", userID,self.evectionID,self.processInstanceID,iosid ];
         
         NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", strURL);
@@ -231,7 +239,7 @@
     };
     [items addObject:_businessTripEnd];
     
-    self.businessNum = SWFormItem_Add(@"外出时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
+    self.businessNum = SWFormItem_Add(@"外出时长", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeDecimalPad);
     self.businessNum.maxInputLength = 5;
     self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
     self.businessNum.unit=@"小时";
@@ -482,7 +490,7 @@
         reason = [reason stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
         reason = [reason stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
-        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
+        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@&iosid=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson,iosid];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GoOutSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -624,7 +632,7 @@
         reason = [reason stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
         reason = [reason stringByReplacingOccurrencesOfString:@"+" withString:@"%2B"];
         
-        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson];
+        NSString *post = [NSString stringWithFormat:@"ProcessApplyCode=%@&edittype=%@&userid=%@&groupid=%@&empid=%@&vtype=%@&starttime=%@&endtime=%@&vatcationtime=%@&reason=%@&name=%@&leavleid=%@&processid=%@&imagecount=%@&applycode=%@&CelReson=%@&iosid=%@", self.ProcessApplyCode,self.edittype,userID,groupid,empID,type,timestart,timeend,vatcationtime,reason,empname,self.evectionID,processid,imagecount,ApplyCode,self.proCelReson,iosid];
         NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
         NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GoOutSave?"];
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
@@ -697,187 +705,202 @@
         NSLog(@"%@",@"connection1-begin");
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
-        if(isUploadImg==1)
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            if(rightImgCount+errImgCount==imgcount){
-                return;
-            }
-            NSString *message=@"";
-            if([xmlString isEqualToString:@"OK"]){
-                rightImgCount++;
-                if(imgcount==rightImgCount){
-                    //保存成功 提交成功
-                    message=@"提交成功";
-                    if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
-                        message=@"保存成功";
-                    }
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-            else{
-                if(errImgCount==0){
-                    message=@"图片上传失败，请重新提交";
-                    if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
-                        message=@"图片上传失败，请重新保存";
-                    }
-                    self.edittype = @"2"; //编辑
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                }
-                errImgCount++;
-            }
-            //s已上传的图片+上传失败的图片=总图片数 说明所有图片已上传
-            if(rightImgCount+errImgCount==imgcount){
-                isUploadImg=0;
-            }
-            return ;
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
-        
-        //从一览进入显示获取数据
-        if([self.urltype isEqualToString:@"getdata"])
+        else
         {
-            // 字符串截取
-            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
-            NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
-            
-            NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
-            NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
-            
-            NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
-            NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
-            
-            //获取附件数据
-            NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
-            NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
-            
-            NSString *requestTmp3 = [NSString stringWithString:resultString3];
-            NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
-            NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
-            listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
-            
-            //获取回览明细表数据
-            NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
-            NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
-            
-            NSString *requestTmp2 = [NSString stringWithString:resultString2];
-            NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
-            NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
-            listdetail = [MdlEvectionDetail mj_objectArrayWithKeyValuesArray:resultDic2];
-            
-            //获取头表数据
-            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-            NSString *resultString = [xmlString substringWithRange:reusltRagne];
-            
-            NSLog(@"%@", resultString);
-            
-            NSString *requestTmp = [NSString stringWithString:resultString];
-            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-            
-            listhead = [MdlEvection mj_objectArrayWithKeyValuesArray:resultDic];
-            for (MdlEvection *p1 in listhead) {
-                
-                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
-                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&gt;"withString:@">" ];
-                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
-                p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
-                
-                NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
-                NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"外出时间：",p1.PlanStartTime,p1.PlanEndTime];
-                NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"外出时长(h)：",p1.TimePlanNum];
-                NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"外出事由：",p1.EvectionDescribe];
-                
-                self.businessTripStart.info =  p1.PlanStartTime;
-                self.businessTripEnd.info = p1.PlanEndTime;
-                self.businessNum.info = p1.TimePlanNum;
-                self.reason.info = p1.EvectionDescribe;
-                
-                // 日期格式化类
-                NSDateFormatter *format = [[NSDateFormatter alloc] init];
-                // 设置日期格式 为了转换成功
-                format.dateFormat = @"yyyy-MM-dd";
-                // 时间字符串
-                NSString *string = self.businessTripStart.info;
-                // NSString * -> NSDate *
-                NSDate *data = [format dateFromString:string];
-                [datePickers setDate:data animated:YES];
-                // 时间字符串
-                string = self.businessTripEnd.info;
-                // NSString * -> NSDate *
-                data = [format dateFromString:string];
-                [datePickere setDate:data animated:YES];
-                NSMutableArray *imagepath = [[NSMutableArray alloc] init];
-                
-                for(NSInteger i = 0;i <listAnnex.count;i++)
-                {
-                    MdlAnnex *kl2 = self.listAnnex[i];
-                    NSString *imagepath_s = [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.AnnexPath];
-                    UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
-                    if (imagetest) {
-                        [imagepath addObject:imagetest];
-                    }
-                }
-                self.image.images =imagepath;
-                [CATransaction begin];
-                [CATransaction setCompletionBlock:^{
-                    [self.formTableView reloadData];
-                }];
-                [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-                [CATransaction commit];
-            }
-        }
-        //保存 提交操作    但是要区分追加还是修改保存
-        else if([self.urltype isEqualToString:@"keepsave"] )
-        {
-            // 字符串截取
-            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-            NSString *resultString = [xmlString substringWithRange:reusltRagne];
-            
-            NSString *requestTmp = [NSString stringWithString:resultString];
-            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-            
-            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-            listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
-            
-            if(listOfLeave.count > 0)
+            if(isUploadImg==1)
             {
-                LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
-                if ([ m.Status isEqualToString:@"0"])
-                {
-                    ApplyCode = m.ApplyCode;
-                    processid=m.ProcessID;
-                    self.evectionID=m.LeaveID;
-                    
-                    if(self.image.images.count >0){
-                        [self uploadImg];
-                    }
-                    else{
+                if(rightImgCount+errImgCount==imgcount){
+                    return;
+                }
+                NSString *message=@"";
+                if([xmlString isEqualToString:@"OK"]){
+                    rightImgCount++;
+                    if(imgcount==rightImgCount){
                         //保存成功 提交成功
-                        NSString *message=@"提交成功";
+                        message=@"提交成功";
                         if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
                             message=@"保存成功";
                         }
-                        UIAlertView *alert = [[UIAlertView alloc]
-                                              initWithTitle: @""
-                                              message: message
-                                              delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
                     }
                 }
-                else
+                else{
+                    if(errImgCount==0){
+                        message=@"图片上传失败，请重新提交";
+                        if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                            message=@"图片上传失败，请重新保存";
+                        }
+                        self.edittype = @"2"; //编辑
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        [alert show];
+                    }
+                    errImgCount++;
+                }
+                //s已上传的图片+上传失败的图片=总图片数 说明所有图片已上传
+                if(rightImgCount+errImgCount==imgcount){
+                    isUploadImg=0;
+                }
+                return ;
+            }
+            
+            //从一览进入显示获取数据
+            if([self.urltype isEqualToString:@"getdata"])
+            {
+                // 字符串截取
+                NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">{\"Table\":"];
+                NSRange endRagne = [xmlString rangeOfString:@",\"Table1\":"];
+                
+                NSRange startRange2 =[xmlString rangeOfString:@",\"Table1\":"];
+                NSRange endRagne2 = [xmlString rangeOfString:@",\"Table2\":"];
+                
+                NSRange startRange3 =[xmlString rangeOfString:@",\"Table2\":"];
+                NSRange endRagne3 =[xmlString rangeOfString:@"}</string>"];
+                
+                //获取附件数据
+                NSRange reusltRagnedetail3 = NSMakeRange(startRange3.location + startRange3.length, endRagne3.location - startRange3.location - startRange3.length);
+                NSString *resultString3 = [xmlString substringWithRange:reusltRagnedetail3];
+                
+                NSString *requestTmp3 = [NSString stringWithString:resultString3];
+                NSData *resData3 = [[NSData alloc] initWithData:[requestTmp3 dataUsingEncoding:NSUTF8StringEncoding]];
+                NSMutableDictionary *resultDic3 = [NSJSONSerialization JSONObjectWithData:resData3 options:NSJSONReadingMutableLeaves error:nil];
+                listAnnex = [MdlAnnex mj_objectArrayWithKeyValuesArray:resultDic3];
+                
+                //获取回览明细表数据
+                NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);
+                NSString *resultString2 = [xmlString substringWithRange:reusltRagnedetail2];
+                
+                NSString *requestTmp2 = [NSString stringWithString:resultString2];
+                NSData *resData2 = [[NSData alloc] initWithData:[requestTmp2 dataUsingEncoding:NSUTF8StringEncoding]];
+                NSMutableDictionary *resultDic2 = [NSJSONSerialization JSONObjectWithData:resData2 options:NSJSONReadingMutableLeaves error:nil];
+                listdetail = [MdlEvectionDetail mj_objectArrayWithKeyValuesArray:resultDic2];
+                
+                //获取头表数据
+                NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+                NSString *resultString = [xmlString substringWithRange:reusltRagne];
+                
+                NSLog(@"%@", resultString);
+                
+                NSString *requestTmp = [NSString stringWithString:resultString];
+                NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+                NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+                
+                listhead = [MdlEvection mj_objectArrayWithKeyValuesArray:resultDic];
+                for (MdlEvection *p1 in listhead) {
+                    
+                    p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                    p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&gt;"withString:@">" ];
+                    p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                    p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+                    p1.EvectionDescribe = [p1.EvectionDescribe stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+                    
+                    NSString * strapplydate =[[NSString alloc]initWithFormat:@"%@%@",@"申请时间：",p1.ApplyDate];
+                    NSString * strleavedate =[[NSString alloc]initWithFormat:@"%@%@ ~ %@",@"外出时间：",p1.PlanStartTime,p1.PlanEndTime];
+                    NSString * strleavecounts =[[NSString alloc]initWithFormat:@"%@%@",@"外出时长(h)：",p1.TimePlanNum];
+                    NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"外出事由：",p1.EvectionDescribe];
+                    
+                    self.businessTripStart.info =  p1.PlanStartTime;
+                    self.businessTripEnd.info = p1.PlanEndTime;
+                    self.businessNum.info = p1.TimePlanNum;
+                    self.reason.info = p1.EvectionDescribe;
+                    
+                    // 日期格式化类
+                    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+                    // 设置日期格式 为了转换成功
+                    format.dateFormat = @"yyyy-MM-dd";
+                    // 时间字符串
+                    NSString *string = self.businessTripStart.info;
+                    // NSString * -> NSDate *
+                    NSDate *data = [format dateFromString:string];
+                    [datePickers setDate:data animated:YES];
+                    // 时间字符串
+                    string = self.businessTripEnd.info;
+                    // NSString * -> NSDate *
+                    data = [format dateFromString:string];
+                    [datePickere setDate:data animated:YES];
+                    NSMutableArray *imagepath = [[NSMutableArray alloc] init];
+                    
+                    for(NSInteger i = 0;i <listAnnex.count;i++)
+                    {
+                        MdlAnnex *kl2 = self.listAnnex[i];
+                        NSString *imagepath_s = [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.AnnexPath];
+                        UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
+                        if (imagetest) {
+                            [imagepath addObject:imagetest];
+                        }
+                    }
+                    self.image.images =imagepath;
+                    [CATransaction begin];
+                    [CATransaction setCompletionBlock:^{
+                        [self.formTableView reloadData];
+                    }];
+                    [self.formTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [CATransaction commit];
+                }
+            }
+            //保存 提交操作    但是要区分追加还是修改保存
+            else if([self.urltype isEqualToString:@"keepsave"] )
+            {
+                // 字符串截取
+                NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+                NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+                NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+                NSString *resultString = [xmlString substringWithRange:reusltRagne];
+                
+                NSString *requestTmp = [NSString stringWithString:resultString];
+                NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+                
+                NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+                listOfLeave = [LeaveStatusModel mj_objectArrayWithKeyValuesArray:resultDic];
+                
+                if(listOfLeave.count > 0)
                 {
-                    // 弹出 对话框
-                    [self showError:m.message];
+                    LeaveStatusModel *m =self.listOfLeave[0];//取出数据元素
+                    if ([ m.Status isEqualToString:@"0"])
+                    {
+                        ApplyCode = m.ApplyCode;
+                        processid=m.ProcessID;
+                        self.evectionID=m.LeaveID;
+                        
+                        if(self.image.images.count >0){
+                            [self uploadImg];
+                        }
+                        else{
+                            //保存成功 提交成功
+                            NSString *message=@"提交成功";
+                            if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
+                                message=@"保存成功";
+                            }
+                            UIAlertView *alert = [[UIAlertView alloc]
+                                                  initWithTitle: @""
+                                                  message: message
+                                                  delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+                            [alert show];
+                        }
+                    }
+                    else
+                    {
+                        // 弹出 对话框
+                        [self showError:m.message];
+                    }
                 }
             }
         }
+        
+        
+       
     }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];

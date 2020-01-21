@@ -10,6 +10,8 @@
 #import "MultiParamButton.h"
 #import "MJExtension.h"
 #import "../SDWebImage/UIImageView+WebCache.h"
+ #import "ViewController.h"
+
 #define kMargin 10
 
 @interface GoOutDetailCell()
@@ -53,16 +55,22 @@
     
     NSLog(@"Vvvverify : %@", multiParamButton.multiParamDic);
     
-    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"taskid"];
-    
-    NSString *userID;
-    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
+    iosid = [defaults objectForKey:@"adId"];
+
     
-    NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", userID,obj1 ];
-    NSLog(@"%@", strURL);
+    NSString * obj1 = [multiParamButton.multiParamDic objectForKey:@"taskid"];
+    
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@&iosid=%@", userID,obj1,iosid ];
+    
+    NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
+    
+    
+    //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AdmitUrge?userID=%@&taskID=%@", @"1",obj1 ];
+    //NSLog(@"%@", strURL);
+    //NSURL *url = [NSURL URLWithString:strURL];
     //进行请求
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     
@@ -71,6 +79,18 @@
                                    delegate:self];
     
 }
+
+//获取控制器
+- (UIViewController *)viewController{
+    for (UIView* next = [self superview]; next; next = next.superview) {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
+}
+
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8 一
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSLog(@"%@    ",@"connection1-begin");
@@ -84,18 +104,35 @@
     
     xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@", @"kaishidayin");
-    NSLog(@"%@", xmlString);
+    if([xmlString containsString: Common_MoreDeviceLoginFlag])
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        ViewController *nextVc = [[ViewController alloc]init];//初始化下一个界面
+        [[self viewController].navigationController pushViewController:nextVc animated:YES];
+        
+        //ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+        //跳转
+        //[self presentModalViewController:valueView animated:YES];
+    }
+    else
+    {
+        NSLog(@"%@", @"kaishidayin");
+        NSLog(@"%@", xmlString);
+        
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSLog(@"%@", resultString);
+        
+        NSLog(@"%@",@"connection1-end");
+    }
     
-    // 字符串截取
-    NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-    NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-    NSString *resultString = [xmlString substringWithRange:reusltRagne];
     
-    NSLog(@"%@", resultString);
-    
-    NSLog(@"%@",@"connection1-end");
 }
 
 //弹出消息框

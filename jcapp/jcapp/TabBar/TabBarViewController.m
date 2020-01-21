@@ -512,7 +512,7 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         
         make.left.mas_equalTo(Common_ColSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+        make.size.mas_equalTo(CGSizeMake(Common_TableUserImageSize,Common_TableUserImageSize));
     }];
     [vc.lblname mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
@@ -529,21 +529,21 @@ UIViewController *childViewControllerAttendanceCalendar (NSString *title, NSStri
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [vc.calview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableUserImageSize+Common_RowSize*2);
         
         make.left.mas_equalTo(0);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.47));
     }];
     [vc.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+kScreenHeight*0.45+Common_RowSize*2);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableUserImageSize+kScreenHeight*0.45+Common_RowSize*2);
         
         make.left.mas_equalTo(0);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight*0.2));
     }]; 
     vc.myHeadPortrait.layer.masksToBounds = YES;
-    vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
+    vc.myHeadPortrait.layer.cornerRadius = Common_TableUserImageSize * 0.5;
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }
@@ -557,7 +557,7 @@ UIViewController *childViewControllerAttendanceSummary (NSString *title, NSStrin
         
         make.left.mas_equalTo(Common_ColSize);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(Common_UserImageSize,Common_UserImageSize));
+        make.size.mas_equalTo(CGSizeMake(Common_TableUserImageSize,Common_TableUserImageSize));
     }];
     [vc.lblname mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
@@ -574,21 +574,21 @@ UIViewController *childViewControllerAttendanceSummary (NSString *title, NSStrin
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_TxTHeight));
     }];
     [vc.btndate mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize*2);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_RowSize);
         
         make.left.mas_equalTo(kScreenWidth*0.5);
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(Common_TxTWidth,Common_BtnHeight));
     }];
     [vc.foldingTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2);
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight+Common_TableUserImageSize);
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2)));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight-(StatusBarAndNavigationBarHeight+Common_TableUserImageSize+Common_RowSize*2)));
     }];
     vc.myHeadPortrait.layer.masksToBounds = YES;
-    vc.myHeadPortrait.layer.cornerRadius = Common_UserImageSize * 0.5;
+    vc.myHeadPortrait.layer.cornerRadius = Common_TableUserImageSize * 0.5;
     setAnimation(vc.tabBarItem, tag);
     return vc;
 }

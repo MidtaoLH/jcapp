@@ -13,7 +13,7 @@
 #import "../TaskViewBack/TaskBackInfoViewController.h"
 #import "../MJRefresh/MJRefresh.h"
 #import "LeaveDetailController.h"
-
+ #import "ViewController.h"
 
 static NSString * identifier = @"LeaveListCell";
 
@@ -29,6 +29,8 @@ static NSString * identifier = @"LeaveListCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+
     
     CGFloat headimageW = self.view.frame.size.width;
     CGFloat headimageH =  self.view.frame.size.height;
@@ -85,11 +87,12 @@ static NSString * identifier = @"LeaveListCell";
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
-    
+
+    iosid = [defaults objectForKey:@"adId"];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLeaveListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@", @"1",currentPageCountstr,userID,groupid,@"",@"2",@"",@"1"];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetLeaveListData?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&CaseName=%@&ApplyGroupID_FK=%@&EmpCName=%@&ProcessStutas=%@&iosid=%@", @"1",currentPageCountstr,userID,groupid,@"",@"2",@"",@"1",iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];
@@ -106,33 +109,47 @@ static NSString * identifier = @"LeaveListCell";
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
-        NSLog(@"%@", @"kaishidayin");
-        NSLog(@"%@", xmlString);
-        
-        // 字符串截取
-        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
-        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-        NSString *resultString = [xmlString substringWithRange:reusltRagne];
-        
-        NSLog(@"%@", resultString);
-        
-        NSString *requestTmp = [NSString stringWithString:resultString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        if([LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
-            // 设置状态
-            [footer setState:MJRefreshStateNoMoreData];
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
         }
-        listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            [_NewTableView reloadData];
-        }];
-        [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [CATransaction commit];
-        NSLog(@"%@",@"connection1-end");
+        else
+        {
+            NSLog(@"%@", @"kaishidayin");
+            NSLog(@"%@", xmlString);
+            
+            // 字符串截取
+            NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+            NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+            NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+            NSString *resultString = [xmlString substringWithRange:reusltRagne];
+            
+            NSLog(@"%@", resultString);
+            
+            NSString *requestTmp = [NSString stringWithString:resultString];
+            NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+            if([LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+                // 设置状态
+                [footer setState:MJRefreshStateNoMoreData];
+            }
+            listOfMovies = [LeaveListModel mj_objectArrayWithKeyValuesArray:resultDic];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [_NewTableView reloadData];
+            }];
+            [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
+            NSLog(@"%@",@"connection1-end");
+        }
+        
+      
         
     }
     @catch (NSException *exception) {

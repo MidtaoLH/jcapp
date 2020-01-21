@@ -168,7 +168,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     CGFloat topHeight = [[UIApplication sharedApplication] statusBarFrame].size.height + 44;
-    YUFoldingTableView *foldingTableView = [[YUFoldingTableView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2, kScreenWidth,kScreenHeight-(StatusBarAndNavigationBarHeight+Common_UserImageSize+Common_RowSize*2))];
+    YUFoldingTableView *foldingTableView = [[YUFoldingTableView alloc] initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight+Common_TableUserImageSize+Common_RowSize*2, kScreenWidth,kScreenHeight-(StatusBarAndNavigationBarHeight+Common_TableUserImageSize+Common_RowSize*2))];
     _foldingTableView = foldingTableView;
     
     [self.view addSubview:foldingTableView];

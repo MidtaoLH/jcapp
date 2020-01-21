@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentValue;
     NSString *resultString;
     NSString *userid;
+    NSString *iosid;
 }
 @property (nonatomic,copy) NSString *code;
 @property (nonatomic,copy) NSString *taskcode;

@@ -16,7 +16,8 @@
 #import "VatcationMainView.h"
 #import "BusinessTripEditViewController.h"
 #import "GoOutEditController.h"
-#import "ViewController.h"
+#import "../ViewController.h"
+
 static NSString * identifier = @"TableCell";
 
 NSString * saveflag = @"flase";
@@ -60,7 +61,9 @@ NSInteger currentPageCountwait_new;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    iosid = [defaults objectForKey:@"adId"];
+    
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.way_refresh =@"false";
     if(listOfWay.count > 0)
     {
@@ -148,7 +151,7 @@ NSInteger currentPageCountwait_new;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     //myDelegate.userPhotoimageView;
     
     if ([myDelegate.way_refresh isEqualToString:@"true"]) {
@@ -172,11 +175,11 @@ NSInteger currentPageCountwait_new;
 
 -(void)LoadData
 {
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
-    
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid = [defaults objectForKey:@"userid"];
-    
+//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//    
+//    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//    NSString *userid = [defaults objectForKey:@"userid"];
+//    
     
     NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",userid,self.processid ,iosid,userID];
     
@@ -199,6 +202,7 @@ NSInteger currentPageCountwait_new;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -207,6 +211,7 @@ NSInteger currentPageCountwait_new;
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
             //跳转
             [self presentModalViewController:valueView animated:YES];
+            return;
         }
         else
         {
@@ -418,7 +423,7 @@ NSInteger currentPageCountwait_new;
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"userid"];
     
-    AppDelegate *myDelegate = [[UIApplication sharedApplication] delegate];
+    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     // Model array -> JSON array
     NSArray *dictArray = [Way mj_keyValuesArrayWithObjectArray:listOfWay];
     
@@ -428,10 +433,11 @@ NSInteger currentPageCountwait_new;
     jsonString = [NSString stringWithFormat:@"%@",jsonString];
     
     //////////////////////////////////
-    NSString *post = [NSString stringWithFormat:@"strjson=%@&userid=%@&processid=%@",
+    NSString *post = [NSString stringWithFormat:@"strjson=%@&userid=%@&processid=%@&iosid=%@",
                       jsonString,userid,_processid];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
-    NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/InsertProcessChange?"];
+//    NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/InsertProcessChange?"];
+    NSURL *webServiceURL = [NSURL URLWithString:[NSString stringWithFormat:Common_WSUrl,@"InsertProcessChange?"]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:postData];

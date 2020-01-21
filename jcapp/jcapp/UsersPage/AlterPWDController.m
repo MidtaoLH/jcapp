@@ -30,6 +30,7 @@
         make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_UserTableHeight*2));
     }];
     [self datas];
+    self.formTableView.scrollEnabled  = NO;
 }
 /**
  数据源处理

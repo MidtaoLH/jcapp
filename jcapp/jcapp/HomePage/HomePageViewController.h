@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *currentTagName;
     NSString *currentValue;
     NSString *resultString;
+    NSString *iosid;
+    NSString *empID;
+    NSString *userID;
     
     NSString *BLCount;//我的申请
     NSString *DCLCount;//待我审批

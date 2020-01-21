@@ -51,6 +51,8 @@
     }];
     
     [self loadData];
+    self.formTableView.scrollEnabled  = NO;
+    //self.formTableView.scrollEnabled = YES;
 }
 /**
  数据源处理
@@ -360,9 +362,10 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)goBack {
-    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
-    [self presentViewController:navigationController animated:YES completion:nil];
+     [self.navigationController popViewControllerAnimated:YES];
+    //    UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+//    [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

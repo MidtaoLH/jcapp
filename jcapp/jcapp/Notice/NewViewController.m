@@ -11,7 +11,8 @@
 #import "../Model/NoticeNews.h"
 #import "NoticeCell.h"
 #import "NoticeDetailController.h"
-#import "ViewController.h"
+#import "../ViewController.h"
+
 #import "../MJRefresh/MJRefresh.h"
 
 @interface NewViewController ()<UIActionSheetDelegate>{
@@ -92,10 +93,10 @@ static NSString *identifier =@"NoticeCell";
     empname = [defaults objectForKey:@"empname"];
     groupid = [defaults objectForKey:@"Groupid"];
     UserHour = [defaults objectForKey:@"UserHour"];
- iosid = [defaults objectForKey:@"adId"];
+    iosid = [defaults objectForKey:@"adId"];
     
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetNoticeNews?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@ &iosid=%@", @"1",currentPageCountstr,userID,groupid ,iosid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetNoticeNews?pasgeIndex=%@&pageSize=%@&userID=%@&GroupID_FK=%@&iosid=%@", @"1",currentPageCountstr,userID,groupid,iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
 
@@ -115,6 +116,45 @@ static NSString *identifier =@"NoticeCell";
         NSLog(@"%@",@"connection1-begin");
         
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //判断账号是否总其他设备登录
+        if([xmlString containsString: Common_MoreDeviceLoginFlag])
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            
+            ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
+            //跳转
+            [self presentModalViewController:valueView animated:YES];
+            return;
+        }
+        NSLog(@"%@", @"kaishidayin");
+        NSLog(@"%@", xmlString);
+        
+        // 字符串截取
+        NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRagne = [xmlString rangeOfString:@"</string>"];
+        NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
+        NSString *resultString = [xmlString substringWithRange:reusltRagne];
+        
+        NSLog(@"%@", resultString);
+        
+        NSString *requestTmp = [NSString stringWithString:resultString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        NSMutableDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        if([NoticeNews mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
+            // 设置状态
+            [footer setState:MJRefreshStateNoMoreData];
+        }
+        listOfMovies = [NoticeNews mj_objectArrayWithKeyValuesArray:resultDic];
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [_NewTableView reloadData];
+        }];
+        [_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [CATransaction commit];
+        NSLog(@"%@",@"connection1-end");
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {

@@ -213,7 +213,7 @@ NSString * bflag = @"flase";
     };
     [items addObject:_businessTripEnd];
     
-    self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeNumberPad);
+    self.businessNum = SWFormItem_Add(@"出差天数", nil, SWFormItemTypeInput, YES, YES, UIKeyboardTypeDecimalPad);
     self.businessNum.maxInputLength = 4;
     self.businessNum.itemUnitType = SWFormItemUnitTypeCustom;
     self.businessNum.unit=@"天";

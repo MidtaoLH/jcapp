@@ -707,7 +707,7 @@
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"" message: Common_MoreDeviceLoginErrMsg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
             
             ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
@@ -833,7 +833,8 @@
                     for(NSInteger i = 0;i <listAnnex.count;i++)
                     {
                         MdlAnnex *kl2 = self.listAnnex[i];
-                        NSString *imagepath_s = [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.AnnexPath];
+                        NSString *imagepath_s =[NSString stringWithFormat:Common_WSUrl, kl2.AnnexPath];
+                        //NSString *imagepath_s = [@"http://47.94.85.101:8095/" stringByAppendingString: kl2.AnnexPath];
                         UIImage *imagetest = [self SaveImageToLocal:imagepath_s Keys: [NSString stringWithFormat:@"%d",i]];
                         if (imagetest) {
                             [imagepath addObject:imagetest];

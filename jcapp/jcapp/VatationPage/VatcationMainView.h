@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *userID;
     NSString *UserHour;
     NSString *iosid;
-    
+    NSString *alert;
     NSString *edittype;
     NSString *vatcationid;
     NSString *processid;

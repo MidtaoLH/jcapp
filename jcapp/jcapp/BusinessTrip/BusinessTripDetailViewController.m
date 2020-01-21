@@ -519,6 +519,12 @@ static NSString *identifierImage =@"ImageCell.h";
                     NSString * strleaveremark =[[NSString alloc]initWithFormat:@"%@%@",@"出差事由：",p1.BusinessTripReason];
                     
                     _lblleaveremark.text = strleaveremark;
+                    [CATransaction begin];
+                    [CATransaction setCompletionBlock:^{
+                        [self.NewTableView reloadData];
+                    }];
+                    [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [CATransaction commit];
                 }
             }
             else if (edittype == 1)
@@ -568,8 +574,12 @@ static NSString *identifierImage =@"ImageCell.h";
                     [self showError:@"操作成功！"];
                 }
             }
-            [self.ImageTableView reloadData];
-            [self.ImageTableView layoutIfNeeded];
+            [CATransaction begin];
+            [CATransaction setCompletionBlock:^{
+                [self.ImageTableView reloadData];
+            }];
+            [self.ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [CATransaction commit];
         }
         
         
@@ -626,7 +636,6 @@ static NSString *identifierImage =@"ImageCell.h";
     [ipParser parse];
     NSLog(@"%@",@"connectionDidFinishLoading-end");
     
-    [self.NewTableView reloadData];
 }
 
 //解析xml回调方法

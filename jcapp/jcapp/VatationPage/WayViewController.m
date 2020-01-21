@@ -34,10 +34,14 @@ NSInteger currentPageCountwait_new;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    userID = [defaults objectForKey:@"userid"];
+    empID = [defaults objectForKey:@"EmpID"];
+    iosid = [defaults objectForKey:@"adId"];
+    
     [self loadstyle];
     [self loadinfo];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    iosid = [defaults objectForKey:@"adId"];
+   
     self.navigationItem.title=@"路径确认";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 }
@@ -58,10 +62,10 @@ NSInteger currentPageCountwait_new;
 -(void)loadinfo
 {
     currentPageCountwait_new=[Common_PageSize intValue];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    userID = [defaults objectForKey:@"userid"];
-    empID = [defaults objectForKey:@"EmpID"];
-    iosid = [defaults objectForKey:@"adId"];
+//    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//    userID = [defaults objectForKey:@"userid"];
+//    empID = [defaults objectForKey:@"EmpID"];
+//    iosid = [defaults objectForKey:@"adId"];
     
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     myDelegate.way_refresh =@"false";
@@ -181,7 +185,7 @@ NSInteger currentPageCountwait_new;
 //    NSString *userid = [defaults objectForKey:@"userid"];
 //    
     
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",self.processid ,iosid,userID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetWay?id=%@&processid=%@&iosid=%@&userid=%@",userID,self.processid ,iosid,userID];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

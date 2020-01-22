@@ -99,6 +99,10 @@
     {
         self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];
     }
+    else
+    {
+        self.pendingTypeLable.text = @"";
+    }
 }
 -(void)layoutSubviews
 {

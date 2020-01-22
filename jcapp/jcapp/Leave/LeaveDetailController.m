@@ -284,10 +284,16 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                          for(UITextField *text in alert.textFields){
                                                              edittype = 1;
                                                              
-                                                             NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
+                                                             NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ,iosid];
                                                              
-                                                             NSLog(@"%@", strURL);
+                                                             NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
                                                              NSURL *url = [NSURL URLWithString:strURL];
+
+                                                             
+                                                             //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ];
+                                                             
+                                                             //NSLog(@"%@", strURL);
+                                                             //NSURL *url = [NSURL URLWithString:strURL];
                                                              //进行请求
                                                              NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
                                                              

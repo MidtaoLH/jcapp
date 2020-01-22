@@ -352,8 +352,13 @@ NSString *adduserlistflag = @"true";
         // 保存文件的名称
         [self.myHeadPortrait setImage:userimage];
     }
-
-    tableView.hidden = true;
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        self.usernamelist.hidden = true;
+    }];
+    //[_NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
+    //tableView.hidden = true;
     //tableView.show
 }
 
@@ -879,9 +884,16 @@ NSString *adduserlistflag = @"true";
 }
 //点击背景键盘退出
 -(IBAction)backgroundTap:(id)sender {
-    //[txtuser resignFirstResponder];
-    //[txtpassword resignFirstResponder];
-    self.usernamelist.hidden = true;
+    [txtuser resignFirstResponder];
+    [txtpassword resignFirstResponder];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+       self.usernamelist.hidden = true;
+        
+    }];
+    [self.usernamelist reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [CATransaction commit];
+    
     
 }
 //解决tableview线不对的问题

@@ -287,7 +287,12 @@ qualifiedName:(NSString *)qName {
     VCCollect.ProcessApplyCode=cell.leavelistitem.ProcessApplyCode;
     VCCollect.edittype = @"2"; //编辑
     VCCollect.urltype = @"getdata";
+    VCCollect.hidesBottomBarWhenPushed= YES;
     [self.navigationController pushViewController:VCCollect animated:YES];
+    
+    
+   
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

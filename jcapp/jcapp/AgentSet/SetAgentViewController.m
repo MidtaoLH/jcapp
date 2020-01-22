@@ -146,7 +146,11 @@
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
         NSString *userID = [defaults objectForKey:@"userid"];
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@&iosid=%@",userID,self.agentID ,iosid];
+        
+        NSString *strPara = [NSString stringWithFormat:@"ppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@&iosid=%@",userID,self.agentID ,iosid];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+ 
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];

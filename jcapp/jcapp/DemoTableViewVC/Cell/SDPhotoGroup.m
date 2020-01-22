@@ -11,6 +11,7 @@
 #import "UIButton+WebCache.h"
 #import "SDPhotoBrowser.h"
 #import "Masonry.h"
+#import "../../SDWebImage/UIImageView+WebCache.h"
 
 #define SDPhotoGroupImageMargin 15
 
@@ -43,6 +44,25 @@
     }
     return _lblcount;
 }
+-(void)clickCategory:(UITapGestureRecognizer *)gestureRecognizer
+{
+    @try
+    {
+        SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
+        browser.sourceImagesContainerView = self; // 原图的父控件
+        browser.imageCount = self.photoItemArray.count; // 图片总数
+        browser.currentImageIndex = gestureRecognizer.view.tag;
+        browser.delegate = self;
+        [browser show];
+    }
+    @catch (NSException *exception)
+    {
+        NSArray *arr = [exception callStackSymbols];
+        NSString *reason = [exception reason];
+        NSString *name = [exception name];
+        NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
+    }
+}
 
 - (void)setPhotoItemArray:(NSArray *)photoItemArray
 {
@@ -50,6 +70,18 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [photoItemArray enumerateObjectsUsingBlock:^(SDPhotoItem *obj, NSUInteger idx, BOOL *stop) {
+        
+        UIImageView *btnimage= [[UIImageView alloc] init];
+        [btnimage sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail_pic] placeholderImage:nil options:SDWebImageRefreshCached];
+        btnimage.clipsToBounds = YES;
+        [btnimage setTag:idx];
+        btnimage.contentMode = UIViewContentModeScaleAspectFill;
+        
+        btnimage.userInteractionEnabled = YES;
+        [btnimage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCategory:)]];
+        
+        [self addSubview:btnimage];
+        /*
         UIButton *btn = [[UIButton alloc] init];
         [btn sd_setImageWithURL:[NSURL URLWithString:obj.thumbnail_pic] forState:UIControlStateNormal];
         
@@ -58,6 +90,7 @@
         [btn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 
         [self addSubview:btn];
+         */
     }];
     
     //可以根据idx设置位置
@@ -134,7 +167,10 @@
 {
     //将共几张字样置于最外层
     //[self bringSubviewToFront:self.lblcount];
-    return [self.subviews[index] currentImage];
+    UIImageView *imgview =self.subviews[index];
+    //   return [self.subviews[index] currentImage];
+    return imgview.image;
+    return nil;
 }
 
 

@@ -108,7 +108,11 @@
     if(_pendinglistitem.CaseTypeTxt!=NULL)
     {
         self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];
-    }   
+    }
+    else
+    {
+        self.pendingTypeLable.text = @"";
+    }
 }
 -(void) updateUIImage:(UIImage*)img{
     self.imageView.image=img;

@@ -27,7 +27,14 @@
         
         make.left.mas_equalTo(0);
         // 添加大小约束
-        make.size.mas_equalTo(CGSizeMake(kScreenWidth,Common_UserTableHeight*2));
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
+    }];
+    [self.formTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(StatusBarAndNavigationBarHeight);
+        
+        make.left.mas_equalTo(0);
+        // 添加大小约束
+        make.size.mas_equalTo(CGSizeMake(kScreenWidth,kScreenHeight));
     }];
     [self datas];
     self.formTableView.scrollEnabled  = NO;

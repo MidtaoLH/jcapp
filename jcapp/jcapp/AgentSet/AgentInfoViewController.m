@@ -28,11 +28,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    iosid = [defaults objectForKey:@"adId"];
+    
     [self loadstyle];
     [self loadData];
     [self initUI];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    iosid = [defaults objectForKey:@"adId"];
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.title=@"代理人设定";
     self.tableView.scrollEnabled  = NO;

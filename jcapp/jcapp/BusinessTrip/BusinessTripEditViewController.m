@@ -881,7 +881,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                 
                 if([_operateType isEqual:@"2"] && [isLoad isEqualToString:@"true"]){
                     //将明细数据拆分，头表数据及出差地点数据
-                    NSArray *array = [requestTmp componentsSeparatedByString:@"+"];
+                    NSArray *array = [requestTmp componentsSeparatedByString:@"❀"];
                     //解析头表数据
                     NSData *resData = [[NSData alloc] initWithData:[array[0] dataUsingEncoding:NSUTF8StringEncoding]];
                     NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:nil];

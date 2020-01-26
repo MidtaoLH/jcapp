@@ -55,6 +55,7 @@
 		775B61B8238BD79B00985FF3 /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61B6238BD79B00985FF3 /* NewViewController.m */; };
 		775B61B9238BD79B00985FF3 /* NewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775B61B7238BD79B00985FF3 /* NewViewController.xib */; };
 		775B61BC238C10FB00985FF3 /* WJWebserviceHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */; };
+		7765C87323DC83E0005BD164 /* ExamineEditReturn.m in Sources */ = {isa = PBXBuildFile; fileRef = 7765C87223DC83E0005BD164 /* ExamineEditReturn.m */; };
 		776D6329239A51E00030C96A /* LeaveTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 776D6328239A51E00030C96A /* LeaveTask.m */; };
 		776D632C239A98F50030C96A /* MultiParamButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 776D632B239A98F50030C96A /* MultiParamButton.m */; };
 		776DA10823A32BC400DB9424 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776DA10723A32BC400DB9424 /* Foundation.framework */; };
@@ -454,6 +455,8 @@
 		775B61B7238BD79B00985FF3 /* NewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewViewController.xib; sourceTree = "<group>"; };
 		775B61BA238C10FB00985FF3 /* WJWebserviceHttpRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WJWebserviceHttpRequest.h; sourceTree = "<group>"; };
 		775B61BB238C10FB00985FF3 /* WJWebserviceHttpRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WJWebserviceHttpRequest.m; sourceTree = "<group>"; };
+		7765C87123DC83E0005BD164 /* ExamineEditReturn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExamineEditReturn.h; sourceTree = "<group>"; };
+		7765C87223DC83E0005BD164 /* ExamineEditReturn.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExamineEditReturn.m; sourceTree = "<group>"; };
 		776D6327239A51E00030C96A /* LeaveTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveTask.h; sourceTree = "<group>"; };
 		776D6328239A51E00030C96A /* LeaveTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveTask.m; sourceTree = "<group>"; };
 		776D632A239A98F50030C96A /* MultiParamButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiParamButton.h; sourceTree = "<group>"; };
@@ -1374,6 +1377,8 @@
 				EBFF30C923B6020E007A7B2C /* pwdinfo.m */,
 				774DFE1923BDEB39002C3602 /* ExamineHead.h */,
 				774DFE1A23BDEB39002C3602 /* ExamineHead.m */,
+				7765C87123DC83E0005BD164 /* ExamineEditReturn.h */,
+				7765C87223DC83E0005BD164 /* ExamineEditReturn.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2590,6 +2595,7 @@
 				7700055E23A36ED20079B49F /* ExamineEditImageCell.m in Sources */,
 				EB7A33DF23B23FC100F34F46 /* BRInfoCell.m in Sources */,
 				AF9B0F8323A3678D008138EB /* SWFormBaseController.m in Sources */,
+				7765C87323DC83E0005BD164 /* ExamineEditReturn.m in Sources */,
 				EB5A26C523A734F70077F2A5 /* AlreadyEndViewController.m in Sources */,
 				8D88D48E23A0EE8B00C5AD8F /* Emp.m in Sources */,
 				AF9B0F2923A36555008138EB /* MBProgressHUD+Add.m in Sources */,

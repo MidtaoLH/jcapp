@@ -180,10 +180,6 @@ static NSString *identifier =@"NoticeCell";
 - (void) connectionDidFinishLoading: (NSURLConnection*) connection {
     
     NSLog(@"%@", @"kaishijiex");    //开始解析XML
-    
-    NSXMLParser *ipParser = [[NSXMLParser alloc] initWithData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    ipParser.delegate = self;
-    [ipParser parse];
      NSLog(@"%@",@"connectionDidFinishLoading-end");
 }
 

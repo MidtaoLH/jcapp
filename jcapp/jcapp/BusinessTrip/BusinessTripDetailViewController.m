@@ -530,6 +530,13 @@ static NSString *identifierImage =@"ImageCell.h";
                     }];
                     [self.NewTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
                     [CATransaction commit];
+                    
+                    [CATransaction begin];
+                    [CATransaction setCompletionBlock:^{
+                        [self.ImageTableView reloadData];
+                    }];
+                    [self.ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [CATransaction commit];
                 }
             }
             else if (edittype == 1)
@@ -579,12 +586,6 @@ static NSString *identifierImage =@"ImageCell.h";
                     [self showError:@"操作成功！"];
                 }
             }
-            [CATransaction begin];
-            [CATransaction setCompletionBlock:^{
-                [self.ImageTableView reloadData];
-            }];
-            [self.ImageTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [CATransaction commit];
         }
         
         

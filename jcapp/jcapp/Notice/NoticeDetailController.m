@@ -112,7 +112,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.row==0)
         return 100.0f;
-    else if(indexPath.row==1)
+    else if(indexPath.row==1 )
          return _labelSize.height;
     else
          return 100.0f;

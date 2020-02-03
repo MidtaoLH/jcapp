@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) NoticeNews * noticeitem;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic, copy) NSArray *titleArr;
-@property (nonatomic, assign)  CGSize  labelSize; 
+@property (nonatomic, assign)  CGSize  labelSize;  
 @end
 
 NS_ASSUME_NONNULL_END

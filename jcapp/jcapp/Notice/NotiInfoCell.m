@@ -17,7 +17,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.deptLabel];
-        [self.contentView addSubview:self.dateLabel];
+        [self.contentView addSubview:self.dateLabel]; 
         [self.contentView addSubview:self.contextLabel];
     }
     return self;

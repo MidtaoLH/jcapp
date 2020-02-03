@@ -20,13 +20,28 @@
 #import "WayViewController.h"
 #import "Masonry.h"
 #import "ViewController.h"
+#import "MJExtension.h"
+
 
 static NSInteger rowHeight=50;
 
 
 NSString * boolflag = @"flase";
 
-@interface VatcationMainView ()<UIActionSheetDelegate,VcBDelegate>//遵循协议
+@interface VatcationMainView ()<UIActionSheetDelegate,VcBDelegate>{
+    
+    NSTimer *_timer;
+    UILabel *_tipLable;
+    BOOL _pushToPhotoPickerVc;
+    
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
+    
+    UIStatusBarStyle _originStatusBarStyle;
+    
+}//遵循协议
 @property (nonatomic, strong) NSArray *genders;
 @property (nonatomic, strong) SWFormItem *VatcationType;
 @property (nonatomic, strong) SWFormItem *businessTripStart;
@@ -624,6 +639,9 @@ NSString * boolflag = @"flase";
                                        initWithRequest:request delegate:self];
         
         
+        [self showProgressHUD ];
+        
+        
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
         //返回不为1显示登陆失败
@@ -853,6 +871,8 @@ NSString * boolflag = @"flase";
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request delegate:self];
         
+        [self showProgressHUD ];
+        
     
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -949,6 +969,7 @@ NSString * boolflag = @"flase";
                     rightImgCount++;
                     if(imgcount==rightImgCount){
                         //保存成功 提交成功
+                        [self hideProgressHUD  ];
                         message=@"提交成功";
                         if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
                             message=@"保存成功";
@@ -964,7 +985,7 @@ NSString * boolflag = @"flase";
                             message=@"图片上传失败，请重新保存";
                         }
                         self.edittype = @"2"; //编辑
-                        
+                         [self hideProgressHUD  ];
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
                     }
@@ -976,25 +997,12 @@ NSString * boolflag = @"flase";
                 }
                 return ;
             }
-            
+
             // 字符串截取
             NSRange startRange = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
             NSRange endRagne = [xmlString rangeOfString:@"</string>"];
             NSRange reusltRagne = NSMakeRange(startRange.location + startRange.length, endRagne.location - startRange.location - startRange.length);
-            if(reusltRagne.length==0){
-                //保存成功 提交成功
-                NSString *message=@"提交失败";
-                if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
-                    message=@"保存失败";
-                }
-                UIAlertView *alert = [[UIAlertView alloc]
-                                      initWithTitle: @""
-                                      message: message
-                                      delegate:self
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-                [alert show];
-            }
+            
             NSString *resultString = [xmlString substringWithRange:reusltRagne];
             
             NSLog(@"%@", resultString);
@@ -1091,6 +1099,7 @@ NSString * boolflag = @"flase";
                             [self uploadImg];
                         }
                         else{
+                             [self hideProgressHUD  ];
                             //保存成功 提交成功
                             NSString *message=@"提交成功";
                             if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
@@ -1108,6 +1117,7 @@ NSString * boolflag = @"flase";
                     }
                     else
                     {
+                         [self hideProgressHUD  ];
                         UIAlertView *alert = [[UIAlertView alloc]
                                               initWithTitle: @""
                                               message: m.message
@@ -1160,6 +1170,49 @@ NSString * boolflag = @"flase";
     
 }
 
+//test zhaodan
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        
+
+        
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 120, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+    
+
+}
+
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
+    }
+}
+//test zhaodan
 
 
 -(void)uploadImg{

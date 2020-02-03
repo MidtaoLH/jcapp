@@ -21,6 +21,7 @@
 #import "AppDelegate.h"
 #import "Masonry.h"
 #import "../ViewController.h"
+#import "../Model/ExamineEditReturn.h"
 #define kCount 4  //图片总张数
  
 @interface ExamineEditLController ()
@@ -53,6 +54,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 @synthesize listhead;
 @synthesize  listtask;
 @synthesize listAnnex;
+@synthesize taskeditreturn;
 
 - (void)viewDidLoad {
     
@@ -81,9 +83,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
-    
-   
-    
+ 
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     //_ImageTableView.rowHeight = Common_EditImageTableHeight;
     
@@ -94,7 +94,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
 //    self.btntaskno.layer.masksToBounds=YES;
 //    [self.buttaskyes.layer setCornerRadius:12];
 //    self.buttaskyes.layer.masksToBounds=YES;
-//    
+//
 //     [_btntaskno addTarget:self action:@selector(actionno:)   forControlEvents:UIControlEventTouchUpInside];
 //     [_buttaskyes addTarget:self action:@selector(actionyes:)   forControlEvents:UIControlEventTouchUpInside];
     UIToolbar *toolBar = [[UIToolbar alloc]init];
@@ -342,7 +342,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     id objremark = mutableDic0[@"remark"];
     
     //设置需要访问的ws和传入参数
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@&iosid=%@",userid,self.strTaskid,objremark,objtasktype,@"1",iosid];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/TaskInstanceEdit?userID=%@&taskInstanceID=%@&Remark=%@&operate=%@&operatr=%@&iosid=%@",userid,self.strTaskid,objremark,objtasktype,userid,iosid];
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
 
     NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -355,13 +355,10 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
- 
 }
 // 驳回操作
 -(void)actionno:(id)sender{
  
-    NSLog(@"Vvvverify : %@", @"23423");
-    
     if([self.txtvexamineremark.text isEqualToString:@""])
     {
         [self showError:@"请输入驳回理由"];
@@ -410,51 +407,50 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         [self presentModalViewController:valueView animated:YES];
         return;
     }
-    
-    // 字符串截取
-    NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
-    NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
-    
-    if(edittype == 1)
+    //承认 驳回，服务器返回了 方法名
+    if([xmlString containsString: @"TaskInstanceEdit"])
     {
+        // 字符串截取
+        NSRange startRangetaskedit = [xmlString rangeOfString:@"<string xmlns=\"http://tempuri.org/\">"];
+        NSRange endRangetaskedit =[xmlString rangeOfString:@"</string>"];
+ 
         NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
         NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
+
+        NSString *returntmp = [NSString stringWithString:resultStringtaskedit];
+        NSData *returnData = [[NSData alloc] initWithData:[returntmp dataUsingEncoding:NSUTF8StringEncoding]];
+        NSMutableDictionary *returnDic = [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingMutableLeaves error:nil];
         
-        if(![resultStringtaskedit isEqualToString:@"0"])
-        {
-            // 弹出 对话框
-            [self showError:resultStringtaskedit];
-        }
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: @"同意成功"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
-        }
-    }
-    else if (edittype == 2)
-    {
-        NSRange reusltRagnedetaskedit = NSMakeRange(startRangetaskedit.location + startRangetaskedit.length, endRangetaskedit.location - startRangetaskedit.location - startRangetaskedit.length);
-        NSString *resultStringtaskedit = [xmlString substringWithRange:reusltRagnedetaskedit];
+        taskeditreturn = [ExamineEditReturn mj_objectArrayWithKeyValuesArray:returnDic];
         
-        if(![resultStringtaskedit isEqualToString:@"0"])
+        NSString *strmessage = @"";
+        
+        for (ExamineEditReturn *mdre in taskeditreturn)
         {
-            // 弹出“请检查用户名和密码是否为空！”对话框
-            [self showError:resultStringtaskedit];
-        }
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle: @""
-                                  message: @"驳回成功"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-            [alert show];
+            if(![mdre.resuelt isEqualToString:@"0"])
+            {
+                // 弹出 对话框
+                [self showError:resultStringtaskedit];
+            }
+            else
+            {
+                //2 承认
+                if([mdre.edittype isEqualToString:@"2"])
+                {
+                    strmessage = @"同意成功";
+                }
+                else if([mdre.edittype isEqualToString:@"3"])
+                {
+                    strmessage = @"驳回成功";
+                }
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: strmessage
+                                      delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+            }
         }
     }
     else
@@ -471,7 +467,6 @@ static NSString *identifierImage =@"WaitTaskImageCell";
         
         NSRange startRangeEnd =[xmlString rangeOfString:@",\"Table3\":"];
         NSRange endRagneEnd =[xmlString rangeOfString:@"}</string>"];
-        
         
         //获取申请附件数据
         NSRange reusltRagnedetail2 = NSMakeRange(startRange2.location + startRange2.length, endRagne2.location - startRange2.location - startRange2.length);

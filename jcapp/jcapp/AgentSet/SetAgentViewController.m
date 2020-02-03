@@ -147,7 +147,7 @@
         NSString *userID = [defaults objectForKey:@"userid"];
         //设置需要访问的ws和传入参数
         
-        NSString *strPara = [NSString stringWithFormat:@"ppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@&iosid=%@",userID,self.agentID ,iosid];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAgentSetInfo?userID=%@&agentID=%@&iosid=%@",userID,self.agentID ,iosid];
         
         NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
  

@@ -13,18 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NoticeDetailController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *lblthem;
-
-@property (weak, nonatomic) IBOutlet UILabel *lblgroup;
-
-@property (weak, nonatomic) IBOutlet UILabel *lblnoticedate;
-
-@property (weak, nonatomic) IBOutlet UILabel *lbltoncent;
 
 // 添加数据源
 @property (nonatomic,strong) NoticeNews * noticeitem;
-
--(IBAction)onClickButtonreturn:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (nonatomic, copy) NSArray *titleArr;
+@property (nonatomic, assign)  CGSize  labelSize;  
 @end
 
 NS_ASSUME_NONNULL_END

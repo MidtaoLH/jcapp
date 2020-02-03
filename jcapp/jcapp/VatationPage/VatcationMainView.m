@@ -1177,9 +1177,6 @@ NSString * boolflag = @"flase";
         [_progressHUD setBackgroundColor:[UIColor clearColor]];
         
         _HUDContainer = [[UIView alloc] init];
-        
-
-        
         _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
         _HUDContainer.layer.cornerRadius = 8;
         _HUDContainer.clipsToBounds = YES;
@@ -1187,10 +1184,10 @@ NSString * boolflag = @"flase";
         _HUDContainer.alpha = 0.7;
         
         _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        _HUDIndicatorView.frame = CGRectMake(35, 15, 30, 30);
         
         _HUDLable = [[UILabel alloc] init];
-        _HUDLable.frame = CGRectMake(0,40, 120, 50);
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
         _HUDLable.textAlignment = NSTextAlignmentCenter;
         _HUDLable.text = @"正在处理...";
         _HUDLable.font = [UIFont systemFontOfSize:15];
@@ -1202,8 +1199,6 @@ NSString * boolflag = @"flase";
     }
     [_HUDIndicatorView startAnimating];
     [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
-    
-
 }
 
 - (void)hideProgressHUD {

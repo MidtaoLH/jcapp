@@ -25,16 +25,22 @@
 #import "ViewController.h"
 
 @interface GoOutEditController ()<UIActionSheetDelegate>
-@property (nonatomic, strong) NSArray *genders;
-@property (nonatomic, strong) SWFormItem *VatcationType;
-@property (nonatomic, strong) SWFormItem *businessTripStart;
-@property (nonatomic, strong) SWFormItem *businessTripEnd;
-@property (nonatomic, strong) SWFormItem *businessNum;
-@property (nonatomic, strong) SWFormItem *gender;
-@property (nonatomic, strong) SWFormItem *reason;
-@property (nonatomic, strong) SWFormItem *image;
+{
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
+}
+    @property (nonatomic, strong) NSArray *genders;
+    @property (nonatomic, strong) SWFormItem *VatcationType;
+    @property (nonatomic, strong) SWFormItem *businessTripStart;
+    @property (nonatomic, strong) SWFormItem *businessTripEnd;
+    @property (nonatomic, strong) SWFormItem *businessNum;
+    @property (nonatomic, strong) SWFormItem *gender;
+    @property (nonatomic, strong) SWFormItem *reason;
+    @property (nonatomic, strong) SWFormItem *image;
 
-@property (nonatomic, strong) NSMutableData *mResponseData;
+    @property (nonatomic, strong) NSMutableData *mResponseData;
 @end
 
 @implementation GoOutEditController
@@ -502,6 +508,7 @@
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request delegate:self];
         
+          [self showProgressHUD ];
         
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -643,7 +650,7 @@
         [request setHTTPBody:postData];
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request delegate:self];
-        
+        [self showProgressHUD];
 
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -695,7 +702,6 @@
                                cancelButtonTitle:@"OK"
                                otherButtonTitles:nil];
     [errorAlert show];
-    
 }
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
@@ -751,6 +757,7 @@
                 if(rightImgCount+errImgCount==imgcount){
                     isUploadImg=0;
                 }
+                [self hideProgressHUD];
                 return ;
             }
             
@@ -877,6 +884,8 @@
                             [self uploadImg];
                         }
                         else{
+                            [self hideProgressHUD];
+                            
                             //保存成功 提交成功
                             NSString *message=@"提交成功";
                             if([self.edittype isEqual:@"1"] || [self.edittype isEqual:@"2"]||[self.edittype isEqual:@"3"]){
@@ -893,15 +902,14 @@
                     }
                     else
                     {
+                        [self hideProgressHUD];
+                        
                         // 弹出 对话框
                         [self showError:m.message];
                     }
                 }
             }
         }
-        
-        
-       
     }
     @catch (NSException *exception) {
         NSArray *arr = [exception callStackSymbols];
@@ -909,7 +917,6 @@
         NSString *name = [exception name];
         NSLog(@"err:\n%@\n%@\n%@",arr,reason,name);
     }
-    
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -946,7 +953,42 @@
     }
     return image;
 }
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(35, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
 
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
+    }
+}
 -(void)uploadImg{
     imgcount=self.image.images.count;
     rightImgCount=0;

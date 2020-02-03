@@ -20,7 +20,12 @@
 #import "MJExtension.h"
 #import "TabBarViewController.h"
 @interface AgentInfoViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
-
+{
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
+}
 
 @end
 
@@ -231,7 +236,7 @@
     NSString *empID = [defaults objectForKey:@"EmpID"];
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     //设置需要访问的ws和传入参数
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/AgentSetEND?userID=%@&agentSetID=%@",userID,self.infoModel.agentID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/AgentSetEND?userID=%@&agentSetID=%@&iosid=%@",userID,self.infoModel.agentID,iosid];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
  
@@ -242,6 +247,7 @@
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+    [self showProgressHUD];
 }
 //弹出消息框
 -(void) connection:(NSURLConnection *)connection
@@ -257,8 +263,9 @@
 }
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    @try {
-        
+    @try
+    {
+        [self hideProgressHUD];
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
@@ -322,5 +329,41 @@
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
+
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
+    }
 }
 @end

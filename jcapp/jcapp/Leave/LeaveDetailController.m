@@ -31,6 +31,10 @@
     //0 初始化 1 承认 2 驳回
     long edittype;
     
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
 }
 @property(nonatomic,strong) UITextField *myTextFieldup;
 @property(nonatomic,strong) UIAlertAction *okActionup;
@@ -284,7 +288,7 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                          for(UITextField *text in alert.textFields){
                                                              edittype = 1;
                                                              
-                                                             NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@", userID, @"1", self.processInstanceID, text.text ,iosid];
+                                                             NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/TaskCancle?UserID=%@&MenuID=%@&ProcessInstanceID=%@&CelReson=%@&iosid=%@", userID, @"1", self.processInstanceID, text.text ,iosid];
                                                              
                                                              NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
                                                              NSURL *url = [NSURL URLWithString:strURL];
@@ -300,6 +304,7 @@ static NSString *identifierImage =@"LeaveImageCell.h";
                                                              NSURLConnection *connection = [[NSURLConnection alloc]
                                                                                             initWithRequest:request
                                                                                             delegate:self];
+                                                             [self showProgressHUD];
                                                          }
                                                      }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
@@ -418,7 +423,7 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     @try {
         
         NSLog(@"%@",@"kaishidayin");
-        
+        [self hideProgressHUD];
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
@@ -761,6 +766,42 @@ static NSString *identifierImage =@"LeaveImageCell.h";
     }
     if ([_ImageTableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [_ImageTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
+
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
     }
 }
 @end

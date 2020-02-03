@@ -22,10 +22,16 @@
 
 
 @interface SetAgentViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIActionSheetDelegate>
-@property (nonatomic, strong) SWFormItem *businessTripStart;
-@property (nonatomic, strong) SWFormItem *businessTripEnd;
-@property (nonatomic, strong) SWFormItem *agentname;
-@property (nonatomic, strong) SWFormItem *dept;
+{
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
+}
+    @property (nonatomic, strong) SWFormItem *businessTripStart;
+    @property (nonatomic, strong) SWFormItem *businessTripEnd;
+    @property (nonatomic, strong) SWFormItem *agentname;
+    @property (nonatomic, strong) SWFormItem *dept;
 @end
 
 @implementation SetAgentViewController
@@ -218,8 +224,9 @@
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    @try {
-        
+    @try
+    {
+        [self hideProgressHUD];
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
@@ -322,8 +329,10 @@
     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     if([self.agentID isEqual:@"0"])
     {
-        //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetADD?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@",userID,empID,myDelegate.way_empid,self.businessTripStart.info,self.businessTripEnd.info];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/AgentSetADD?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&iosid=%@",userID,empID,myDelegate.way_empid,self.businessTripStart.info,self.businessTripEnd.info,iosid];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+ 
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -333,7 +342,10 @@
                                        delegate:self];
     }
     else{
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetUpdate?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&agentSetID=%@",userID,empID,myDelegate.way_empid,self.businessTripStart.info,self.businessTripEnd.info,self.agentID];
+        NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/AgentSetUpdate?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&agentSetID=%@&iosid=%@",userID,empID,myDelegate.way_empid,self.businessTripStart.info,self.businessTripEnd.info,self.agentID,iosid];
+        
+        NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+ 
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -342,7 +354,7 @@
                                        initWithRequest:request
                                        delegate:self];
     }
-    
+    [self showProgressHUD];
 }
 
 
@@ -353,7 +365,7 @@
         NSString *empID = [defaults objectForKey:@"EmpID"];
         AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         //设置需要访问的ws和传入参数
-        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&agentSetID=%@",userID,empID,myDelegate.way_empid,self.businessTripStart.info,self.businessTripEnd.info,self.agentID];
+        NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/AgentSetAPP?userID=%@&auditEmpID=%@&agentEmpID=%@&startDate=%@&endDate=%@&agentSetID=%@&iosid=%@",userID,empID,myDelegate.way_empid,self.businessTripStart.info,self.businessTripEnd.info,self.agentID,iosid];
         NSURL *url = [NSURL URLWithString:strURL];
         //进行请求
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -361,7 +373,7 @@
         NSURLConnection *connection = [[NSURLConnection alloc]
                                        initWithRequest:request
                                        delegate:self];
-    
+       [self showProgressHUD];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -430,5 +442,40 @@
         [self.formTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
 
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
+    }
+}
 @end

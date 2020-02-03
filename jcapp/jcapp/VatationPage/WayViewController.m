@@ -23,7 +23,12 @@ static NSString * identifier = @"TableCell";
 NSString * saveflag = @"flase";
 NSString * suessflag = @"false";
 @interface WayViewController ()
-
+{
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
+}
 @end
 
 @implementation WayViewController
@@ -206,6 +211,7 @@ NSInteger currentPageCountwait_new;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        [self hideProgressHUD];
         //判断账号是否总其他设备登录
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
         {
@@ -452,6 +458,7 @@ NSInteger currentPageCountwait_new;
     } else {
         NSLog(@"Request submitted");
     }
+     [self showProgressHUD];
 }
 
 
@@ -479,5 +486,40 @@ NSInteger currentPageCountwait_new;
         [_NewTableView setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
 
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
+    }
+}
 @end

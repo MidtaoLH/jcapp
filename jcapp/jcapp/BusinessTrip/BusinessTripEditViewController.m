@@ -22,14 +22,20 @@
 
 NSString * bflag = @"flase";
 @interface BusinessTripEditViewController ()<UIActionSheetDelegate>
-@property (nonatomic, strong) NSArray *genders;
-@property (nonatomic, strong) SWFormItem *businessTripStart;
-@property (nonatomic, strong) SWFormItem *businessTripEnd;
-@property (nonatomic, strong) SWFormItem *businessNum;
-@property (nonatomic, strong) SWFormItem *gender;
-@property (nonatomic, strong) SWFormItem *reason;
-@property (nonatomic, strong) SWFormItem *image;
-@property (nonatomic, strong) NSMutableData *mResponseData;
+{
+    UIButton *_progressHUD;
+    UIView *_HUDContainer;
+    UIActivityIndicatorView *_HUDIndicatorView;
+    UILabel *_HUDLable;
+}
+    @property (nonatomic, strong) NSArray *genders;
+    @property (nonatomic, strong) SWFormItem *businessTripStart;
+    @property (nonatomic, strong) SWFormItem *businessTripEnd;
+    @property (nonatomic, strong) SWFormItem *businessNum;
+    @property (nonatomic, strong) SWFormItem *gender;
+    @property (nonatomic, strong) SWFormItem *reason;
+    @property (nonatomic, strong) SWFormItem *image;
+    @property (nonatomic, strong) NSMutableData *mResponseData;
 @end
 @implementation BusinessTripEditViewController
 
@@ -516,7 +522,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
         } else {
             
         }
-        
+          [self showProgressHUD];
 
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -630,7 +636,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
         } else {
             
         }
-        
+          [self showProgressHUD];
         
     } failure:^(NSString *error) {
         //NSLog(@"error====%@",error);
@@ -823,8 +829,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                 requestTmp = [requestTmp stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
                 
                 NSLog(@"requestTmp:%@",requestTmp);
-                
-                //上传图片
+ 
                 if([_operateType isEqual:@"0"]){
                     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
                     
@@ -842,11 +847,12 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                             }
                             //显示信息。正式环境时改为跳转
                             UIAlertView *alert = [[UIAlertView alloc]  initWithTitle: @"" message: message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                            [self hideProgressHUD];
                             [alert show];
                             return;
                         }
                         if([m.ProcessID isEqualToString:@"0"]){
-                            //保存成功 提交成功
+                            [self hideProgressHUD];
                             NSString *message=@"提交失败";
                             if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
                                 message=@"保存失败";
@@ -865,6 +871,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                             [self uploadImg];
                         }
                         else{
+                            [self hideProgressHUD];
                             //保存成功 提交成功
                             NSString *message=@"提交成功";
                             if([self->_pageType isEqual:@"1"] || [self->_pageType isEqual:@"2"]||[self->_pageType isEqual:@"3"]){
@@ -954,6 +961,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
                 if(rightImgCount+errImgCount==imgcount){
                     return;
                 }
+                [self hideProgressHUD];
                 xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 NSString *message=@"";
                 if([xmlString isEqualToString:@"OK"]){
@@ -1020,6 +1028,42 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
         [self presentViewController:navigationController animated:YES completion:nil];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(35, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
+
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
     }
 }
 

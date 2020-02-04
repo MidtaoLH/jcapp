@@ -446,8 +446,14 @@ NSInteger currentPageCountwait_new;
     NSString *post = [NSString stringWithFormat:@"strjson=%@&userid=%@&processid=%@&iosid=%@",
                       jsonString,userid,_processid,iosid];
     NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding];
-//    NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/InsertProcessChange?"];
-    NSURL *webServiceURL = [NSURL URLWithString:[NSString stringWithFormat:Common_WSUrl,@"InsertProcessChange?"]];
+    
+    
+    
+    
+    
+    
+    //NSURL *webServiceURL = [NSURL URLWithString:@"http://47.94.85.101:8095/AppWebService.asmx/InsertProcessChange?"];
+    NSURL *webServiceURL = [NSURL URLWithString:[NSString stringWithFormat:Common_WSUrl,@"AppWebService.asmx/InsertProcessChange?"]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:webServiceURL];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:postData];

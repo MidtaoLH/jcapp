@@ -60,7 +60,7 @@
     
     dateStr = [dateStr stringByReplacingOccurrencesOfString:@"年" withString:@"-"];
     
-    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceMonth?empid=%@&actime=%@&iosid=%@&iosid=%@",empID,dateStr ,iosid,userID];
+    NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetAttendanceMonth?empid=%@&actime=%@&iosid=%@&userid=%@",empID,dateStr ,iosid,userID];
     
     NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
     NSURL *url = [NSURL URLWithString:strURL];

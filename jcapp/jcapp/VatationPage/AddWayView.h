@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *xmlString;
     NSString *stringflag;
         NSString *iosid;
+    NSString *userid;
     NSMutableDictionary *info;
 }
 

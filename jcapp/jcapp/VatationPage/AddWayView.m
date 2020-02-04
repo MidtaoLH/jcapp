@@ -39,6 +39,7 @@
 
      NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     iosid = [defaults objectForKey:@"adId"];
+    userid = [defaults objectForKey:@"userid"];
     
     NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetGroup"];
     
@@ -126,10 +127,24 @@
             {
                 stringflag = @"emp";
                 
-                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@ &iosid=%@",@"123",@"1" ,iosid];
+                //NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@ &iosid=%@",@"123",@"1",iosid];
+                
+                //NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+                //NSURL *url = [NSURL URLWithString:strURL];
+                
+                
+                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@&iosid=%@&userid=%@", @"123",@"1",iosid,userid];
                 
                 NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
-                NSURL *url = [NSURL URLWithString:strURL];
+                //NSURL *url = [NSURL URLWithString:strURL];
+                
+                
+                // NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@&iosid=%@", userID,vatcationid,processid,iosid];
+                
+                NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                NSLog(@"%@", strURL);
+                NSURL *url = [NSURL URLWithString:urlStringUTF8];
+                
                 
                 
                 //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"1"];
@@ -145,10 +160,23 @@
             {
                 stringflag = @"emp";
                 
-                NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@&iosid=%@",@"123",@"0" ,iosid];
+                
+                  NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@&iosid=%@&userid=%@", @"123",@"0",iosid,userid];
                 
                 NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
-                NSURL *url = [NSURL URLWithString:strURL];
+                //NSURL *url = [NSURL URLWithString:strURL];
+                
+                
+                // NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/VatcationSearchByID?userID=%@&VatcationID=%@&processid=%@&iosid=%@", userID,vatcationid,processid,iosid];
+                
+                NSString *urlStringUTF8 = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                NSLog(@"%@", strURL);
+                NSURL *url = [NSURL URLWithString:urlStringUTF8];
+                
+                //NSString *strPara = [NSString stringWithFormat:@"AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@&iosid=%@",@"123",@"0" ,iosid];
+                
+                //NSString *strURL = [NSString stringWithFormat:Common_WSUrl,strPara];
+                //NSURL *url = [NSURL URLWithString:strURL];
                 
                 //NSString *strURL = [NSString stringWithFormat:@"http://47.94.85.101:8095/AppWebService.asmx/GetEmpname?groupid=%@&AuditUsedFlag=%@",@"123",@"0"];
                 //NSURL *url = [NSURL URLWithString:strURL];

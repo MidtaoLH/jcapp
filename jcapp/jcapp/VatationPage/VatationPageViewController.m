@@ -84,7 +84,7 @@ NSString *strtype;
     //当代理响应sendValue方法时，把_tx.text中的值传到VCA
     if ([_delegate respondsToSelector:@selector(sendValue:)]) {
         [_delegate sendValue:strtype];
-        [self.navigationController popViewControllerAnimated:YES];
+       [self.navigationController popViewControllerAnimated:YES];
     }
     
     // 定义一个JSON字符串

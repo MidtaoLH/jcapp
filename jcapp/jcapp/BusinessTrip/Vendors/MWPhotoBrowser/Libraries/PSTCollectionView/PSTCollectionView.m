@@ -1616,12 +1616,12 @@ static void PSTCollectionViewCommonSetup(PSTCollectionView *_self) {
     NSMutableDictionary *viewsToRemove = [NSMutableDictionary dictionaryWithObjectsAndKeys:
             [NSMutableArray array], @(PSTCollectionViewItemTypeCell),
             [NSMutableArray array], @(PSTCollectionViewItemTypeDecorationView),
-            [NSMutableArray array], @(PSTCollectionViewItemTypeSupplementaryView), nil];
+            [NSMutableArray array], @(PSTCollectionViewItemTypeSupplementaryView), nil]; 
 
     for (PSTCollectionViewUpdateItem *updateItem in items) {
         if (updateItem.isSectionOperation && updateItem.updateAction != PSTCollectionUpdateActionDelete) continue;
         if (updateItem.isSectionOperation && updateItem.updateAction == PSTCollectionUpdateActionDelete) {
-            NSInteger numberOfBeforeSection = [_update[@"oldModel"] numberOfItemsInSection:updateItem.indexPathBeforeUpdate.section];
+            NSInteger numberOfBeforeSection =[(UICollectionView *)_update[@"oldModel"] numberOfItemsInSection:updateItem.indexPathBeforeUpdate.section];
             for (NSInteger i = 0; i < numberOfBeforeSection; i++) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:updateItem.indexPathBeforeUpdate.section];
 

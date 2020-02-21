@@ -137,6 +137,7 @@ NSString * boolflag = @"flase";
     if([self.edittype isEqualToString:@"1"]){
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:navigationController animated:YES completion:nil];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
@@ -1145,6 +1146,7 @@ NSString * boolflag = @"flase";
 {
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+      navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:navigationController animated:YES completion:nil];
     
 }

@@ -196,6 +196,7 @@ NSString *unloadflag = @"";
         picker.delegate = self;
         //加上下面这句会有编辑框
         picker.allowsEditing = YES;
+          picker.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:picker animated:YES completion:nil];
     }
 }
@@ -206,6 +207,7 @@ NSString *unloadflag = @"";
     picker.delegate = self;
     picker.showsCameraControls = YES;
     picker.allowsEditing = YES;
+      picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:picker animated:YES completion:nil];
 }
 #pragma - mark - UIImagePickerControllerDelegate
@@ -391,6 +393,8 @@ NSString *unloadflag = @"";
                     ViewController * valueView = [[ViewController alloc] initWithNibName:@"ViewController"bundle:[NSBundle mainBundle]];
                     [[SDImageCache sharedImageCache] clearDisk];
                     [[SDImageCache sharedImageCache] clearMemory];
+                       valueView.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
                     //跳转
                     [self presentModalViewController:valueView animated:YES];
                 }

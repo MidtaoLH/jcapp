@@ -661,6 +661,7 @@ UIViewController *childViewControllerNewView (NSString *title, NSString *imgName
     myDelegate.tabbarType=@"1";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 // MARK: - 给UITabBarItem绑定动画

@@ -103,8 +103,8 @@
     //UIImage* resultImage = [UIImage imageWithData: imageData];
     //self.imageView.image=resultImage;
     
-    self.beignDateLable.text = _pendinglistitem.BeignDate;
-    self.endDateLable.text = _pendinglistitem.EndDate;
+    self.beignDateLable.text =[NSString stringWithFormat:@"开始时间:%@",_pendinglistitem.BeignDate] ;
+    self.endDateLable.text = [NSString stringWithFormat:@"结束时间:%@",_pendinglistitem.EndDate] ;
     if(_pendinglistitem.CaseTypeTxt!=NULL)
     {
         self.pendingTypeLable.text = [NSString stringWithFormat:@"请假类型:%@",_pendinglistitem.CaseTypeTxt];

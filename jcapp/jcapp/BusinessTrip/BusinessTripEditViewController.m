@@ -778,6 +778,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
     if([alert isEqual:@"save"]){
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+          navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
@@ -1025,6 +1026,7 @@ self.reason.info = [self.reason.info stringByReplacingOccurrencesOfString:@"+" w
     if([_pageType isEqualToString:@"1"]){
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+          navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:navigationController animated:YES completion:nil];
     }else{
         [self.navigationController popViewControllerAnimated:YES];

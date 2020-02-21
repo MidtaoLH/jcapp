@@ -193,6 +193,7 @@
 }
 -(IBAction)btnreturnClick:(id)sender {
     UITabBarController *tabBarCtrl = [[UsersViewController alloc]init];
+      tabBarCtrl.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:tabBarCtrl animated:NO completion:nil];
 }
 
@@ -303,6 +304,7 @@
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     tabBarCtrl.selectedIndex=1;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName

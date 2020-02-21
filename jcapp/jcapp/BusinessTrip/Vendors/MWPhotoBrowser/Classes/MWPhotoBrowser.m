@@ -1645,8 +1645,9 @@
         [emailer setSubject:NSLocalizedString(@"Photo", nil)];
         [emailer addAttachmentData:UIImagePNGRepresentation([photo underlyingImage]) mimeType:@"png" fileName:@"Photo.png"];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            emailer.modalPresentationStyle = UIModalPresentationPageSheet;
+            //emailer.modalPresentationStyle = UIModalPresentationPageSheet;
         }
+                    emailer.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:emailer animated:YES completion:nil];
         [self hideProgressHUD:NO];
     }

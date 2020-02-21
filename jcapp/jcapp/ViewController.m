@@ -472,6 +472,7 @@ NSString *adduserlistflag = @"true";
 -(IBAction)onClickButton:(id)sender {
 
     BusinessTripDetailViewController *nextVc = [[BusinessTripDetailViewController alloc]init];//初始化下一个界面
+      nextVc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nextVc animated:YES completion:nil];//跳转到下一个
 
 }
@@ -687,6 +688,7 @@ NSString *adduserlistflag = @"true";
                     myDelegate.tabbarType=@"1";
                     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController:navigationController animated:YES completion:nil];
                 }];
             }
@@ -737,6 +739,7 @@ NSString *adduserlistflag = @"true";
                 myDelegate.tabbarType=@"1";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                      navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }];
         }

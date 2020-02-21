@@ -78,6 +78,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     if([self.titletype isEqualToString:@"0"]){
         UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+           navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:navigationController animated:YES completion:nil];
     }else{//不需要刷新列表
         [self.navigationController popViewControllerAnimated:YES];

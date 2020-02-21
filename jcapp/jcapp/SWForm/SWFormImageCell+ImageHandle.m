@@ -69,7 +69,7 @@ typedef void(^SWSelectImageCompletion)(NSArray *images);
     [photoBrowser setCurrentPhotoIndex:currentIndex];
     
     UINavigationController *photoNavigationController = [[UINavigationController alloc] initWithRootViewController:photoBrowser];
-    photoNavigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+       photoNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [[self superViewController:self] presentViewController:photoNavigationController animated:YES completion:nil];
 }
 
@@ -138,6 +138,7 @@ typedef void(^SWSelectImageCompletion)(NSArray *images);
         picker.delegate = self;
         picker.allowsEditing = YES;
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+          picker.modalPresentationStyle = UIModalPresentationFullScreen;
         [[self superViewController:self] presentViewController:picker animated:YES completion:nil];
     }else
     {
@@ -150,6 +151,7 @@ typedef void(^SWSelectImageCompletion)(NSArray *images);
     TZImagePickerController  *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:([self sw_maxImagesCount] - [self sw_currentImagesCount]) delegate:self];
     imagePickerVC.allowPickingVideo = NO;
     if ([self superViewController:self]) {
+            imagePickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [[self superViewController:self] presentViewController:imagePickerVC animated:YES completion:nil];
     }
 }

@@ -108,6 +108,7 @@
             　 }];
         [alert addAction:ok];
         [alert addAction:cancel];
+        
         [self presentViewController:alert animated:YES completion:^{ }];
     };
     [items addObject:_businessTripStart];
@@ -380,6 +381,7 @@
 {
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+       navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 - (void)goBack {

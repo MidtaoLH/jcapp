@@ -566,6 +566,7 @@ static NSString *identifierImage =@"ImageCell.h";
                     AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                       navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                     [self presentViewController:navigationController animated:YES completion:nil];
                 }
             }

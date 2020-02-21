@@ -194,6 +194,7 @@
             myDelegate.tabbarType=@"8";
             UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+              navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:navigationController animated:YES completion:nil];
         }//解析案件数量
         else if([xmlString containsString:@"BLCount"]){
@@ -369,6 +370,7 @@
                 myDelegate.tabbarType=@"2";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
@@ -377,6 +379,7 @@
                 myDelegate.tabbarType=@"3";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
@@ -386,6 +389,7 @@
                 myDelegate.tabbarIndex=@"0";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
@@ -409,6 +413,7 @@
                 myDelegate.tabbarType=@"5";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
@@ -418,6 +423,7 @@
                 myDelegate.tabbarType=@"6";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];               
             }
                 break;
@@ -426,6 +432,7 @@
                 myDelegate.tabbarType=@"7";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
@@ -455,6 +462,7 @@
                 myDelegate.tabbarType=@"9";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;
@@ -463,6 +471,7 @@
                 myDelegate.tabbarType=@"10";
                 UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
                 UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                  navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self presentViewController:navigationController animated:YES completion:nil];
             }
                 break;

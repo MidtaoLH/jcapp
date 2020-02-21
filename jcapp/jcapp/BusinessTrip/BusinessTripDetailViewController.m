@@ -606,6 +606,7 @@ static NSString *identifierImage =@"ImageCell.h";
     UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
     //tabBarCtrl.selectedIndex=myDelegate.tabbarIndex;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+      navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 

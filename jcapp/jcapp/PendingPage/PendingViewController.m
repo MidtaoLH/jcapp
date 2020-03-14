@@ -77,6 +77,7 @@ MJRefreshBackNormalFooter *footer;
     // ......
     //if(currentPageCount>1)
     //currentPageCount--;
+    currentPageCount=1;
     [self LoadData];
     // 模拟延迟3秒
     //[NSThread sleepForTimeInterval:3];

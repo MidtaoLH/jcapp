@@ -126,7 +126,7 @@ static NSString *identifierImage =@"WaitTaskImageCell";
     //注册自定义 cell
     [_NewTableView registerClass:[TaskBackListCell class] forCellReuseIdentifier:identifier];
     _NewTableView.rowHeight = Common_TableRowHeight;
-    
+    _NewTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [_ImageTableView registerClass:[SDDemoCell class] forCellReuseIdentifier:identifierImage];
     _ImageTableView.rowHeight = Common_ImageTableRowHeight;
     _ImageTableView.scrollEnabled=NO;

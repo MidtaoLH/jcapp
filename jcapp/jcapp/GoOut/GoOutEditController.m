@@ -135,6 +135,7 @@
         
         // 添加大小约束
         make.size.mas_equalTo(CGSizeMake(kScreenWidth, TabbarHeight));
+        make.left.mas_equalTo(0);
     }];
     
     UIImage* itemImage= [UIImage imageNamed:@"save.png"];

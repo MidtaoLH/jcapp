@@ -47,6 +47,7 @@
                                    delegate:self];
     [super viewDidLoad];
     self.scrollview.backgroundColor=Color_ScrollviewColor;
+    
     UIView *titleview=[[UIView alloc]init];
     [self.view addSubview:titleview];
     [titleview mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -143,7 +143,7 @@
 #define Common_UserTableRowHeight 50.f
 #endif /* PrefixHeader_pch */
 /*轮播图大小*/
-#define Common_ScrollSize 220.f
+#define Common_ScrollSize (kScreenHeight >= 569.f ? 220.f : 150.f)
 #define Common_HomeCellSize 80.f
 #define Common_HomeRowSize 10.f
 // 随机色

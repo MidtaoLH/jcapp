@@ -29,7 +29,8 @@
     [super layoutSubviews];
     [_titlelb setTextAlignment:NSTextAlignmentCenter];
     _titlelb.font = [UIFont systemFontOfSize:14];
-    //_titlelb.adjustsFontSizeToFitWidth = YES;    
+    //_titlelb.adjustsFontSizeToFitWidth = YES;
+    [_countlb setTextAlignment:NSTextAlignmentCenter];
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -65,7 +66,7 @@
         .heightRatioToView(self, 0.5);
         
         _countlb.sd_layout
-        .widthRatioToView(self, 0.5)
+        .widthRatioToView(self, 0.6)
         .topSpaceToView(_titlelb, 0)
         //.leftEqualToView(_titlelb)
         //.rightEqualToView(self)
@@ -73,7 +74,6 @@
         .centerXEqualToView(_titlelb);
         //_countlb.frame=CGRectMake(_titlelb.left,_titlelb.top+_titlelb.height+10.0, _countlb.width, _countlb.height);
    
-        
     }
     return self;
 }

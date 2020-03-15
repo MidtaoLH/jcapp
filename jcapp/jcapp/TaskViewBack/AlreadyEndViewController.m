@@ -17,6 +17,10 @@
 
 static NSString * identifier = @"PendingsListCell";
 @interface AlreadyEndViewController (){
+    UIButton *_progressHUD;
+              UIView *_HUDContainer;
+              UIActivityIndicatorView *_HUDIndicatorView;
+              UILabel *_HUDLable;
     MJRefreshBackNormalFooter *footer;
 }
 
@@ -59,6 +63,7 @@ static NSString * identifier = @"PendingsListCell";
 
 -(void)LoadData
 {
+    [self showProgressHUD];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
@@ -76,33 +81,36 @@ static NSString * identifier = @"PendingsListCell";
 // 2.实现下拉刷新和上拉加载的事件。
 // 头部的下拉刷新触发事件
 - (void)headerClick {
-    // 可在此处实现下拉刷新时要执行的代码
-    // ......
-    //if(currentPageCount>1)
-    //currentPageCount--;
-    [self LoadData];
-    // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
-    // 结束刷新
-    [self.NewTableView.mj_header endRefreshing];
+   // 可在此处实现下拉刷新时要执行的代码
+       // ......
+       //if(currentPageCount>1)
+       //currentPageCount--;
+       currentPageCount=5;
+       listOfMovies=nil;
+       [self LoadData];
+       // 模拟延迟3秒
+       [NSThread sleepForTimeInterval:0.5];
+       // 结束刷新
+       [self.NewTableView.mj_header endRefreshing];
 }
 // 底部的上拉加载触发事件
 - (void)footerClick {
     // 可在此处实现上拉加载时要执行的代码
-    // ......
-    currentPageCount=currentPageCount+[Common_PageSizeAdd intValue]    ;
-    [self LoadData];
-    // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
-    // 结束刷新
-    [self.NewTableView.mj_footer endRefreshing];
+      // ......
+      
+      currentPageCount=currentPageCount+[Common_PageSizeAdd intValue];
+      [self LoadData];
+      // 模拟延迟3秒
+      [NSThread sleepForTimeInterval:0.5];
+      // 结束刷新
+      [self.NewTableView.mj_footer endRefreshing];
 }
 
 
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
-        
+        [self hideProgressHUD];
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         //判断账号是否总其他设备登录
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
@@ -129,6 +137,9 @@ static NSString * identifier = @"PendingsListCell";
             // 设置状态
             [footer setState:MJRefreshStateNoMoreData];
         }
+        else{
+                        [self.NewTableView.mj_footer resetNoMoreData];
+                     }
         listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
         //[self.listOfMovies addObjectsFromArray:self.listMovies];
         [CATransaction begin];
@@ -260,6 +271,44 @@ static NSString * identifier = @"PendingsListCell";
     [super viewDidAppear:animated];
     if (!animated) {
         [self LoadData];
+    }
+}
+
+
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
+
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
     }
 }
 @end

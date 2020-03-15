@@ -18,6 +18,10 @@
 static NSString * identifier = @"PendingListCell";
 
 @interface PendingViewController (){
+    UIButton *_progressHUD;
+         UIView *_HUDContainer;
+         UIActivityIndicatorView *_HUDIndicatorView;
+         UILabel *_HUDLable;
 MJRefreshBackNormalFooter *footer;
 }
 @end
@@ -56,6 +60,7 @@ MJRefreshBackNormalFooter *footer;
 
 -(void)LoadData
 {
+     [self showProgressHUD];
     //设置需要访问的ws和传入参数
     // code, string userID, string menuID
     NSString *currentPageCountstr = [NSString stringWithFormat: @"%ld", (long)currentPageCount];
@@ -68,6 +73,7 @@ MJRefreshBackNormalFooter *footer;
     NSURLConnection *connection = [[NSURLConnection alloc]
                                    initWithRequest:request
                                    delegate:self];
+   
 }
 
 // 2.实现下拉刷新和上拉加载的事件。
@@ -77,10 +83,11 @@ MJRefreshBackNormalFooter *footer;
     // ......
     //if(currentPageCount>1)
     //currentPageCount--;
-    currentPageCount=1;
+    currentPageCount=5;
+    listOfMovies=nil;
     [self LoadData];
     // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
+    [NSThread sleepForTimeInterval:0.5];
     // 结束刷新
     [self.NewTableView.mj_header endRefreshing];
 }
@@ -92,7 +99,7 @@ MJRefreshBackNormalFooter *footer;
     currentPageCount=currentPageCount+[Common_PageSizeAdd intValue];
     [self LoadData];
     // 模拟延迟3秒
-    //[NSThread sleepForTimeInterval:3];
+    [NSThread sleepForTimeInterval:0.5];
     // 结束刷新
     [self.NewTableView.mj_footer endRefreshing];
 }
@@ -101,6 +108,7 @@ MJRefreshBackNormalFooter *footer;
 //系统自带方法调用ws后进入将gbk转为utf-8如果确认是utf-8可以不转，因为ios只认utf-8
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     @try {
+         [self hideProgressHUD];
         xmlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         //判断账号是否总其他设备登录
         if([xmlString containsString: Common_MoreDeviceLoginFlag])
@@ -125,6 +133,9 @@ MJRefreshBackNormalFooter *footer;
         if([Pending mj_objectArrayWithKeyValuesArray:resultDic].count==listOfMovies.count){
             // 设置状态
             [footer setState:MJRefreshStateNoMoreData];
+        }
+        else{
+           [self.NewTableView.mj_footer resetNoMoreData];
         }
         listOfMovies = [Pending mj_objectArrayWithKeyValuesArray:resultDic];
         //[self.listOfMovies addObjectsFromArray:self.listMovies];
@@ -275,6 +286,42 @@ MJRefreshBackNormalFooter *footer;
     [super viewDidAppear:animated];
     if (!animated) {
         [self LoadData];
+    }
+}
+- (void)showProgressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_progressHUD setBackgroundColor:[UIColor clearColor]];
+        
+        _HUDContainer = [[UIView alloc] init];
+        _HUDContainer.frame = CGRectMake(150, 300, 100,100 );
+        _HUDContainer.layer.cornerRadius = 8;
+        _HUDContainer.clipsToBounds = YES;
+        _HUDContainer.backgroundColor = [UIColor darkGrayColor];
+        _HUDContainer.alpha = 0.7;
+        
+        _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
+        
+        _HUDLable = [[UILabel alloc] init];
+        _HUDLable.frame = CGRectMake(0,40, 100, 50);
+        _HUDLable.textAlignment = NSTextAlignmentCenter;
+        _HUDLable.text = @"正在处理...";
+        _HUDLable.font = [UIFont systemFontOfSize:15];
+        _HUDLable.textColor = [UIColor whiteColor];
+        
+        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDIndicatorView];
+        [_progressHUD addSubview:_HUDContainer];
+    }
+    [_HUDIndicatorView startAnimating];
+    [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
+}
+
+- (void)hideProgressHUD {
+    if (_progressHUD) {
+        [_HUDIndicatorView stopAnimating];
+        [_progressHUD removeFromSuperview];
     }
 }
 @end

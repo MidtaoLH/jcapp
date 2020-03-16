@@ -57,6 +57,9 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.title=@"外出申请";
     
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     userID = [defaults objectForKey:@"userid"];
     empID = [defaults objectForKey:@"EmpID"];
@@ -112,6 +115,30 @@
         make.size.mas_equalTo(CGSizeMake(kScreenWidth, kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight));
     }];
     //self.formTableView.estimatedRowHeight = kScreenHeight-StatusBarAndNavigationBarHeight-TabbarHeight;
+}
+
+    -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+   // DLog(@" gestureRecognizerShouldBegin : %@ \n %@",gestureRecognizer,[gestureRecognizer class]);
+    BOOL rlt = FALSE;
+ 
+    // 手势
+    if(gestureRecognizer == self.navigationController.interactivePopGestureRecognizer){
+        // 控制器堆栈
+        if(self.navigationController.viewControllers.count >= 2){
+            
+            if([self.edittype isEqualToString:@"1"]){
+                UITabBarController *tabBarCtrl = [[TabBarViewController alloc]init];
+                UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarCtrl];
+                   navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+                [self presentViewController:navigationController animated:YES completion:nil];
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            
+          //  rlt = TRUE;
+        }
+    }
+    return rlt;
 }
 
 - (void)goBack {

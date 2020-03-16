@@ -114,18 +114,17 @@ static NSInteger const SW_RowImageCount = 4;
          
     // }];
     
-    // [CATransaction begin];
-    // [CATransaction setCompletionBlock:^{
-         
-    // }];
+     [CATransaction begin];
+     [CATransaction setCompletionBlock:^{
+          [self.expandableTableView reloadData];
+     }];
 
      NSLog( [NSString stringWithFormat:@"%d",[NSIndexSet indexSetWithIndex:0]]);
      
-     [self.expandableTableView reloadData];
+    [CATransaction commit];
      
      [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
      //[self.expandableTableView reloadSections:NSIndexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-     //[CATransaction commit];
    
 }
 

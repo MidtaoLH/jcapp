@@ -106,20 +106,26 @@ static NSInteger const SW_RowImageCount = 4;
 #pragma mark -- 刷新当前图片数据
 - (void)sw_reloadData {
     if (self.imageCompletion) {
-        self.imageCompletion(self.mutableImages);
-    }
-   // [UIView performWithoutAnimation:^{
-       // [self.expandableTableView beginUpdates];
-       // [self.expandableTableView endUpdates];
-        
-   // }];
-   
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [self.expandableTableView reloadData];
-    }];
-    [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [CATransaction commit];
+         self.imageCompletion(self.mutableImages);
+     }
+    // [UIView performWithoutAnimation:^{
+        // [self.expandableTableView beginUpdates];
+        // [self.expandableTableView endUpdates];
+         
+    // }];
+    
+    // [CATransaction begin];
+    // [CATransaction setCompletionBlock:^{
+         
+    // }];
+
+     NSLog( [NSString stringWithFormat:@"%d",[NSIndexSet indexSetWithIndex:0]]);
+     
+     [self.expandableTableView reloadData];
+     
+     [self.expandableTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+     //[self.expandableTableView reloadSections:NSIndexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+     //[CATransaction commit];
    
 }
 
